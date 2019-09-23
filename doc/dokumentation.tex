@@ -1,0 +1,211 @@
+%BSP Bild
+%\begin{figure}[h]
+%\centering
+%\includegraphics[width=7cm,height=2.8cm]{Fotos/logo.jpg}
+%\end{figure}
+
+%BSP Sektion
+%\section{Test}
+%\subsection{Umsetzung}
+%\subsubsection{Eingabe}
+
+%BSP Aufzählung
+%\begin{enumerate}
+%\item Wie realisieren wir den Roboter mechanisch?
+%\item Wie lässt sich das Einlesen des Sudokus umsetzen?
+%\item Wie implementieren wir den Algorithmus?
+%\end{enumerate}
+
+%BSP Aufzählung
+%\begin{itemize}
+%\item Helligkeitssensor
+%\item Farbsensor
+%\end{itemize}
+
+
+%-------------------
+%Beginn des Kopfbereiches
+%-------------------
+
+%Wir verwenden eine DIN-A4-Seite und die Schriftgrš§e 12.
+\documentclass[a4paper,fontsize=13pt]{scrartcl} 
+
+ \usepackage{float}
+
+%ein Versuch die Silbentrennung auszuschalten
+%\hyphenpenalty=10000
+%\exhyphenpenalty=10000
+\usepackage[none]{hyphenat} 
+\sloppy
+
+%Fuer Abbildungsverzeichnis
+\usepackage{graphicx}
+
+%Diese drei Pakete benštigen wir fŸr die Umlaute, Deutsche Silbentrennung etc.
+\usepackage[utf8x]{inputenc}
+\usepackage[ngerman]{babel}
+\usepackage[T1]{fontenc}
+
+%Für Zeilenabstände
+\usepackage{setspace}
+
+% Für Bilder 
+\usepackage{graphicx}
+
+%sorgt dafÃ¼r, dass deutsche AnfÃ¼hrungszeichen in Zitaten
+\usepackage[babel,german=quotes]{csquotes}
+
+%Das Paket erzeugt ein anklickbares Verzeichnis in der PDF-Datei.
+\usepackage{hyperref}
+
+\usepackage{titleref}
+
+%für Eurosymbole
+\usepackage{eurosym}
+
+\usepackage{enumitem}
+
+
+% Stil der Zitate und der Bibliographie
+\bibliographystyle{unsrt}
+
+% Einbindung von Quellcode
+\usepackage{listings}  
+
+
+%Das Paket wird fŸr die anderthalb-zeiligen Zeilenabstand benštigt
+\usepackage{setspace}
+
+%Fuer Abbildungsverz im Inhaltsverz
+\usepackage{tocbibind}
+
+\usepackage{pdfpages}
+
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{amsthm}
+
+%Für Bögen über Strecken
+\usepackage{arcs}
+
+% Einbindung von Quellcode
+
+\usepackage{xcolor}
+\usepackage{listings}
+\lstset{
+	numbers=left, 
+	numberstyle=\small, 
+	numbersep=8pt,
+	language=JAVA, 
+	frame = single, 
+	framexleftmargin=15pt}
+
+%EinrŸckung eines neuen Absatzes
+\setlength{\parindent}{0em}
+
+%Definition der Ränder
+\usepackage[paper=a4paper,left=30mm,right=30mm,top=30mm,bottom=30mm]{geometry} 
+
+%Abstand der Fußnoten
+%\deffootnote{1em}{1em}{\textsuperscript{\thefootnotemark\ }}
+
+%Regeln, bis zu welcher Tiefe (section,subsection,subsubsection) †berschriften angezeigt werden sollen (Anzeige der †berschriften im Verzeichnis / Anzeige der Nummerierung)
+%\setcounter{tocdepth}{3}
+%\setcounter{secnumdepth}{3}
+
+%-------------------
+%Ende des Kopfbereiches
+%-------------------
+
+\usepackage{contour}
+\usepackage{ulem}
+
+\renewcommand{\ULdepth}{1.8pt}
+\contourlength{0.8pt}
+
+\newcommand{\myuline}[1]{%
+  \uline{\phantom{#1}}%
+  \llap{\contour{white}{#1}}%
+}
+
+\setcounter{tocdepth}{4}
+\setcounter{secnumdepth}{4}
+
+\begin{document}
+
+\title{Role-Play-Game - Dokumentation der Pojektarbeit}
+\author{\centerline{Jonas Dalchow, Lukas Fausten, Philipp Maleri,} \\ \centerline{Philipp Neumer, Tim Holzenkamp}}
+\date{16. Oktober 2019}
+
+\maketitle
+
+\newpage
+
+\tableofcontents
+
+\newpage
+
+\section{Lastenheft}
+\label{Lastenheft}
+
+\textbf{UR001}\\
+\textbf{Aussage} Das Role-Play-Game soll eine graphische Benutzeroberfläche haben.\\
+\textbf{Priorität A} \\
+
+\textbf{UR002}\\
+\textbf{Aussage} Der Spieler soll sich einen Helden erstellen können.\\
+\textbf{Priorität A} \\
+
+\textbf{UR003}\\
+\textbf{Aussage} Der erstellte Held soll in verschiedenen Runden gegen Monster kämpfen.\\
+\textbf{Priorität A} \\
+
+\textbf{UR004}\\
+\textbf{Aussage} Es soll eine Kampfanimation geben.\\
+\textbf{Priorität A}\\
+
+\textbf{UR005}\\
+\textbf{Aussage} Es soll verschiedene Arten von Monstern und Helden geben.\\
+\textbf{Priorität A}\\
+
+\textbf{UR006}\\
+\textbf{Aussage} Helden sollen Magier bzw. Krieger sein können.\\
+\textbf{Priorität B}\\
+
+\textbf{UR007}\\
+\textbf{Aussage} Die verschiedenen Heldenarten sollen sich in ihrem Aussehen unterscheiden.\\
+\textbf{Priorität B}\\
+
+\textbf{UR008}\\
+\textbf{Aussage} Die verschiedenen Heldenarten sollen sich in ihren Stärken bzw. Fähigkeiten unterscheiden.\\
+\textbf{Priorität C}\\
+
+\textbf{UR009}\\
+\textbf{Aussage} Der Benutzer soll seinen Helden individuell gestalten können bezüglich Haarfarbe, Kleidung...\\
+\textbf{Priorität C}\\
+
+\textbf{UR010}\\
+\textbf{Aussage} Das Role-Play-Game soll bis zum 16.10 fertiggestellt und dem Kunden übergeben werden.\\
+\textbf{Priorität A}
+
+\newpage
+
+\section{Pflichtenheft}
+\label{Pflichtenheft}
+
+\newpage
+
+\section{Tagebuch}
+\label{Tagebuch}
+
+\myuline{Donnerstag, 19.09.19:}
+
+Nach Bekanntgeben des Beginns des Projekts, begann unsere Gruppe mit der Diskussion, wie wir alle zusammen an einem Projekt gleichzeitig arbeiten können. Dabei ging es sowohl um gemeinsame Java-Editoren für die tatsächliche Programmierarbeit als auch um gemeinsame Text-Editoren um eine einfach Arbeit am Tagebuch zu ermöglichen. Letztendlich wurde für Ersteres Git als Lösung vorgeschlagen und für Letzteres keine Lösung gefunden.\\
+Des Weiteren wurden sich Gedanken gemacht über das grundlegende Aussehen der Anwendung, wobei sich auf eine \glqq{}Pixelgrafik\grqq{} geeinigt wurde. Die Ansicht des Kampfes sollte von der Seite sein - mit dem Monster in einer Ecke und dem Helden in der anderen. Lukas und Jonas äußerten Vorstellungen eines Hauptmenüs mit Optionen wie einem Shop u.Ä.\\
+
+\myuline{Sonntag, 22.09.19:}
+
+Tim arbeitete weiter am Lastenheft und am vorherigen Tagebucheintrag. Es muss besprochen werden, ob der Rest der Gruppe mit dem erstellten Lastenheft und insbesondere mit den festgelegten Prioritäten übereinstimmt.
+
+\end{document}
+
