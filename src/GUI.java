@@ -38,7 +38,7 @@ class GUI extends JPanel {
     public void paint(Graphics g) {
         // paint background
         g.setColor(Color.RED);
-        g.fillRect(0, 0, 960, 540);
+        g.fillRect(0, 0, Main.width, Main.height);
 
         // paint graphic objects
         player.paint(g);
