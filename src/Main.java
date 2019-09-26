@@ -1,8 +1,10 @@
 import javax.swing.*;
 
-public class Main extends JPanel{
+public class Main extends JPanel {
+    private GUI gui;
+
     private Main() {
-	// setup main frame
+        // setup main frame
         JFrame frame = new JFrame();
         frame.setTitle("RPG-lol");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -11,17 +13,17 @@ public class Main extends JPanel{
         frame.setVisible(true);
         frame.setSize(960, 540);
 
-	// measure time for game logic
+        // measure time for game logic
         long time0 = System.currentTimeMillis();
 
-	// main game jpanel
-        JPanel gui = new GUI();
+        // main game jpanel
+        gui = new GUI();
         frame.add(gui);
 
-	// updating the game
-        while(true) {
+        // updating the game
+        while (true) {
             try {
-		// wait 16ms
+                // wait 16ms
                 Thread.sleep(16);
             } catch (InterruptedException e) {
                 e.printStackTrace();
@@ -29,7 +31,7 @@ public class Main extends JPanel{
             }
             // measure time for updating game logic
             long time1 = System.currentTimeMillis();
-            updateGame((int) (time1-time0));
+            updateGame((int) (time1 - time0));
             time0 = time1;
 
             // update the frame
@@ -42,6 +44,6 @@ public class Main extends JPanel{
     }
 
     private void updateGame(int time) {
-	
+        gui.update(time);
     }
 }
