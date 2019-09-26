@@ -7,7 +7,7 @@ import java.io.IOException;
 class Player {
     private int x, y;
     private int width, height;
-    private float speed = 0.5f;
+    private float speed = 0.15f;
     boolean[] directions; // 0 is up, 1 is left, 2 is down, 3 is right
     private Image img;
 
