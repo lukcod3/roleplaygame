@@ -4,6 +4,7 @@ import java.awt.*;
 class Player {
     private int x, y;
     private int width, height;
+
     Player(int x, int y) {
         this.x = x;
         this.y = y;

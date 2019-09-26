@@ -35,6 +35,6 @@ public class Main extends JPanel{
     }
 
     private void updateGame(int time) {
-
+	
     }
 }
