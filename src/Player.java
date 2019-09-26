@@ -56,16 +56,16 @@ class Player {
         }
 
         // move player
-        if (this.directions[0]) {
+        if (this.directions[0] && this.y - movement > 0) {
             this.y -= movement;
         }
-        if (this.directions[1]) {
+        if (this.directions[1] && this.x - movement > 0) {
             this.x -= movement;
         }
-        if (this.directions[2]) {
+        if (this.directions[2] && this.y + movement < Main.height - this.height) {
             this.y += movement;
         }
-        if (this.directions[3]) {
+        if (this.directions[3] && this.x + movement < Main.width - this.width) {
             this.x += movement;
         }
     }

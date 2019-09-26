@@ -1,9 +1,15 @@
 import javax.swing.*;
 
 public class Main {
+    static int height, width;
     private GUI gui;
 
     private Main() {
+        // set height and width
+        width = 960;
+        height = 540;
+
+
         // setup main frame
         JFrame frame = new JFrame();
         frame.setTitle("RPG-lol");
@@ -11,7 +17,7 @@ public class Main {
         frame.setResizable(false);
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
-        frame.setSize(960, 540);
+        frame.setSize(width, height);
 
         // measure time for game logic
         long time0 = System.currentTimeMillis();
