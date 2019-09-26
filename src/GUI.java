@@ -4,8 +4,12 @@ import java.awt.event.*;
 
 class GUI extends JPanel {
     private Player player;
-    Image img = Toolkit.getDefaultToolkit().getImage("res/background.jpg").getScaledInstance(950,-1,1);
+    private Image img;
+
     GUI() {
+        // load background image
+        img = Toolkit.getDefaultToolkit().getImage("res/background.jpg").getScaledInstance(950,-1,1);
+
         // create the player
         player = new Player(0, 0);
 

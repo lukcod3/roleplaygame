@@ -1,24 +1,35 @@
+import javax.imageio.ImageIO;
 import java.awt.*;
+import java.awt.image.ImageObserver;
+import java.io.File;
+import java.io.IOException;
 
 class Player {
     private int x, y;
     private int width, height;
     private float speed = 0.5f;
     boolean[] directions; // 0 is up, 1 is left, 2 is down, 3 is right
+    private Image img;
 
     Player(int x, int y) {
         // setup player stats
         this.x = x;
         this.y = y;
-        this.width = 100;
-        this.height = 100;
         this.directions = new boolean[4];
+        try {
+            img = ImageIO.read(new File("res/player.png"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        assert img != null;
+        this.width = img.getWidth(null);
+        this.height = img.getHeight(null);
     }
 
     void paint(Graphics g) {
         // paint player
         g.setColor(Color.BLACK);
-        g.fillRect(this.x, this.y, this.width, this.height);
+        g.drawImage(img, this.x, this.y, null);
     }
 
     void update(int time) {
@@ -45,16 +56,16 @@ class Player {
         }
 
         // move player
-        if (this.directions[0]) {
+        if (this.directions[0] && this.y - movement > 0) {
             this.y -= movement;
         }
-        if (this.directions[1]) {
+        if (this.directions[1] && this.x - movement > 0) {
             this.x -= movement;
         }
-        if (this.directions[2]) {
+        if (this.directions[2] && this.y + movement < Main.height - this.height) {
             this.y += movement;
         }
-        if (this.directions[3]) {
+        if (this.directions[3] && this.x + movement < Main.width - this.width) {
             this.x += movement;
         }
     }
