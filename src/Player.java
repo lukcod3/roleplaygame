@@ -3,7 +3,7 @@ import java.awt.*;
 class Player {
     private int x, y;
     private int width, height;
-    private float speed = 1;
+    private float speed = 0.5f;
     boolean[] directions; // 0 is up, 1 is left, 2 is down, 3 is right
 
     Player(int x, int y) {
