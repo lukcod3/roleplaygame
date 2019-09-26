@@ -1,3 +1,6 @@
+import Maps.ExampleMap;
+import Maps.Map;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -5,10 +8,14 @@ import java.awt.event.*;
 class GUI extends JPanel {
     private Player player;
     private Image img;
+    private Map map;
 
     GUI() {
         // load background image
         img = Toolkit.getDefaultToolkit().getImage("res/background.jpg").getScaledInstance(950,-1,1);
+
+        //create map
+        map = new ExampleMap();
 
         // create the player
         player = new Player(0, 0);
@@ -44,6 +51,7 @@ class GUI extends JPanel {
         super.paintComponent(g);
         g.drawImage(img, 0, 0, null);
         // paint graphic objects
+        map.paint(g);
         player.paint(g);
 
         // sync graphic

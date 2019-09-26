@@ -1,6 +1,5 @@
 import javax.imageio.ImageIO;
 import java.awt.*;
-import java.awt.image.ImageObserver;
 import java.io.File;
 import java.io.IOException;
 
@@ -62,10 +61,10 @@ class Player {
         if (this.directions[1] && this.x - movement > 0) {
             this.x -= movement;
         }
-        if (this.directions[2] && this.y + movement < Main.height - this.height) {
+        if (this.directions[2] && this.y + movement < Main.HEIGHT - this.height) {
             this.y += movement;
         }
-        if (this.directions[3] && this.x + movement < Main.width - this.width) {
+        if (this.directions[3] && this.x + movement < Main.WIDTH - this.width) {
             this.x += movement;
         }
     }
