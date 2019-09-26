@@ -1,6 +1,6 @@
 import javax.swing.*;
 
-public class Main extends JPanel {
+public class Main {
     private GUI gui;
 
     private Main() {
@@ -19,6 +19,8 @@ public class Main extends JPanel {
         // main game jpanel
         gui = new GUI();
         frame.add(gui);
+
+        frame.validate();
 
         // updating the game
         while (true) {
