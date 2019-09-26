@@ -22,8 +22,8 @@ class Player {
             e.printStackTrace();
         }
         assert img != null;
-        this.width = img.getWidth(null);
-        this.height = img.getHeight(null);
+        this.width = img.getWidth(null)+15;
+        this.height = img.getHeight(null)+34;
     }
 
     void paint(Graphics g) {
