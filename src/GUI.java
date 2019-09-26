@@ -4,7 +4,7 @@ import java.awt.event.*;
 
 class GUI extends JPanel {
     private Player player;
-
+    Image img = Toolkit.getDefaultToolkit().getImage("res/background.jpg").getScaledInstance(950,-1,1);
     GUI() {
         // create the player
         player = new Player(0, 0);
@@ -36,10 +36,9 @@ class GUI extends JPanel {
 
 
     public void paint(Graphics g) {
-        // paint background
-        g.setColor(Color.RED);
-        g.fillRect(0, 0, 960, 540);
-
+        // paint background image
+        super.paintComponent(g);
+        g.drawImage(img, 0, 0, null);
         // paint graphic objects
         player.paint(g);
 
