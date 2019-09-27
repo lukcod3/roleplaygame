@@ -14,6 +14,9 @@ public class Player {
     private float speed = 0.15f;
     boolean[] directions; // 0 is up, 1 is left, 2 is down, 3 is right
     private Image img;
+    private boolean moving;
+    private int animation_state;
+    private String base_char = "elf_m";
 
     public Player(Map map, int x, int y) {
         // setup player stats
@@ -22,7 +25,7 @@ public class Player {
         this.y = y;
         this.directions = new boolean[4];
         try {
-            img = ImageIO.read(new File("res/player.png"));
+            img = ImageIO.read(new File("res/player.png")).getScaledInstance(100, 100, Image.SCALE_SMOOTH);;
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -49,7 +52,16 @@ public class Player {
         // if no or opposite keys are pressed the player doesnt move
         if (dir_count == 0 || dir_count > 2 || this.directions[0] && this.directions[2] || this.directions[1] && this.directions[3]) {
             // opposite keys are pressed => player doesnt move
+            if (moving) {
+                moving = false;
+                animation_state = 0;
+            }
             return;
+        }
+
+        if (!moving) {
+            moving = true;
+            animation_state = 0;
         }
 
         // calculate how much the player moves
@@ -80,11 +92,16 @@ public class Player {
 
         // check if player in wall => reset movement
         for (int d_x : new int[]{0, this.width}) {
-            for (int d_y : new int[]{0, this.height}) {
-                if (map.tile_at((int) (this.x + d_x), (int) (this.y + d_y)) != Map.Tile.GROUND) {
+            if (map.tile_at((int) (this.x + d_x), (int) (this.y + this.height)) != Map.Tile.GROUND) {
+                // player doesnt move
+                // test if fix is possible
+                if (map.tile_at((int) (old_x + d_x), (int) (this.y + this.height)) == Map.Tile.GROUND) {
+                    this.x = old_x;
+                } else if (map.tile_at((int) (this.x + d_x), (int) (old_y + this.height)) == Map.Tile.GROUND) {
+                    this.y = old_y;
+                } else {
                     this.x = old_x;
                     this.y = old_y;
-                    break;
                 }
             }
         }
