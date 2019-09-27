@@ -1,9 +1,11 @@
+package lolz;
+
 import javax.swing.*;
 
 public class Main {
-    static final int HEIGHT = 540;
-    static final int WIDTH = 960;
-    static final int TILE_SIZE = 50;
+    public static final int HEIGHT = 540;
+    public static final int WIDTH = 960;
+    public static final int TILE_SIZE = 50;
 
     private GUI gui;
 

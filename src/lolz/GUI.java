@@ -1,24 +1,24 @@
-import Maps.ExampleMap;
-import Maps.Map;
+package lolz;
+
+import lolz.Maps.ExampleMap;
+import lolz.Maps.Map;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
-class GUI extends JPanel {
-    private Player player;
+public class GUI extends JPanel {
     private Image img;
     private Map map;
 
     GUI() {
         // load background image
-        img = Toolkit.getDefaultToolkit().getImage("res/background.jpg").getScaledInstance(950,-1,1);
+        // img = Toolkit.getDefaultToolkit().getImage("res/background.jpg").getScaledInstance(950,-1,1);
 
         //create map
         map = new ExampleMap();
 
         // create the player
-        player = new Player(0, 0);
 
         // add the key bindings for player movement
         char[] keys = {'W', 'A', 'S', 'D'};
@@ -40,19 +40,15 @@ class GUI extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 // change the players directions
-                player.directions[dir] = pressed;
+                map.player.directions[dir] = pressed;
             }
         };
     }
 
 
     public void paint(Graphics g) {
-        // paint background image
-        super.paintComponent(g);
-        g.drawImage(img, 0, 0, null);
-        // paint graphic objects
+        // paint map
         map.paint(g);
-        player.paint(g);
 
         // sync graphic
         Toolkit.getDefaultToolkit().sync();
@@ -60,7 +56,7 @@ class GUI extends JPanel {
 
     void update(int time) {
         // update the players position
-        player.update(time);
+        map.update(time);
     }
 
 }
