@@ -15,7 +15,22 @@ public abstract class Map {
     public int VIRTUAL_WIDTH, VIRTUAL_HEIGHT;
     public int AREA, VIRTUAL_AREA;
 
-    public enum Tile {EMPTY, GROUND, WALL}
+    public enum Tile {
+        EMPTY("empty", false),
+        GROUND("ground", false),
+        WALL("wall", true),
+        WALL_LEFT("wall left", true),
+        WALL_RIGHT("wall right", true),
+        WALL_TOP("wall top", true);
+
+        public final String name;
+        public final boolean solid;
+
+        private Tile(String name, boolean solid) {
+            this.name = name;
+            this.solid = solid;
+        }
+    }
 
     private HashMap<Tile, Image> tilePics;
 
@@ -32,6 +47,9 @@ public abstract class Map {
         try {
             tilePics.put(Tile.GROUND, ImageIO.read(new File("res/tiles/floor_1.png")).getScaledInstance(Main.TILE_SIZE, Main.TILE_SIZE, Image.SCALE_SMOOTH));
             tilePics.put(Tile.WALL, ImageIO.read(new File("res/tiles/wall_mid.png")).getScaledInstance(Main.TILE_SIZE, Main.TILE_SIZE, Image.SCALE_SMOOTH));
+            tilePics.put(Tile.WALL_LEFT, ImageIO.read(new File("res/tiles/wall_side_mid_left.png")).getScaledInstance(Main.TILE_SIZE, Main.TILE_SIZE, Image.SCALE_SMOOTH));
+            tilePics.put(Tile.WALL_RIGHT, ImageIO.read(new File("res/tiles/wall_side_mid_right.png")).getScaledInstance(Main.TILE_SIZE, Main.TILE_SIZE, Image.SCALE_SMOOTH));
+            tilePics.put(Tile.WALL_TOP, ImageIO.read(new File("res/tiles/wall_top_mid.png")).getScaledInstance(Main.TILE_SIZE, Main.TILE_SIZE, Image.SCALE_SMOOTH));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -54,8 +72,16 @@ public abstract class Map {
         for (int y = 0; y < this.tiles.length; y++) {
             for (int x = 0; x < this.tiles[0].length; x++) {
                 if (this.tiles[y][x] != Tile.EMPTY) {
-                    g.drawImage(this.tilePics.get(Tile.WALL), Main.TILE_SIZE * x, Main.TILE_SIZE * y, null);
                     g.drawImage(this.tilePics.get(this.tiles[y][x]), Main.TILE_SIZE * x, Main.TILE_SIZE * y, null);
+                    switch (this.tiles[y][x]) {
+                        case WALL:
+                            g.drawImage(this.tilePics.get(Tile.WALL_TOP), Main.TILE_SIZE * x, Main.TILE_SIZE * (y - 1), null);
+                            break;
+                        case WALL_LEFT:
+                        case WALL_RIGHT:
+                            g.drawImage(this.tilePics.get(this.tiles[y][x]), Main.TILE_SIZE * x, Main.TILE_SIZE * (y - 1), null);
+                            break;
+                    }
                 }
             }
         }
@@ -67,10 +93,17 @@ public abstract class Map {
     public abstract void update(int time);
 
     public Tile get_tile_at(int x, int y) {
-        if (x < 0 || x >= this.VIRTUAL_WIDTH || y < 0 || y >= this.VIRTUAL_HEIGHT) {
+        if (x < 0 || x >= this.WIDTH || y < 0 || y >= this.HEIGHT) {
             return null;
         }
         return this.tiles[y / Main.TILE_SIZE][x / Main.TILE_SIZE];
+    }
+
+    Tile get_tile_at_virtual(int x, int y) {
+        if (x < 0 || x >= this.VIRTUAL_WIDTH || y < 0 || y >= this.VIRTUAL_HEIGHT) {
+            return null;
+        }
+        return this.tiles[y][x];
     }
 
 }

@@ -27,10 +27,10 @@ public class Player {
         this.img = new Image[2][4];
         try {
             for (int i = 0; i < 4; i++) {
-                img[0][i] = ImageIO.read(new File("res/tiles/" + this.base_char + "_idle_anim_f" + Integer.toString(i) + ".png")).getScaledInstance(40, -1, Image.SCALE_SMOOTH);
+                img[0][i] = ImageIO.read(new File("res/tiles/" + this.base_char + "_idle_anim_f" + Integer.toString(i) + ".png")).getScaledInstance(45, -1, Image.SCALE_SMOOTH);
             }
             for (int i = 0; i < 4; i++) {
-                img[1][i] = ImageIO.read(new File("res/tiles/" + this.base_char + "_run_anim_f" + Integer.toString(i) + ".png")).getScaledInstance(40, -1, Image.SCALE_SMOOTH);
+                img[1][i] = ImageIO.read(new File("res/tiles/" + this.base_char + "_run_anim_f" + Integer.toString(i) + ".png")).getScaledInstance(45, -1, Image.SCALE_SMOOTH);
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -44,9 +44,6 @@ public class Player {
     }
 
     public void paint(Graphics g) {
-        this.animation_state += 0.1;
-        this.animation_state %= 4;
-
         // paint player
         g.setColor(Color.BLACK);
         if (moving) {
@@ -57,7 +54,13 @@ public class Player {
     }
 
     public void update(int time) {
-        System.out.println("x: " + Integer.toString((int) this.x) + " | y: " + Integer.toString((int) this.y));
+        // update player graphic stats
+        if (moving) {
+            this.animation_state += (float) time / 100;
+        } else {
+            this.animation_state += (float) time / 150;
+        }
+        this.animation_state %= 4;
 
         // count how many directions are active
         int dir_count = 0;
@@ -110,13 +113,12 @@ public class Player {
 
         // check if player in wall => reset movement
         for (int d_x : new int[]{0, this.width}) {
-            if (map.get_tile_at((int) (this.x + d_x), (int) (this.y + this.height)) == Map.Tile.WALL) {
-                System.out.println("conflict");
+            if (map.get_tile_at((int) (this.x + d_x), (int) (this.y + this.height)).solid) {
                 // player doesnt move
                 // test if fix is possible
-                if (map.get_tile_at((int) (old_x + d_x), (int) (this.y + this.height)) == Map.Tile.GROUND) {
+                if (!map.get_tile_at((int) (old_x + d_x), (int) (this.y + this.height)).solid) {
                     this.x = old_x;
-                } else if (map.get_tile_at((int) (this.x + d_x), (int) (old_y + this.height)) == Map.Tile.GROUND) {
+                } else if (!map.get_tile_at((int) (this.x + d_x), (int) (old_y + this.height)).solid) {
                     this.y = old_y;
                 } else {
                     this.x = old_x;
