@@ -13,10 +13,10 @@ public class Player {
     private int width, height;
     private float speed = 0.15f;
     boolean[] directions; // 0 is up, 1 is left, 2 is down, 3 is right
-    private Image img;
+    private Image[][] img;
     private boolean moving;
-    private int animation_state;
-    private String base_char = "elf_m";
+    private double animation_state;
+    private final String base_char = "elf_m";
 
     public Player(Map map, int x, int y) {
         // setup player stats
@@ -24,20 +24,32 @@ public class Player {
         this.x = x;
         this.y = y;
         this.directions = new boolean[4];
+        this.img = new Image[2][4];
         try {
-            img = ImageIO.read(new File("res/player.png")).getScaledInstance(100, 100, Image.SCALE_SMOOTH);;
+            for (int i = 0; i < 4; i++) {
+                img[0][i] = ImageIO.read(new File("res/tiles/" + this.base_char + "_idle_anim_f" + Integer.toString(i) + ".png")).getScaledInstance(50, -1, Image.SCALE_SMOOTH);
+            }
+            for (int i = 0; i < 4; i++) {
+                img[1][i] = ImageIO.read(new File("res/tiles/" + this.base_char + "_run_anim_f" + Integer.toString(i) + ".png")).getScaledInstance(50, -1, Image.SCALE_SMOOTH);
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
-        assert img != null;
-        this.width = img.getWidth(null);
-        this.height = img.getHeight(null);
+        this.width = img[0][0].getWidth(null);
+        this.height = img[0][0].getHeight(null);
     }
 
     public void paint(Graphics g) {
+        this.animation_state += 0.1;
+        this.animation_state %= 4;
+
         // paint player
         g.setColor(Color.BLACK);
-        g.drawImage(img, (int) this.x, (int) this.y, null);
+        if (moving) {
+            g.drawImage(img[1][(int)this.animation_state], (int) this.x, (int) this.y, null);
+        } else {
+            g.drawImage(img[0][(int)this.animation_state], (int) this.x, (int) this.y, null);
+        }
     }
 
     public void update(int time) {
