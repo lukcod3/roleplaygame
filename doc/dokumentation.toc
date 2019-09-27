@@ -1,0 +1,5 @@
+\babel@toc {ngerman}{}
+\contentsline {section}{Inhaltsverzeichnis}{2}{section*.1}
+\contentsline {section}{\numberline {1}Lastenheft}{3}{section.1}
+\contentsline {section}{\numberline {2}Pflichtenheft}{5}{section.2}
+\contentsline {section}{\numberline {3}Tagebuch}{6}{section.3}

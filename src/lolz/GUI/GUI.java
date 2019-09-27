@@ -1,7 +1,8 @@
-package lolz;
+package lolz.GUI;
 
 import lolz.Maps.ExampleMap;
 import lolz.Maps.Map;
+import lolz.Maps.RandomMap;
 
 import javax.swing.*;
 import java.awt.*;
@@ -11,14 +12,14 @@ public class GUI extends JPanel {
     private Image img;
     private Map map;
 
-    GUI() {
-        // load background image
-        // img = Toolkit.getDefaultToolkit().getImage("res/background.jpg").getScaledInstance(950,-1,1);
+    public GUI() {
+        // call super class
+        super();
 
-        //create map
-        map = new ExampleMap();
+        // create map
+        map = new RandomMap();
 
-        // create the player
+        this.repaint();
 
         // add the key bindings for player movement
         char[] keys = {'W', 'A', 'S', 'D'};
@@ -54,7 +55,7 @@ public class GUI extends JPanel {
         Toolkit.getDefaultToolkit().sync();
     }
 
-    void update(int time) {
+    public void update(int time) {
         // update the players position
         map.update(time);
     }

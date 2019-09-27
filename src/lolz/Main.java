@@ -1,6 +1,9 @@
 package lolz;
 
+import lolz.GUI.GUI;
+
 import javax.swing.*;
+import java.awt.*;
 
 public class Main {
     public static final int HEIGHT = 540;
@@ -12,19 +15,20 @@ public class Main {
     private Main() {
         // setup main frame
         JFrame frame = new JFrame();
+
+        // main game jpanel
+        gui = new GUI();
+        frame.add(gui);
+
         frame.setTitle("RPG-lol");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setResizable(false);
-        //frame.setLocationRelativeTo(null);
+        frame.setBackground(Color.BLACK);
         frame.setVisible(true);
         frame.setSize(WIDTH, HEIGHT);
 
         // measure time for game logic
         long time0 = System.currentTimeMillis();
-
-        // main game jpanel
-        gui = new GUI();
-        frame.add(gui);
 
         frame.validate();
 

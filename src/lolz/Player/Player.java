@@ -1,4 +1,4 @@
-package lolz;
+package lolz.Player;
 
 import lolz.Maps.Map;
 
@@ -12,11 +12,11 @@ public class Player {
     public double x, y;
     private int width, height;
     private float speed = 0.15f;
-    boolean[] directions; // 0 is up, 1 is left, 2 is down, 3 is right
+    public boolean[] directions; // 0 is up, 1 is left, 2 is down, 3 is right
     private Image[][] img;
     private boolean moving;
     private double animation_state;
-    private final String base_char = "elf_f";
+    private final String base_char = "elf_m";
 
     public Player(Map map, int x, int y) {
         // setup player stats
@@ -27,16 +27,20 @@ public class Player {
         this.img = new Image[2][4];
         try {
             for (int i = 0; i < 4; i++) {
-                img[0][i] = ImageIO.read(new File("res/tiles/" + this.base_char + "_idle_anim_f" + Integer.toString(i) + ".png")).getScaledInstance(50, -1, Image.SCALE_SMOOTH);
+                img[0][i] = ImageIO.read(new File("res/tiles/" + this.base_char + "_idle_anim_f" + Integer.toString(i) + ".png")).getScaledInstance(40, -1, Image.SCALE_SMOOTH);
             }
             for (int i = 0; i < 4; i++) {
-                img[1][i] = ImageIO.read(new File("res/tiles/" + this.base_char + "_run_anim_f" + Integer.toString(i) + ".png")).getScaledInstance(50, -1, Image.SCALE_SMOOTH);
+                img[1][i] = ImageIO.read(new File("res/tiles/" + this.base_char + "_run_anim_f" + Integer.toString(i) + ".png")).getScaledInstance(40, -1, Image.SCALE_SMOOTH);
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
         this.width = img[0][0].getWidth(null);
         this.height = img[0][0].getHeight(null);
+
+        // rearrange y (given x and y values are for the bottom left corner)
+        // this.x -= this.width;
+        this.y -= this.height;
     }
 
     public void paint(Graphics g) {
@@ -46,13 +50,15 @@ public class Player {
         // paint player
         g.setColor(Color.BLACK);
         if (moving) {
-            g.drawImage(img[1][(int)this.animation_state], (int) this.x, (int) this.y, null);
+            g.drawImage(img[1][(int) this.animation_state], (int) this.x, (int) this.y, null);
         } else {
-            g.drawImage(img[0][(int)this.animation_state], (int) this.x, (int) this.y, null);
+            g.drawImage(img[0][(int) this.animation_state], (int) this.x, (int) this.y, null);
         }
     }
 
     public void update(int time) {
+        System.out.println("x: " + Integer.toString((int) this.x) + " | y: " + Integer.toString((int) this.y));
+
         // count how many directions are active
         int dir_count = 0;
         for (boolean b : this.directions) {
@@ -104,12 +110,13 @@ public class Player {
 
         // check if player in wall => reset movement
         for (int d_x : new int[]{0, this.width}) {
-            if (map.tile_at((int) (this.x + d_x), (int) (this.y + this.height)) != Map.Tile.GROUND) {
+            if (map.get_tile_at((int) (this.x + d_x), (int) (this.y + this.height)) == Map.Tile.WALL) {
+                System.out.println("conflict");
                 // player doesnt move
                 // test if fix is possible
-                if (map.tile_at((int) (old_x + d_x), (int) (this.y + this.height)) == Map.Tile.GROUND) {
+                if (map.get_tile_at((int) (old_x + d_x), (int) (this.y + this.height)) == Map.Tile.GROUND) {
                     this.x = old_x;
-                } else if (map.tile_at((int) (this.x + d_x), (int) (old_y + this.height)) == Map.Tile.GROUND) {
+                } else if (map.get_tile_at((int) (this.x + d_x), (int) (old_y + this.height)) == Map.Tile.GROUND) {
                     this.y = old_y;
                 } else {
                     this.x = old_x;
