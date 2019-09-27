@@ -38,30 +38,6 @@ public class ExampleMap extends Map {
     }
 
     @Override
-    public void paint(Graphics g) {
-        // translate map to player coords
-        g.translate((int)-(this.player.x - Main.WIDTH/2), (int)-(this.player.y - Main.HEIGHT/2));
-
-        // draw map
-        for (int y = 0; y < HEIGHT / Main.TILE_SIZE; y++) {
-            for (int x = 0; x < WIDTH / Main.TILE_SIZE; x++) {
-                switch (tiles[y][x]) {
-                    case GROUND:
-                        g.setColor(Color.ORANGE);
-                        break;
-                    case WALL:
-                        g.setColor(Color.GRAY);
-                        break;
-                }
-                g.fillRect(x * Main.TILE_SIZE, y * Main.TILE_SIZE, Main.TILE_SIZE, Main.TILE_SIZE);
-            }
-        }
-
-        // draw player
-        this.player.paint(g);
-    }
-
-    @Override
     public void update(int time) {
         this.player.update(time);
     }

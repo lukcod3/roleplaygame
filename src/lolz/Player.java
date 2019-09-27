@@ -16,7 +16,7 @@ public class Player {
     private Image[][] img;
     private boolean moving;
     private double animation_state;
-    private final String base_char = "elf_m";
+    private final String base_char = "elf_f";
 
     public Player(Map map, int x, int y) {
         // setup player stats
