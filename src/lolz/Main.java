@@ -4,6 +4,8 @@ import lolz.GUI.GUI;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 public class Main {
     public static final int HEIGHT = 540;
@@ -12,7 +14,10 @@ public class Main {
 
     private GUI gui;
 
+
     private Main() {
+
+
         // setup main frame
         JFrame frame = new JFrame();
 
@@ -20,12 +25,36 @@ public class Main {
         gui = new GUI();
         frame.add(gui);
 
+
         frame.setTitle("RPG-lol");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setResizable(false);
         frame.setBackground(Color.BLACK);
         frame.setVisible(true);
         frame.setSize(WIDTH, HEIGHT);
+
+        // setup stats
+        frame.addKeyListener(new KeyListener() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+
+            }
+
+            @Override
+            public void keyPressed(KeyEvent e) {
+
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+                if(e.getKeyChar() == 'i'){
+                    if(gui.statsShown){
+                        frame.repaint();
+                    }
+                    gui.statsShown = !gui.statsShown;
+                }
+            }
+        });
 
         // measure time for game logic
         long time0 = System.currentTimeMillis();

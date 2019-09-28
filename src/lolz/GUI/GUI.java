@@ -11,11 +11,11 @@ import java.awt.event.*;
 public class GUI extends JPanel {
     private Image img;
     private Map map;
-
+    public boolean statsShown;
     public GUI() {
         // call super class
         super();
-
+        statsShown = false;
         // create map
         map = new RandomMap();
 
@@ -48,8 +48,23 @@ public class GUI extends JPanel {
 
 
     public void paint(Graphics g) {
+
         // paint map
+        Graphics f = g.create();
         map.paint(g);
+        // paint stats
+        if(statsShown){
+            Color myColor = new Color(56, 56, 56, 150);
+            Font titleF = new Font( "SansSerif", Font.BOLD, 25);
+            Font statsF = new Font("SansSerif", Font.PLAIN, 15);
+            f.setColor(myColor);
+            f.fillRect(150, 50, 660, 440);
+            f.setFont(titleF);
+            f.setColor(Color.white);
+            f.drawString("Stats",450,100);
+            f.setFont(statsF);
+            f.drawString("Leben.............(", 100 ,100);
+        }
 
         // sync graphic
         Toolkit.getDefaultToolkit().sync();
