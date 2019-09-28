@@ -40,12 +40,12 @@ public class Walker {
                 break;
         }
 
-        if (this.x < 1) {
+        if (this.x < 2) {
             this.x += 1;
         } else if (this.x >= map.VIRTUAL_WIDTH - 1) {
             this.x -= 1;
         }
-        if (this.y < 1) {
+        if (this.y < 2) {
             this.y += 1;
         } else if (this.y >= map.VIRTUAL_HEIGHT - 1) {
             this.y -= 1;
