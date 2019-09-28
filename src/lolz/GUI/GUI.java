@@ -11,12 +11,10 @@ import java.awt.event.*;
 
 public class GUI extends JPanel {
     private Image img;
-    private Map map;
-
+    public Map map;
     public GUI() {
         // call super class
         super();
-
         // create map
         map = new RandomMap();
 
@@ -76,10 +74,14 @@ public class GUI extends JPanel {
         };
     }
 
-
     public void paint(Graphics g) {
+
+        // set graphic for player stats
+        map.player.gStats = g.create();
+
         // paint map
         map.paint(g);
+
 
         // sync graphic
         Toolkit.getDefaultToolkit().sync();
@@ -89,5 +91,4 @@ public class GUI extends JPanel {
         // update the players position
         map.update(time);
     }
-
 }
