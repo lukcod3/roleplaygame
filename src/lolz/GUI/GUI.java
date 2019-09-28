@@ -1,5 +1,6 @@
 package lolz.GUI;
 
+import lolz.Main;
 import lolz.Maps.ExampleMap;
 import lolz.Maps.Map;
 import lolz.Maps.RandomMap;
@@ -18,6 +19,35 @@ public class GUI extends JPanel {
         map = new RandomMap();
 
         this.repaint();
+
+        this.addMouseListener(new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                Point p = MouseInfo.getPointerInfo().getLocation();
+                System.out.println("x: " + ((int) (p.x + map.player.x) - (map.VIRTUAL_WIDTH / 2) * Main.TILE_SIZE) / Main.TILE_SIZE +
+                        " | y: " + ((int) (p.y + map.player.y) - (map.VIRTUAL_HEIGHT / 2) * Main.TILE_SIZE) / Main.TILE_SIZE);
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+
+            }
+        });
 
         // add the key bindings for player movement
         char[] keys = {'W', 'A', 'S', 'D'};

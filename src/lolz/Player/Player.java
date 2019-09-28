@@ -31,10 +31,10 @@ public class Player {
         this.img = new Image[2][4];
         try {
             for (int i = 0; i < 4; i++) {
-                img[0][i] = ImageIO.read(new File("res/tiles/" + this.base_char + "_idle_anim_f" + Integer.toString(i) + ".png")).getScaledInstance(45, -1, Image.SCALE_SMOOTH);
+                img[0][i] = ImageIO.read(new File("res/tiles/" + this.base_char + "_idle_anim_f" + i + ".png")).getScaledInstance(45, -1, Image.SCALE_SMOOTH);
             }
             for (int i = 0; i < 4; i++) {
-                img[1][i] = ImageIO.read(new File("res/tiles/" + this.base_char + "_run_anim_f" + Integer.toString(i) + ".png")).getScaledInstance(45, -1, Image.SCALE_SMOOTH);
+                img[1][i] = ImageIO.read(new File("res/tiles/" + this.base_char + "_run_anim_f" + i + ".png")).getScaledInstance(45, -1, Image.SCALE_SMOOTH);
             }
         } catch (IOException e) {
             e.printStackTrace();
