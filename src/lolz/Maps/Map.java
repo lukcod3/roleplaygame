@@ -126,9 +126,6 @@ public abstract class Map {
             }
         }
 
-        // draw player
-        this.player.paint(g);
-
         // draw wall decos
         for (int y = 0; y < this.tiles.length; y++) {
             for (int x = 0; x < this.tiles[0].length; x++) {
@@ -141,6 +138,9 @@ public abstract class Map {
                 }
             }
         }
+
+        // draw player
+        this.player.paint(g);
     }
 
     public abstract void update(int time);
