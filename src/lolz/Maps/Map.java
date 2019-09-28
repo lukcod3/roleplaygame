@@ -139,7 +139,7 @@ public abstract class Map {
             }
         }
 
-        // draw player
+        // draw player, needs to be called last
         this.player.paint(g);
     }
 
