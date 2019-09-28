@@ -33,7 +33,7 @@ public class Main {
         frame.setVisible(true);
         frame.setSize(WIDTH, HEIGHT);
 
-        // setup stats
+        // setup stats, press 'i' to open stats
         frame.addKeyListener(new KeyListener() {
             @Override
             public void keyTyped(KeyEvent e) {
@@ -54,6 +54,7 @@ public class Main {
                     gui.map.player.statsShown = !gui.map.player.statsShown;
                 }
             }
+
         });
 
         // measure time for game logic

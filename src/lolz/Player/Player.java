@@ -67,12 +67,12 @@ public class Player {
             gStats.setColor(Color.white);
             gStats.drawString("Profil", 450, 100);
             gStats.setFont(statsF);
-            gStats.drawString("Leben............................(" + 100 + "/" + 200 + ")", 200, 150);
-            gStats.drawString("Angriffsschaden....................." + 100, 200, 180);
-            gStats.drawString("Fähigkeitsstärke....................." + 100, 200, 210);
-            gStats.drawString("Rüstung..................................." + 100, 200, 240);
-            gStats.drawString("Gold........................................" + 100, 200, 350);
-            gStats.drawString("Level............." + 10 + "(" + 100 + " XP/" + 200 + " XP)", 200, 380);
+            gStats.drawString("Leben............................(" +health+"/"+maxHealth+")", 200, 150);
+            gStats.drawString("Angriffsschaden....................."+attackdamage, 200, 180);
+            gStats.drawString("Fähigkeitsstärke....................."+abilitypower, 200, 210);
+            gStats.drawString("Rüstung..................................."+armor, 200, 240);
+            gStats.drawString("Gold........................................"+gold, 200, 350);
+            gStats.drawString("Level............."+level+"("+exp+" XP/" +200+" XP)", 200, 380); // needs formula for maxXP
         }
     }
 
