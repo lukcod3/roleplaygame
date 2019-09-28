@@ -14,9 +14,13 @@ public class Player {
     private float speed = 0.15f;
     public boolean[] directions; // 0 is up, 1 is left, 2 is down, 3 is right
     private Image[][] img;
-    private boolean moving;
+    public boolean moving, statsShown;
     private double animation_state;
     private final String base_char = "elf_m";
+    public Graphics gStats;
+
+    // Ingame stats
+    private int maxHealth, health, attackdamage, abilitypower, armor, level, exp, gold;
 
     public Player(Map map, int x, int y) {
         // setup player stats
@@ -44,12 +48,31 @@ public class Player {
     }
 
     public void paint(Graphics g) {
+
         // paint player
         g.setColor(Color.BLACK);
         if (moving) {
             g.drawImage(img[1][(int) this.animation_state], (int) this.x, (int) this.y, null);
         } else {
             g.drawImage(img[0][(int) this.animation_state], (int) this.x, (int) this.y, null);
+        }
+        // paint player stats
+        if(statsShown) {
+            Color myColor = new Color(56, 56, 56, 150);
+            Font titleF = new Font("SansSerif", Font.BOLD, 25);
+            Font statsF = new Font("SansSerif", Font.PLAIN, 15);
+            gStats.setColor(myColor);
+            gStats.fillRect(150, 50, 660, 440);
+            gStats.setFont(titleF);
+            gStats.setColor(Color.white);
+            gStats.drawString("Profil", 450, 100);
+            gStats.setFont(statsF);
+            gStats.drawString("Leben............................(" + 100 + "/" + 200 + ")", 200, 150);
+            gStats.drawString("Angriffsschaden....................." + 100, 200, 180);
+            gStats.drawString("Fähigkeitsstärke....................." + 100, 200, 210);
+            gStats.drawString("Rüstung..................................." + 100, 200, 240);
+            gStats.drawString("Gold........................................" + 100, 200, 350);
+            gStats.drawString("Level............." + 10 + "(" + 100 + " XP/" + 200 + " XP)", 200, 380);
         }
     }
 
