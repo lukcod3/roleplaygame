@@ -10,10 +10,15 @@ public class Monster {
     private Image[][] img;
     private double animation_state;
     private final String base_monster = "big_demon";
+    private int maxHealth, health, attackdamage, armor;
 
-    public Monster(int x, int y){
+    public Monster(int x, int y, int maxHealth, int attackdamage, int armor){
         this.x = x;
         this.y = y;
+        setMaxHealth(maxHealth);
+        setHealth(maxHealth);
+        setAttackdamage(attackdamage);
+        setArmor(armor);
         this.img = new Image[2][4];
         try {
             for (int i = 0; i < 4; i++) {
@@ -38,5 +43,38 @@ public class Monster {
         // update monster graphic stats
         this.animation_state += (float) time / 150;
         this.animation_state %= 4;
+    }
+
+    //Getters and Setters
+    public int getMaxHealth() {
+        return maxHealth;
+    }
+
+    public int getHealth() {
+        return health;
+    }
+
+    public void setHealth(int health) {
+        this.health = health;
+    }
+
+    public void setMaxHealth(int maxHealth) {
+        this.maxHealth = maxHealth;
+    }
+
+    public int getAttackdamage() {
+        return attackdamage;
+    }
+
+    public void setAttackdamage(int attackdamage) {
+        this.attackdamage = attackdamage;
+    }
+
+    public int getArmor() {
+        return armor;
+    }
+
+    public void setArmor(int armor) {
+        this.armor = armor;
     }
 }

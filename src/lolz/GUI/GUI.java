@@ -87,8 +87,7 @@ public class GUI extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 // change the players directions
-                map.player.setHit(pressed);
-
+                    map.player.setHit(pressed);
             }
         };
     }
