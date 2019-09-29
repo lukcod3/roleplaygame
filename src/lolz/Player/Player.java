@@ -97,6 +97,7 @@ public class Player {
             Color myColor = new Color(56, 56, 56, 165);
             Font titleF = new Font("SansSerif", Font.BOLD, 25);
             Font statsF = new Font("SansSerif", Font.PLAIN, 15);
+            gStats.drawRect(150, 50, 660, 440);
             gStats.setColor(myColor);
             gStats.fillRect(150, 50, 660, 440);
             gStats.setFont(titleF);
