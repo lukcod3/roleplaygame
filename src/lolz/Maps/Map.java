@@ -65,11 +65,10 @@ public abstract class Map {
                 }
             }
         }
-
-        // draw player
-        this.player.paint(g);
         // draw monster
         this.monster.paint(g);
+        // draw player, needs to be called last
+        this.player.paint(g);
     }
 
     public abstract void update(int time);

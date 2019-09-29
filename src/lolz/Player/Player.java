@@ -20,6 +20,9 @@ public class Player {
     private double animation_state;
     private final String base_char = "elf_m";
     public Graphics gStats;
+    public int[] equipment; // 1 is hat, 2 is t-shirt, 3 is sword, 4 is shoes, 5 is ring, 6 is necklace, 7 is belt
+    public Image[][] inventoryImages;
+    public Image empty;
 
     // Ingame stats
     private int maxHealth, health, attackdamage, abilitypower, armor, level, exp, gold;
@@ -49,6 +52,22 @@ public class Player {
         // rearrange y (given x and y values are for the bottom left corner)
         // this.x -= this.width;
         this.y -= this.height;
+
+        // setup player inventory
+        equipment = new int[] {0,0,0,0,0,0,0};
+        inventoryImages = new Image[7][1];
+        try {
+            inventoryImages[0][0] = ImageIO.read(new File("res/hutPlatz.png"));
+            inventoryImages[1][0] = ImageIO.read(new File("res/ruestungPlatz.png"));
+            inventoryImages[2][0] = ImageIO.read(new File("res/schwertPlatz.png"));
+            inventoryImages[3][0] = ImageIO.read(new File("res/schuhePlatz.png"));
+            inventoryImages[4][0] = ImageIO.read(new File("res/kettePlatz.png"));
+            inventoryImages[5][0] = ImageIO.read(new File("res/ringPlatz.png"));
+            inventoryImages[6][0] = ImageIO.read(new File("res/guertelPlatz.png"));
+            empty = ImageIO.read(new File("res/freiPlatz.png"));
+        }catch (Exception e){
+            System.out.println("Fehler");
+        }
     }
 
     // set Getters and Setters for attribute hit
@@ -74,21 +93,41 @@ public class Player {
 
         // paint player stats
         if(statsShown) {
-            Color myColor = new Color(56, 56, 56, 150);
+
+            Color myColor = new Color(56, 56, 56, 165);
             Font titleF = new Font("SansSerif", Font.BOLD, 25);
             Font statsF = new Font("SansSerif", Font.PLAIN, 15);
             gStats.setColor(myColor);
             gStats.fillRect(150, 50, 660, 440);
             gStats.setFont(titleF);
             gStats.setColor(Color.white);
-            gStats.drawString("Profil", 450, 100);
+            gStats.drawString("Profil", 260, 80);
+            gStats.drawString("Inventar", 570, 80);
             gStats.setFont(statsF);
-            gStats.drawString("Leben............................(" +health+"/"+maxHealth+")", 200, 150);
-            gStats.drawString("Angriffsschaden....................."+attackdamage, 200, 180);
-            gStats.drawString("Fähigkeitsstärke....................."+abilitypower, 200, 210);
-            gStats.drawString("Rüstung..................................."+armor, 200, 240);
-            gStats.drawString("Gold........................................"+gold, 200, 350);
-            gStats.drawString("Level............."+level+"("+exp+" XP/" +200+" XP)", 200, 380); // needs formula for maxXP
+            gStats.drawString("Leben............................(" +health+"/"+maxHealth+")", 200, 130);
+            gStats.drawString("Angriffsschaden....................."+attackdamage, 200, 160);
+            gStats.drawString("Fähigkeitsstärke....................."+abilitypower, 200, 190);
+            gStats.drawString("Rüstung..................................."+armor, 200, 220);
+            gStats.drawString("Gold........................................"+gold, 200, 330);
+            gStats.drawString("Level............."+level+"("+exp+" XP/" +200+" XP)", 200, 360); // needs formula for maxXP
+
+            if (moving) {
+                gStats.drawImage((img[1][(int) this.animation_state]).getScaledInstance(120, -1, Image.SCALE_DEFAULT), 560, 110, null);
+            } else {
+                gStats.drawImage((img[0][(int) this.animation_state]).getScaledInstance(120, -1, Image.SCALE_DEFAULT), 560, 110, null);
+            }
+            gStats.drawImage(inventoryImages[0][0].getScaledInstance(60, -1, Image.SCALE_DEFAULT), 590, 100, null);
+            gStats.drawImage(inventoryImages[1][0].getScaledInstance(60, -1, Image.SCALE_DEFAULT), 500, 180, null);
+            gStats.drawImage(inventoryImages[2][0].getScaledInstance(60, -1, Image.SCALE_DEFAULT), 500, 255, null);
+            gStats.drawImage(inventoryImages[3][0].getScaledInstance(60, -1, Image.SCALE_DEFAULT), 590, 330, null);
+            gStats.drawImage(inventoryImages[4][0].getScaledInstance(60, -1, Image.SCALE_DEFAULT), 680, 155, null);
+            gStats.drawImage(inventoryImages[5][0].getScaledInstance(60, -1, Image.SCALE_DEFAULT), 680, 230, null);
+            gStats.drawImage(inventoryImages[6][0].getScaledInstance(60, -1, Image.SCALE_DEFAULT), 680, 305, null);
+            gStats.drawImage(inventoryImages[6][0].getScaledInstance(60, -1, Image.SCALE_DEFAULT), 680, 305, null);
+            gStats.drawImage(empty.getScaledInstance(60, -1, Image.SCALE_DEFAULT), 500, 420, null);
+            gStats.drawImage(empty.getScaledInstance(60, -1, Image.SCALE_DEFAULT), 561, 420, null);
+            gStats.drawImage(empty.getScaledInstance(60, -1, Image.SCALE_DEFAULT), 622, 420, null);
+            gStats.drawImage(empty.getScaledInstance(60, -1, Image.SCALE_DEFAULT), 683, 420, null);
         }
     }
 
