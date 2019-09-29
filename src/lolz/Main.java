@@ -48,8 +48,8 @@ public class Main {
 
             @Override
             public void keyReleased(KeyEvent e) {
-                if(e.getKeyChar() == 'i'){
-                    if(gui.map.player.statsShown){
+                if (e.getKeyChar() == 'i') {
+                    if (gui.map.player.statsShown) {
                         frame.repaint();
                     }
                     gui.map.player.statsShown = !gui.map.player.statsShown;

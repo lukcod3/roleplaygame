@@ -14,6 +14,7 @@ import java.awt.event.MouseListener;
 public class GUI extends JPanel {
     private Image img;
     public Map map;
+
     //public Hub hub;
     public GUI() {
         // call super class
@@ -65,7 +66,7 @@ public class GUI extends JPanel {
             this.getActionMap().put(c + "Pressed", generateKeyAction(i, true));
             this.getActionMap().put(c + "Released", generateKeyAction(i, false));
         }
-        
+
         //add the key binding for the players attack (with the space key)
         this.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_SPACE, 0, false), KeyEvent.VK_SPACE + "Pressed");
         this.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_SPACE, 0, true), KeyEvent.VK_SPACE + "Released");
@@ -89,7 +90,7 @@ public class GUI extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 // change the players directions
-                    map.player.setHit(pressed);
+                map.player.setHit(pressed);
             }
         };
     }

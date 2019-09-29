@@ -18,7 +18,7 @@ public class Player {
     private boolean hit; // variable true if user makes character hit
     public boolean moving, statsShown;
     private double animation_state;
-    private final String base_char = "elf_m";
+    private final String base_char = "wizard_m";
     public Graphics gStats;
     public int[] equipment; // 1 is hat, 2 is t-shirt, 3 is sword, 4 is shoes, 5 is ring, 6 is necklace, 7 is belt
     public Image[][] inventoryImages;
@@ -54,7 +54,7 @@ public class Player {
         this.y -= this.height;
 
         // setup player inventory
-        equipment = new int[] {0,0,0,0,0,0,0};
+        equipment = new int[]{0, 0, 0, 0, 0, 0, 0};
         inventoryImages = new Image[7][1];
         try {
             inventoryImages[0][0] = ImageIO.read(new File("res/inventory/hutPlatz.png"));
@@ -65,17 +65,17 @@ public class Player {
             inventoryImages[5][0] = ImageIO.read(new File("res/inventory/ringPlatz.png"));
             inventoryImages[6][0] = ImageIO.read(new File("res/inventory/guertelPlatz.png"));
             empty = ImageIO.read(new File("res/inventory/freiPlatz.png"));
-        }catch (Exception e){
+        } catch (Exception e) {
             System.out.println("Fehler");
         }
     }
 
     // set Getters and Setters for attribute hit
-    public boolean getHit(){
+    public boolean getHit() {
         return hit;
     }
 
-    public void setHit(boolean b){
+    public void setHit(boolean b) {
         hit = b;
     }
 
@@ -85,14 +85,14 @@ public class Player {
         g.setColor(Color.BLACK);
         if (getHit()) { // is able to hit while running and while standing still -> always checks if hit is true regardless of moving
             g.drawImage(hitImage, (int) this.x, (int) this.y, null); // set player's animation to hit animation
-        } else if (moving){
+        } else if (moving) {
             g.drawImage(img[1][(int) this.animation_state], (int) this.x, (int) this.y, null);
-        } else{
+        } else {
             g.drawImage(img[0][(int) this.animation_state], (int) this.x, (int) this.y, null);
         }
 
         // paint player stats
-        if(statsShown) {
+        if (statsShown) {
 
             Color myColor = new Color(56, 56, 56, 165);
             Font titleF = new Font("SansSerif", Font.BOLD, 25);
@@ -105,12 +105,12 @@ public class Player {
             gStats.drawString("Profil", 260, 80);
             gStats.drawString("Inventar", 570, 80);
             gStats.setFont(statsF);
-            gStats.drawString("Leben............................(" +health+"/"+maxHealth+")", 200, 130);
-            gStats.drawString("Angriffsschaden....................."+attackdamage, 200, 160);
-            gStats.drawString("Fähigkeitsstärke....................."+abilitypower, 200, 190);
-            gStats.drawString("Rüstung..................................."+armor, 200, 220);
-            gStats.drawString("Gold........................................"+gold, 200, 330);
-            gStats.drawString("Level............."+level+"("+exp+" XP/" +200+" XP)", 200, 360); // needs formula for maxXP
+            gStats.drawString("Leben............................(" + health + "/" + maxHealth + ")", 200, 130);
+            gStats.drawString("Angriffsschaden....................." + attackdamage, 200, 160);
+            gStats.drawString("Fähigkeitsstärke....................." + abilitypower, 200, 190);
+            gStats.drawString("Rüstung..................................." + armor, 200, 220);
+            gStats.drawString("Gold........................................" + gold, 200, 330);
+            gStats.drawString("Level............." + level + "(" + exp + " XP/" + 200 + " XP)", 200, 360); // needs formula for maxXP
 
             if (moving) {
                 gStats.drawImage((img[1][(int) this.animation_state]).getScaledInstance(120, -1, Image.SCALE_DEFAULT), 560, 110, null);

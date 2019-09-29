@@ -49,27 +49,37 @@ public abstract class Map {
         // draw map
         for (int y = 0; y < this.tiles.length; y++) {
             for (int x = 0; x < this.tiles[0].length; x++) {
-                if (!this.tiles[y][x].isEmpty()) {
-                    g.drawImage(Tile.tilePics.get(this.tiles[y][x].activeTiles.get(0)), Main.TILE_SIZE * x, Main.TILE_SIZE * y, null);
+                for (StaticTile t : this.tiles[y][x].baseTiles) {
+                    g.drawImage(Tile.tilePics.get(t), Main.TILE_SIZE * x, Main.TILE_SIZE * y, null);
                 }
             }
         }
 
+
         // draw wall decos
-        for (int y = 0; y < this.tiles.length; y++) {
+        for (int y = 0; y < this.player.y / Main.TILE_SIZE; y++) {
             for (int x = 0; x < this.tiles[0].length; x++) {
-                if (this.tiles[y][x].multipleLayouts()) {
-                    for (StaticTile t : this.tiles[y][x].activeTiles.subList(1, this.tiles[y][x].activeTiles.size())) {
-                        g.drawImage(Tile.tilePics.get(t), Main.TILE_SIZE * x, Main.TILE_SIZE * y, null);
-                    }
+                for (StaticTile t : this.tiles[y][x].topTiles) {
+                    g.drawImage(Tile.tilePics.get(t), Main.TILE_SIZE * x, Main.TILE_SIZE * y, null);
+                }
+            }
+        }
+
+        // draw player
+        this.player.paint(g);
+
+        // draw wall decos
+        for (int y = (int) (this.player.y / Main.TILE_SIZE); y < this.tiles.length; y++) {
+            for (int x = 0; x < this.tiles[0].length; x++) {
+                for (StaticTile t : this.tiles[y][x].topTiles) {
+                    g.drawImage(Tile.tilePics.get(t), Main.TILE_SIZE * x, Main.TILE_SIZE * y, null);
                 }
             }
         }
 
         // draw monster
         this.monster.paint(g);
-        // draw player, needs to be called last
-        this.player.paint(g);
+
 
     }
 
@@ -229,22 +239,26 @@ public abstract class Map {
 
                 // striche um wall_side mit wall zu verbinden
                 if (this.tile_is_left_wall(x + 1, y) && this.tile_contains(x, y - 1, StaticTile.WALL_SIDE_MID_LEFT)) {
-                    this.tiles[y][x+1].remove(StaticTile.WALL_LEFT);
-                    this.tiles[y][x+1].add(StaticTile.WALL);
+                    this.tiles[y][x + 1].remove(StaticTile.WALL_LEFT);
+                    this.tiles[y][x + 1].add(StaticTile.WALL);
                     this.tiles[y][x].add(StaticTile.WALL_SIDE_FRONT_LEFT);
                 }
                 if (this.tile_is_right_wall(x - 1, y) && this.tile_contains(x, y - 1, StaticTile.WALL_SIDE_MID_RIGHT)) {
-                    this.tiles[y][x-1].remove(StaticTile.WALL_RIGHT);
-                    this.tiles[y][x-1].add(StaticTile.WALL);
+                    this.tiles[y][x - 1].remove(StaticTile.WALL_RIGHT);
+                    this.tiles[y][x - 1].add(StaticTile.WALL);
                     this.tiles[y][x].add(StaticTile.WALL_SIDE_FRONT_RIGHT);
                 }
 
                 // seitenwand nach unten ziehen
                 if (this.tile_is_right_wall(x, y) && (this.tile_is_right_wall(x, y + 1) || this.tile_contains(x, y + 1, StaticTile.WALL_SIDE_MID_LEFT) || this.tile_is_left_wall(x + 1, y + 1))) {
                     this.tiles[y][x].add(StaticTile.WALL_SIDE_MID_LEFT);
+                    this.tiles[y - 1][x].remove(StaticTile.WALL_TOP_RIGHT);
+                    this.tiles[y - 1][x].add(StaticTile.WALL_CORNER_TOP_RIGHT);
                 }
                 if (this.tile_is_left_wall(x, y) && (this.tile_is_left_wall(x, y + 1) || this.tile_contains(x, y + 1, StaticTile.WALL_SIDE_MID_RIGHT) || this.tile_is_right_wall(x - 1, y + 1))) {
                     this.tiles[y][x].add(StaticTile.WALL_SIDE_MID_RIGHT);
+                    this.tiles[y - 1][x].remove(StaticTile.WALL_TOP_LEFT);
+                    this.tiles[y - 1][x].add(StaticTile.WALL_CORNER_TOP_LEFT);
                 }
             }
         }
