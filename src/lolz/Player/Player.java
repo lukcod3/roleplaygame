@@ -14,8 +14,8 @@ public class Player {
     private float speed = 0.15f;
     public boolean[] directions; // 0 is up, 1 is left, 2 is down, 3 is right
     private Image[][] img;
-    private Image hitImage;
-    private boolean hit;
+    private Image hitImage; // Image for hit animation didn't belong to the Image array, so it's assigned to a new attribute
+    private boolean hit; // variable true if user makes character hit
     public boolean moving, statsShown;
     private double animation_state;
     private final String base_char = "elf_m";
@@ -38,6 +38,7 @@ public class Player {
             for (int i = 0; i < 4; i++) {
                 img[1][i] = ImageIO.read(new File("res/tiles/" + this.base_char + "_run_anim_f" + i + ".png")).getScaledInstance(45, -1, Image.SCALE_SMOOTH);
             }
+            // read and assign image for hit animation to attribute hitImage
             hitImage = ImageIO.read(new File("res/tiles/" + this.base_char + "_hit_anim_f0.png")).getScaledInstance(45, -1, Image.SCALE_SMOOTH);
         } catch (IOException e) {
             e.printStackTrace();
@@ -50,6 +51,7 @@ public class Player {
         this.y -= this.height;
     }
 
+    // set Getters and Setters for attribute hit
     public boolean getHit(){
         return hit;
     }
@@ -62,10 +64,10 @@ public class Player {
 
         // paint player
         g.setColor(Color.BLACK);
-        if (moving) {
+        if (getHit()) { // is able to hit while running and while standing still -> always checks if hit is true regardless of moving
+            g.drawImage(hitImage, (int) this.x, (int) this.y, null); // set player's animation to hit animation
+        } else if (moving){
             g.drawImage(img[1][(int) this.animation_state], (int) this.x, (int) this.y, null);
-        } else if (hit){
-            g.drawImage(hitImage, (int) this.x, (int) this.y, null);
         } else{
             g.drawImage(img[0][(int) this.animation_state], (int) this.x, (int) this.y, null);
         }
