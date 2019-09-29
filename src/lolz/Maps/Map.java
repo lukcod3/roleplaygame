@@ -2,6 +2,7 @@ package lolz.Maps;
 
 import lolz.Main;
 import lolz.Player.Player;
+import lolz.Monster;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -12,6 +13,7 @@ import java.util.HashMap;
 
 public abstract class Map {
     public Player player;
+    public Monster monster;
     public int WIDTH, HEIGHT;
     public int VIRTUAL_WIDTH, VIRTUAL_HEIGHT;
     public int AREA, VIRTUAL_AREA;
@@ -141,6 +143,7 @@ public abstract class Map {
 
         // draw player
         this.player.paint(g);
+        this.monster.paint(g);
     }
 
     public abstract void update(int time);

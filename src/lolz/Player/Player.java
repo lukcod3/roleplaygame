@@ -14,6 +14,8 @@ public class Player {
     private float speed = 0.15f;
     public boolean[] directions; // 0 is up, 1 is left, 2 is down, 3 is right
     private Image[][] img;
+    private Image hitImage;
+    private boolean hit;
     public boolean moving, statsShown;
     private double animation_state;
     private final String base_char = "elf_m";
@@ -36,6 +38,7 @@ public class Player {
             for (int i = 0; i < 4; i++) {
                 img[1][i] = ImageIO.read(new File("res/tiles/" + this.base_char + "_run_anim_f" + i + ".png")).getScaledInstance(45, -1, Image.SCALE_SMOOTH);
             }
+            hitImage = ImageIO.read(new File("res/tiles/" + this.base_char + "_hit_anim_f0.png")).getScaledInstance(45, -1, Image.SCALE_SMOOTH);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -47,15 +50,26 @@ public class Player {
         this.y -= this.height;
     }
 
+    public boolean getHit(){
+        return hit;
+    }
+
+    public void setHit(boolean b){
+        hit = b;
+    }
+
     public void paint(Graphics g) {
 
         // paint player
         g.setColor(Color.BLACK);
         if (moving) {
             g.drawImage(img[1][(int) this.animation_state], (int) this.x, (int) this.y, null);
-        } else {
+        } else if (hit){
+            g.drawImage(hitImage, (int) this.x, (int) this.y, null);
+        } else{
             g.drawImage(img[0][(int) this.animation_state], (int) this.x, (int) this.y, null);
         }
+
         // paint player stats
         if(statsShown) {
             Color myColor = new Color(56, 56, 56, 150);

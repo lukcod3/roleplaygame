@@ -1,13 +1,15 @@
 package lolz.GUI;
 
 import lolz.Main;
-import lolz.Maps.ExampleMap;
 import lolz.Maps.Map;
 import lolz.Maps.RandomMap;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
 public class GUI extends JPanel {
     private Image img;
@@ -62,6 +64,11 @@ public class GUI extends JPanel {
             this.getActionMap().put(c + "Released", generateKeyAction(i, false));
         }
 
+        this.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_SPACE, 0, false), KeyEvent.VK_SPACE + "Pressed");
+        this.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_SPACE, 0, true), KeyEvent.VK_SPACE + "Released");
+
+        this.getActionMap().put(KeyEvent.VK_SPACE + "Pressed", generateOtherKeyAction(true));
+        this.getActionMap().put(KeyEvent.VK_SPACE + "Released", generateOtherKeyAction(false));
     }
 
     private Action generateKeyAction(final int dir, final boolean pressed) {
@@ -73,6 +80,18 @@ public class GUI extends JPanel {
             }
         };
     }
+
+    private Action generateOtherKeyAction(final boolean pressed) {
+        return new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // change the players directions
+                map.player.setHit(pressed);
+
+            }
+        };
+    }
+
 
     public void paint(Graphics g) {
 

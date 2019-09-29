@@ -29,12 +29,14 @@ public class Monster {
     }
 
     public void paint(Graphics g) {
-        this.animation_state += 0.1;
-        this.animation_state %= 4;
 
         // paint player
         g.setColor(Color.BLACK);
         g.drawImage(img[0][(int)this.animation_state], (int) this.x, (int) this.y, null);
     }
 
+    public void update(int time){
+        this.animation_state += (float) time / 150;
+        this.animation_state %= 4;
+    }
 }
