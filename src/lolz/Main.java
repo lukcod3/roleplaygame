@@ -2,10 +2,12 @@ package lolz;
 
 import lolz.GUI.GUI;
 
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+
 
 public class Main {
     public static final int HEIGHT = 540;
@@ -16,7 +18,6 @@ public class Main {
 
 
     private Main() {
-
 
         // setup main frame
         JFrame frame = new JFrame();
