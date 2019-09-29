@@ -143,6 +143,7 @@ public abstract class Map {
 
         // draw player
         this.player.paint(g);
+        // draw monster
         this.monster.paint(g);
     }
 
