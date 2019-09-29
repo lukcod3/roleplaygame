@@ -19,7 +19,7 @@ public class RandomMap extends Map {
         // spawn player
         this.player = new Player(this, (this.VIRTUAL_WIDTH / 2) * Main.TILE_SIZE, (this.VIRTUAL_HEIGHT / 2) * Main.TILE_SIZE);
         // spawn monster at player's position
-        this.monster = new Monster((int) player.x, (int) player.y);
+        this.monster = new Monster((int) player.x, (int) player.y, 50, 15, 10);
     }
 
     private int numberOfTiles() {
