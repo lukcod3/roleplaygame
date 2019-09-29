@@ -12,7 +12,7 @@ public class Player {
     public double x, y;
     private int width, height;
     private float speed = 0.15f;
-    public boolean[] directions; // 0 is up, 1 is left, 2 is down, 3 is right
+    public volatile boolean[] directions; // 0 is up, 1 is left, 2 is down, 3 is right
     private Image[][] img;
     private Image hitImage; // Image for hit animation didn't belong to the Image array, so it's assigned to a new attribute
     private boolean hit; // variable true if user makes character hit
@@ -152,12 +152,12 @@ public class Player {
 
         // check if player in wall => reset movement
         for (int d_x : new int[]{0, this.width}) {
-            if (map.get_tile_at((int) (this.x + d_x), (int) (this.y + this.height)).solid) {
+            if (map.get_tile_at((int) (this.x + d_x), (int) (this.y + this.height)).isSolid()) {
                 // player doesnt move
                 // test if fix is possible
-                if (!map.get_tile_at((int) (old_x + d_x), (int) (this.y + this.height)).solid) {
+                if (!map.get_tile_at((int) (old_x + d_x), (int) (this.y + this.height)).isSolid()) {
                     this.x = old_x;
-                } else if (!map.get_tile_at((int) (this.x + d_x), (int) (old_y + this.height)).solid) {
+                } else if (!map.get_tile_at((int) (this.x + d_x), (int) (old_y + this.height)).isSolid()) {
                     this.y = old_y;
                 } else {
                     this.x = old_x;

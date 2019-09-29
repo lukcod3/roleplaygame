@@ -19,7 +19,7 @@ public class Main {
 
 
         // setup main frame
-        JFrame frame = new JFrame();
+        final JFrame frame = new JFrame();
 
         // main game jpanel
         gui = new GUI();
@@ -73,6 +73,7 @@ public class Main {
             }
             // measure time for updating game logic
             long time1 = System.currentTimeMillis();
+            // System.out.println("Time delay:" + (int)(time1-time0-16));
             updateGame((int) (time1 - time0));
             time0 = time1;
 

@@ -1,6 +1,7 @@
 package lolz.Maps;
 
 import lolz.GUI.Walker;
+import lolz.GUI.Tile.StaticTile;
 import lolz.Main;
 import lolz.Player.Player;
 import lolz.Monster;
@@ -26,7 +27,7 @@ public class RandomMap extends Map {
         int n = 0;
         for (int y = 0; y < this.VIRTUAL_HEIGHT; y++) {
             for (int x = 0; x < this.VIRTUAL_WIDTH; x++) {
-                if (this.tiles[y][x] == Tile.GROUND) {
+                if (this.tiles[y][x].contains(StaticTile.GROUND)) {
                     n++;
                 }
             }
