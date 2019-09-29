@@ -14,12 +14,12 @@ import java.awt.event.MouseListener;
 public class GUI extends JPanel {
     private Image img;
     public Map map;
-    public Hub hub;
+    //public Hub hub;
     public GUI() {
         // call super class
         super();
         // create map
-        hub = new Hub();
+        //hub = new Hub();
         map = new RandomMap();
 
         this.repaint();

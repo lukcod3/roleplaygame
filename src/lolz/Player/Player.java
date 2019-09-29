@@ -128,6 +128,8 @@ public class Player {
             gStats.drawImage(empty.getScaledInstance(60, -1, Image.SCALE_DEFAULT), 561, 420, null);
             gStats.drawImage(empty.getScaledInstance(60, -1, Image.SCALE_DEFAULT), 622, 420, null);
             gStats.drawImage(empty.getScaledInstance(60, -1, Image.SCALE_DEFAULT), 683, 420, null);
+
+
         }
     }
 
