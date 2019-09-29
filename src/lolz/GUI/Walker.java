@@ -1,6 +1,7 @@
 package lolz.GUI;
 
 import lolz.Maps.Map;
+import lolz.GUI.Tile.StaticTile;
 
 public class Walker {
     private Map map;
@@ -17,7 +18,7 @@ public class Walker {
         changeDirection();
 
         // make spawning tile ground
-        this.map.tiles[this.y][this.x] = Map.Tile.GROUND;
+        this.map.tiles[this.y][this.x].add(StaticTile.GROUND);
     }
 
     public void changeDirection() {
@@ -52,9 +53,7 @@ public class Walker {
         }
 
         // set tile to ground
-        if (map.tiles[this.y][this.x] != Map.Tile.GROUND) {
-            map.tiles[this.y][this.x] = Map.Tile.GROUND;
-        }
+        this.map.tiles[this.y][this.x].add(StaticTile.GROUND);
 
     }
 }
