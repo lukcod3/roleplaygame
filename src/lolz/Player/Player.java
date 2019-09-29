@@ -194,12 +194,12 @@ public class Player {
 
         // check if player in wall => reset movement
         for (int d_x : new int[]{0, this.width}) {
-            if (map.get_tile_at((int) (this.x + d_x), (int) (this.y + this.height)).isSolid()) {
+            if (!map.get_tile_at((int) (this.x + d_x), (int) (this.y + this.height)).isGround()) {
                 // player doesnt move
                 // test if fix is possible
-                if (!map.get_tile_at((int) (old_x + d_x), (int) (this.y + this.height)).isSolid()) {
+                if (map.get_tile_at((int) (old_x + d_x), (int) (this.y + this.height)).isGround()) {
                     this.x = old_x;
-                } else if (!map.get_tile_at((int) (this.x + d_x), (int) (old_y + this.height)).isSolid()) {
+                } else if (map.get_tile_at((int) (this.x + d_x), (int) (old_y + this.height)).isGround()) {
                     this.y = old_y;
                 } else {
                     this.x = old_x;
