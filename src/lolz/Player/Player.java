@@ -18,7 +18,7 @@ public class Player {
     private boolean hit; // variable true if user makes character hit
     public boolean moving, statsShown;
     private double animation_state;
-    private final String base_char = "wizard_m";
+    private final String base_char = "elf_m";
     public Graphics gStats;
     public int[] equipment; // 1 is hat, 2 is t-shirt, 3 is sword, 4 is shoes, 5 is ring, 6 is necklace, 7 is belt
     public Image[][] inventoryImages;
@@ -75,8 +75,8 @@ public class Player {
         return hit;
     }
 
-    public void setHit(boolean b) {
-        hit = b;
+    public void setHit(boolean hit){
+        this.hit = hit;
     }
 
     public void paint(Graphics g) {
@@ -143,6 +143,8 @@ public class Player {
         }
         this.animation_state %= 4;
 
+        overlap(map.monster);
+
         // count how many directions are active
         int dir_count = 0;
         for (boolean b : this.directions) {
@@ -207,7 +209,19 @@ public class Player {
                 }
             }
         }
+    }
 
+    // check if any given monster is "touching" the hero or rather if the hero is touching it
+    public boolean overlap(lolz.Monster monster){
+        for (int i : new int[]{0, monster.getWidth()}) { //checking for the left and right border of the monster's image
+            for (int j : new int[]{0, monster.getWidth()} ) { //checking for the top and bottom border of the monster's image
+                if(this.x <= monster.getX() + i && monster.getX() + i <= this.x + this.width && this.y <= monster.getY() + j && monster.getY() + j <= this.y + this.height){ //if any of the monster's boundaries can be found between any of the hero's boundaries, they touch
+                    System.out.println("Overlap");
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
 }

@@ -7,6 +7,7 @@ import java.io.IOException;
 
 public class Monster {
     private double x, y;
+    private int width, height;
     private Image[][] img;
     private double animation_state;
     private final String base_monster = "big_demon";
@@ -31,6 +32,24 @@ public class Monster {
                 IOException e) {
             e.printStackTrace();
         }
+        this.width = img[0][0].getWidth(null);
+        this.height = img[0][0].getHeight(null);
+    }
+
+    public double getX(){
+        return x;
+    }
+
+    public double getY(){
+        return y;
+    }
+
+    public int getWidth(){
+        return width;
+    }
+
+    public int getHeight(){
+        return height;
     }
 
     public void paint(Graphics g) {
