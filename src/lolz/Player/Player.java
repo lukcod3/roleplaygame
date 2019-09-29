@@ -57,14 +57,14 @@ public class Player {
         equipment = new int[] {0,0,0,0,0,0,0};
         inventoryImages = new Image[7][1];
         try {
-            inventoryImages[0][0] = ImageIO.read(new File("res/hutPlatz.png"));
-            inventoryImages[1][0] = ImageIO.read(new File("res/ruestungPlatz.png"));
-            inventoryImages[2][0] = ImageIO.read(new File("res/schwertPlatz.png"));
-            inventoryImages[3][0] = ImageIO.read(new File("res/schuhePlatz.png"));
-            inventoryImages[4][0] = ImageIO.read(new File("res/kettePlatz.png"));
-            inventoryImages[5][0] = ImageIO.read(new File("res/ringPlatz.png"));
-            inventoryImages[6][0] = ImageIO.read(new File("res/guertelPlatz.png"));
-            empty = ImageIO.read(new File("res/freiPlatz.png"));
+            inventoryImages[0][0] = ImageIO.read(new File("res/inventory/hutPlatz.png"));
+            inventoryImages[1][0] = ImageIO.read(new File("res/inventory/ruestungPlatz.png"));
+            inventoryImages[2][0] = ImageIO.read(new File("res/inventory/schwertPlatz.png"));
+            inventoryImages[3][0] = ImageIO.read(new File("res/inventory/schuhePlatz.png"));
+            inventoryImages[4][0] = ImageIO.read(new File("res/inventory/kettePlatz.png"));
+            inventoryImages[5][0] = ImageIO.read(new File("res/inventory/ringPlatz.png"));
+            inventoryImages[6][0] = ImageIO.read(new File("res/inventory/guertelPlatz.png"));
+            empty = ImageIO.read(new File("res/inventory/freiPlatz.png"));
         }catch (Exception e){
             System.out.println("Fehler");
         }

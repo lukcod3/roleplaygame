@@ -9,6 +9,7 @@ import java.util.ArrayList;
 
 public class RandomMap extends Map {
 
+
     public RandomMap() {
         // setup map
         super(20000, 15000);
