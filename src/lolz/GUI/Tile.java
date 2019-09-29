@@ -138,6 +138,10 @@ public class Tile {
         return this.contains(StaticTile.WALL_RIGHT) || this.contains(StaticTile.WALL_LEFT_RIGHT);
     }
 
+    public boolean isGround() {
+        return this.contains(StaticTile.GROUND);
+    }
+
     private void sort() {
         StaticTile[] first = new StaticTile[]{StaticTile.GROUND, StaticTile.WALL, StaticTile.WALL_LEFT, StaticTile.WALL_RIGHT, StaticTile.WALL_LEFT_RIGHT, StaticTile.WALL_SIDE_FRONT_LEFT, StaticTile.WALL_SIDE_FRONT_RIGHT};
         for (StaticTile t : first) {

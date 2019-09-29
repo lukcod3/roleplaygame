@@ -53,7 +53,7 @@ public class Monster {
     }
 
     public void paint(Graphics g) {
-        // paint player
+        // paint monster
         g.setColor(Color.BLACK);
         g.drawImage(img[0][(int)this.animation_state], (int) this.x, (int) this.y, null);
     }
