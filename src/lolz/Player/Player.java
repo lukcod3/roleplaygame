@@ -143,7 +143,7 @@ public class Player {
         }
         this.animation_state %= 4;
 
-        ueberlappen(map.monster);
+        overlap(map.monster);
 
         // count how many directions are active
         int dir_count = 0;
@@ -212,11 +212,11 @@ public class Player {
     }
 
     // check if any given monster is "touching" the hero or rather if the hero is touching it
-    public boolean ueberlappen(lolz.Monster monster){
+    public boolean overlap(lolz.Monster monster){
         for (int i : new int[]{0, monster.getWidth()}) { //checking for the left and right border of the monster's image
             for (int j : new int[]{0, monster.getWidth()} ) { //checking for the top and bottom border of the monster's image
                 if(this.x <= monster.getX() + i && monster.getX() + i <= this.x + this.width && this.y <= monster.getY() + j && monster.getY() + j <= this.y + this.height){ //if any of the monster's boundaries can be found between any of the hero's boundaries, they touch
-                    System.out.println("Überlappung");
+                    System.out.println("Overlap");
                     return true;
                 }
             }
