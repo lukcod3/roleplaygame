@@ -38,7 +38,7 @@ public class Player extends Entity {
         this.img[1] = new Image[6];
         this.img[2] = new Image[5];
 
-        this.width = 70;
+        this.width = 60;
         try {
             for (int i = 0; i < 4; i++) {
                 img[0][i] = ImageIO.read(new File("res/Individual Sprites/adventurer-idle-0" + i + ".png")).getScaledInstance(this.width, -1, Image.SCALE_SMOOTH);
@@ -52,7 +52,7 @@ public class Player extends Entity {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        this.width *= 2.5/4.0;
+        this.width *= 3.0 / 4.0;
         this.height = img[0][0].getHeight(null);
 
         // rearrange y (given x and y values are for the bottom left corner)
@@ -91,19 +91,25 @@ public class Player extends Entity {
         g.setColor(Color.BLACK);
         if (turnedRight) {
             if (getHit()) { // is able to hit while running and while standing still -> always checks if hit is true regardless of moving
-                g.drawImage(img[2][(int) this.animation_state % 5], (int) this.x, (int) this.y, null); // set player's animation to hit animation
+                int offset = (img[2][(int) this.animation_state % 5].getWidth(null) - this.width) / 2;
+                g.drawImage(img[2][(int) this.animation_state % 5], (int) this.x - offset, (int) this.y, null); // set player's animation to hit animation
             } else if (moving) {
-                g.drawImage(img[1][(int) this.animation_state % 6], (int) this.x, (int) this.y, null);
+                int offset = (img[1][(int) this.animation_state % 6].getWidth(null) - this.width) / 2;
+                g.drawImage(img[1][(int) this.animation_state % 6], (int) this.x - offset, (int) this.y, null);
             } else {
-                g.drawImage(img[0][(int) this.animation_state % 4], (int) this.x, (int) this.y, null);
+                int offset = (img[0][(int) this.animation_state % 4].getWidth(null) - this.width) / 2;
+                g.drawImage(img[0][(int) this.animation_state % 4], (int) this.x - offset, (int) this.y, null);
             }
         } else {
             if (getHit()) { // is able to hit while running and while standing still -> always checks if hit is true regardless of moving
-                Main.drawReflectImage(img[2][(int) this.animation_state % 5], g, (int) this.x, (int) this.y);
+                int offset = (img[2][(int) this.animation_state % 5].getWidth(null) - this.width) / 2;
+                Main.drawReflectImage(img[2][(int) this.animation_state % 5], g, (int) this.x - offset, (int) this.y);
             } else if (moving) {
-                Main.drawReflectImage(img[1][(int) this.animation_state % 6], g, (int) this.x, (int) this.y);
+                int offset = (img[1][(int) this.animation_state % 6].getWidth(null) - this.width) / 2;
+                Main.drawReflectImage(img[1][(int) this.animation_state % 6], g, (int) this.x - offset, (int) this.y);
             } else {
-                Main.drawReflectImage(img[0][(int) this.animation_state % 4], g, (int) this.x, (int) this.y);
+                int offset = (img[0][(int) this.animation_state % 4].getWidth(null) - this.width) / 2;
+                Main.drawReflectImage(img[0][(int) this.animation_state % 4], g, (int) this.x - offset, (int) this.y);
             }
         }
     }

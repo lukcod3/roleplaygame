@@ -123,7 +123,6 @@ public class GUI extends JPanel {
 
 
     public void paint(Graphics g) {
-
         // paint map
         map.paint(g);
 
