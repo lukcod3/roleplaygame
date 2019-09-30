@@ -97,7 +97,7 @@ public class GUI extends JPanel {
                 map.player.setHit(pressed);
                 if(!schongeschlagen) {
                     //System.out.println(map.player.animation_state);
-                    map.player.animation_state = 0;
+                    map.player.animation_state = 1.5;
                     schongeschlagen = true;
                 }
                 if(pressed){
