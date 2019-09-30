@@ -19,7 +19,7 @@ public class Main {
     private GUI gui;
 
 
-    private Main() throws IOException {
+    private Main() {
 
         // setup main frame
         final JFrame frame = new JFrame();
@@ -90,7 +90,7 @@ public class Main {
         }
     }
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
         new Main();
     }
 
