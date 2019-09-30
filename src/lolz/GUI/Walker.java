@@ -18,7 +18,7 @@ public class Walker {
         changeDirection();
 
         // make spawning tile ground
-        this.map.tiles[this.y][this.x].add(StaticTile.GROUND);
+        this.map.tiles[this.y][this.x].add(StaticTile.FLOOR_1);
     }
 
     public void changeDirection() {
@@ -53,7 +53,7 @@ public class Walker {
         }
 
         // set tile to ground
-        this.map.tiles[this.y][this.x].add(StaticTile.GROUND);
+        this.map.tiles[this.y][this.x].add(StaticTile.FLOOR_1);
 
     }
 }

@@ -70,7 +70,7 @@ public abstract class Map {
         int y = 0;
         int entitiy_index = 0;
         while (y < this.tiles.length) {
-            while (entitiy_index < this.entities.size() && (int) (this.entities.get(entitiy_index).y + this.player.getHeight())/ Main.TILE_SIZE == y) {
+            while (entitiy_index < this.entities.size() && (int) (this.entities.get(entitiy_index).y + this.player.getHeight()) / Main.TILE_SIZE == y) {
                 this.entities.get(entitiy_index).paint(g);
                 entitiy_index++;
             }
@@ -140,6 +140,10 @@ public abstract class Map {
     }
 
     void makeWalls() {
+        // possibilities for floor mutation (starting from index 2 (bc 1 is standard))
+        StaticTile[] floors = {StaticTile.FLOOR_2, StaticTile.FLOOR_3, StaticTile.FLOOR_4, StaticTile.FLOOR_5, StaticTile.FLOOR_6, StaticTile.FLOOR_7, StaticTile.FLOOR_8};
+        double[] poss = {0.05, 0.05, 0.1, 0.1, 0.1, 0.1, 0.1};
+
         // remove all walls with only wall over or under it
         boolean done = false;
         while (!done) {
@@ -149,21 +153,21 @@ public abstract class Map {
                     if (this.tiles[y][x].isEmpty()) {
                         // check for nearby ground tiles
                         int n = 0;
-                        if (this.tile_contains(x, y - 1, StaticTile.GROUND)) {
+                        if (this.tile_contains(x, y - 1, StaticTile.FLOOR_1)) {
                             n++;
                         }
-                        if (this.tile_contains(x + 1, y, StaticTile.GROUND)) {
+                        if (this.tile_contains(x + 1, y, StaticTile.FLOOR_1)) {
                             n++;
                         }
-                        if (this.tile_contains(x, y + 1, StaticTile.GROUND)) {
+                        if (this.tile_contains(x, y + 1, StaticTile.FLOOR_1)) {
                             n++;
                         }
-                        if (this.tile_contains(x - 1, y, StaticTile.GROUND)) {
+                        if (this.tile_contains(x - 1, y, StaticTile.FLOOR_1)) {
                             n++;
                         }
 
                         if (n == 3 || n == 4) {
-                            this.tiles[y][x].add(StaticTile.GROUND);
+                            this.tiles[y][x].add(StaticTile.FLOOR_1);
                             done = false;
                         }
                     }
@@ -178,16 +182,16 @@ public abstract class Map {
                 if (this.tiles[y][x].isEmpty()) {
                     // check for nearby ground tiles
                     boolean[] ground = new boolean[4]; // 0 -> north, 1 -> east, 2 -> south, 3 -> west
-                    if (this.tile_contains(x, y - 1, StaticTile.GROUND)) {
+                    if (this.tile_contains(x, y - 1, StaticTile.FLOOR_1)) {
                         ground[0] = true;
                     }
-                    if (this.tile_contains(x + 1, y, StaticTile.GROUND)) {
+                    if (this.tile_contains(x + 1, y, StaticTile.FLOOR_1)) {
                         ground[1] = true;
                     }
-                    if (this.tile_contains(x, y + 1, StaticTile.GROUND)) {
+                    if (this.tile_contains(x, y + 1, StaticTile.FLOOR_1)) {
                         ground[2] = true;
                     }
-                    if (this.tile_contains(x - 1, y, StaticTile.GROUND)) {
+                    if (this.tile_contains(x - 1, y, StaticTile.FLOOR_1)) {
                         ground[3] = true;
                     }
 
@@ -263,6 +267,39 @@ public abstract class Map {
                     this.tiles[y][x].add(StaticTile.WALL_SIDE_MID_RIGHT);
                     this.tiles[y - 1][x].remove(StaticTile.WALL_TOP_LEFT);
                     this.tiles[y - 1][x].add(StaticTile.WALL_CORNER_TOP_LEFT);
+                }
+            }
+        }
+
+        // mutate floor
+        for (int y = 0; y < this.VIRTUAL_HEIGHT; y++) {
+            for (int x = 0; x < this.VIRTUAL_WIDTH; x++) {
+                if (this.tile_contains(x, y, StaticTile.FLOOR_1)) {
+                    if (this.tiles[y][x - 1].contains(StaticTile.WALL_SIDE_MID_LEFT)) {
+                        if (Math.random() < poss[2]) {
+                            this.tiles[y][x].remove(StaticTile.FLOOR_1);
+                            this.tiles[y][x].add(floors[2]);
+                        } else if (Math.random() < poss[3]) {
+                            this.tiles[y][x].remove(StaticTile.FLOOR_1);
+                            this.tiles[y][x].add(floors[3]);
+                        }
+                    } else if (this.tiles[y][x + 1].contains(StaticTile.WALL_SIDE_MID_RIGHT)) {
+                        if (Math.random() < poss[4]) {
+                            this.tiles[y][x].remove(StaticTile.FLOOR_1);
+                            this.tiles[y][x].add(floors[4]);
+                        } else if (Math.random() < poss[5]) {
+                            this.tiles[y][x].remove(StaticTile.FLOOR_1);
+                            this.tiles[y][x].add(floors[5]);
+                        }
+                    } else {
+                        if (Math.random() < poss[0]) {
+                            this.tiles[y][x].remove(StaticTile.FLOOR_1);
+                            this.tiles[y][x].add(floors[0]);
+                        } else if (Math.random() < poss[1]) {
+                            this.tiles[y][x].remove(StaticTile.FLOOR_1);
+                            this.tiles[y][x].add(floors[1]);
+                        }
+                    }
                 }
             }
         }

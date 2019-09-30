@@ -31,7 +31,7 @@ public class RandomMap extends Map {
         int n = 0;
         for (int y = 0; y < this.VIRTUAL_HEIGHT; y++) {
             for (int x = 0; x < this.VIRTUAL_WIDTH; x++) {
-                if (this.tiles[y][x].contains(StaticTile.GROUND)) {
+                if (this.tiles[y][x].contains(StaticTile.FLOOR_1)) {
                     n++;
                 }
             }

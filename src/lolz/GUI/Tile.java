@@ -14,7 +14,14 @@ import java.util.Map;
 public class Tile {
     public enum StaticTile {
         EMPTY("empty", true, true),
-        GROUND("ground", false, true),
+        FLOOR_1("floor 1", false, true),
+        FLOOR_2("floor 2", false, true),
+        FLOOR_3("floor 3", false, true),
+        FLOOR_4("floor 4", false, true),
+        FLOOR_5("floor 5", false, true),
+        FLOOR_6("floor 6", false, true),
+        FLOOR_7("floor 7", false, true),
+        FLOOR_8("floor 8", false, true),
         WALL("wall", true, true),
         WALL_LEFT("wall left", true, true),
         WALL_RIGHT("wall right", true, true),
@@ -58,7 +65,14 @@ public class Tile {
     static {
         tilePics = new HashMap<>();
         try {
-            tilePics.put(StaticTile.GROUND, load_image("res/tiles/floor_1.png"));
+            tilePics.put(StaticTile.FLOOR_1, load_image("res/tiles/floor_1.png"));
+            tilePics.put(StaticTile.FLOOR_2, load_image("res/tiles/floor_2.png"));
+            tilePics.put(StaticTile.FLOOR_3, load_image("res/tiles/floor_3.png"));
+            tilePics.put(StaticTile.FLOOR_4, load_image("res/tiles/floor_4.png"));
+            tilePics.put(StaticTile.FLOOR_5, load_image("res/tiles/floor_5.png"));
+            tilePics.put(StaticTile.FLOOR_6, load_image("res/tiles/floor_6.png"));
+            tilePics.put(StaticTile.FLOOR_7, load_image("res/tiles/floor_7.png"));
+            tilePics.put(StaticTile.FLOOR_8, load_image("res/tiles/floor_8.png"));
             tilePics.put(StaticTile.WALL, load_image("res/tiles/wall_mid.png"));
             tilePics.put(StaticTile.WALL_LEFT, load_image("res/tiles/wall_left.png"));
             tilePics.put(StaticTile.WALL_RIGHT, load_image("res/tiles/wall_right.png"));
@@ -167,7 +181,9 @@ public class Tile {
     }
 
     public boolean isGround() {
-        return this.contains(StaticTile.GROUND);
+        return this.contains(StaticTile.FLOOR_1) || this.contains(StaticTile.FLOOR_2) || this.contains(StaticTile.FLOOR_3)
+                || this.contains(StaticTile.FLOOR_4) || this.contains(StaticTile.FLOOR_5) || this.contains(StaticTile.FLOOR_6)
+                || this.contains(StaticTile.FLOOR_7) || this.contains(StaticTile.FLOOR_8);
     }
 
     public void validate() {
