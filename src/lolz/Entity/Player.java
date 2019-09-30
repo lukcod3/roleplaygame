@@ -32,7 +32,11 @@ public class Player extends Entity {
         this.x = x;
         this.y = y;
         this.directions = new boolean[4];
-        this.img = new Image[3][6];
+        this.img = new Image[3][];
+        this.img[0] = new Image[4];
+        this.img[1] = new Image[6];
+        this.img[2] = new Image[5];
+
         this.width = 45;
         try {
             for (int i = 0; i < 4; i++) {
@@ -86,19 +90,19 @@ public class Player extends Entity {
         g.setColor(Color.BLACK);
         if(turnedRight){
             if (getHit()) { // is able to hit while running and while standing still -> always checks if hit is true regardless of moving
-                g.drawImage(img[2][(int) this.animation_state], (int) this.x, (int) this.y, null); // set player's animation to hit animation
+                g.drawImage(img[2][(int) this.animation_state%5], (int) this.x, (int) this.y, null); // set player's animation to hit animation
             } else if (moving) {
-                g.drawImage(img[1][(int) this.animation_state], (int) this.x, (int) this.y, null);
+                g.drawImage(img[1][(int) this.animation_state%6], (int) this.x, (int) this.y, null);
             } else {
-                g.drawImage(img[0][(int) this.animation_state], (int) this.x, (int) this.y, null);
+                g.drawImage(img[0][(int) this.animation_state%4], (int) this.x, (int) this.y, null);
             }
         }else{
             if (getHit()) { // is able to hit while running and while standing still -> always checks if hit is true regardless of moving
-                Main.drawReflectImage(img[2][(int) this.animation_state], g, (int) this.x, (int) this.y);
+                Main.drawReflectImage(img[2][(int) this.animation_state%5], g, (int) this.x, (int) this.y);
             } else if (moving) {
-                Main.drawReflectImage(img[1][(int) this.animation_state], g, (int) this.x, (int) this.y);
+                Main.drawReflectImage(img[1][(int) this.animation_state%6], g, (int) this.x, (int) this.y);
             } else {
-                Main.drawReflectImage(img[0][(int) this.animation_state], g, (int) this.x, (int) this.y);
+                Main.drawReflectImage(img[0][(int) this.animation_state%4], g, (int) this.x, (int) this.y);
             }
         }
     }
@@ -116,15 +120,14 @@ public class Player extends Entity {
 
         // update player graphic width and height
         if (old_state < (int) this.animation_state) {
-            this.animation_state %= 4;
-            int picIndex = 0;
+            this.animation_state %= 60;
             if (getHit()) { // is able to hit while running and while standing still -> always checks if hit is true regardless of moving
-                picIndex = 2;
+                this.height = img[2][(int) this.animation_state%5].getHeight(null);
+                this.width = img[2][(int) this.animation_state%5].getWidth(null);
             } else if (moving) {
-                picIndex = 1;
+                this.height = img[1][(int) this.animation_state%6].getHeight(null);
+                this.width = img[1][(int) this.animation_state%6].getWidth(null);
             }
-            this.height = img[picIndex][(int) this.animation_state].getHeight(null);
-            this.width = img[picIndex][(int) this.animation_state].getWidth(null);
         }
 
         // old
