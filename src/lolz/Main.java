@@ -2,11 +2,13 @@ package lolz;
 
 import lolz.GUI.GUI;
 
-
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.io.File;
+import java.io.IOException;
 
 
 public class Main {
@@ -17,7 +19,7 @@ public class Main {
     private GUI gui;
 
 
-    private Main() {
+    private Main() throws IOException {
 
         // setup main frame
         final JFrame frame = new JFrame();
@@ -31,6 +33,11 @@ public class Main {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setResizable(false);
         frame.setBackground(Color.BLACK);
+        try {
+            frame.setIconImage(ImageIO.read(new File("res/tiles/knight_f_hit_anim_f0.png")));
+        } catch (IOException e) {
+            System.out.println("Whoops...");
+        }
         frame.setVisible(true);
         frame.setSize(WIDTH, HEIGHT);
 
@@ -83,7 +90,7 @@ public class Main {
         }
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         new Main();
     }
 
