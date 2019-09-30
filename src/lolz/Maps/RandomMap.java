@@ -1,14 +1,17 @@
 package lolz.Maps;
 
-import lolz.GUI.Walker;
-import lolz.GUI.Tile.StaticTile;
-import lolz.Main;
-import lolz.Entity.Player;
+import lolz.Entity.Entity;
 import lolz.Entity.Monster;
+import lolz.Entity.Player;
+import lolz.GUI.Tile.StaticTile;
+import lolz.GUI.Walker;
+import lolz.Main;
 
 import java.util.ArrayList;
 
 public class RandomMap extends Map {
+
+    private ArrayList<Entity> monsterEntities;
 
     public RandomMap() {
         // setup map
@@ -25,6 +28,9 @@ public class RandomMap extends Map {
         // set entities array
         this.entities.add(this.player);
         this.entities.add(this.monster);
+
+        monsterEntities = entities;
+        monsterEntities.remove(0);
     }
 
     private int numberOfTiles() {
@@ -93,6 +99,11 @@ public class RandomMap extends Map {
     @Override
     public void update(int time) {
         this.player.update(time);
+        /*for (Entity monster : monsterEntities) {
+            if (this.player.overlap(monster)) {
+                this.player.attack(monster);
+            }
+        }*/
         this.monster.update(time);
     }
 }
