@@ -6,7 +6,7 @@ public abstract class Entity {
     public double x, y;
     int width, height;
     private int maxHealth, health, damage, armor;
-    double speed;
+    public double speed;
 
     Entity(int x, int y, int maxHealth, int damage, int armor, double speed) {
         this.x = x;

@@ -1,5 +1,6 @@
 package lolz.Entity;
 
+import lolz.Main;
 import lolz.Maps.Map;
 
 import javax.imageio.ImageIO;
@@ -32,7 +33,7 @@ public class Player extends Entity {
         this.y = y;
         this.directions = new boolean[4];
         this.img = new Image[3][6];
-        this.width = 75;
+        this.width = 45;
         try {
             for (int i = 0; i < 4; i++) {
                 img[0][i] = ImageIO.read(new File("res/Individual Sprites/adventurer-idle-0" + i + ".png")).getScaledInstance(this.width, -1, Image.SCALE_SMOOTH);
@@ -95,12 +96,22 @@ public class Player extends Entity {
         // System.out.println(map.get_tile_at((int) (this.x), (int) (this.y + this.height)).toString());
         // paint player
         g.setColor(Color.BLACK);
-        if (getHit()) { // is able to hit while running and while standing still -> always checks if hit is true regardless of moving
-            g.drawImage(img[2][(int) this.animation_state], (int) this.x, (int) this.y, null); // set player's animation to hit animation
-        } else if (moving) {
-            g.drawImage(img[1][(int) this.animation_state], (int) this.x, (int) this.y, null);
-        } else {
-            g.drawImage(img[0][(int) this.animation_state], (int) this.x, (int) this.y, null);
+        if(turnedRight){
+            if (getHit()) { // is able to hit while running and while standing still -> always checks if hit is true regardless of moving
+                g.drawImage(img[2][(int) this.animation_state], (int) this.x, (int) this.y, null); // set player's animation to hit animation
+            } else if (moving) {
+                g.drawImage(img[1][(int) this.animation_state], (int) this.x, (int) this.y, null);
+            } else {
+                g.drawImage(img[0][(int) this.animation_state], (int) this.x, (int) this.y, null);
+            }
+        }else{
+            if (getHit()) { // is able to hit while running and while standing still -> always checks if hit is true regardless of moving
+                Main.drawReflectImage(img[2][(int) this.animation_state], g, (int) this.x, (int) this.y);
+            } else if (moving) {
+                Main.drawReflectImage(img[1][(int) this.animation_state], g, (int) this.x, (int) this.y);
+            } else {
+                Main.drawReflectImage(img[0][(int) this.animation_state], g, (int) this.x, (int) this.y);
+            }
         }
     }
 
@@ -152,6 +163,11 @@ public class Player extends Entity {
         if (!moving) {
             moving = true;
             animation_state = 0;
+        }
+        if(this.directions[3]){
+            turnedRight = true;
+        }else if(this.directions[1]){
+            turnedRight = false;
         }
 
         // calculate how much the player moves
