@@ -1,14 +1,17 @@
 package lolz.Maps;
 
+import lolz.Entity.Entity;
 import lolz.GUI.Tile;
 import lolz.Main;
-import lolz.Player.Player;
-import lolz.Monster;
+import lolz.Entity.Player;
+import lolz.Entity.Monster;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Comparator;
 
 import lolz.GUI.Tile.StaticTile;
 
@@ -18,6 +21,7 @@ public abstract class Map {
     public int WIDTH, HEIGHT;
     public int VIRTUAL_WIDTH, VIRTUAL_HEIGHT;
     public int AREA, VIRTUAL_AREA;
+    ArrayList<Entity> entities;
 
     public Tile[][] tiles;
 
@@ -28,6 +32,7 @@ public abstract class Map {
         this.VIRTUAL_HEIGHT = this.HEIGHT / Main.TILE_SIZE;
         this.AREA = this.WIDTH * this.HEIGHT;
         this.VIRTUAL_AREA = this.VIRTUAL_WIDTH + this.VIRTUAL_HEIGHT;
+        this.entities = new ArrayList<>();
 
         // set tiles to empty by default
         this.tiles = new Tile[this.VIRTUAL_HEIGHT][this.VIRTUAL_WIDTH];
@@ -55,31 +60,27 @@ public abstract class Map {
             }
         }
 
+        this.entities.sort(new Comparator<Entity>() {
+            @Override
+            public int compare(Entity o1, Entity o2) {
+                return Double.compare(o1.y, o2.y);
+            }
+        });
 
-        // draw wall decos
-        for (int y = 0; y < this.player.y / Main.TILE_SIZE; y++) {
+        int y = 0;
+        int entitiy_index = 0;
+        while (y < this.tiles.length) {
+            while (entitiy_index < this.entities.size() && (int) (this.entities.get(0).y / Main.TILE_SIZE) + 1 == y) {
+                this.entities.get(entitiy_index).paint(g);
+                entitiy_index++;
+            }
             for (int x = 0; x < this.tiles[0].length; x++) {
                 for (StaticTile t : this.tiles[y][x].topTiles) {
                     g.drawImage(Tile.tilePics.get(t), Main.TILE_SIZE * x, Main.TILE_SIZE * y, null);
                 }
             }
+            y++;
         }
-
-        // draw player
-        this.player.paint(g);
-
-        // draw wall decos
-        for (int y = (int) (this.player.y / Main.TILE_SIZE); y < this.tiles.length; y++) {
-            for (int x = 0; x < this.tiles[0].length; x++) {
-                for (StaticTile t : this.tiles[y][x].topTiles) {
-                    g.drawImage(Tile.tilePics.get(t), Main.TILE_SIZE * x, Main.TILE_SIZE * y, null);
-                }
-            }
-        }
-
-        // draw monster
-        this.monster.paint(g);
-
 
     }
 

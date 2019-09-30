@@ -1,5 +1,6 @@
-package lolz.Player;
+package lolz.Entity;
 
+import lolz.Entity.Monster;
 import lolz.Maps.Map;
 
 import javax.imageio.ImageIO;
@@ -7,11 +8,8 @@ import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 
-public class Player {
+public class Player extends Entity {
     private Map map;
-    public double x, y;
-    private int width, height;
-    private float speed = 0.15f;
     public volatile boolean[] directions; // 0 is up, 1 is left, 2 is down, 3 is right
     private Image[][] img;
     private Image hitImage; // Image for hit animation didn't belong to the Image array, so it's assigned to a new attribute
@@ -29,6 +27,7 @@ public class Player {
 
     public Player(Map map, int x, int y) {
         // setup player stats
+        super(x, y, 100, 10, 30, 0.15);
         this.map = map;
         this.x = x;
         this.y = y;
@@ -75,7 +74,7 @@ public class Player {
         return hit;
     }
 
-    public void setHit(boolean hit){
+    public void setHit(boolean hit) {
         this.hit = hit;
     }
 
@@ -212,10 +211,10 @@ public class Player {
     }
 
     // check if any given monster is "touching" the hero or rather if the hero is touching it
-    public boolean overlap(lolz.Monster monster){
+    private boolean overlap(Monster monster) {
         for (int i : new int[]{0, monster.getWidth()}) { //checking for the left and right border of the monster's image
-            for (int j : new int[]{0, monster.getWidth()} ) { //checking for the top and bottom border of the monster's image
-                if(this.x <= monster.getX() + i && monster.getX() + i <= this.x + this.width && this.y <= monster.getY() + j && monster.getY() + j <= this.y + this.height){ //if any of the monster's boundaries can be found between any of the hero's boundaries, they touch
+            for (int j : new int[]{0, monster.getWidth()}) { //checking for the top and bottom border of the monster's image
+                if (this.x <= monster.getX() + i && monster.getX() + i <= this.x + this.width && this.y <= monster.getY() + j && monster.getY() + j <= this.y + this.height) { //if any of the monster's boundaries can be found between any of the hero's boundaries, they touch
                     System.out.println("Overlap");
                     return true;
                 }
