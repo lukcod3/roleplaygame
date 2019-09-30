@@ -14,10 +14,10 @@ import java.util.Map;
 public class Tile {
     public enum StaticTile {
         EMPTY("empty", true, true),
-        GROUND("ground", false,true),
-        WALL("wall", true,true),
-        WALL_LEFT("wall left", true,true),
-        WALL_RIGHT("wall right", true,true),
+        GROUND("ground", false, true),
+        WALL("wall", true, true),
+        WALL_LEFT("wall left", true, true),
+        WALL_RIGHT("wall right", true, true),
         WALL_LEFT_RIGHT("wall left right", true, true),
         WALL_SIDE_MID_LEFT("wall side mid left", true, false),
         WALL_SIDE_MID_RIGHT("wall side mid right", true, false),
@@ -34,8 +34,8 @@ public class Tile {
         WALL_INNER_CORNER_T_TOP_RIGHT("wall inner corner t top right", false, false),
         WALL_CORNER_BOTTOM_LEFT("wall corner bottom left", true, false),
         WALL_CORNER_BOTTOM_RIGHT("wall corner bottom right", true, false),
-        WALL_SIDE_FRONT_LEFT("wall side front left", false,true),
-        WALL_SIDE_FRONT_RIGHT("wall side front right", false,true);
+        WALL_SIDE_FRONT_LEFT("wall side front left", false, true),
+        WALL_SIDE_FRONT_RIGHT("wall side front right", false, true);
 
         public final String name;
         public final boolean solid;
@@ -108,7 +108,7 @@ public class Tile {
 
     public void add(StaticTile t) {
         if (!this.contains(t)) {
-            if (t.isBase){
+            if (t.isBase) {
                 this.baseTiles.add(t);
             } else {
                 this.topTiles.add(t);
@@ -118,8 +118,8 @@ public class Tile {
 
     private void add(int index, StaticTile t) {
         if (!this.contains(t)) {
-            if (t.isBase){
-                this.baseTiles.add(index,t);
+            if (t.isBase) {
+                this.baseTiles.add(index, t);
             } else {
                 this.topTiles.add(index, t);
             }

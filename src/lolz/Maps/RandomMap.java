@@ -3,8 +3,8 @@ package lolz.Maps;
 import lolz.GUI.Walker;
 import lolz.GUI.Tile.StaticTile;
 import lolz.Main;
-import lolz.Player.Player;
-import lolz.Monster;
+import lolz.Entity.Player;
+import lolz.Entity.Monster;
 
 import java.util.ArrayList;
 
@@ -21,6 +21,10 @@ public class RandomMap extends Map {
         this.player = new Player(this, (this.VIRTUAL_WIDTH / 2) * Main.TILE_SIZE, (this.VIRTUAL_HEIGHT / 2) * Main.TILE_SIZE);
         // spawn monster at player's position
         this.monster = new Monster((int) player.x, (int) player.y, 50, 15, 10);
+
+        // set entities array
+        this.entities.add(this.player);
+        this.entities.add(this.monster);
     }
 
     private int numberOfTiles() {
