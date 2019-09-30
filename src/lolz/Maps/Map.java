@@ -65,8 +65,7 @@ public abstract class Map {
             }
         }
 
-        // draw player
-        this.player.paint(g);
+
 
         // draw wall decos
         for (int y = (int) (this.player.y / Main.TILE_SIZE); y < this.tiles.length; y++) {
@@ -79,7 +78,8 @@ public abstract class Map {
 
         // draw monster
         this.monster.paint(g);
-
+        // draw player, needs to be called last
+        this.player.paint(g);
 
     }
 

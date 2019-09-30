@@ -20,7 +20,7 @@ public class Player {
     private double animation_state;
     private final String base_char = "elf_m";
     public Graphics gStats;
-    public int[] equipment; // 1 is hat, 2 is t-shirt, 3 is sword, 4 is shoes, 5 is ring, 6 is necklace, 7 is belt
+    public int[] equipment; // 1 is hat, 2 is t-shirt, 3 is sword, 4 is shoes, 5 is ring, 6 is necklace, 7 is belt, 8-11 is depot
     public Image[][] inventoryImages;
     public Image empty;
 
@@ -34,7 +34,10 @@ public class Player {
         this.y = y;
         this.directions = new boolean[4];
         this.img = new Image[2][4];
-        try {
+        try{
+            for
+        }
+        /*try {
             for (int i = 0; i < 4; i++) {
                 img[0][i] = ImageIO.read(new File("res/tiles/" + this.base_char + "_idle_anim_f" + i + ".png")).getScaledInstance(45, -1, Image.SCALE_SMOOTH);
             }
@@ -46,6 +49,7 @@ public class Player {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        */
         this.width = img[0][0].getWidth(null);
         this.height = img[0][0].getHeight(null);
 
@@ -129,7 +133,6 @@ public class Player {
             gStats.drawImage(empty.getScaledInstance(60, -1, Image.SCALE_DEFAULT), 561, 420, null);
             gStats.drawImage(empty.getScaledInstance(60, -1, Image.SCALE_DEFAULT), 622, 420, null);
             gStats.drawImage(empty.getScaledInstance(60, -1, Image.SCALE_DEFAULT), 683, 420, null);
-
 
         }
     }
