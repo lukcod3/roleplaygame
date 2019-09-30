@@ -1,7 +1,6 @@
 package lolz.GUI;
 
 import lolz.Main;
-import lolz.Entity.*;
 import lolz.Maps.Map;
 import lolz.Maps.RandomMap;
 
@@ -14,8 +13,8 @@ import java.awt.event.MouseListener;
 
 public class GUI extends JPanel {
     private Image img;
-    public Map map;
-    public boolean statsShown, schongeschlagen;
+    private Map map;
+    private boolean statsShown;
 
     //public Hub hub;
     public GUI() {
@@ -67,15 +66,13 @@ public class GUI extends JPanel {
 
         //add the key binding for the players attack (with the space key)
         this.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_J, 0, false), KeyEvent.VK_J + "Pressed");
-        this.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_J, 0, true), KeyEvent.VK_J + "Released");
 
-        this.getActionMap().put(KeyEvent.VK_J + "Pressed", generateAttackKeyAction(true));
-        this.getActionMap().put(KeyEvent.VK_J + "Released", generateAttackKeyAction(false));
+        this.getActionMap().put(KeyEvent.VK_J + "Pressed", generateAttackKeyAction());
 
         // key bindings for player stats
         this.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_I, 0, false), KeyEvent.VK_I + "Pressed");
 
-        this.getActionMap().put(KeyEvent.VK_I + "Pressed", generateInventoryKeyAction(true));
+        this.getActionMap().put(KeyEvent.VK_I + "Pressed", generateInventoryKeyAction());
 
     }
 
@@ -89,29 +86,18 @@ public class GUI extends JPanel {
         };
     }
 
-    private Action generateAttackKeyAction(final boolean pressed) {
+    private Action generateAttackKeyAction() {
         return new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // change the players directions
-                map.player.setHit(pressed);
-                if(!schongeschlagen) {
-                    //System.out.println(map.player.animation_state);
-                    map.player.animation_state = 1.5;
-                    schongeschlagen = true;
-                }
-                if(pressed){
-                    map.player.speed = 0.05;
-                }else{
-                    map.player.speed = 0.15;
-                    schongeschlagen = false;
-
+                if (!map.player.getHitting()) {
+                    map.player.setHitting(true);
                 }
             }
         };
     }
 
-    private Action generateInventoryKeyAction(final boolean pressed) {
+    private Action generateInventoryKeyAction() {
         return new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -161,17 +147,17 @@ public class GUI extends JPanel {
             g.drawString("Level............." + this.map.player.level + "(" + this.map.player.exp + " XP/" + 200 + " XP)", 200, 360); // needs formula for maxXP
 
             if(this.map.player.turnedRight){
-                if (this.map.player.getHit()) { // is able to hit while running and while standing still -> always checks if hit is true regardless of moving
+                if (this.map.player.getHitting()) { // is able to hit while running and while standing still -> always checks if hit is true regardless of moving
                     g.drawImage(this.map.player.img[2][(int) this.map.player.animation_state%5].getScaledInstance(120, -1, Image.SCALE_DEFAULT), xPositionImageInventory, yPositionImageInventory, null); // set player's animation to hit animation
-                } else if (this.map.player.moving) {
+                } else if (this.map.player.isMoving) {
                     g.drawImage(this.map.player.img[1][(int) this.map.player.animation_state%6].getScaledInstance(120, -1, Image.SCALE_DEFAULT), xPositionImageInventory, yPositionImageInventory, null);
                 } else {
                     g.drawImage(this.map.player.img[0][(int) this.map.player.animation_state%4].getScaledInstance(120, -1, Image.SCALE_DEFAULT), xPositionImageInventory, yPositionImageInventory, null);
                 }
             }else{
-                if (this.map.player.getHit()) { // is able to hit while running and while standing still -> always checks if hit is true regardless of moving
+                if (this.map.player.getHitting()) { // is able to hit while running and while standing still -> always checks if hit is true regardless of moving
                     Main.drawReflectImage(this.map.player.img[2][(int) this.map.player.animation_state%5].getScaledInstance(120, -1, Image.SCALE_DEFAULT), g, xPositionImageInventory, yPositionImageInventory);
-                } else if (this.map.player.moving) {
+                } else if (this.map.player.isMoving) {
                     Main.drawReflectImage(this.map.player.img[1][(int) this.map.player.animation_state%6].getScaledInstance(120, -1, Image.SCALE_DEFAULT), g, xPositionImageInventory, yPositionImageInventory);
                 } else {
                     Main.drawReflectImage(this.map.player.img[0][(int) this.map.player.animation_state%4].getScaledInstance(120, -1, Image.SCALE_DEFAULT), g, xPositionImageInventory, yPositionImageInventory);

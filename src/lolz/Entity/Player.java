@@ -12,15 +12,14 @@ public class Player extends Entity {
     public volatile boolean[] directions; // 0 is up, 1 is left, 2 is down, 3 is right
     public Image[][] img;
     public Image hitImage; // Image for hit animation didn't belong to the Image array, so it's assigned to a new attribute
-    public boolean hit; // variable true if user makes character hit
-    public boolean moving;
+    public boolean isHitting, hasDamaged; // variable true if user makes character hit
+    public boolean isMoving;
     public double animation_state;
     public final String base_char = "elf_m";
     public int[] equipment; // 1 is hat, 2 is t-shirt, 3 is sword, 4 is shoes, 5 is ring, 6 is necklace, 7 is belt, 8-11 is depot
     public Image[][] inventoryImages;
     public Image empty;
     public boolean turnedRight;
-    public boolean lock;
 
     // Ingame stats
     public int maxHealth, health, attackdamage, abilitypower, armor, level, exp, gold;
@@ -77,12 +76,23 @@ public class Player extends Entity {
     }
 
     // set Getters and Setters for attribute hit
-    public boolean getHit() {
-        return hit;
+    public boolean getHitting() {
+        return isHitting;
     }
 
-    public void setHit(boolean hit) {
-        this.hit = hit;
+    public void setHitting(boolean isHitting) {
+        if (this.isHitting != isHitting) {
+            if (isHitting) {
+                // slow player down while attacking
+                this.speed = 0.05;
+            } else {
+                // restore speed and attacking status
+                this.speed = 0.15;
+                this.hasDamaged = false;
+            }
+            this.animation_state = 0;
+        }
+        this.isHitting = isHitting;
     }
 
     public void paint(Graphics g) {
@@ -90,43 +100,43 @@ public class Player extends Entity {
         // paint player
         g.setColor(Color.BLACK);
         if (turnedRight) {
-            if (getHit()) { // is able to hit while running and while standing still -> always checks if hit is true regardless of moving
-                int offset = (img[2][(int) this.animation_state % 5].getWidth(null) - this.width) / 2;
-                g.drawImage(img[2][(int) this.animation_state % 5], (int) this.x - offset, (int) this.y, null); // set player's animation to hit animation
-            } else if (moving) {
-                int offset = (img[1][(int) this.animation_state % 6].getWidth(null) - this.width) / 2;
-                g.drawImage(img[1][(int) this.animation_state % 6], (int) this.x - offset, (int) this.y, null);
+            if (getHitting()) { // is able to hit while running and while standing still -> always checks if hit is true regardless of moving
+                int offset = (img[2][(int) this.animation_state].getWidth(null) - this.width) / 2;
+                g.drawImage(img[2][(int) this.animation_state], (int) this.x - offset, (int) this.y, null); // set player's animation to hit animation
+            } else if (isMoving) {
+                int offset = (img[1][(int) this.animation_state].getWidth(null) - this.width) / 2;
+                g.drawImage(img[1][(int) this.animation_state], (int) this.x - offset, (int) this.y, null);
             } else {
-                int offset = (img[0][(int) this.animation_state % 4].getWidth(null) - this.width) / 2;
-                g.drawImage(img[0][(int) this.animation_state % 4], (int) this.x - offset, (int) this.y, null);
+                int offset = (img[0][(int) this.animation_state].getWidth(null) - this.width) / 2;
+                g.drawImage(img[0][(int) this.animation_state], (int) this.x - offset, (int) this.y, null);
             }
         } else {
-            if (getHit()) { // is able to hit while running and while standing still -> always checks if hit is true regardless of moving
-                int offset = (img[2][(int) this.animation_state % 5].getWidth(null) - this.width) / 2;
-                Main.drawReflectImage(img[2][(int) this.animation_state % 5], g, (int) this.x - offset, (int) this.y);
-            } else if (moving) {
-                int offset = (img[1][(int) this.animation_state % 6].getWidth(null) - this.width) / 2;
-                Main.drawReflectImage(img[1][(int) this.animation_state % 6], g, (int) this.x - offset, (int) this.y);
+            if (getHitting()) { // is able to hit while running and while standing still -> always checks if hit is true regardless of moving
+                int offset = (img[2][(int) this.animation_state].getWidth(null) - this.width) / 2;
+                Main.drawReflectImage(img[2][(int) this.animation_state], g, (int) this.x - offset, (int) this.y);
+            } else if (isMoving) {
+                int offset = (img[1][(int) this.animation_state].getWidth(null) - this.width) / 2;
+                Main.drawReflectImage(img[1][(int) this.animation_state], g, (int) this.x - offset, (int) this.y);
             } else {
-                int offset = (img[0][(int) this.animation_state % 4].getWidth(null) - this.width) / 2;
-                Main.drawReflectImage(img[0][(int) this.animation_state % 4], g, (int) this.x - offset, (int) this.y);
+                int offset = (img[0][(int) this.animation_state].getWidth(null) - this.width) / 2;
+                Main.drawReflectImage(img[0][(int) this.animation_state], g, (int) this.x - offset, (int) this.y);
             }
         }
     }
 
     public void update(int time) {
         // update player graphic stats
-        if (hit) {
+        if (isHitting) {
             this.animation_state += (float) time / 100;
-        } else if (moving) {
+            if (this.animation_state >= 5) {
+                this.setHitting(false);
+            }
+        } else if (isMoving) {
             this.animation_state += (float) time / 100;
+            this.animation_state %= 6;
         } else {
             this.animation_state += (float) time / 150;
-        }
-
-        if ((int) this.animation_state % 5 != 2 && this.lock) {
-            this.lock = false;
-            System.out.println(this.lock);
+            this.animation_state %= 4;
         }
 
         overlap(map.monster);
@@ -145,15 +155,15 @@ public class Player extends Entity {
         // if no or opposite keys are pressed the player doesnt move
         if (dir_count == 0 || dir_count > 2 || this.directions[0] && this.directions[2] || this.directions[1] && this.directions[3]) {
             // opposite keys are pressed => player doesnt move
-            if (moving) {
-                moving = false;
+            if (isMoving) {
+                isMoving = false;
                 animation_state = 0;
             }
             return;
         }
 
-        if (!moving) {
-            moving = true;
+        if (!isMoving) {
+            isMoving = true;
             animation_state = 0;
         }
         if (this.directions[3]) {
@@ -220,7 +230,8 @@ public class Player extends Entity {
     }
 
     public boolean attack(Entity monster) {
-        if (getHit() && (int) animation_state % 5 == 2 && !lock) {
+        if (getHitting() && (int) animation_state % 5 == 2 && !hasDamaged) {
+            this.hasDamaged = true;
             monster.setHealth(monster.getHealth() - this.attackdamage);
             System.out.println("monster health: " + monster.getHealth());
             return true;
