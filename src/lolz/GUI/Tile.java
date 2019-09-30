@@ -94,6 +94,10 @@ public class Tile {
         this.topTiles = new ArrayList<>();
     }
 
+    public String toString() {
+        return this.baseTiles.toString() + "  |  " + this.topTiles.toString();
+    }
+
     private static Image load_image(String path) throws IOException {
         return ImageIO.read(new File(path)).getScaledInstance(Main.TILE_SIZE, Main.TILE_SIZE, Image.SCALE_SMOOTH);
     }

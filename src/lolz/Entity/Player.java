@@ -32,18 +32,19 @@ public class Player extends Entity {
         this.y = y;
         this.directions = new boolean[4];
         this.img = new Image[3][6];
+        this.width = 75;
         try {
             for (int i = 0; i < 4; i++) {
-                img[0][i] = ImageIO.read(new File("res/Individual Sprites/adventurer-idle-0" + i + ".png")).getScaledInstance(45, -1, Image.SCALE_SMOOTH);
+                img[0][i] = ImageIO.read(new File("res/Individual Sprites/adventurer-idle-0" + i + ".png")).getScaledInstance(this.width, -1, Image.SCALE_SMOOTH);
             }
-            for (int i = 0; i<6; i++){
-                img[1][i] = ImageIO.read(new File("res/Individual Sprites/adventurer-run-0" + i + ".png")).getScaledInstance(45, -1, Image.SCALE_SMOOTH);
+            for (int i = 0; i < 6; i++) {
+                img[1][i] = ImageIO.read(new File("res/Individual Sprites/adventurer-run-0" + i + ".png")).getScaledInstance(this.width, -1, Image.SCALE_SMOOTH);
             }
-            for (int i = 0; i<5; i++){
-                img[2][i] = ImageIO.read(new File("res/Individual Sprites/adventurer-attack1-0" + i + ".png")).getScaledInstance(45, -1, Image.SCALE_SMOOTH);
+            for (int i = 0; i < 5; i++) {
+                img[2][i] = ImageIO.read(new File("res/Individual Sprites/adventurer-attack1-0" + i + ".png")).getScaledInstance(this.width, -1, Image.SCALE_SMOOTH);
             }
-        } catch(Exception e){
-
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         /*
         try {
@@ -58,8 +59,6 @@ public class Player extends Entity {
         } catch (IOException e) {
             e.printStackTrace();
         } */
-
-        this.width = img[0][0].getWidth(null);
         this.height = img[0][0].getHeight(null);
 
         // rearrange y (given x and y values are for the bottom left corner)
@@ -93,7 +92,7 @@ public class Player extends Entity {
     }
 
     public void paint(Graphics g) {
-
+        // System.out.println(map.get_tile_at((int) (this.x), (int) (this.y + this.height)).toString());
         // paint player
         g.setColor(Color.BLACK);
         if (getHit()) { // is able to hit while running and while standing still -> always checks if hit is true regardless of moving
@@ -115,7 +114,7 @@ public class Player extends Entity {
         }
 
         // update player graphic width and height
-        if (old_state < (int) this.animation_state){
+        if (old_state < (int) this.animation_state) {
             this.animation_state %= 4;
             int picIndex = 0;
             if (getHit()) { // is able to hit while running and while standing still -> always checks if hit is true regardless of moving
@@ -199,7 +198,7 @@ public class Player extends Entity {
     }
 
     // check if any given monster is "touching" the hero or rather if the hero is touching it
-    public boolean overlap(Monster monster){
+    private boolean overlap(Monster monster) {
         for (int i : new int[]{0, monster.getWidth()}) { //checking for the left and right border of the monster's image
             for (int j : new int[]{0, monster.getWidth()}) { //checking for the top and bottom border of the monster's image
                 if (this.x <= monster.getX() + i && monster.getX() + i <= this.x + this.width && this.y <= monster.getY() + j && monster.getY() + j <= this.y + this.height) { //if any of the monster's boundaries can be found between any of the hero's boundaries, they touch
