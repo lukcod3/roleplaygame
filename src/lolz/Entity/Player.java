@@ -20,6 +20,7 @@ public class Player extends Entity {
     public Image[][] inventoryImages;
     public Image empty;
     public boolean turnedRight;
+    public boolean lock;
 
     // Ingame stats
     public int maxHealth, health, attackdamage, abilitypower, armor, level, exp, gold;
@@ -32,7 +33,11 @@ public class Player extends Entity {
         this.x = x;
         this.y = y;
         this.directions = new boolean[4];
-        this.img = new Image[3][6];
+        this.img = new Image[3][];
+        this.img[0] = new Image[4];
+        this.img[1] = new Image[6];
+        this.img[2] = new Image[5];
+
         this.width = 45;
         try {
             for (int i = 0; i < 4; i++) {
@@ -86,19 +91,19 @@ public class Player extends Entity {
         g.setColor(Color.BLACK);
         if(turnedRight){
             if (getHit()) { // is able to hit while running and while standing still -> always checks if hit is true regardless of moving
-                g.drawImage(img[2][(int) this.animation_state], (int) this.x, (int) this.y, null); // set player's animation to hit animation
+                g.drawImage(img[2][(int) this.animation_state%5], (int) this.x, (int) this.y, null); // set player's animation to hit animation
             } else if (moving) {
-                g.drawImage(img[1][(int) this.animation_state], (int) this.x, (int) this.y, null);
+                g.drawImage(img[1][(int) this.animation_state%6], (int) this.x, (int) this.y, null);
             } else {
-                g.drawImage(img[0][(int) this.animation_state], (int) this.x, (int) this.y, null);
+                g.drawImage(img[0][(int) this.animation_state%4], (int) this.x, (int) this.y, null);
             }
         }else{
             if (getHit()) { // is able to hit while running and while standing still -> always checks if hit is true regardless of moving
-                Main.drawReflectImage(img[2][(int) this.animation_state], g, (int) this.x, (int) this.y);
+                Main.drawReflectImage(img[2][(int) this.animation_state%5], g, (int) this.x, (int) this.y);
             } else if (moving) {
-                Main.drawReflectImage(img[1][(int) this.animation_state], g, (int) this.x, (int) this.y);
+                Main.drawReflectImage(img[1][(int) this.animation_state%6], g, (int) this.x, (int) this.y);
             } else {
-                Main.drawReflectImage(img[0][(int) this.animation_state], g, (int) this.x, (int) this.y);
+                Main.drawReflectImage(img[0][(int) this.animation_state%4], g, (int) this.x, (int) this.y);
             }
         }
     }
@@ -107,7 +112,7 @@ public class Player extends Entity {
         // update player graphic stats
         int old_state = (int) this.animation_state;
         if(hit){
-            this.animation_state += (float) time / 200;
+            this.animation_state += (float) time / 100;
         }else if (moving) {
             this.animation_state += (float) time / 100;
         } else {
@@ -116,21 +121,25 @@ public class Player extends Entity {
 
         // update player graphic width and height
         if (old_state < (int) this.animation_state) {
-            this.animation_state %= 4;
-            int picIndex = 0;
+            this.animation_state %= 60;
             if (getHit()) { // is able to hit while running and while standing still -> always checks if hit is true regardless of moving
-                picIndex = 2;
+                this.height = img[2][(int) this.animation_state%5].getHeight(null);
+                this.width = img[2][(int) this.animation_state%5].getWidth(null);
             } else if (moving) {
-                picIndex = 1;
+                this.height = img[1][(int) this.animation_state%6].getHeight(null);
+                this.width = img[1][(int) this.animation_state%6].getWidth(null);
             }
-            this.height = img[picIndex][(int) this.animation_state].getHeight(null);
-            this.width = img[picIndex][(int) this.animation_state].getWidth(null);
         }
+
+        if ((int) this.animation_state%5 != 2 && this.lock) {
+            this.lock = false;
+            System.out.println(this.lock);
+        }
+
+        overlap(map.monster);
 
         // old
         // this.animation_state %= 4;
-
-        overlap(map.monster);
 
         // count how many directions are active
         int dir_count = 0;
@@ -204,7 +213,7 @@ public class Player extends Entity {
     }
 
     // check if any given monster is "touching" the hero or rather if the hero is touching it
-    private boolean overlap(Monster monster) {
+    public boolean overlap(Entity monster) {
         for (int i : new int[]{0, monster.getWidth()}) { //checking for the left and right border of the monster's image
             for (int j : new int[]{0, monster.getWidth()}) { //checking for the top and bottom border of the monster's image
                 if (this.x <= monster.getX() + i && monster.getX() + i <= this.x + this.width && this.y <= monster.getY() + j && monster.getY() + j <= this.y + this.height) { //if any of the monster's boundaries can be found between any of the hero's boundaries, they touch
@@ -212,6 +221,15 @@ public class Player extends Entity {
                     return true;
                 }
             }
+        }
+        return false;
+    }
+
+    public boolean attack(Entity monster) {
+        if (getHit() && (int) animation_state%5 == 2 && !lock) {
+            monster.setHealth(monster.getHealth() - this.attackdamage);
+            System.out.println("monster health: " + monster.getHealth());
+            return true;
         }
         return false;
     }

@@ -97,7 +97,7 @@ public class GUI extends JPanel {
                 map.player.setHit(pressed);
                 if(!schongeschlagen) {
                     //System.out.println(map.player.animation_state);
-                    map.player.animation_state = 0;
+                    map.player.animation_state = 1.5;
                     schongeschlagen = true;
                 }
                 if(pressed){
@@ -163,19 +163,19 @@ public class GUI extends JPanel {
 
             if(this.map.player.turnedRight){
                 if (this.map.player.getHit()) { // is able to hit while running and while standing still -> always checks if hit is true regardless of moving
-                    g.drawImage(this.map.player.img[2][(int) this.map.player.animation_state].getScaledInstance(120, -1, Image.SCALE_DEFAULT), xPositionImageInventory, yPositionImageInventory, null); // set player's animation to hit animation
+                    g.drawImage(this.map.player.img[2][(int) this.map.player.animation_state%5].getScaledInstance(120, -1, Image.SCALE_DEFAULT), xPositionImageInventory, yPositionImageInventory, null); // set player's animation to hit animation
                 } else if (this.map.player.moving) {
-                    g.drawImage(this.map.player.img[1][(int) this.map.player.animation_state].getScaledInstance(120, -1, Image.SCALE_DEFAULT), xPositionImageInventory, yPositionImageInventory, null);
+                    g.drawImage(this.map.player.img[1][(int) this.map.player.animation_state%6].getScaledInstance(120, -1, Image.SCALE_DEFAULT), xPositionImageInventory, yPositionImageInventory, null);
                 } else {
-                    g.drawImage(this.map.player.img[0][(int) this.map.player.animation_state].getScaledInstance(120, -1, Image.SCALE_DEFAULT), xPositionImageInventory, yPositionImageInventory, null);
+                    g.drawImage(this.map.player.img[0][(int) this.map.player.animation_state%4].getScaledInstance(120, -1, Image.SCALE_DEFAULT), xPositionImageInventory, yPositionImageInventory, null);
                 }
             }else{
                 if (this.map.player.getHit()) { // is able to hit while running and while standing still -> always checks if hit is true regardless of moving
-                    Main.drawReflectImage(this.map.player.img[2][(int) this.map.player.animation_state].getScaledInstance(120, -1, Image.SCALE_DEFAULT), g, xPositionImageInventory, yPositionImageInventory);
+                    Main.drawReflectImage(this.map.player.img[2][(int) this.map.player.animation_state%5].getScaledInstance(120, -1, Image.SCALE_DEFAULT), g, xPositionImageInventory, yPositionImageInventory);
                 } else if (this.map.player.moving) {
-                    Main.drawReflectImage(this.map.player.img[1][(int) this.map.player.animation_state].getScaledInstance(120, -1, Image.SCALE_DEFAULT), g, xPositionImageInventory, yPositionImageInventory);
+                    Main.drawReflectImage(this.map.player.img[1][(int) this.map.player.animation_state%6].getScaledInstance(120, -1, Image.SCALE_DEFAULT), g, xPositionImageInventory, yPositionImageInventory);
                 } else {
-                    Main.drawReflectImage(this.map.player.img[0][(int) this.map.player.animation_state].getScaledInstance(120, -1, Image.SCALE_DEFAULT), g, xPositionImageInventory, yPositionImageInventory);
+                    Main.drawReflectImage(this.map.player.img[0][(int) this.map.player.animation_state%4].getScaledInstance(120, -1, Image.SCALE_DEFAULT), g, xPositionImageInventory, yPositionImageInventory);
                 }
             }
             /*

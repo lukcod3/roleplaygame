@@ -31,8 +31,12 @@ public abstract class Entity {
         return health;
     }
 
-    private void setHealth(int health) {
-        this.health = health;
+    public void setHealth(int health) {
+        if (health >= 0) {
+            this.health = health;
+        } else {
+            this.health = 0;
+        }
     }
 
     private void setMaxHealth(int maxHealth) {
