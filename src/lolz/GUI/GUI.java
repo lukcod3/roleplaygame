@@ -64,11 +64,11 @@ public class GUI extends JPanel {
         }
 
         //add the key binding for the players attack (with the space key)
-        this.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_SPACE, 0, false), KeyEvent.VK_SPACE + "Pressed");
-        this.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_SPACE, 0, true), KeyEvent.VK_SPACE + "Released");
+        this.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_J, 0, false), KeyEvent.VK_J + "Pressed");
+        this.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_J, 0, true), KeyEvent.VK_J + "Released");
 
-        this.getActionMap().put(KeyEvent.VK_SPACE + "Pressed", generateOtherKeyAction(true));
-        this.getActionMap().put(KeyEvent.VK_SPACE + "Released", generateOtherKeyAction(false));
+        this.getActionMap().put(KeyEvent.VK_J + "Pressed", generateOtherKeyAction(true));
+        this.getActionMap().put(KeyEvent.VK_J + "Released", generateOtherKeyAction(false));
     }
 
     private Action generateKeyAction(final int dir, final boolean pressed) {

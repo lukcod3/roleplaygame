@@ -21,6 +21,7 @@ public class Player extends Entity {
     public int[] equipment; // 1 is hat, 2 is t-shirt, 3 is sword, 4 is shoes, 5 is ring, 6 is necklace, 7 is belt, 8-11 is depot
     public Image[][] inventoryImages;
     public Image empty;
+    public boolean turnedRight;
 
     // Ingame stats
     private int maxHealth, health, attackdamage, abilitypower, armor, level, exp, gold;
@@ -28,13 +29,24 @@ public class Player extends Entity {
     public Player(Map map, int x, int y) {
         // setup player stats
         super(x, y, 100, 10, 30, 0.15);
+        turnedRight = true;
         this.map = map;
         this.x = x;
         this.y = y;
         this.directions = new boolean[4];
-        this.img = new Image[2][4];
-        try{
-            for
+        this.img = new Image[3][6];
+        try {
+            for (int i = 0; i < 4; i++) {
+                img[0][i] = ImageIO.read(new File("res/Individual Sprites/adventurer-idle-0" + i + ".png")).getScaledInstance(45, -1, Image.SCALE_SMOOTH);
+            }
+            for (int i = 0; i<6; i++){
+                img[1][i] = ImageIO.read(new File("res/Individual Sprites/adventurer-run-0" + i + ".png")).getScaledInstance(45, -1, Image.SCALE_SMOOTH);
+            }
+            for (int i = 0; i<5; i++){
+                img[2][i] = ImageIO.read(new File("res/Individual Sprites/adventurer-attack1-0" + i + ".png")).getScaledInstance(45, -1, Image.SCALE_SMOOTH);
+            }
+        } catch(Exception e){
+
         }
         /*try {
             for (int i = 0; i < 4; i++) {
@@ -87,7 +99,7 @@ public class Player extends Entity {
         // paint player
         g.setColor(Color.BLACK);
         if (getHit()) { // is able to hit while running and while standing still -> always checks if hit is true regardless of moving
-            g.drawImage(hitImage, (int) this.x, (int) this.y, null); // set player's animation to hit animation
+            g.drawImage(img[2][(int) this.animation_state], (int) this.x, (int) this.y, null); // set player's animation to hit animation
         } else if (moving) {
             g.drawImage(img[1][(int) this.animation_state], (int) this.x, (int) this.y, null);
         } else {
@@ -214,7 +226,7 @@ public class Player extends Entity {
     }
 
     // check if any given monster is "touching" the hero or rather if the hero is touching it
-    private boolean overlap(Monster monster) {
+    public boolean overlap(Monster monster){
         for (int i : new int[]{0, monster.getWidth()}) { //checking for the left and right border of the monster's image
             for (int j : new int[]{0, monster.getWidth()}) { //checking for the top and bottom border of the monster's image
                 if (this.x <= monster.getX() + i && monster.getX() + i <= this.x + this.width && this.y <= monster.getY() + j && monster.getY() + j <= this.y + this.height) { //if any of the monster's boundaries can be found between any of the hero's boundaries, they touch
