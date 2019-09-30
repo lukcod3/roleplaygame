@@ -47,19 +47,7 @@ public class Player extends Entity {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        /*
-        try {
-            for (int i = 0; i < 4; i++) {
-                img[0][i] = ImageIO.read(new File("res/tiles/" + this.base_char + "_idle_anim_f" + i + ".png")).getScaledInstance(45, -1, Image.SCALE_SMOOTH);
-            }
-            for (int i = 0; i < 4; i++) {
-                img[1][i] = ImageIO.read(new File("res/tiles/" + this.base_char + "_run_anim_f" + i + ".png")).getScaledInstance(45, -1, Image.SCALE_SMOOTH);
-            }
-            // read and assign image for hit animation to attribute hitImage
-            hitImage = ImageIO.read(new File("res/tiles/" + this.base_char + "_hit_anim_f0.png")).getScaledInstance(45, -1, Image.SCALE_SMOOTH);
-        } catch (IOException e) {
-            e.printStackTrace();
-        } */
+
         this.height = img[0][0].getHeight(null);
 
         // rearrange y (given x and y values are for the bottom left corner)
