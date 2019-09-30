@@ -15,7 +15,7 @@ import java.awt.event.MouseListener;
 public class GUI extends JPanel {
     private Image img;
     public Map map;
-    public boolean statsShown, x;
+    public boolean statsShown, schongeschlagen;
 
     //public Hub hub;
     public GUI() {
@@ -95,16 +95,16 @@ public class GUI extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 // change the players directions
                 map.player.setHit(pressed);
-                if(!x) {
+                if(!schongeschlagen) {
                     //System.out.println(map.player.animation_state);
                     map.player.animation_state = 0;
-                    x = true;
+                    schongeschlagen = true;
                 }
                 if(pressed){
                     map.player.speed = 0.05;
                 }else{
                     map.player.speed = 0.15;
-                    x = false;
+                    schongeschlagen = false;
 
                 }
             }
@@ -128,56 +128,15 @@ public class GUI extends JPanel {
         map.paint(g);
 
         // paint stats
-        this.printStatsneu(g);
+        this.printStats(g);
 
         // sync graphic
         Toolkit.getDefaultToolkit().sync();
     }
 
-    private void printStats(Graphics g) {
-        // paint player stats
-        if (this.statsShown) {
 
-            Color myColor = new Color(56, 56, 56, 165);
-            Font titleF = new Font("SansSerif", Font.BOLD, 25);
-            Font statsF = new Font("SansSerif", Font.PLAIN, 15);
-            g.drawRect(150, 50, 660, 440);
-            g.setColor(myColor);
-            g.fillRect(150, 50, 660, 440);
-            g.setFont(titleF);
-            g.setColor(Color.white);
-            g.drawString("Profil", 260, 80);
-            g.drawString("Inventar", 570, 80);
-            g.setFont(statsF);
-            g.drawString("Leben............................(" + this.map.player.getHealth() + "/" + this.map.player.getMaxHealth() + ")", 200, 130);
-            g.drawString("Angriffsschaden....................." + this.map.player.getDamage(), 200, 160);
-            g.drawString("Fähigkeitsstärke....................." + this.map.player.abilitypower, 200, 190);
-            g.drawString("Rüstung..................................." + this.map.player.getArmor(), 200, 220);
-            g.drawString("Gold........................................" +this.map.player.gold, 200, 330);
-            g.drawString("Level............." + this.map.player.level + "(" + this.map.player.exp + " XP/" + 200 + " XP)", 200, 360); // needs formula for maxXP
-
-            if (this.map.player.moving) {
-                g.drawImage((this.map.player.img[1][(int) this.map.player.animation_state]).getScaledInstance(120, -1, Image.SCALE_DEFAULT), 560, 110, null);
-            } else {
-                g.drawImage((this.map.player.img[0][(int) this.map.player.animation_state]).getScaledInstance(120, -1, Image.SCALE_DEFAULT), 560, 110, null);
-            }
-            g.drawImage(this.map.player.inventoryImages[0][0].getScaledInstance(60, -1, Image.SCALE_DEFAULT), 590, 100, null);
-            g.drawImage(this.map.player.inventoryImages[1][0].getScaledInstance(60, -1, Image.SCALE_DEFAULT), 500, 180, null);
-            g.drawImage(this.map.player.inventoryImages[2][0].getScaledInstance(60, -1, Image.SCALE_DEFAULT), 500, 255, null);
-            g.drawImage(this.map.player.inventoryImages[3][0].getScaledInstance(60, -1, Image.SCALE_DEFAULT), 590, 330, null);
-            g.drawImage(this.map.player.inventoryImages[4][0].getScaledInstance(60, -1, Image.SCALE_DEFAULT), 680, 155, null);
-            g.drawImage(this.map.player.inventoryImages[5][0].getScaledInstance(60, -1, Image.SCALE_DEFAULT), 680, 230, null);
-            g.drawImage(this.map.player.inventoryImages[6][0].getScaledInstance(60, -1, Image.SCALE_DEFAULT), 680, 305, null);
-            g.drawImage(this.map.player.inventoryImages[6][0].getScaledInstance(60, -1, Image.SCALE_DEFAULT), 680, 305, null);
-            g.drawImage(this.map.player.empty.getScaledInstance(60, -1, Image.SCALE_DEFAULT), 500, 420, null);
-            g.drawImage(this.map.player.empty.getScaledInstance(60, -1, Image.SCALE_DEFAULT), 561, 420, null);
-            g.drawImage(this.map.player.empty.getScaledInstance(60, -1, Image.SCALE_DEFAULT), 622, 420, null);
-            g.drawImage(this.map.player.empty.getScaledInstance(60, -1, Image.SCALE_DEFAULT), 683, 420, null);
-            
-        }
-    }
     
-    private void printStatsneu(Graphics g){
+    private void printStats(Graphics g){
         int xPositionImageInventory = 560;
         int yPositionImageInventory = 185;
 
