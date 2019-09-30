@@ -38,7 +38,7 @@ public class Player extends Entity {
         this.img[1] = new Image[6];
         this.img[2] = new Image[5];
 
-        this.width = 45;
+        this.width = 70;
         try {
             for (int i = 0; i < 4; i++) {
                 img[0][i] = ImageIO.read(new File("res/Individual Sprites/adventurer-idle-0" + i + ".png")).getScaledInstance(this.width, -1, Image.SCALE_SMOOTH);
@@ -52,7 +52,7 @@ public class Player extends Entity {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
+        this.width *= 2.5/4.0;
         this.height = img[0][0].getHeight(null);
 
         // rearrange y (given x and y values are for the bottom left corner)
@@ -89,49 +89,36 @@ public class Player extends Entity {
         // System.out.println(map.get_tile_at((int) (this.x), (int) (this.y + this.height)).toString());
         // paint player
         g.setColor(Color.BLACK);
-        if(turnedRight){
+        if (turnedRight) {
             if (getHit()) { // is able to hit while running and while standing still -> always checks if hit is true regardless of moving
-                g.drawImage(img[2][(int) this.animation_state%5], (int) this.x, (int) this.y, null); // set player's animation to hit animation
+                g.drawImage(img[2][(int) this.animation_state % 5], (int) this.x, (int) this.y, null); // set player's animation to hit animation
             } else if (moving) {
-                g.drawImage(img[1][(int) this.animation_state%6], (int) this.x, (int) this.y, null);
+                g.drawImage(img[1][(int) this.animation_state % 6], (int) this.x, (int) this.y, null);
             } else {
-                g.drawImage(img[0][(int) this.animation_state%4], (int) this.x, (int) this.y, null);
+                g.drawImage(img[0][(int) this.animation_state % 4], (int) this.x, (int) this.y, null);
             }
-        }else{
+        } else {
             if (getHit()) { // is able to hit while running and while standing still -> always checks if hit is true regardless of moving
-                Main.drawReflectImage(img[2][(int) this.animation_state%5], g, (int) this.x, (int) this.y);
+                Main.drawReflectImage(img[2][(int) this.animation_state % 5], g, (int) this.x, (int) this.y);
             } else if (moving) {
-                Main.drawReflectImage(img[1][(int) this.animation_state%6], g, (int) this.x, (int) this.y);
+                Main.drawReflectImage(img[1][(int) this.animation_state % 6], g, (int) this.x, (int) this.y);
             } else {
-                Main.drawReflectImage(img[0][(int) this.animation_state%4], g, (int) this.x, (int) this.y);
+                Main.drawReflectImage(img[0][(int) this.animation_state % 4], g, (int) this.x, (int) this.y);
             }
         }
     }
 
     public void update(int time) {
         // update player graphic stats
-        int old_state = (int) this.animation_state;
-        if(hit){
+        if (hit) {
             this.animation_state += (float) time / 100;
-        }else if (moving) {
+        } else if (moving) {
             this.animation_state += (float) time / 100;
         } else {
             this.animation_state += (float) time / 150;
         }
 
-        // update player graphic width and height
-        if (old_state < (int) this.animation_state) {
-            this.animation_state %= 60;
-            if (getHit()) { // is able to hit while running and while standing still -> always checks if hit is true regardless of moving
-                this.height = img[2][(int) this.animation_state%5].getHeight(null);
-                this.width = img[2][(int) this.animation_state%5].getWidth(null);
-            } else if (moving) {
-                this.height = img[1][(int) this.animation_state%6].getHeight(null);
-                this.width = img[1][(int) this.animation_state%6].getWidth(null);
-            }
-        }
-
-        if ((int) this.animation_state%5 != 2 && this.lock) {
+        if ((int) this.animation_state % 5 != 2 && this.lock) {
             this.lock = false;
             System.out.println(this.lock);
         }
@@ -163,9 +150,9 @@ public class Player extends Entity {
             moving = true;
             animation_state = 0;
         }
-        if(this.directions[3]){
+        if (this.directions[3]) {
             turnedRight = true;
-        }else if(this.directions[1]){
+        } else if (this.directions[1]) {
             turnedRight = false;
         }
 
@@ -226,7 +213,7 @@ public class Player extends Entity {
     }
 
     public boolean attack(Entity monster) {
-        if (getHit() && (int) animation_state%5 == 2 && !lock) {
+        if (getHit() && (int) animation_state % 5 == 2 && !lock) {
             monster.setHealth(monster.getHealth() - this.attackdamage);
             System.out.println("monster health: " + monster.getHealth());
             return true;
