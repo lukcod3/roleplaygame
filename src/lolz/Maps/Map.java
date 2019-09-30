@@ -70,7 +70,7 @@ public abstract class Map {
         int y = 0;
         int entitiy_index = 0;
         while (y < this.tiles.length) {
-            while (entitiy_index < this.entities.size() && (int) (this.entities.get(0).y / Main.TILE_SIZE) + 1 == y) {
+            while (entitiy_index < this.entities.size() && (int) (this.entities.get(entitiy_index).y / Main.TILE_SIZE) + 1 == y) {
                 this.entities.get(entitiy_index).paint(g);
                 entitiy_index++;
             }
@@ -81,6 +81,9 @@ public abstract class Map {
             }
             y++;
         }
+
+        // translate back
+        g.translate((int) (this.player.x - Main.WIDTH / 2), (int) (this.player.y - Main.HEIGHT / 2));
 
     }
 

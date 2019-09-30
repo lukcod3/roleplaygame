@@ -41,30 +41,6 @@ public class Main {
         frame.setVisible(true);
         frame.setSize(WIDTH, HEIGHT);
 
-        // setup stats, press 'i' to open stats
-        frame.addKeyListener(new KeyListener() {
-            @Override
-            public void keyTyped(KeyEvent e) {
-
-            }
-
-            @Override
-            public void keyPressed(KeyEvent e) {
-
-            }
-
-            @Override
-            public void keyReleased(KeyEvent e) {
-                if (e.getKeyChar() == 'i') {
-                    if (gui.map.player.statsShown) {
-                        frame.repaint();
-                    }
-                    gui.map.player.statsShown = !gui.map.player.statsShown;
-                }
-            }
-
-        });
-
         // measure time for game logic
         long time0 = System.currentTimeMillis();
 

@@ -1,30 +1,27 @@
 package lolz.Entity;
 
-import lolz.Entity.Monster;
 import lolz.Maps.Map;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.io.File;
-import java.io.IOException;
 
 public class Player extends Entity {
     private Map map;
     public volatile boolean[] directions; // 0 is up, 1 is left, 2 is down, 3 is right
-    private Image[][] img;
-    private Image hitImage; // Image for hit animation didn't belong to the Image array, so it's assigned to a new attribute
-    private boolean hit; // variable true if user makes character hit
-    public boolean moving, statsShown;
-    private double animation_state;
-    private final String base_char = "elf_m";
-    public Graphics gStats;
+    public Image[][] img;
+    public Image hitImage; // Image for hit animation didn't belong to the Image array, so it's assigned to a new attribute
+    public boolean hit; // variable true if user makes character hit
+    public boolean moving;
+    public double animation_state;
+    public final String base_char = "elf_m";
     public int[] equipment; // 1 is hat, 2 is t-shirt, 3 is sword, 4 is shoes, 5 is ring, 6 is necklace, 7 is belt, 8-11 is depot
     public Image[][] inventoryImages;
     public Image empty;
     public boolean turnedRight;
 
     // Ingame stats
-    private int maxHealth, health, attackdamage, abilitypower, armor, level, exp, gold;
+    public int maxHealth, health, attackdamage, abilitypower, armor, level, exp, gold;
 
     public Player(Map map, int x, int y) {
         // setup player stats
@@ -48,7 +45,8 @@ public class Player extends Entity {
         } catch(Exception e){
 
         }
-        /*try {
+        /*
+        try {
             for (int i = 0; i < 4; i++) {
                 img[0][i] = ImageIO.read(new File("res/tiles/" + this.base_char + "_idle_anim_f" + i + ".png")).getScaledInstance(45, -1, Image.SCALE_SMOOTH);
             }
@@ -59,8 +57,8 @@ public class Player extends Entity {
             hitImage = ImageIO.read(new File("res/tiles/" + this.base_char + "_hit_anim_f0.png")).getScaledInstance(45, -1, Image.SCALE_SMOOTH);
         } catch (IOException e) {
             e.printStackTrace();
-        }
-        */
+        } */
+
         this.width = img[0][0].getWidth(null);
         this.height = img[0][0].getHeight(null);
 
@@ -105,57 +103,32 @@ public class Player extends Entity {
         } else {
             g.drawImage(img[0][(int) this.animation_state], (int) this.x, (int) this.y, null);
         }
-
-        // paint player stats
-        if (statsShown) {
-
-            Color myColor = new Color(56, 56, 56, 165);
-            Font titleF = new Font("SansSerif", Font.BOLD, 25);
-            Font statsF = new Font("SansSerif", Font.PLAIN, 15);
-            gStats.drawRect(150, 50, 660, 440);
-            gStats.setColor(myColor);
-            gStats.fillRect(150, 50, 660, 440);
-            gStats.setFont(titleF);
-            gStats.setColor(Color.white);
-            gStats.drawString("Profil", 260, 80);
-            gStats.drawString("Inventar", 570, 80);
-            gStats.setFont(statsF);
-            gStats.drawString("Leben............................(" + health + "/" + maxHealth + ")", 200, 130);
-            gStats.drawString("Angriffsschaden....................." + attackdamage, 200, 160);
-            gStats.drawString("Fähigkeitsstärke....................." + abilitypower, 200, 190);
-            gStats.drawString("Rüstung..................................." + armor, 200, 220);
-            gStats.drawString("Gold........................................" + gold, 200, 330);
-            gStats.drawString("Level............." + level + "(" + exp + " XP/" + 200 + " XP)", 200, 360); // needs formula for maxXP
-
-            if (moving) {
-                gStats.drawImage((img[1][(int) this.animation_state]).getScaledInstance(120, -1, Image.SCALE_DEFAULT), 560, 110, null);
-            } else {
-                gStats.drawImage((img[0][(int) this.animation_state]).getScaledInstance(120, -1, Image.SCALE_DEFAULT), 560, 110, null);
-            }
-            gStats.drawImage(inventoryImages[0][0].getScaledInstance(60, -1, Image.SCALE_DEFAULT), 590, 100, null);
-            gStats.drawImage(inventoryImages[1][0].getScaledInstance(60, -1, Image.SCALE_DEFAULT), 500, 180, null);
-            gStats.drawImage(inventoryImages[2][0].getScaledInstance(60, -1, Image.SCALE_DEFAULT), 500, 255, null);
-            gStats.drawImage(inventoryImages[3][0].getScaledInstance(60, -1, Image.SCALE_DEFAULT), 590, 330, null);
-            gStats.drawImage(inventoryImages[4][0].getScaledInstance(60, -1, Image.SCALE_DEFAULT), 680, 155, null);
-            gStats.drawImage(inventoryImages[5][0].getScaledInstance(60, -1, Image.SCALE_DEFAULT), 680, 230, null);
-            gStats.drawImage(inventoryImages[6][0].getScaledInstance(60, -1, Image.SCALE_DEFAULT), 680, 305, null);
-            gStats.drawImage(inventoryImages[6][0].getScaledInstance(60, -1, Image.SCALE_DEFAULT), 680, 305, null);
-            gStats.drawImage(empty.getScaledInstance(60, -1, Image.SCALE_DEFAULT), 500, 420, null);
-            gStats.drawImage(empty.getScaledInstance(60, -1, Image.SCALE_DEFAULT), 561, 420, null);
-            gStats.drawImage(empty.getScaledInstance(60, -1, Image.SCALE_DEFAULT), 622, 420, null);
-            gStats.drawImage(empty.getScaledInstance(60, -1, Image.SCALE_DEFAULT), 683, 420, null);
-
-        }
     }
 
     public void update(int time) {
         // update player graphic stats
+        int old_state = (int) this.animation_state;
         if (moving) {
             this.animation_state += (float) time / 100;
         } else {
             this.animation_state += (float) time / 150;
         }
-        this.animation_state %= 4;
+
+        // update player graphic width and height
+        if (old_state < (int) this.animation_state){
+            this.animation_state %= 4;
+            int picIndex = 0;
+            if (getHit()) { // is able to hit while running and while standing still -> always checks if hit is true regardless of moving
+                picIndex = 2;
+            } else if (moving) {
+                picIndex = 1;
+            }
+            this.height = img[picIndex][(int) this.animation_state].getHeight(null);
+            this.width = img[picIndex][(int) this.animation_state].getWidth(null);
+        }
+
+        // old
+        // this.animation_state %= 4;
 
         overlap(map.monster);
 
