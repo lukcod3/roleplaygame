@@ -15,7 +15,7 @@ import java.awt.event.MouseListener;
 public class GUI extends JPanel {
     private Image img;
     public Map map;
-    public boolean statsShown;
+    public boolean statsShown, x;
 
     //public Hub hub;
     public GUI() {
@@ -95,10 +95,17 @@ public class GUI extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 // change the players directions
                 map.player.setHit(pressed);
+                if(!x) {
+                    //System.out.println(map.player.animation_state);
+                    map.player.animation_state = 0;
+                    x = true;
+                }
                 if(pressed){
                     map.player.speed = 0.05;
                 }else{
                     map.player.speed = 0.15;
+                    x = false;
+
                 }
             }
         };

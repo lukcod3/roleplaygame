@@ -118,7 +118,9 @@ public class Player extends Entity {
     public void update(int time) {
         // update player graphic stats
         int old_state = (int) this.animation_state;
-        if (moving) {
+        if(hit){
+            this.animation_state += (float) time / 200;
+        }else if (moving) {
             this.animation_state += (float) time / 100;
         } else {
             this.animation_state += (float) time / 150;
