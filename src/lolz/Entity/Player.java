@@ -20,6 +20,7 @@ public class Player extends Entity {
     public Image[][] inventoryImages;
     public Image empty;
     public boolean turnedRight;
+    public boolean lock;
 
     // Ingame stats
     public int maxHealth, health, attackdamage, abilitypower, armor, level, exp, gold;
@@ -130,10 +131,15 @@ public class Player extends Entity {
             }
         }
 
-        // old
-        // this.animation_state %= 4;
+        if ((int) this.animation_state%5 != 2 && this.lock) {
+            this.lock = false;
+            System.out.println(this.lock);
+        }
 
         overlap(map.monster);
+
+        // old
+        // this.animation_state %= 4;
 
         // count how many directions are active
         int dir_count = 0;
@@ -207,7 +213,7 @@ public class Player extends Entity {
     }
 
     // check if any given monster is "touching" the hero or rather if the hero is touching it
-    private boolean overlap(Monster monster) {
+    public boolean overlap(Entity monster) {
         for (int i : new int[]{0, monster.getWidth()}) { //checking for the left and right border of the monster's image
             for (int j : new int[]{0, monster.getWidth()}) { //checking for the top and bottom border of the monster's image
                 if (this.x <= monster.getX() + i && monster.getX() + i <= this.x + this.width && this.y <= monster.getY() + j && monster.getY() + j <= this.y + this.height) { //if any of the monster's boundaries can be found between any of the hero's boundaries, they touch
@@ -215,6 +221,15 @@ public class Player extends Entity {
                     return true;
                 }
             }
+        }
+        return false;
+    }
+
+    public boolean attack(Entity monster) {
+        if (getHit() && (int) animation_state%5 == 2 && !lock) {
+            monster.setHealth(monster.getHealth() - this.attackdamage);
+            System.out.println("monster health: " + monster.getHealth());
+            return true;
         }
         return false;
     }

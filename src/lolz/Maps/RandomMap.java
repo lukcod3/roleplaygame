@@ -11,8 +11,6 @@ import java.util.ArrayList;
 
 public class RandomMap extends Map {
 
-    private ArrayList<Entity> monsterEntities;
-
     public RandomMap() {
         // setup map
         super(20000, 15000);
@@ -28,9 +26,6 @@ public class RandomMap extends Map {
         // set entities array
         this.entities.add(this.player);
         this.entities.add(this.monster);
-
-        monsterEntities = entities;
-        monsterEntities.remove(0);
     }
 
     private int numberOfTiles() {
@@ -99,11 +94,14 @@ public class RandomMap extends Map {
     @Override
     public void update(int time) {
         this.player.update(time);
-        /*for (Entity monster : monsterEntities) {
+        for (Entity monster : this.entities.subList(1, entities.size())) {
             if (this.player.overlap(monster)) {
-                this.player.attack(monster);
+                if (this.player.attack(monster)) {
+                    this.player.lock = true;
+                    System.out.println(this.player.lock);
+                }
             }
-        }*/
+        }
         this.monster.update(time);
     }
 }

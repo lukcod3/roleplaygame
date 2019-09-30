@@ -37,7 +37,6 @@ public abstract class Entity {
         } else {
             this.health = 0;
         }
-
     }
 
     private void setMaxHealth(int maxHealth) {
