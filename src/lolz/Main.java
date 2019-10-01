@@ -15,6 +15,8 @@ public class Main {
     public static final int WIDTH = 960;
     public static final int TILE_SIZE = 50;
 
+    public static int CONTENT_WIDTH, CONTENT_HEIGHT;
+
     final JFrame frame;
     JPanel activePanel;
 
@@ -43,6 +45,9 @@ public class Main {
         long time0 = System.currentTimeMillis();
 
         frame.validate();
+
+        CONTENT_WIDTH = frame.getContentPane().getWidth();
+        CONTENT_HEIGHT = frame.getContentPane().getHeight();
 
         // updating the game
         while (true) {

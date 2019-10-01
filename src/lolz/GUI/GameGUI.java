@@ -14,17 +14,34 @@ import java.awt.event.MouseListener;
 public class GameGUI extends JPanel {
     private Image img;
     private Map map;
-    private boolean statsShown;
+    private boolean statsShown, inEscMenu;
+    private JButton exitButton;
+
 
     //public Hub hub;
     public GameGUI() {
         // call super class
         super();
+        this.setLayout(null);
         // create map
         //hub = new Hub();
         map = new RandomMap();
 
         this.repaint();
+        this.setOpaque(false);
+        this.setBackground(Color.GREEN);
+
+        // add exit button
+        String str = "Exit game";
+        int button_width = 300;
+        int button_height = 60;
+        exitButton = new JButton("Exit game");
+        //exitButton.setBounds(0,0,400,80);
+        System.out.println((Main.WIDTH-exitButton.getWidth())/2);
+        //exitButton.setBounds((Main.WIDTH-button_width)/2, 100, button_width, button_height);
+        exitButton.setBounds(1000, 1000, button_width, button_height);
+        exitButton.setVisible(false);
+        this.add(exitButton);
 
         this.addMouseListener(new MouseListener() {
             @Override
@@ -71,14 +88,20 @@ public class GameGUI extends JPanel {
         // key bindings for player stats
         this.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_I, 0, false), KeyEvent.VK_I + "Pressed");
         this.getActionMap().put(KeyEvent.VK_I + "Pressed", generateInventoryKeyAction());
+
+        // key bindings for esc menu
+        this.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0, false), KeyEvent.VK_ESCAPE + "Pressed");
+        this.getActionMap().put(KeyEvent.VK_ESCAPE + "Pressed", generateEscapeAction());
     }
 
     private Action generateMoveKeyAction(final int dir, final boolean pressed) {
         return new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // change the players directions
-                map.player.directions[dir] = pressed;
+                if (!inEscMenu) {
+                    // change the players directions
+                    map.player.directions[dir] = pressed;
+                }
             }
         };
     }
@@ -87,7 +110,7 @@ public class GameGUI extends JPanel {
         return new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (!map.player.getHitting()) {
+                if (!inEscMenu && !map.player.getHitting()) {
                     map.player.setHitting(true);
                 }
             }
@@ -99,21 +122,79 @@ public class GameGUI extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 // change the players directions
-                statsShown = !statsShown;
+                if (!inEscMenu) {
+                    statsShown = !statsShown;
+                }
+            }
+        };
+    }
+
+    private Action generateEscapeAction() {
+        return new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.out.println();
+                if (statsShown) {
+                    statsShown = false;
+                } else {
+                    inEscMenu = !inEscMenu;
+                    if (inEscMenu) {
+                        addEscItems();
+                    } else {
+                        removeEscItems();
+                    }
+                }
             }
         };
     }
 
 
     public void paint(Graphics g) {
+        // black background
+        g.setColor(Color.BLACK);
+        g.fillRect(0,0, Main.CONTENT_WIDTH, Main.CONTENT_HEIGHT);
+
         // paint map
         map.paint(g);
 
-        // paint stats
+        // paint overlay interfaces
         this.printStats(g);
+        this.printEscMenu(g);
+
+        if (this.exitButton.isVisible()) {
+            this.exitButton.paint(g);
+        }
 
         // sync graphic
         Toolkit.getDefaultToolkit().sync();
+    }
+
+    private void addEscItems() {
+        this.exitButton.setVisible(true);
+        this.revalidate();
+    }
+
+    private void removeEscItems() {
+        this.exitButton.setVisible(false);
+        this.revalidate();
+    }
+
+    private void printEscMenu(Graphics g) {
+        int border_x = 40;
+        int border_y = 30;
+        if (inEscMenu) {
+            Color myColor = new Color(56, 56, 56, 230);
+            Font titleF = new Font("SansSerif", Font.BOLD, 25);
+            Font statsF = new Font("SansSerif", Font.PLAIN, 15);
+            g.drawRect(border_x, border_y, Main.CONTENT_WIDTH-2*border_x, Main.CONTENT_HEIGHT-2*border_y);
+            g.setColor(myColor);
+            g.fillRect(border_x, border_y, Main.CONTENT_WIDTH-2*border_x, Main.CONTENT_HEIGHT-2*border_y);
+            g.setFont(titleF);
+            g.setColor(Color.white);
+            String str = "Menu";
+            g.drawString(str, (Main.CONTENT_WIDTH-g.getFontMetrics().stringWidth(str))/2, 80);
+            g.setFont(statsF);
+        }
     }
 
 
@@ -183,7 +264,9 @@ public class GameGUI extends JPanel {
     }
 
     public void update(int time) {
-        // update the players position
-        map.update(time);
+        if (!inEscMenu) {
+            // update map
+            map.update(time);
+        }
     }
 }
