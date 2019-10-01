@@ -4,12 +4,14 @@ import lolz.Main;
 import lolz.Maps.Map;
 import lolz.Maps.RandomMap;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.File;
 
 public class GUI extends JPanel {
     private Image img;
@@ -18,21 +20,26 @@ public class GUI extends JPanel {
     private MouseEvent e;
     public Point frameLocation;
     public int aktInventar;
-    public JButton showButton;
+    public boolean showButton;
+    public Image[] inventoryImages;
+    public int[] mouseCoordinates;
 
     //public Hub hub;
     public GUI() {
         // call super class
         super();
+        mouseCoordinates = new int[2];
         // create map
         //hub = new Hub();
         map = new RandomMap();
         this.repaint();
-        showButton = new JButton("test");
+        try {
+            inventoryImages = new Image[] { ImageIO.read(new File("res/inventory/gegenstandAblegen_aus.PNG")), ImageIO.read(new File("res/inventory/gegenstandAblegen_an.PNG")) };
+        }catch (Exception e){
+
+        }
         //showButton.setIcon(new ImageIcon("res/inventory/gegenstandAblegen_aus.PNG"));
         //showButton.setRolloverIcon(new ImageIcon("res/inventory/gegenstandAblegen_an.PNG"));
-        this.add(showButton);
-        showButton.setBounds(100, 100, 100, 100);
 
         this.addMouseListener(new MouseListener() {
             @Override
@@ -67,8 +74,19 @@ public class GUI extends JPanel {
                         aktInventar = 10;
                     }else if(MouseInfo.getPointerInfo().getLocation().getX()-frameLocation.getX()<=743&&MouseInfo.getPointerInfo().getLocation().getX()-frameLocation.getX()>=683&&MouseInfo.getPointerInfo().getLocation().getY()-frameLocation.getY()<=510&&MouseInfo.getPointerInfo().getLocation().getY()-frameLocation.getY()>=450){
                         aktInventar = 11;
+                    }else{
+                        aktInventar = 0;
                     }
-                    System.out.println(aktInventar);
+                    if(aktInventar!=0){
+                        showButton = true;
+                        mouseCoordinates[0] = (int)(MouseInfo.getPointerInfo().getLocation().getX()-frameLocation.getX());
+                        mouseCoordinates[1] = (int)(MouseInfo.getPointerInfo().getLocation().getY()-frameLocation.getY());
+
+                    }
+
+                }else if(e.getButton()==1){
+                    showButton = false;
+
                 }
             }
 
@@ -198,18 +216,24 @@ public class GUI extends JPanel {
                 }
             }
 
-            g.drawImage(this.map.player.inventoryImages[0][0].getScaledInstance(60, -1, Image.SCALE_DEFAULT), 590, 100, null);
-            g.drawImage(this.map.player.inventoryImages[1][0].getScaledInstance(60, -1, Image.SCALE_DEFAULT), 500, 180, null);
-            g.drawImage(this.map.player.inventoryImages[2][0].getScaledInstance(60, -1, Image.SCALE_DEFAULT), 500, 255, null);
-            g.drawImage(this.map.player.inventoryImages[3][0].getScaledInstance(60, -1, Image.SCALE_DEFAULT), 590, 330, null);
-            g.drawImage(this.map.player.inventoryImages[4][0].getScaledInstance(60, -1, Image.SCALE_DEFAULT), 680, 155, null);
-            g.drawImage(this.map.player.inventoryImages[5][0].getScaledInstance(60, -1, Image.SCALE_DEFAULT), 680, 230, null);
-            g.drawImage(this.map.player.inventoryImages[6][0].getScaledInstance(60, -1, Image.SCALE_DEFAULT), 680, 305, null);
+            g.drawImage(this.map.player.inventoryImages[0][this.map.player.equipment[0]].getScaledInstance(60, -1, Image.SCALE_DEFAULT), 590, 100, null);
+            g.drawImage(this.map.player.inventoryImages[1][this.map.player.equipment[1]].getScaledInstance(60, -1, Image.SCALE_DEFAULT), 500, 180, null);
+            g.drawImage(this.map.player.inventoryImages[2][this.map.player.equipment[2]].getScaledInstance(60, -1, Image.SCALE_DEFAULT), 500, 255, null);
+            g.drawImage(this.map.player.inventoryImages[3][this.map.player.equipment[3]].getScaledInstance(60, -1, Image.SCALE_DEFAULT), 590, 330, null);
+            g.drawImage(this.map.player.inventoryImages[4][this.map.player.equipment[4]].getScaledInstance(60, -1, Image.SCALE_DEFAULT), 680, 155, null);
+            g.drawImage(this.map.player.inventoryImages[5][this.map.player.equipment[5]].getScaledInstance(60, -1, Image.SCALE_DEFAULT), 680, 230, null);
+            g.drawImage(this.map.player.inventoryImages[6][this.map.player.equipment[6]].getScaledInstance(60, -1, Image.SCALE_DEFAULT), 680, 305, null);
             g.drawImage(this.map.player.empty.getScaledInstance(60, -1, Image.SCALE_DEFAULT), 500, 420, null);
             g.drawImage(this.map.player.empty.getScaledInstance(60, -1, Image.SCALE_DEFAULT), 561, 420, null);
             g.drawImage(this.map.player.empty.getScaledInstance(60, -1, Image.SCALE_DEFAULT), 622, 420, null);
             g.drawImage(this.map.player.empty.getScaledInstance(60, -1, Image.SCALE_DEFAULT), 683, 420, null);
-            //System.out.println(MouseInfo.getPointerInfo().getLocation().getX()-frameLocation.getX()+", "+(MouseInfo.getPointerInfo().getLocation().getY()-frameLocation.getY()));
+            if(showButton&&aktInventar!=0){
+                if(MouseInfo.getPointerInfo().getLocation().getX()-frameLocation.getX()<=mouseCoordinates[0] +255&&MouseInfo.getPointerInfo().getLocation().getX()-frameLocation.getX()>=mouseCoordinates[0] + 10&&MouseInfo.getPointerInfo().getLocation().getY()-frameLocation.getY()<=mouseCoordinates[1]+3&&MouseInfo.getPointerInfo().getLocation().getY()-frameLocation.getY()>=mouseCoordinates[1] - 30) {
+                    g.drawImage(inventoryImages[1].getScaledInstance(235, -1, Image.SCALE_DEFAULT), mouseCoordinates[0] + 10, mouseCoordinates[1] - 60, null);
+                }else{
+                    g.drawImage(inventoryImages[0].getScaledInstance(235, -1, Image.SCALE_DEFAULT), mouseCoordinates[0] + 10, mouseCoordinates[1] - 60, null);
+                }
+            }
         }
     }
 

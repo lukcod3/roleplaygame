@@ -25,7 +25,7 @@ public class Main {
         // main game jpanel
         gui = new GUI();
         frame.add(gui);
-
+        //gui.setBounds(0, 0, WIDTH, HEIGHT);
 
         frame.setTitle("RPG-lol");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
