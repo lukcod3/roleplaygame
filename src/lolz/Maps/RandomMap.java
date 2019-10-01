@@ -1,5 +1,6 @@
 package lolz.Maps;
 
+import lolz.Entity.Entity;
 import lolz.Entity.Monster;
 import lolz.Entity.Player;
 import lolz.GUI.Tile.StaticTile;
@@ -20,11 +21,12 @@ public class RandomMap extends Map {
         // spawn player
         this.player = new Player(this, (this.VIRTUAL_WIDTH / 2) * Main.TILE_SIZE, (this.VIRTUAL_HEIGHT / 2) * Main.TILE_SIZE);
         // spawn monster at player's position
-        this.monster = new Monster((int) player.x, (int) player.y, 50, 15, 10);
+        this.monster = new Monster((this.VIRTUAL_WIDTH / 2) * Main.TILE_SIZE, (this.VIRTUAL_HEIGHT / 2) * Main.TILE_SIZE, 50, 15, 10);
 
         // set entities array
         this.entities.add(this.player);
         this.entities.add(this.monster);
+        this.monsterCount += 1;
     }
 
     private int numberOfTiles() {
@@ -88,19 +90,25 @@ public class RandomMap extends Map {
 
         // generate walls
         this.makeWalls();
+
+        spawnRandomMonsters(this.tiles);
     }
 
     @Override
     public void update(int time) {
         this.player.update(time);
-        /*for (Entity monster : this.entities.subList(1, entities.size())) {
-            if (this.player.overlap(monster)) {
-                if (this.player.attack(monster)) {
-                    this.player.lock = true;
-                    System.out.println(this.player.lock);
+        for (Entity entity : this.entities) {
+            if (!(entity instanceof Player) && this.player.overlap(entity)) {
+                if (this.player.attack(entity)) {
+                    this.entities.remove(entity);
+                    this.monsterCount -= 1;
                 }
             }
-        }*/
-        this.monster.update(time);
+        }
+        for (Entity entity : this.entities) {
+            if (entity instanceof Monster) {
+                entity.update(time);
+            }
+        }
     }
 }

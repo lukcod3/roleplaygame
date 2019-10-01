@@ -13,7 +13,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
 
-public class GUI extends JPanel {
+public class GameGUI extends JPanel {
     private Image img;
     private Map map;
     private boolean statsShown;
@@ -25,7 +25,7 @@ public class GUI extends JPanel {
     public int[] mouseCoordinates;
 
     //public Hub hub;
-    public GUI() {
+    public GameGUI() {
         // call super class
         super();
         mouseCoordinates = new int[2];
@@ -92,7 +92,6 @@ public class GUI extends JPanel {
 
             @Override
             public void mouseReleased(MouseEvent e) {
-
             }
 
             @Override
@@ -119,14 +118,11 @@ public class GUI extends JPanel {
 
         //add the key binding for the players attack (with the space key)
         this.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_J, 0, false), KeyEvent.VK_J + "Pressed");
-
         this.getActionMap().put(KeyEvent.VK_J + "Pressed", generateAttackKeyAction());
 
         // key bindings for player stats
         this.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_I, 0, false), KeyEvent.VK_I + "Pressed");
-
         this.getActionMap().put(KeyEvent.VK_I + "Pressed", generateInventoryKeyAction());
-
     }
 
     private Action generateMoveKeyAction(final int dir, final boolean pressed) {
@@ -173,7 +169,7 @@ public class GUI extends JPanel {
     }
 
 
-    private void printStats(Graphics g){
+    private void printStats(Graphics g) {
         int xPositionImageInventory = 560;
         int yPositionImageInventory = 185;
 
@@ -192,27 +188,27 @@ public class GUI extends JPanel {
             g.drawString("Inventar", 570, 80);
             g.setFont(statsF);
             g.drawString("Leben............................(" + this.map.player.health + "/" + this.map.player.maxHealth + ")", 200, 130);
-            g.drawString("Angriffsschaden....................." + this.map.player.attackdamage, 200, 160);
+            g.drawString("Angriffsschaden....................." + this.map.player.damage, 200, 160);
             g.drawString("Fähigkeitsstärke....................." + this.map.player.abilitypower, 200, 190);
             g.drawString("Rüstung..................................." + this.map.player.armor, 200, 220);
             g.drawString("Gold........................................" + this.map.player.gold, 200, 330);
             g.drawString("Level............." + this.map.player.level + "(" + this.map.player.exp + " XP/" + 200 + " XP)", 200, 360); // needs formula for maxXP
 
-            if(this.map.player.turnedRight){
+            if (this.map.player.turnedRight) {
                 if (this.map.player.getHitting()) { // is able to hit while running and while standing still -> always checks if hit is true regardless of moving
-                    g.drawImage(this.map.player.img[2][(int) this.map.player.animation_state%5].getScaledInstance(120, -1, Image.SCALE_DEFAULT), xPositionImageInventory, yPositionImageInventory, null); // set player's animation to hit animation
+                    g.drawImage(this.map.player.img[2][(int) this.map.player.animation_state % 5].getScaledInstance(120, -1, Image.SCALE_DEFAULT), xPositionImageInventory, yPositionImageInventory, null); // set player's animation to hit animation
                 } else if (this.map.player.isMoving) {
-                    g.drawImage(this.map.player.img[1][(int) this.map.player.animation_state%6].getScaledInstance(120, -1, Image.SCALE_DEFAULT), xPositionImageInventory, yPositionImageInventory, null);
+                    g.drawImage(this.map.player.img[1][(int) this.map.player.animation_state % 6].getScaledInstance(120, -1, Image.SCALE_DEFAULT), xPositionImageInventory, yPositionImageInventory, null);
                 } else {
-                    g.drawImage(this.map.player.img[0][(int) this.map.player.animation_state%4].getScaledInstance(120, -1, Image.SCALE_DEFAULT), xPositionImageInventory, yPositionImageInventory, null);
+                    g.drawImage(this.map.player.img[0][(int) this.map.player.animation_state % 4].getScaledInstance(120, -1, Image.SCALE_DEFAULT), xPositionImageInventory, yPositionImageInventory, null);
                 }
-            }else{
+            } else {
                 if (this.map.player.getHitting()) { // is able to hit while running and while standing still -> always checks if hit is true regardless of moving
-                    Main.drawReflectImage(this.map.player.img[2][(int) this.map.player.animation_state%5].getScaledInstance(120, -1, Image.SCALE_DEFAULT), g, xPositionImageInventory, yPositionImageInventory);
+                    Main.drawReflectImage(this.map.player.img[2][(int) this.map.player.animation_state % 5].getScaledInstance(120, -1, Image.SCALE_DEFAULT), g, xPositionImageInventory, yPositionImageInventory);
                 } else if (this.map.player.isMoving) {
-                    Main.drawReflectImage(this.map.player.img[1][(int) this.map.player.animation_state%6].getScaledInstance(120, -1, Image.SCALE_DEFAULT), g, xPositionImageInventory, yPositionImageInventory);
+                    Main.drawReflectImage(this.map.player.img[1][(int) this.map.player.animation_state % 6].getScaledInstance(120, -1, Image.SCALE_DEFAULT), g, xPositionImageInventory, yPositionImageInventory);
                 } else {
-                    Main.drawReflectImage(this.map.player.img[0][(int) this.map.player.animation_state%4].getScaledInstance(120, -1, Image.SCALE_DEFAULT), g, xPositionImageInventory, yPositionImageInventory);
+                    Main.drawReflectImage(this.map.player.img[0][(int) this.map.player.animation_state % 4].getScaledInstance(120, -1, Image.SCALE_DEFAULT), g, xPositionImageInventory, yPositionImageInventory);
                 }
             }
 

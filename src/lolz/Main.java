@@ -1,6 +1,7 @@
 package lolz;
 
-import lolz.GUI.GUI;
+import lolz.GUI.GameGUI;
+import lolz.GUI.MainMenu;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -14,20 +15,19 @@ public class Main {
     public static final int WIDTH = 960;
     public static final int TILE_SIZE = 50;
 
-    private GUI gui;
-    public final JFrame frame;
+    final JFrame frame;
+    JPanel activePanel;
 
-    public Main() {
+    private Main() {
 
         // setup main frame
         frame = new JFrame();
 
         // main game jpanel
-        gui = new GUI();
-        frame.add(gui);
-        //gui.setBounds(0, 0, WIDTH, HEIGHT);
+        activePanel = new MainMenu(this);
+        frame.add(activePanel);
 
-        frame.setTitle("RPG-lol");
+        frame.setTitle("Monsters & Magic");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setResizable(false);
         frame.setBackground(Color.BLACK);
@@ -56,7 +56,9 @@ public class Main {
             // measure time for updating game logic
             long time1 = System.currentTimeMillis();
             // System.out.println("Time delay:" + (int)(time1-time0-16));
-            updateGame((int) (time1 - time0));
+            if (activePanel instanceof GameGUI) {
+                updateGame((int) (time1 - time0));
+            }
             time0 = time1;
 
             // update the frame
@@ -68,11 +70,19 @@ public class Main {
         new Main();
     }
 
-    private void updateGame(int time) {
-        gui.update(time);
-        gui.frameLocation = frame.getLocationOnScreen();
+    public void startGame() {
+        this.activePanel = new GameGUI();
+        frame.getContentPane().removeAll();
+        frame.getContentPane().add(activePanel);
+        frame.revalidate();
     }
-    public static void drawReflectImage(Image i, Graphics g, int x, int y){
-        g.drawImage(i, x+i.getWidth(null), y, -i.getWidth(null), i.getHeight(null), null);
+
+    private void updateGame(int time) {
+        ((GameGUI) activePanel).update(time);
+        ((GameGUI) activePanel).frameLocation = frame.getLocationOnScreen();
+    }
+
+    public static void drawReflectImage(Image i, Graphics g, int x, int y) {
+        g.drawImage(i, x + i.getWidth(null), y, -i.getWidth(null), i.getHeight(null), null);
     }
 }
