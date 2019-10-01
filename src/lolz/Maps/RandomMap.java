@@ -1,5 +1,6 @@
 package lolz.Maps;
 
+import lolz.Entity.Entity;
 import lolz.Entity.Monster;
 import lolz.Entity.Player;
 import lolz.GUI.Tile.StaticTile;
@@ -93,11 +94,11 @@ public class RandomMap extends Map {
     @Override
     public void update(int time) {
         this.player.update(time);
-        //for (Entity monster : this.entities.subList(1, entities.size())) {
-            if (this.player.overlap(this.monster)) {
-                this.player.attack(this.monster);
+        for (Entity entity : this.entities) {
+            if (!(entity instanceof Player) && this.player.overlap(entity)) {
+                this.player.attack(entity);
             }
-        //}
+        }
         this.monster.update(time);
     }
 }
