@@ -16,7 +16,7 @@ public class Player extends Entity {
     public boolean isMoving;
     public double animation_state;
     public final String base_char = "elf_m";
-    public int[] equipment; // 1 is hat, 2 is t-shirt, 3 is sword, 4 is shoes, 5 is ring, 6 is necklace, 7 is belt, 8-11 is depot
+    public int[] equipment; // 1 is hat, 2 is t-shirt, 3 is sword, 4 is shoes, 5 is necklace, 6 is ring, 7 is belt, 8-11 is depot
     public Image[][] inventoryImages;
     public Image empty;
     public boolean turnedRight;
@@ -61,8 +61,8 @@ public class Player extends Entity {
         this.y -= this.height;
 
         // setup player inventory
-        equipment = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
-        inventoryImages = new Image[7][1];
+        equipment = new int[] {0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0};
+        inventoryImages = new Image[7][5];
         try {
             inventoryImages[0][0] = ImageIO.read(new File("res/inventory/hutPlatz.png"));
             inventoryImages[1][0] = ImageIO.read(new File("res/inventory/ruestungPlatz.png"));
@@ -72,8 +72,22 @@ public class Player extends Entity {
             inventoryImages[5][0] = ImageIO.read(new File("res/inventory/ringPlatz.png"));
             inventoryImages[6][0] = ImageIO.read(new File("res/inventory/guertelPlatz.png"));
             empty = ImageIO.read(new File("res/inventory/freiPlatz.png"));
+
+            for (int i = 1; i <= 4; i++) {
+                //inventoryImages[0][i] = ImageIO.read(new File("res/inventory/hut"+i+".png"));
+                //inventoryImages[1][i] = ImageIO.read(new File("res/inventory/ruestung"+i+".png"));
+                inventoryImages[2][i] = ImageIO.read(new File("res/inventory/schwert" + i + ".png"));
+                //inventoryImages[3][i] = ImageIO.read(new File("res/inventory/schuhe"+i+".png"));
+                //inventoryImages[4][i] = ImageIO.read(new File("res/inventory/kette"+i+".png"));
+                //inventoryImages[5][i] = ImageIO.read(new File("res/inventory/ring"+i+".png"));
+                //inventoryImages[6][i] = ImageIO.read(new File("res/inventory/guertel"+i+".png"));
+            }
+
         } catch (Exception e) {
             System.out.println("Fehler");
+        }
+        if(inventoryImages[2][1]==null){
+            System.out.println(1);
         }
     }
 
@@ -203,7 +217,7 @@ public class Player extends Entity {
         // check if player in wall => reset movement
         for (int d_x : new int[]{0, this.width}) {
             if (!map.get_tile_at((int) (this.x + d_x), (int) (this.y + this.height)).isGround()) {
-                // player doesnt move
+                // player doesnt movedd
                 // test if fix is possible
                 if (map.get_tile_at((int) (old_x + d_x), (int) (this.y + this.height)).isGround()) {
                     this.x = old_x;

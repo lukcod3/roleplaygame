@@ -75,25 +75,25 @@ public class GameGUI extends JPanel {
                 if (e.getButton() == 3 && statsShown) {
                     if (isCourserInRectangle(590, 650, 130, 190) && map.player.equipment[0] != 0) {
                         aktInventar = 1;
-                    } else if (isCourserInRectangle(500, 560, 210, 270)&& map.player.equipment[1] != 0) {
+                    } else if (isCourserInRectangle(500, 560, 210, 270) && map.player.equipment[1] != 0) {
                         aktInventar = 2;
-                    } else if (isCourserInRectangle(500, 560, 285, 345)&& map.player.equipment[2] != 0) {
+                    } else if (isCourserInRectangle(500, 560, 285, 345) && map.player.equipment[2] != 0) {
                         aktInventar = 3;
-                    } else if (isCourserInRectangle(590, 640, 360, 420)&& map.player.equipment[3] != 0) {
+                    } else if (isCourserInRectangle(590, 640, 360, 420) && map.player.equipment[3] != 0) {
                         aktInventar = 4;
-                    } else if (isCourserInRectangle(680, 730, 185, 245)&& map.player.equipment[4] != 0) {
+                    } else if (isCourserInRectangle(680, 730, 185, 245) && map.player.equipment[4] != 0) {
                         aktInventar = 5;
-                    } else if (isCourserInRectangle(680, 730, 260, 320)&& map.player.equipment[5] != 0) {
+                    } else if (isCourserInRectangle(680, 730, 260, 320) && map.player.equipment[5] != 0) {
                         aktInventar = 6;
-                    } else if (isCourserInRectangle(680, 730, 335, 395)&& map.player.equipment[6] != 0) {
+                    } else if (isCourserInRectangle(680, 730, 335, 395) && map.player.equipment[6] != 0) {
                         aktInventar = 7;
-                    } else if (isCourserInRectangle(500, 560, 450, 510)&& map.player.equipment[7] != 0) {
+                    } else if (isCourserInRectangle(500, 560, 450, 510) && map.player.equipment[7] != 0) {
                         aktInventar = 8;
-                    } else if (isCourserInRectangle(561, 621, 450, 510)&& map.player.equipment[8] != 0) {
+                    } else if (isCourserInRectangle(561, 621, 450, 510) && map.player.equipment[8] != 0) {
                         aktInventar = 9;
-                    } else if (isCourserInRectangle(622, 682, 450, 510)&& map.player.equipment[9] != 0) {
+                    } else if (isCourserInRectangle(622, 682, 450, 510) && map.player.equipment[9] != 0) {
                         aktInventar = 10;
-                    } else if (isCourserInRectangle(683, 743, 450, 510)&& map.player.equipment[10] != 0) {
+                    } else if (isCourserInRectangle(683, 743, 450, 510) && map.player.equipment[10] != 0) {
                         aktInventar = 11;
 
                     } else {
@@ -107,19 +107,27 @@ public class GameGUI extends JPanel {
 
                 } else if (e.getButton() == 1) {
                     if (readyForSwitch) {
-                        if (aktInventar > 0 && aktInventar < 8){
-                            for(int i = 0; i<4;i++){
-                                if(map.player.equipment[7+i] == 0){
-                                    map.player.equipment[7+i] = aktInventar * map.player.equipment[aktInventar-1];
-                                    map.player.equipment[aktInventar-1] = 0;
+                        readyForSwitch = false;
+                        showButton = false;
+                        if (aktInventar > 0 && aktInventar < 8) {
+                            for (int i = 0; i < 4; i++) {
+                                if (map.player.equipment[7 + i] == 0) {
+                                    map.player.equipment[7 + i] = (aktInventar-1)*4 +map.player.equipment[aktInventar - 1];
+                                    map.player.equipment[aktInventar - 1] = 0;
                                     break;
-                                }else if(i == 3){
-                                    map.player.equipment[aktInventar-1] = 0;
+                                } else if (i == 3) {
+                                    map.player.equipment[aktInventar - 1] = 0;
                                 }
                             }
-                        }else{
-                            int hilf = map.player.equipment[aktInventar-1];
-                            map.player.equipment[aktInventar-1] = map.player.equipment[aktInventar-1]-(map.player.equipment[aktInventar-1]%4)+map.player.equipment[map.player.equipment[aktInventar-1]%4];
+                        } else {
+                            int hilf = map.player.equipment[aktInventar - 1];
+                            if(map.player.equipment[hilf / 4] == 0){
+                                map.player.equipment[aktInventar -1] = 0;
+                                map.player.equipment[hilf / 4] = hilf % 4;
+                            } else {
+                                map.player.equipment[aktInventar - 1] = map.player.equipment[aktInventar - 1] - ((map.player.equipment[aktInventar - 1]) % 4) + 1 + (map.player.equipment[map.player.equipment[aktInventar - 1] % 4] - 1);
+                                map.player.equipment[hilf / 4] = hilf % 4;
+                            }
                         }
                     } else {
                         showButton = false;
@@ -318,11 +326,17 @@ public class GameGUI extends JPanel {
             g.drawImage(this.map.player.inventoryImages[4][this.map.player.equipment[4]].getScaledInstance(60, -1, Image.SCALE_DEFAULT), 680, 155, null);
             g.drawImage(this.map.player.inventoryImages[5][this.map.player.equipment[5]].getScaledInstance(60, -1, Image.SCALE_DEFAULT), 680, 230, null);
             g.drawImage(this.map.player.inventoryImages[6][this.map.player.equipment[6]].getScaledInstance(60, -1, Image.SCALE_DEFAULT), 680, 305, null);
-            g.drawImage(this.map.player.inventoryImages[this.map.player.equipment[7]%7][this.map.player.equipment[7]%4].getScaledInstance(60, -1, Image.SCALE_DEFAULT), 500, 420, null);
-            g.drawImage(this.map.player.inventoryImages[this.map.player.equipment[8]%7][this.map.player.equipment[8]%4].getScaledInstance(60, -1, Image.SCALE_DEFAULT), 561, 420, null);
-            g.drawImage(this.map.player.inventoryImages[this.map.player.equipment[9]%7][this.map.player.equipment[9]%4].getScaledInstance(60, -1, Image.SCALE_DEFAULT), 622, 420, null);
-            g.drawImage(this.map.player.inventoryImages[this.map.player.equipment[10]%7][this.map.player.equipment[10]%4].getScaledInstance(60, -1, Image.SCALE_DEFAULT), 683, 420, null);
-            if (showButton && aktInventar > 0&&aktInventar < 8) {
+            for (int i = 0; i <= 3; i++) {
+                Image a;
+                if (this.map.player.equipment[i + 7] == 0) {
+                    a = this.map.player.empty;
+                } else {
+                    //System.out.println((this.map.player.equipment[i + 7]-1) / 4+ " "+ (this.map.player.equipment[i + 7]-1) % 4);
+                    a = this.map.player.inventoryImages[(this.map.player.equipment[i + 7]-1) / 4][(this.map.player.equipment[i + 7]) % 4];
+                }
+                g.drawImage(a.getScaledInstance(60, -1, Image.SCALE_DEFAULT), 500 + (i * 61), 420, null);
+            }
+            if (showButton && aktInventar > 0 && aktInventar < 8) {
                 if (isCourserInRectangle(mouseCoordinates[0] + 10, mouseCoordinates[0] + 255, mouseCoordinates[1] - 30, mouseCoordinates[1] + 3)) {
                     g.drawImage(inventoryImages[1].getScaledInstance(235, -1, Image.SCALE_DEFAULT), mouseCoordinates[0] + 10, mouseCoordinates[1] - 60, null);
                     readyForSwitch = true;
@@ -330,7 +344,7 @@ public class GameGUI extends JPanel {
                     g.drawImage(inventoryImages[0].getScaledInstance(235, -1, Image.SCALE_DEFAULT), mouseCoordinates[0] + 10, mouseCoordinates[1] - 60, null);
                     readyForSwitch = false;
                 }
-            } else if(showButton && aktInventar > 7 && aktInventar < 12){
+            } else if (showButton && aktInventar > 7 && aktInventar < 12) {
                 if (isCourserInRectangle(mouseCoordinates[0] + 10, mouseCoordinates[0] + 255, mouseCoordinates[1] - 30, mouseCoordinates[1] + 3)) {
                     g.drawImage(inventoryImages[3].getScaledInstance(235, -1, Image.SCALE_DEFAULT), mouseCoordinates[0] + 10, mouseCoordinates[1] - 60, null);
                     readyForSwitch = true;
@@ -338,7 +352,7 @@ public class GameGUI extends JPanel {
                     g.drawImage(inventoryImages[2].getScaledInstance(235, -1, Image.SCALE_DEFAULT), mouseCoordinates[0] + 10, mouseCoordinates[1] - 60, null);
                     readyForSwitch = false;
                 }
-            }else {
+            } else {
                 readyForSwitch = false;
             }
         }
