@@ -1,19 +1,15 @@
 package lolz.Maps;
 
 import lolz.Entity.Entity;
-import lolz.GUI.Tile;
-import lolz.Main;
-import lolz.Entity.Player;
 import lolz.Entity.Monster;
+import lolz.Entity.Player;
+import lolz.GUI.Tile;
+import lolz.GUI.Tile.StaticTile;
+import lolz.Main;
 
-import javax.imageio.ImageIO;
 import java.awt.*;
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Comparator;
-
-import lolz.GUI.Tile.StaticTile;
 
 public abstract class Map {
     public Player player;
@@ -22,6 +18,7 @@ public abstract class Map {
     public int VIRTUAL_WIDTH, VIRTUAL_HEIGHT;
     public int AREA, VIRTUAL_AREA;
     ArrayList<Entity> entities;
+    public int monsterCount;
 
     public Tile[][] tiles;
 
@@ -308,4 +305,19 @@ public abstract class Map {
         }
     }
 
+    public void spawnRandomMonsters (Tile[][] tiles) {
+        double randInt = 0;
+        for (int i = 0 ; i < this.tiles.length; i ++) {
+            for (int j = 0 ; j < this.tiles[0].length; j ++) {
+                if (tiles[i][j].isGround()) {
+                    randInt = Math.random();
+                    if (randInt < 0.1) {
+                        this.entities.add(new Monster(j * Main.TILE_SIZE, i * Main.TILE_SIZE, 50, 15, 10));
+                        this.monsterCount += 1;
+                        //System.out.println(this.monsterCount + " X: " + j + " || Y: " + i);
+                    }
+                }
+            }
+        }
+    }
 }

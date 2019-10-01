@@ -26,6 +26,7 @@ public class RandomMap extends Map {
         // set entities array
         this.entities.add(this.player);
         this.entities.add(this.monster);
+        this.monsterCount += 1;
     }
 
     private int numberOfTiles() {
@@ -89,6 +90,8 @@ public class RandomMap extends Map {
 
         // generate walls
         this.makeWalls();
+
+        spawnRandomMonsters(this.tiles);
     }
 
     @Override
@@ -99,6 +102,10 @@ public class RandomMap extends Map {
                 this.player.attack(entity);
             }
         }
-        this.monster.update(time);
+        for (Entity entity : this.entities) {
+            if (entity instanceof Monster) {
+                entity.update(time);
+            }
+        }
     }
 }
