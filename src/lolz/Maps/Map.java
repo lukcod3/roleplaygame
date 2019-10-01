@@ -332,6 +332,6 @@ public abstract class Map {
     }
 
     private int randInt (int min, int max) {
-        return (int) (Math.random()*(max - min) + min);
+        return (int) (Math.random()*(max + 1 - min) + min);
     }
 }
