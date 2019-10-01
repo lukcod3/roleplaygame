@@ -27,7 +27,6 @@ public class Main {
         activePanel = new MainMenu(this);
         frame.add(activePanel);
 
-
         frame.setTitle("Monsters & Magic");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setResizable(false);
