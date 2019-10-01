@@ -43,10 +43,6 @@ public abstract class Map {
         }
     }
 
-    private Image load_image(String path) throws IOException {
-        return ImageIO.read(new File(path)).getScaledInstance(Main.TILE_SIZE, Main.TILE_SIZE, Image.SCALE_SMOOTH);
-    }
-
     public void paint(Graphics g) {
         // translate map to player coords
         g.translate((int) -(this.player.x - Main.WIDTH / 2), (int) -(this.player.y - Main.HEIGHT / 2));
