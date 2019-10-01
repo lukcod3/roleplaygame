@@ -15,6 +15,8 @@ public class GUI extends JPanel {
     private Image img;
     private Map map;
     private boolean statsShown;
+    private MouseEvent e;
+    public Point frameLocation;
 
     //public Hub hub;
     public GUI() {
@@ -175,7 +177,7 @@ public class GUI extends JPanel {
             g.drawImage(this.map.player.empty.getScaledInstance(60, -1, Image.SCALE_DEFAULT), 561, 420, null);
             g.drawImage(this.map.player.empty.getScaledInstance(60, -1, Image.SCALE_DEFAULT), 622, 420, null);
             g.drawImage(this.map.player.empty.getScaledInstance(60, -1, Image.SCALE_DEFAULT), 683, 420, null);
-
+            //System.out.println(MouseInfo.getPointerInfo().getLocation().getX()-frameLocation.getX()+", "+(MouseInfo.getPointerInfo().getLocation().getY()-frameLocation.getY()));
         }
     }
 

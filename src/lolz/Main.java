@@ -15,12 +15,12 @@ public class Main {
     public static final int TILE_SIZE = 50;
 
     private GUI gui;
+    public final JFrame frame;
 
-
-    private Main() {
+    public Main() {
 
         // setup main frame
-        final JFrame frame = new JFrame();
+        frame = new JFrame();
 
         // main game jpanel
         gui = new GUI();
@@ -70,6 +70,7 @@ public class Main {
 
     private void updateGame(int time) {
         gui.update(time);
+        gui.frameLocation = frame.getLocationOnScreen();
     }
     public static void drawReflectImage(Image i, Graphics g, int x, int y){
         g.drawImage(i, x+i.getWidth(null), y, -i.getWidth(null), i.getHeight(null), null);
