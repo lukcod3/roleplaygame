@@ -9,9 +9,11 @@ public class Monster extends Entity {
     private Image[][] img;
     private double animation_state;
     private final String base_monster = "big_demon";
+    private int exp;
 
-    public Monster(int x, int y, int maxHealth, int damage, int armor) {
+    public Monster(int x, int y, int maxHealth, int damage, int armor, int exp) {
         super(x, y, maxHealth, damage, armor, 10);
+        this.exp = exp;
         this.img = new Image[2][4];
         try {
             for (int i = 0; i < 4; i++) {
@@ -27,6 +29,14 @@ public class Monster extends Entity {
         this.width = img[0][0].getWidth(null);
         this.height = img[0][0].getHeight(null);
         this.y -= this.getHeight();
+    }
+
+    public int getExp() {
+        return exp;
+    }
+
+    public void setExp(int exp) {
+        this.exp = exp;
     }
 
     public void paint(Graphics g) {

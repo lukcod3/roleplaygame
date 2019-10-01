@@ -22,6 +22,8 @@ public abstract class Map {
     private double monsterPercentage;
     public int[] removeEntities;
     public int removeIndex;
+    private final int minMaxHealth = 25, maxMaxHealth = 50, minDamage = 10, maxDamage = 15, minArmor = 5, maxArmor = 10, minExp = 15, maxExp = 30;
+    private final double expFactor = 1.2 * this.player.level;
 
     public Tile[][] tiles;
 
@@ -316,12 +318,20 @@ public abstract class Map {
                 if (tiles[i][j].isGround()) {
                     randInt = Math.random();
                     if (randInt < this.monsterPercentage) {
-                        this.entities.add(new Monster(j * Main.TILE_SIZE, (int) ((i + 0.5) * Main.TILE_SIZE), 50, 15, 10));
+                        generateMonster(j, i);
                         this.monsterCount += 1;
                         //System.out.println(this.monsterCount + " X: " + j + " || Y: " + i);
                     }
                 }
             }
         }
+    }
+
+    public Monster generateMonster (int x, int y) {
+        return new Monster(x * Main.TILE_SIZE, (int) ((y + 0.5) * Main.TILE_SIZE), /*maxHealth*/randInt((int) (this.minMaxHealth * this.expFactor), (int) (this.maxMaxHealth * this.expFactor)), /*damage*/randInt((int) (this.minDamage * this.expFactor), (int) (this.maxDamage * this.expFactor)), /*armor*/randInt((int) (this.minArmor * this.expFactor), (int) (this.maxArmor * this.expFactor)), /*exp*/randInt((int) (this.minExp * this.expFactor), (int) (this.maxExp * this.expFactor)));
+    }
+
+    private int randInt (int min, int max) {
+        return (int) Math.random()*(max - min) + min;
     }
 }
