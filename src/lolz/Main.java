@@ -84,6 +84,7 @@ public class Main {
 
     private void updateGame(int time) {
         ((GameGUI) activePanel).update(time);
+        ((GameGUI) activePanel).frameLocation = frame.getLocationOnScreen();
     }
 
     public static void drawReflectImage(Image i, Graphics g, int x, int y) {

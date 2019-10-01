@@ -38,6 +38,7 @@ public class Player extends Entity {
         this.img[2] = new Image[5];
 
         this.width = 90;
+        equipment = new int[] {0, 0, 0, 0, 0, 0, 0};
         try {
             for (int i = 0; i < 4; i++) {
                 img[0][i] = ImageIO.read(new File("res/Individual Sprites/adventurer-idle-0" + i + ".png")).getScaledInstance(this.width, -1, Image.SCALE_SMOOTH);
