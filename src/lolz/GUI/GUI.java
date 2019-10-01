@@ -23,7 +23,6 @@ public class GUI extends JPanel {
         // create map
         //hub = new Hub();
         map = new RandomMap();
-
         this.repaint();
 
         this.addMouseListener(new MouseListener() {
@@ -163,13 +162,7 @@ public class GUI extends JPanel {
                     Main.drawReflectImage(this.map.player.img[0][(int) this.map.player.animation_state%4].getScaledInstance(120, -1, Image.SCALE_DEFAULT), g, xPositionImageInventory, yPositionImageInventory);
                 }
             }
-            /*
-            if (moving) {
-                g.drawImage((img[1][(int) this.animation_state]).getScaledInstance(120, -1, Image.SCALE_DEFAULT), 560, 110, null);
-            } else {
-                g.drawImage((img[0][(int) this.animation_state]).getScaledInstance(120, -1, Image.SCALE_DEFAULT), 560, 110, null);
-            }
-            */
+
             g.drawImage(this.map.player.inventoryImages[0][0].getScaledInstance(60, -1, Image.SCALE_DEFAULT), 590, 100, null);
             g.drawImage(this.map.player.inventoryImages[1][0].getScaledInstance(60, -1, Image.SCALE_DEFAULT), 500, 180, null);
             g.drawImage(this.map.player.inventoryImages[2][0].getScaledInstance(60, -1, Image.SCALE_DEFAULT), 500, 255, null);
