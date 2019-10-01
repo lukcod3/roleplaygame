@@ -318,7 +318,7 @@ public abstract class Map {
                 if (tiles[i][j].isGround()) {
                     randInt = Math.random();
                     if (randInt < this.monsterPercentage) {
-                        generateMonster(j, i);
+                        this.entities.add(generateMonster(j, i));
                         this.monsterCount += 1;
                         //System.out.println(this.monsterCount + " X: " + j + " || Y: " + i);
                     }
