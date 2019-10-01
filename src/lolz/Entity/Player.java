@@ -22,7 +22,7 @@ public class Player extends Entity {
     public boolean turnedRight;
 
     // Ingame stats
-    public int maxHealth, health, attackdamage, abilitypower, armor, level, exp, gold;
+    public int maxHealth, health, damage, abilitypower, armor, level, exp, gold;
 
     public Player(Map map, int x, int y) {
         // setup player stats
@@ -221,7 +221,6 @@ public class Player extends Entity {
             for (int j : new int[]{0, monster.getHeight()}) { //checking for the top and bottom border of the monster's image
                 if ((this.getX() <= monster.getX() + i) && (monster.getX() + i <= this.getX() + this.getWidth()) && (this.getY() <= monster.getY() + j) && (monster.getY() + j <= this.getY() + this.getHeight())) { //if any of the monster's boundaries can be found between any of the hero's boundaries, they touch
                     System.out.println("Player X: " + this.getX() + " | Y: " + this.getY() + " || Monster X: " + monster.getX() + " | Y: " + monster.getY());
-                    System.out.println("Overlap");
                     return true;
                 }
             }
@@ -229,14 +228,12 @@ public class Player extends Entity {
         return false;
     }
 
-    public boolean attack(Entity monster) {
+    public void attack(Entity monster) {
         if (getHitting() && (int) animation_state % 5 == 2 && !hasDamaged) {
             this.hasDamaged = true;
-            monster.setHealth(monster.getHealth() - this.attackdamage);
+            monster.setHealth(monster.getHealth() - this.damage);
             System.out.println("monster health: " + monster.getHealth());
-            return true;
         }
-        return false;
     }
 
 }
