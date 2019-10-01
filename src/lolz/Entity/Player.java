@@ -228,12 +228,16 @@ public class Player extends Entity {
         return false;
     }
 
-    public void attack(Entity monster) {
+    public boolean attack(Entity entity) {
         if (getHitting() && (int) animation_state % 5 == 2 && !hasDamaged) {
             this.hasDamaged = true;
-            monster.setHealth(monster.getHealth() - this.damage);
-            System.out.println("monster health: " + monster.getHealth());
+            entity.setHealth(entity.getHealth() - this.damage);
+            System.out.println("entity health: " + entity.getHealth());
+            if (entity.getHealth() == 0) {
+                return true;
+            }
         }
+        return false;
     }
 
 }

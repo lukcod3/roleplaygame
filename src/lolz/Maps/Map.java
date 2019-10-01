@@ -19,6 +19,7 @@ public abstract class Map {
     public int AREA, VIRTUAL_AREA;
     ArrayList<Entity> entities;
     public int monsterCount;
+    private double monsterPercentage;
 
     public Tile[][] tiles;
 
@@ -30,6 +31,7 @@ public abstract class Map {
         this.AREA = this.WIDTH * this.HEIGHT;
         this.VIRTUAL_AREA = this.VIRTUAL_WIDTH + this.VIRTUAL_HEIGHT;
         this.entities = new ArrayList<>();
+        this.monsterPercentage = 0.01;
 
         // set tiles to empty by default
         this.tiles = new Tile[this.VIRTUAL_HEIGHT][this.VIRTUAL_WIDTH];
@@ -311,7 +313,7 @@ public abstract class Map {
             for (int j = 0 ; j < this.tiles[0].length; j ++) {
                 if (tiles[i][j].isGround()) {
                     randInt = Math.random();
-                    if (randInt < 0.1) {
+                    if (randInt < this.monsterPercentage) {
                         this.entities.add(new Monster(j * Main.TILE_SIZE, i * Main.TILE_SIZE, 50, 15, 10));
                         this.monsterCount += 1;
                         //System.out.println(this.monsterCount + " X: " + j + " || Y: " + i);

@@ -99,7 +99,10 @@ public class RandomMap extends Map {
         this.player.update(time);
         for (Entity entity : this.entities) {
             if (!(entity instanceof Player) && this.player.overlap(entity)) {
-                this.player.attack(entity);
+                if (this.player.attack(entity)) {
+                    this.entities.remove(entity);
+                    this.monsterCount -= 1;
+                }
             }
         }
         for (Entity entity : this.entities) {
