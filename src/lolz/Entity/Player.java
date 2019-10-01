@@ -22,7 +22,7 @@ public class Player extends Entity {
     public boolean turnedRight;
 
     // Ingame stats
-    public int maxHealth, health, attackdamage, abilitypower, armor, level, exp, gold;
+    public int maxHealth, health, damage, abilitypower, armor, level, exp, gold;
 
     public Player(Map map, int x, int y) {
         // setup player stats
@@ -232,7 +232,7 @@ public class Player extends Entity {
     public boolean attack(Entity monster) {
         if (getHitting() && (int) animation_state % 5 == 2 && !hasDamaged) {
             this.hasDamaged = true;
-            monster.setHealth(monster.getHealth() - this.attackdamage);
+            monster.setHealth(monster.getHealth() - this.damage);
             System.out.println("monster health: " + monster.getHealth());
             return true;
         }
