@@ -100,6 +100,7 @@ public class RandomMap extends Map {
     @Override
     public void update(int time) {
         this.player.update(time);
+        this.expFactor = 1.2 * this.player.level;
         for (Entity entity : this.entities) {
             if (!(entity instanceof Player) && this.player.overlap(entity)) {
                 if (this.player.attack(entity)) {
