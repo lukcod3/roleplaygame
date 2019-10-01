@@ -4,37 +4,90 @@ import lolz.Main;
 import lolz.Maps.Map;
 import lolz.Maps.RandomMap;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.File;
 
 public class GameGUI extends JPanel {
     private Image img;
     private Map map;
     private boolean statsShown;
+    private MouseEvent e;
+    public Point frameLocation;
+    public int aktInventar;
+    public boolean showButton;
+    public Image[] inventoryImages;
+    public int[] mouseCoordinates;
 
     //public Hub hub;
     public GameGUI() {
         // call super class
         super();
+        mouseCoordinates = new int[2];
         // create map
         //hub = new Hub();
         map = new RandomMap();
         this.repaint();
+        try {
+            inventoryImages = new Image[] { ImageIO.read(new File("res/inventory/gegenstandAblegen_aus.PNG")), ImageIO.read(new File("res/inventory/gegenstandAblegen_an.PNG")) };
+        }catch (Exception e){
+
+        }
+        //showButton.setIcon(new ImageIcon("res/inventory/gegenstandAblegen_aus.PNG"));
+        //showButton.setRolloverIcon(new ImageIcon("res/inventory/gegenstandAblegen_an.PNG"));
 
         this.addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 Point p = MouseInfo.getPointerInfo().getLocation();
-                System.out.println("x: " + ((int) (p.x + map.player.x) - (map.VIRTUAL_WIDTH / 2) * Main.TILE_SIZE) / Main.TILE_SIZE +
-                        " | y: " + ((int) (p.y + map.player.y) - (map.VIRTUAL_HEIGHT / 2) * Main.TILE_SIZE) / Main.TILE_SIZE);
+                //System.out.println("x: " + ((int) (p.x + map.player.x) - (map.VIRTUAL_WIDTH / 2) * Main.TILE_SIZE) / Main.TILE_SIZE +
+                //        " | y: " + ((int) (p.y + map.player.y) - (map.VIRTUAL_HEIGHT / 2) * Main.TILE_SIZE) / Main.TILE_SIZE);
             }
 
             @Override
             public void mousePressed(MouseEvent e) {
+                if(e.getButton()==3&&statsShown){
+                    if(MouseInfo.getPointerInfo().getLocation().getX()-frameLocation.getX()<=650&&MouseInfo.getPointerInfo().getLocation().getX()-frameLocation.getX()>=590&&MouseInfo.getPointerInfo().getLocation().getY()-frameLocation.getY()<=190&&MouseInfo.getPointerInfo().getLocation().getY()-frameLocation.getY()>=130){
+                        aktInventar = 1;
+                    }else if(MouseInfo.getPointerInfo().getLocation().getX()-frameLocation.getX()<=560&&MouseInfo.getPointerInfo().getLocation().getX()-frameLocation.getX()>=500&&MouseInfo.getPointerInfo().getLocation().getY()-frameLocation.getY()<=270&&MouseInfo.getPointerInfo().getLocation().getY()-frameLocation.getY()>=210){
+                        aktInventar = 2;
+                    }else if(MouseInfo.getPointerInfo().getLocation().getX()-frameLocation.getX()<=560&&MouseInfo.getPointerInfo().getLocation().getX()-frameLocation.getX()>=500&&MouseInfo.getPointerInfo().getLocation().getY()-frameLocation.getY()<=345&&MouseInfo.getPointerInfo().getLocation().getY()-frameLocation.getY()>=285){
+                        aktInventar = 3;
+                    }else if(MouseInfo.getPointerInfo().getLocation().getX()-frameLocation.getX()<=640&&MouseInfo.getPointerInfo().getLocation().getX()-frameLocation.getX()>=590&&MouseInfo.getPointerInfo().getLocation().getY()-frameLocation.getY()<=420&&MouseInfo.getPointerInfo().getLocation().getY()-frameLocation.getY()>=360){
+                        aktInventar = 4;
+                    }else if(MouseInfo.getPointerInfo().getLocation().getX()-frameLocation.getX()<=730&&MouseInfo.getPointerInfo().getLocation().getX()-frameLocation.getX()>=680&&MouseInfo.getPointerInfo().getLocation().getY()-frameLocation.getY()<=245&&MouseInfo.getPointerInfo().getLocation().getY()-frameLocation.getY()>=185){
+                        aktInventar = 5;
+                    }else if(MouseInfo.getPointerInfo().getLocation().getX()-frameLocation.getX()<=730&&MouseInfo.getPointerInfo().getLocation().getX()-frameLocation.getX()>=680&&MouseInfo.getPointerInfo().getLocation().getY()-frameLocation.getY()<=320&&MouseInfo.getPointerInfo().getLocation().getY()-frameLocation.getY()>=260){
+                        aktInventar = 6;
+                    }else if(MouseInfo.getPointerInfo().getLocation().getX()-frameLocation.getX()<=730&&MouseInfo.getPointerInfo().getLocation().getX()-frameLocation.getX()>=680&&MouseInfo.getPointerInfo().getLocation().getY()-frameLocation.getY()<=395&&MouseInfo.getPointerInfo().getLocation().getY()-frameLocation.getY()>=335){
+                        aktInventar = 7;
+                    }else if(MouseInfo.getPointerInfo().getLocation().getX()-frameLocation.getX()<=560&&MouseInfo.getPointerInfo().getLocation().getX()-frameLocation.getX()>=500&&MouseInfo.getPointerInfo().getLocation().getY()-frameLocation.getY()<=510&&MouseInfo.getPointerInfo().getLocation().getY()-frameLocation.getY()>=450){
+                        aktInventar = 8;
+                    }else if(MouseInfo.getPointerInfo().getLocation().getX()-frameLocation.getX()<=621&&MouseInfo.getPointerInfo().getLocation().getX()-frameLocation.getX()>=561&&MouseInfo.getPointerInfo().getLocation().getY()-frameLocation.getY()<=510&&MouseInfo.getPointerInfo().getLocation().getY()-frameLocation.getY()>=450){
+                        aktInventar = 9;
+                    }else if(MouseInfo.getPointerInfo().getLocation().getX()-frameLocation.getX()<=682&&MouseInfo.getPointerInfo().getLocation().getX()-frameLocation.getX()>=622&&MouseInfo.getPointerInfo().getLocation().getY()-frameLocation.getY()<=510&&MouseInfo.getPointerInfo().getLocation().getY()-frameLocation.getY()>=450){
+                        aktInventar = 10;
+                    }else if(MouseInfo.getPointerInfo().getLocation().getX()-frameLocation.getX()<=743&&MouseInfo.getPointerInfo().getLocation().getX()-frameLocation.getX()>=683&&MouseInfo.getPointerInfo().getLocation().getY()-frameLocation.getY()<=510&&MouseInfo.getPointerInfo().getLocation().getY()-frameLocation.getY()>=450){
+                        aktInventar = 11;
+                    }else{
+                        aktInventar = 0;
+                    }
+                    if(aktInventar!=0){
+                        showButton = true;
+                        mouseCoordinates[0] = (int)(MouseInfo.getPointerInfo().getLocation().getX()-frameLocation.getX());
+                        mouseCoordinates[1] = (int)(MouseInfo.getPointerInfo().getLocation().getY()-frameLocation.getY());
+
+                    }
+
+                }else if(e.getButton()==1){
+                    showButton = false;
+
+                }
             }
 
             @Override
@@ -159,19 +212,24 @@ public class GameGUI extends JPanel {
                 }
             }
 
-            g.drawImage(this.map.player.inventoryImages[0][0].getScaledInstance(60, -1, Image.SCALE_DEFAULT), 590, 100, null);
-            g.drawImage(this.map.player.inventoryImages[1][0].getScaledInstance(60, -1, Image.SCALE_DEFAULT), 500, 180, null);
-            g.drawImage(this.map.player.inventoryImages[2][0].getScaledInstance(60, -1, Image.SCALE_DEFAULT), 500, 255, null);
-            g.drawImage(this.map.player.inventoryImages[3][0].getScaledInstance(60, -1, Image.SCALE_DEFAULT), 590, 330, null);
-            g.drawImage(this.map.player.inventoryImages[4][0].getScaledInstance(60, -1, Image.SCALE_DEFAULT), 680, 155, null);
-            g.drawImage(this.map.player.inventoryImages[5][0].getScaledInstance(60, -1, Image.SCALE_DEFAULT), 680, 230, null);
-            g.drawImage(this.map.player.inventoryImages[6][0].getScaledInstance(60, -1, Image.SCALE_DEFAULT), 680, 305, null);
-            g.drawImage(this.map.player.inventoryImages[6][0].getScaledInstance(60, -1, Image.SCALE_DEFAULT), 680, 305, null);
+            g.drawImage(this.map.player.inventoryImages[0][this.map.player.equipment[0]].getScaledInstance(60, -1, Image.SCALE_DEFAULT), 590, 100, null);
+            g.drawImage(this.map.player.inventoryImages[1][this.map.player.equipment[1]].getScaledInstance(60, -1, Image.SCALE_DEFAULT), 500, 180, null);
+            g.drawImage(this.map.player.inventoryImages[2][this.map.player.equipment[2]].getScaledInstance(60, -1, Image.SCALE_DEFAULT), 500, 255, null);
+            g.drawImage(this.map.player.inventoryImages[3][this.map.player.equipment[3]].getScaledInstance(60, -1, Image.SCALE_DEFAULT), 590, 330, null);
+            g.drawImage(this.map.player.inventoryImages[4][this.map.player.equipment[4]].getScaledInstance(60, -1, Image.SCALE_DEFAULT), 680, 155, null);
+            g.drawImage(this.map.player.inventoryImages[5][this.map.player.equipment[5]].getScaledInstance(60, -1, Image.SCALE_DEFAULT), 680, 230, null);
+            g.drawImage(this.map.player.inventoryImages[6][this.map.player.equipment[6]].getScaledInstance(60, -1, Image.SCALE_DEFAULT), 680, 305, null);
             g.drawImage(this.map.player.empty.getScaledInstance(60, -1, Image.SCALE_DEFAULT), 500, 420, null);
             g.drawImage(this.map.player.empty.getScaledInstance(60, -1, Image.SCALE_DEFAULT), 561, 420, null);
             g.drawImage(this.map.player.empty.getScaledInstance(60, -1, Image.SCALE_DEFAULT), 622, 420, null);
             g.drawImage(this.map.player.empty.getScaledInstance(60, -1, Image.SCALE_DEFAULT), 683, 420, null);
-
+            if(showButton&&aktInventar!=0){
+                if(MouseInfo.getPointerInfo().getLocation().getX()-frameLocation.getX()<=mouseCoordinates[0] +255&&MouseInfo.getPointerInfo().getLocation().getX()-frameLocation.getX()>=mouseCoordinates[0] + 10&&MouseInfo.getPointerInfo().getLocation().getY()-frameLocation.getY()<=mouseCoordinates[1]+3&&MouseInfo.getPointerInfo().getLocation().getY()-frameLocation.getY()>=mouseCoordinates[1] - 30) {
+                    g.drawImage(inventoryImages[1].getScaledInstance(235, -1, Image.SCALE_DEFAULT), mouseCoordinates[0] + 10, mouseCoordinates[1] - 60, null);
+                }else{
+                    g.drawImage(inventoryImages[0].getScaledInstance(235, -1, Image.SCALE_DEFAULT), mouseCoordinates[0] + 10, mouseCoordinates[1] - 60, null);
+                }
+            }
         }
     }
 
