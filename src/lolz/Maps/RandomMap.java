@@ -26,7 +26,6 @@ public class RandomMap extends Map {
         // set entities array
         this.entities.add(this.player);
         this.entities.add(this.monster);
-        this.removeEntities = new int[this.entities.size()];
         this.monsterCount += 1;
 
         this.expFactor = Math.pow(1.2, this.player.level);

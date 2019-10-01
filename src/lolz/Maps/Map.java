@@ -36,6 +36,7 @@ public abstract class Map {
         this.VIRTUAL_AREA = this.VIRTUAL_WIDTH + this.VIRTUAL_HEIGHT;
         this.entities = new ArrayList<>();
         this.monsterPercentage = 0.01;
+        this.removeEntities = new int[9];
 
         // set tiles to empty by default
         this.tiles = new Tile[this.VIRTUAL_HEIGHT][this.VIRTUAL_WIDTH];
