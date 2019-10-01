@@ -109,12 +109,17 @@ public class GameGUI extends JPanel {
                     if (readyForSwitch) {
                         if (aktInventar > 0 && aktInventar < 8){
                             for(int i = 0; i<4;i++){
-                                if(map.player.equipment[8+i] == 0){
-
+                                if(map.player.equipment[7+i] == 0){
+                                    map.player.equipment[7+i] = aktInventar * map.player.equipment[aktInventar-1];
+                                    map.player.equipment[aktInventar-1] = 0;
+                                    break;
+                                }else if(i == 3){
+                                    map.player.equipment[aktInventar-1] = 0;
                                 }
                             }
                         }else{
-
+                            int hilf = map.player.equipment[aktInventar-1];
+                            map.player.equipment[aktInventar-1] = map.player.equipment[aktInventar-1]-(map.player.equipment[aktInventar-1]%4)+map.player.equipment[map.player.equipment[aktInventar-1]%4];
                         }
                     } else {
                         showButton = false;
@@ -313,10 +318,10 @@ public class GameGUI extends JPanel {
             g.drawImage(this.map.player.inventoryImages[4][this.map.player.equipment[4]].getScaledInstance(60, -1, Image.SCALE_DEFAULT), 680, 155, null);
             g.drawImage(this.map.player.inventoryImages[5][this.map.player.equipment[5]].getScaledInstance(60, -1, Image.SCALE_DEFAULT), 680, 230, null);
             g.drawImage(this.map.player.inventoryImages[6][this.map.player.equipment[6]].getScaledInstance(60, -1, Image.SCALE_DEFAULT), 680, 305, null);
-            g.drawImage(this.map.player.empty.getScaledInstance(60, -1, Image.SCALE_DEFAULT), 500, 420, null);
-            g.drawImage(this.map.player.empty.getScaledInstance(60, -1, Image.SCALE_DEFAULT), 561, 420, null);
-            g.drawImage(this.map.player.empty.getScaledInstance(60, -1, Image.SCALE_DEFAULT), 622, 420, null);
-            g.drawImage(this.map.player.empty.getScaledInstance(60, -1, Image.SCALE_DEFAULT), 683, 420, null);
+            g.drawImage(this.map.player.inventoryImages[this.map.player.equipment[7]%7][this.map.player.equipment[7]%4].getScaledInstance(60, -1, Image.SCALE_DEFAULT), 500, 420, null);
+            g.drawImage(this.map.player.inventoryImages[this.map.player.equipment[8]%7][this.map.player.equipment[8]%4].getScaledInstance(60, -1, Image.SCALE_DEFAULT), 561, 420, null);
+            g.drawImage(this.map.player.inventoryImages[this.map.player.equipment[9]%7][this.map.player.equipment[9]%4].getScaledInstance(60, -1, Image.SCALE_DEFAULT), 622, 420, null);
+            g.drawImage(this.map.player.inventoryImages[this.map.player.equipment[10]%7][this.map.player.equipment[10]%4].getScaledInstance(60, -1, Image.SCALE_DEFAULT), 683, 420, null);
             if (showButton && aktInventar > 0&&aktInventar < 8) {
                 if (isCourserInRectangle(mouseCoordinates[0] + 10, mouseCoordinates[0] + 255, mouseCoordinates[1] - 30, mouseCoordinates[1] + 3)) {
                     g.drawImage(inventoryImages[1].getScaledInstance(235, -1, Image.SCALE_DEFAULT), mouseCoordinates[0] + 10, mouseCoordinates[1] - 60, null);
