@@ -22,6 +22,7 @@ public class GameGUI extends JPanel {
     public boolean showButton;
     public Image[] inventoryImages;
     public int[] mouseCoordinates;
+    public boolean readyForSwitch;
 
     //public Hub hub;
     public GameGUI() {
@@ -50,7 +51,11 @@ public class GameGUI extends JPanel {
         });
         this.add(exitButton);
         try {
-            inventoryImages = new Image[]{ImageIO.read(new File("res/inventory/gegenstandAblegen_aus.PNG")), ImageIO.read(new File("res/inventory/gegenstandAblegen_an.PNG"))};
+            inventoryImages = new Image[4];
+            inventoryImages[0] = ImageIO.read(new File("res/inventory/gegenstandAblegen_aus.PNG"));
+            inventoryImages[1] = ImageIO.read(new File("res/inventory/gegenstandAblegen_an.PNG"));
+            inventoryImages[2] = ImageIO.read(new File("res/inventory/anlegen_aus.PNG"));
+            inventoryImages[3] = ImageIO.read(new File("res/inventory/anlegen_an.PNG"));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -68,28 +73,29 @@ public class GameGUI extends JPanel {
             @Override
             public void mousePressed(MouseEvent e) {
                 if (e.getButton() == 3 && statsShown) {
-                    if (MouseInfo.getPointerInfo().getLocation().getX() - frameLocation.getX() <= 650 && MouseInfo.getPointerInfo().getLocation().getX() - frameLocation.getX() >= 590 && MouseInfo.getPointerInfo().getLocation().getY() - frameLocation.getY() <= 190 && MouseInfo.getPointerInfo().getLocation().getY() - frameLocation.getY() >= 130) {
+                    if (isCourserInRectangle(590, 650, 130, 190) && map.player.equipment[0] != 0) {
                         aktInventar = 1;
-                    } else if (MouseInfo.getPointerInfo().getLocation().getX() - frameLocation.getX() <= 560 && MouseInfo.getPointerInfo().getLocation().getX() - frameLocation.getX() >= 500 && MouseInfo.getPointerInfo().getLocation().getY() - frameLocation.getY() <= 270 && MouseInfo.getPointerInfo().getLocation().getY() - frameLocation.getY() >= 210) {
+                    } else if (isCourserInRectangle(500, 560, 210, 270)&& map.player.equipment[1] != 0) {
                         aktInventar = 2;
-                    } else if (MouseInfo.getPointerInfo().getLocation().getX() - frameLocation.getX() <= 560 && MouseInfo.getPointerInfo().getLocation().getX() - frameLocation.getX() >= 500 && MouseInfo.getPointerInfo().getLocation().getY() - frameLocation.getY() <= 345 && MouseInfo.getPointerInfo().getLocation().getY() - frameLocation.getY() >= 285) {
+                    } else if (isCourserInRectangle(500, 560, 285, 345)&& map.player.equipment[2] != 0) {
                         aktInventar = 3;
-                    } else if (MouseInfo.getPointerInfo().getLocation().getX() - frameLocation.getX() <= 640 && MouseInfo.getPointerInfo().getLocation().getX() - frameLocation.getX() >= 590 && MouseInfo.getPointerInfo().getLocation().getY() - frameLocation.getY() <= 420 && MouseInfo.getPointerInfo().getLocation().getY() - frameLocation.getY() >= 360) {
+                    } else if (isCourserInRectangle(590, 640, 360, 420)&& map.player.equipment[3] != 0) {
                         aktInventar = 4;
-                    } else if (MouseInfo.getPointerInfo().getLocation().getX() - frameLocation.getX() <= 730 && MouseInfo.getPointerInfo().getLocation().getX() - frameLocation.getX() >= 680 && MouseInfo.getPointerInfo().getLocation().getY() - frameLocation.getY() <= 245 && MouseInfo.getPointerInfo().getLocation().getY() - frameLocation.getY() >= 185) {
+                    } else if (isCourserInRectangle(680, 730, 185, 245)&& map.player.equipment[4] != 0) {
                         aktInventar = 5;
-                    } else if (MouseInfo.getPointerInfo().getLocation().getX() - frameLocation.getX() <= 730 && MouseInfo.getPointerInfo().getLocation().getX() - frameLocation.getX() >= 680 && MouseInfo.getPointerInfo().getLocation().getY() - frameLocation.getY() <= 320 && MouseInfo.getPointerInfo().getLocation().getY() - frameLocation.getY() >= 260) {
+                    } else if (isCourserInRectangle(680, 730, 260, 320)&& map.player.equipment[5] != 0) {
                         aktInventar = 6;
-                    } else if (MouseInfo.getPointerInfo().getLocation().getX() - frameLocation.getX() <= 730 && MouseInfo.getPointerInfo().getLocation().getX() - frameLocation.getX() >= 680 && MouseInfo.getPointerInfo().getLocation().getY() - frameLocation.getY() <= 395 && MouseInfo.getPointerInfo().getLocation().getY() - frameLocation.getY() >= 335) {
+                    } else if (isCourserInRectangle(680, 730, 335, 395)&& map.player.equipment[6] != 0) {
                         aktInventar = 7;
-                    } else if (MouseInfo.getPointerInfo().getLocation().getX() - frameLocation.getX() <= 560 && MouseInfo.getPointerInfo().getLocation().getX() - frameLocation.getX() >= 500 && MouseInfo.getPointerInfo().getLocation().getY() - frameLocation.getY() <= 510 && MouseInfo.getPointerInfo().getLocation().getY() - frameLocation.getY() >= 450) {
+                    } else if (isCourserInRectangle(500, 560, 450, 510)&& map.player.equipment[7] != 0) {
                         aktInventar = 8;
-                    } else if (MouseInfo.getPointerInfo().getLocation().getX() - frameLocation.getX() <= 621 && MouseInfo.getPointerInfo().getLocation().getX() - frameLocation.getX() >= 561 && MouseInfo.getPointerInfo().getLocation().getY() - frameLocation.getY() <= 510 && MouseInfo.getPointerInfo().getLocation().getY() - frameLocation.getY() >= 450) {
+                    } else if (isCourserInRectangle(561, 621, 450, 510)&& map.player.equipment[8] != 0) {
                         aktInventar = 9;
-                    } else if (MouseInfo.getPointerInfo().getLocation().getX() - frameLocation.getX() <= 682 && MouseInfo.getPointerInfo().getLocation().getX() - frameLocation.getX() >= 622 && MouseInfo.getPointerInfo().getLocation().getY() - frameLocation.getY() <= 510 && MouseInfo.getPointerInfo().getLocation().getY() - frameLocation.getY() >= 450) {
+                    } else if (isCourserInRectangle(622, 682, 450, 510)&& map.player.equipment[9] != 0) {
                         aktInventar = 10;
-                    } else if (MouseInfo.getPointerInfo().getLocation().getX() - frameLocation.getX() <= 743 && MouseInfo.getPointerInfo().getLocation().getX() - frameLocation.getX() >= 683 && MouseInfo.getPointerInfo().getLocation().getY() - frameLocation.getY() <= 510 && MouseInfo.getPointerInfo().getLocation().getY() - frameLocation.getY() >= 450) {
+                    } else if (isCourserInRectangle(683, 743, 450, 510)&& map.player.equipment[10] != 0) {
                         aktInventar = 11;
+
                     } else {
                         aktInventar = 0;
                     }
@@ -97,12 +103,22 @@ public class GameGUI extends JPanel {
                         showButton = true;
                         mouseCoordinates[0] = (int) (MouseInfo.getPointerInfo().getLocation().getX() - frameLocation.getX());
                         mouseCoordinates[1] = (int) (MouseInfo.getPointerInfo().getLocation().getY() - frameLocation.getY());
-
                     }
 
                 } else if (e.getButton() == 1) {
-                    showButton = false;
+                    if (readyForSwitch) {
+                        if (aktInventar > 0 && aktInventar < 8){
+                            for(int i = 0; i<4;i++){
+                                if(map.player.equipment[8+i] == 0){
 
+                                }
+                            }
+                        }else{
+
+                        }
+                    } else {
+                        showButton = false;
+                    }
                 }
             }
 
@@ -301,21 +317,37 @@ public class GameGUI extends JPanel {
             g.drawImage(this.map.player.empty.getScaledInstance(60, -1, Image.SCALE_DEFAULT), 561, 420, null);
             g.drawImage(this.map.player.empty.getScaledInstance(60, -1, Image.SCALE_DEFAULT), 622, 420, null);
             g.drawImage(this.map.player.empty.getScaledInstance(60, -1, Image.SCALE_DEFAULT), 683, 420, null);
-            if (showButton && aktInventar != 0) {
-                if (MouseInfo.getPointerInfo().getLocation().getX() - frameLocation.getX() <= mouseCoordinates[0] + 255 && MouseInfo.getPointerInfo().getLocation().getX() - frameLocation.getX() >= mouseCoordinates[0] + 10 && MouseInfo.getPointerInfo().getLocation().getY() - frameLocation.getY() <= mouseCoordinates[1] + 3 && MouseInfo.getPointerInfo().getLocation().getY() - frameLocation.getY() >= mouseCoordinates[1] - 30) {
+            if (showButton && aktInventar > 0&&aktInventar < 8) {
+                if (isCourserInRectangle(mouseCoordinates[0] + 10, mouseCoordinates[0] + 255, mouseCoordinates[1] - 30, mouseCoordinates[1] + 3)) {
                     g.drawImage(inventoryImages[1].getScaledInstance(235, -1, Image.SCALE_DEFAULT), mouseCoordinates[0] + 10, mouseCoordinates[1] - 60, null);
+                    readyForSwitch = true;
                 } else {
                     g.drawImage(inventoryImages[0].getScaledInstance(235, -1, Image.SCALE_DEFAULT), mouseCoordinates[0] + 10, mouseCoordinates[1] - 60, null);
+                    readyForSwitch = false;
                 }
+            } else if(showButton && aktInventar > 7 && aktInventar < 12){
+                if (isCourserInRectangle(mouseCoordinates[0] + 10, mouseCoordinates[0] + 255, mouseCoordinates[1] - 30, mouseCoordinates[1] + 3)) {
+                    g.drawImage(inventoryImages[3].getScaledInstance(235, -1, Image.SCALE_DEFAULT), mouseCoordinates[0] + 10, mouseCoordinates[1] - 60, null);
+                    readyForSwitch = true;
+                } else {
+                    g.drawImage(inventoryImages[2].getScaledInstance(235, -1, Image.SCALE_DEFAULT), mouseCoordinates[0] + 10, mouseCoordinates[1] - 60, null);
+                    readyForSwitch = false;
+                }
+            }else {
+                readyForSwitch = false;
             }
         }
     }
 
     public void update(int time) {
-        System.out.println(this.getX());
+        //System.out.println(this.getX());
         if (!inEscMenu) {
             // update map
             map.update(time);
         }
+    }
+
+    public boolean isCourserInRectangle(double x1, double x2, double y1, double y2) {
+        return (MouseInfo.getPointerInfo().getLocation().getX() - frameLocation.getX() <= x2 && MouseInfo.getPointerInfo().getLocation().getX() - frameLocation.getX() >= x1 && MouseInfo.getPointerInfo().getLocation().getY() - frameLocation.getY() <= y2 && MouseInfo.getPointerInfo().getLocation().getY() - frameLocation.getY() >= y1);
     }
 }
