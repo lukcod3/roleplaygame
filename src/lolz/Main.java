@@ -27,7 +27,7 @@ public class Main {
         frame.add(gui);
 
 
-        frame.setTitle("RPG-lol");
+        frame.setTitle("Monsters & Magic");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setResizable(false);
         frame.setBackground(Color.BLACK);

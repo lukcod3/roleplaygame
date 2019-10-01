@@ -22,7 +22,7 @@ public class Player extends Entity {
     public boolean turnedRight;
 
     // Ingame stats
-    public int maxHealth, health, damage, abilitypower, armor, level, exp, gold;
+    public int abilitypower, level, exp, gold;
 
     public Player(Map map, int x, int y) {
         // setup player stats
@@ -37,7 +37,7 @@ public class Player extends Entity {
         this.img[1] = new Image[6];
         this.img[2] = new Image[5];
 
-        this.width = 60;
+        this.width = 90;
         try {
             for (int i = 0; i < 4; i++) {
                 img[0][i] = ImageIO.read(new File("res/Individual Sprites/adventurer-idle-0" + i + ".png")).getScaledInstance(this.width, -1, Image.SCALE_SMOOTH);
@@ -51,7 +51,7 @@ public class Player extends Entity {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        this.width *= 3.0 / 4.0;
+        this.width = 45;
         this.height = img[0][0].getHeight(null);
 
         // rearrange y (given x and y values are for the bottom left corner)
