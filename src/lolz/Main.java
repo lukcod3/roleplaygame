@@ -1,6 +1,7 @@
 package lolz;
 
-import lolz.GUI.GUI;
+import lolz.GUI.GameGUI;
+import lolz.GUI.MainMenu;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -14,17 +15,17 @@ public class Main {
     public static final int WIDTH = 960;
     public static final int TILE_SIZE = 50;
 
-    private GUI gui;
-
+    final JFrame frame;
+    JPanel activePanel;
 
     private Main() {
 
         // setup main frame
-        final JFrame frame = new JFrame();
+        frame = new JFrame();
 
         // main game jpanel
-        gui = new GUI();
-        frame.add(gui);
+        activePanel = new MainMenu(this);
+        frame.add(activePanel);
 
 
         frame.setTitle("Monsters & Magic");
@@ -56,7 +57,9 @@ public class Main {
             // measure time for updating game logic
             long time1 = System.currentTimeMillis();
             // System.out.println("Time delay:" + (int)(time1-time0-16));
-            updateGame((int) (time1 - time0));
+            if (activePanel instanceof GameGUI) {
+                updateGame((int) (time1 - time0));
+            }
             time0 = time1;
 
             // update the frame
@@ -68,10 +71,18 @@ public class Main {
         new Main();
     }
 
-    private void updateGame(int time) {
-        gui.update(time);
+    public void startGame() {
+        this.activePanel = new GameGUI();
+        frame.getContentPane().removeAll();
+        frame.getContentPane().add(activePanel);
+        frame.revalidate();
     }
-    public static void drawReflectImage(Image i, Graphics g, int x, int y){
-        g.drawImage(i, x+i.getWidth(null), y, -i.getWidth(null), i.getHeight(null), null);
+
+    private void updateGame(int time) {
+        ((GameGUI) activePanel).update(time);
+    }
+
+    public static void drawReflectImage(Image i, Graphics g, int x, int y) {
+        g.drawImage(i, x + i.getWidth(null), y, -i.getWidth(null), i.getHeight(null), null);
     }
 }
