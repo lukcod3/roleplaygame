@@ -28,6 +28,8 @@ public class RandomMap extends Map {
         this.entities.add(this.monster);
         this.removeEntities = new int[this.entities.size()];
         this.monsterCount += 1;
+
+        this.expFactor = 1.2 * this.player.level;
     }
 
     private int numberOfTiles() {

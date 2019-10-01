@@ -23,7 +23,7 @@ public abstract class Map {
     public int[] removeEntities;
     public int removeIndex;
     private final int minMaxHealth = 25, maxMaxHealth = 50, minDamage = 10, maxDamage = 15, minArmor = 5, maxArmor = 10, minExp = 15, maxExp = 30;
-    private final double expFactor = 1.2 * this.player.level;
+    public double expFactor;
 
     public Tile[][] tiles;
 
