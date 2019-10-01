@@ -18,6 +18,7 @@ public class GUI extends JPanel {
     private MouseEvent e;
     public Point frameLocation;
     public int aktInventar;
+    public JButton showButton;
 
     //public Hub hub;
     public GUI() {
@@ -27,6 +28,11 @@ public class GUI extends JPanel {
         //hub = new Hub();
         map = new RandomMap();
         this.repaint();
+        showButton = new JButton("test");
+        //showButton.setIcon(new ImageIcon("res/inventory/gegenstandAblegen_aus.PNG"));
+        //showButton.setRolloverIcon(new ImageIcon("res/inventory/gegenstandAblegen_an.PNG"));
+        this.add(showButton);
+        showButton.setBounds(100, 100, 100, 100);
 
         this.addMouseListener(new MouseListener() {
             @Override
