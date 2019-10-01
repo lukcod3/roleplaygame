@@ -27,6 +27,7 @@ public class Player extends Entity {
     public Player(Map map, int x, int y) {
         // setup player stats
         super(x, y, 100, 10, 30, 0.15);
+        level = 1;
         turnedRight = true;
         this.map = map;
         this.x = x;
