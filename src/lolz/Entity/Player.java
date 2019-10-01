@@ -220,7 +220,7 @@ public class Player extends Entity {
         for (int i : new int[]{0, monster.getWidth()}) { //checking for the left and right border of the monster's image
             for (int j : new int[]{0, monster.getHeight()}) { //checking for the top and bottom border of the monster's image
                 if ((this.getX() <= monster.getX() + i) && (monster.getX() + i <= this.getX() + this.getWidth()) && (this.getY() <= monster.getY() + j) && (monster.getY() + j <= this.getY() + this.getHeight())) { //if any of the monster's boundaries can be found between any of the hero's boundaries, they touch
-                    System.out.println("Player X: " + this.getX() + " | Y: " + this.getY() + " || Monster X: " + monster.getX() + " | Y: " + monster.getY());
+                    //System.out.println("Player X: " + this.getX() + " | Y: " + this.getY() + " || Monster X: " + monster.getX() + " | Y: " + monster.getY());
                     return true;
                 }
             }
@@ -228,12 +228,16 @@ public class Player extends Entity {
         return false;
     }
 
-    public void attack(Entity monster) {
+    public boolean attack(Entity entity) {
         if (getHitting() && (int) animation_state % 5 == 2 && !hasDamaged) {
             this.hasDamaged = true;
-            monster.setHealth(monster.getHealth() - this.damage);
-            System.out.println("monster health: " + monster.getHealth());
+            entity.setHealth(entity.getHealth() - this.damage);
+            System.out.println("entity health: " + entity.getHealth());
+            if (entity.getHealth() == 0) {
+                return true;
+            }
         }
+        return false;
     }
 
 }

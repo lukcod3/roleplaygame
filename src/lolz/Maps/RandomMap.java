@@ -1,5 +1,6 @@
 package lolz.Maps;
 
+import lolz.Entity.Entity;
 import lolz.Entity.Monster;
 import lolz.Entity.Player;
 import lolz.GUI.Tile.StaticTile;
@@ -25,6 +26,7 @@ public class RandomMap extends Map {
         // set entities array
         this.entities.add(this.player);
         this.entities.add(this.monster);
+        this.monsterCount += 1;
     }
 
     private int numberOfTiles() {
@@ -88,16 +90,25 @@ public class RandomMap extends Map {
 
         // generate walls
         this.makeWalls();
+
+        spawnRandomMonsters(this.tiles);
     }
 
     @Override
     public void update(int time) {
         this.player.update(time);
-        //for (Entity monster : this.entities.subList(1, entities.size())) {
-            if (this.player.overlap(this.monster)) {
-                this.player.attack(this.monster);
+        for (Entity entity : this.entities) {
+            if (!(entity instanceof Player) && this.player.overlap(entity)) {
+                if (this.player.attack(entity)) {
+                    this.entities.remove(entity);
+                    this.monsterCount -= 1;
+                }
             }
-        //}
-        this.monster.update(time);
+        }
+        for (Entity entity : this.entities) {
+            if (entity instanceof Monster) {
+                entity.update(time);
+            }
+        }
     }
 }
