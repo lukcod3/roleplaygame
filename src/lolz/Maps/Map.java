@@ -20,6 +20,8 @@ public abstract class Map {
     ArrayList<Entity> entities;
     public int monsterCount;
     private double monsterPercentage;
+    public int[] removeEntities;
+    public int removeIndex;
 
     public Tile[][] tiles;
 
