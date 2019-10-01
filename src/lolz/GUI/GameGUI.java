@@ -7,10 +7,7 @@ import lolz.Maps.RandomMap;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.KeyEvent;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
+import java.awt.event.*;
 import java.io.File;
 
 public class GameGUI extends JPanel {
@@ -29,7 +26,6 @@ public class GameGUI extends JPanel {
     //public Hub hub;
     public GameGUI() {
         // call super class
-        super();
         this.setLayout(null);
         mouseCoordinates = new int[2];
         // create map
@@ -38,23 +34,25 @@ public class GameGUI extends JPanel {
 
         this.repaint();
         this.setOpaque(false);
-        this.setBackground(Color.GREEN);
 
         // add exit button
         String str = "Exit game";
         int button_width = 300;
         int button_height = 60;
         exitButton = new JButton("Exit game");
-        //exitButton.setBounds(0,0,400,80);
-        System.out.println((Main.WIDTH-exitButton.getWidth())/2);
-        //exitButton.setBounds((Main.WIDTH-button_width)/2, 100, button_width, button_height);
-        exitButton.setBounds(1000, 1000, button_width, button_height);
+        exitButton.setBounds((Main.WIDTH - button_width) / 2, 100, button_width, button_height);
         exitButton.setVisible(false);
+        exitButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.exit(0);
+            }
+        });
         this.add(exitButton);
         try {
-            inventoryImages = new Image[] { ImageIO.read(new File("res/inventory/gegenstandAblegen_aus.PNG")), ImageIO.read(new File("res/inventory/gegenstandAblegen_an.PNG")) };
-        }catch (Exception e){
-
+            inventoryImages = new Image[]{ImageIO.read(new File("res/inventory/gegenstandAblegen_aus.PNG")), ImageIO.read(new File("res/inventory/gegenstandAblegen_an.PNG"))};
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         //showButton.setIcon(new ImageIcon("res/inventory/gegenstandAblegen_aus.PNG"));
         //showButton.setRolloverIcon(new ImageIcon("res/inventory/gegenstandAblegen_an.PNG"));
@@ -69,40 +67,40 @@ public class GameGUI extends JPanel {
 
             @Override
             public void mousePressed(MouseEvent e) {
-                if(e.getButton()==3&&statsShown){
-                    if(MouseInfo.getPointerInfo().getLocation().getX()-frameLocation.getX()<=650&&MouseInfo.getPointerInfo().getLocation().getX()-frameLocation.getX()>=590&&MouseInfo.getPointerInfo().getLocation().getY()-frameLocation.getY()<=190&&MouseInfo.getPointerInfo().getLocation().getY()-frameLocation.getY()>=130){
+                if (e.getButton() == 3 && statsShown) {
+                    if (MouseInfo.getPointerInfo().getLocation().getX() - frameLocation.getX() <= 650 && MouseInfo.getPointerInfo().getLocation().getX() - frameLocation.getX() >= 590 && MouseInfo.getPointerInfo().getLocation().getY() - frameLocation.getY() <= 190 && MouseInfo.getPointerInfo().getLocation().getY() - frameLocation.getY() >= 130) {
                         aktInventar = 1;
-                    }else if(MouseInfo.getPointerInfo().getLocation().getX()-frameLocation.getX()<=560&&MouseInfo.getPointerInfo().getLocation().getX()-frameLocation.getX()>=500&&MouseInfo.getPointerInfo().getLocation().getY()-frameLocation.getY()<=270&&MouseInfo.getPointerInfo().getLocation().getY()-frameLocation.getY()>=210){
+                    } else if (MouseInfo.getPointerInfo().getLocation().getX() - frameLocation.getX() <= 560 && MouseInfo.getPointerInfo().getLocation().getX() - frameLocation.getX() >= 500 && MouseInfo.getPointerInfo().getLocation().getY() - frameLocation.getY() <= 270 && MouseInfo.getPointerInfo().getLocation().getY() - frameLocation.getY() >= 210) {
                         aktInventar = 2;
-                    }else if(MouseInfo.getPointerInfo().getLocation().getX()-frameLocation.getX()<=560&&MouseInfo.getPointerInfo().getLocation().getX()-frameLocation.getX()>=500&&MouseInfo.getPointerInfo().getLocation().getY()-frameLocation.getY()<=345&&MouseInfo.getPointerInfo().getLocation().getY()-frameLocation.getY()>=285){
+                    } else if (MouseInfo.getPointerInfo().getLocation().getX() - frameLocation.getX() <= 560 && MouseInfo.getPointerInfo().getLocation().getX() - frameLocation.getX() >= 500 && MouseInfo.getPointerInfo().getLocation().getY() - frameLocation.getY() <= 345 && MouseInfo.getPointerInfo().getLocation().getY() - frameLocation.getY() >= 285) {
                         aktInventar = 3;
-                    }else if(MouseInfo.getPointerInfo().getLocation().getX()-frameLocation.getX()<=640&&MouseInfo.getPointerInfo().getLocation().getX()-frameLocation.getX()>=590&&MouseInfo.getPointerInfo().getLocation().getY()-frameLocation.getY()<=420&&MouseInfo.getPointerInfo().getLocation().getY()-frameLocation.getY()>=360){
+                    } else if (MouseInfo.getPointerInfo().getLocation().getX() - frameLocation.getX() <= 640 && MouseInfo.getPointerInfo().getLocation().getX() - frameLocation.getX() >= 590 && MouseInfo.getPointerInfo().getLocation().getY() - frameLocation.getY() <= 420 && MouseInfo.getPointerInfo().getLocation().getY() - frameLocation.getY() >= 360) {
                         aktInventar = 4;
-                    }else if(MouseInfo.getPointerInfo().getLocation().getX()-frameLocation.getX()<=730&&MouseInfo.getPointerInfo().getLocation().getX()-frameLocation.getX()>=680&&MouseInfo.getPointerInfo().getLocation().getY()-frameLocation.getY()<=245&&MouseInfo.getPointerInfo().getLocation().getY()-frameLocation.getY()>=185){
+                    } else if (MouseInfo.getPointerInfo().getLocation().getX() - frameLocation.getX() <= 730 && MouseInfo.getPointerInfo().getLocation().getX() - frameLocation.getX() >= 680 && MouseInfo.getPointerInfo().getLocation().getY() - frameLocation.getY() <= 245 && MouseInfo.getPointerInfo().getLocation().getY() - frameLocation.getY() >= 185) {
                         aktInventar = 5;
-                    }else if(MouseInfo.getPointerInfo().getLocation().getX()-frameLocation.getX()<=730&&MouseInfo.getPointerInfo().getLocation().getX()-frameLocation.getX()>=680&&MouseInfo.getPointerInfo().getLocation().getY()-frameLocation.getY()<=320&&MouseInfo.getPointerInfo().getLocation().getY()-frameLocation.getY()>=260){
+                    } else if (MouseInfo.getPointerInfo().getLocation().getX() - frameLocation.getX() <= 730 && MouseInfo.getPointerInfo().getLocation().getX() - frameLocation.getX() >= 680 && MouseInfo.getPointerInfo().getLocation().getY() - frameLocation.getY() <= 320 && MouseInfo.getPointerInfo().getLocation().getY() - frameLocation.getY() >= 260) {
                         aktInventar = 6;
-                    }else if(MouseInfo.getPointerInfo().getLocation().getX()-frameLocation.getX()<=730&&MouseInfo.getPointerInfo().getLocation().getX()-frameLocation.getX()>=680&&MouseInfo.getPointerInfo().getLocation().getY()-frameLocation.getY()<=395&&MouseInfo.getPointerInfo().getLocation().getY()-frameLocation.getY()>=335){
+                    } else if (MouseInfo.getPointerInfo().getLocation().getX() - frameLocation.getX() <= 730 && MouseInfo.getPointerInfo().getLocation().getX() - frameLocation.getX() >= 680 && MouseInfo.getPointerInfo().getLocation().getY() - frameLocation.getY() <= 395 && MouseInfo.getPointerInfo().getLocation().getY() - frameLocation.getY() >= 335) {
                         aktInventar = 7;
-                    }else if(MouseInfo.getPointerInfo().getLocation().getX()-frameLocation.getX()<=560&&MouseInfo.getPointerInfo().getLocation().getX()-frameLocation.getX()>=500&&MouseInfo.getPointerInfo().getLocation().getY()-frameLocation.getY()<=510&&MouseInfo.getPointerInfo().getLocation().getY()-frameLocation.getY()>=450){
+                    } else if (MouseInfo.getPointerInfo().getLocation().getX() - frameLocation.getX() <= 560 && MouseInfo.getPointerInfo().getLocation().getX() - frameLocation.getX() >= 500 && MouseInfo.getPointerInfo().getLocation().getY() - frameLocation.getY() <= 510 && MouseInfo.getPointerInfo().getLocation().getY() - frameLocation.getY() >= 450) {
                         aktInventar = 8;
-                    }else if(MouseInfo.getPointerInfo().getLocation().getX()-frameLocation.getX()<=621&&MouseInfo.getPointerInfo().getLocation().getX()-frameLocation.getX()>=561&&MouseInfo.getPointerInfo().getLocation().getY()-frameLocation.getY()<=510&&MouseInfo.getPointerInfo().getLocation().getY()-frameLocation.getY()>=450){
+                    } else if (MouseInfo.getPointerInfo().getLocation().getX() - frameLocation.getX() <= 621 && MouseInfo.getPointerInfo().getLocation().getX() - frameLocation.getX() >= 561 && MouseInfo.getPointerInfo().getLocation().getY() - frameLocation.getY() <= 510 && MouseInfo.getPointerInfo().getLocation().getY() - frameLocation.getY() >= 450) {
                         aktInventar = 9;
-                    }else if(MouseInfo.getPointerInfo().getLocation().getX()-frameLocation.getX()<=682&&MouseInfo.getPointerInfo().getLocation().getX()-frameLocation.getX()>=622&&MouseInfo.getPointerInfo().getLocation().getY()-frameLocation.getY()<=510&&MouseInfo.getPointerInfo().getLocation().getY()-frameLocation.getY()>=450){
+                    } else if (MouseInfo.getPointerInfo().getLocation().getX() - frameLocation.getX() <= 682 && MouseInfo.getPointerInfo().getLocation().getX() - frameLocation.getX() >= 622 && MouseInfo.getPointerInfo().getLocation().getY() - frameLocation.getY() <= 510 && MouseInfo.getPointerInfo().getLocation().getY() - frameLocation.getY() >= 450) {
                         aktInventar = 10;
-                    }else if(MouseInfo.getPointerInfo().getLocation().getX()-frameLocation.getX()<=743&&MouseInfo.getPointerInfo().getLocation().getX()-frameLocation.getX()>=683&&MouseInfo.getPointerInfo().getLocation().getY()-frameLocation.getY()<=510&&MouseInfo.getPointerInfo().getLocation().getY()-frameLocation.getY()>=450){
+                    } else if (MouseInfo.getPointerInfo().getLocation().getX() - frameLocation.getX() <= 743 && MouseInfo.getPointerInfo().getLocation().getX() - frameLocation.getX() >= 683 && MouseInfo.getPointerInfo().getLocation().getY() - frameLocation.getY() <= 510 && MouseInfo.getPointerInfo().getLocation().getY() - frameLocation.getY() >= 450) {
                         aktInventar = 11;
-                    }else{
+                    } else {
                         aktInventar = 0;
                     }
-                    if(aktInventar!=0){
+                    if (aktInventar != 0) {
                         showButton = true;
-                        mouseCoordinates[0] = (int)(MouseInfo.getPointerInfo().getLocation().getX()-frameLocation.getX());
-                        mouseCoordinates[1] = (int)(MouseInfo.getPointerInfo().getLocation().getY()-frameLocation.getY());
+                        mouseCoordinates[0] = (int) (MouseInfo.getPointerInfo().getLocation().getX() - frameLocation.getX());
+                        mouseCoordinates[1] = (int) (MouseInfo.getPointerInfo().getLocation().getY() - frameLocation.getY());
 
                     }
 
-                }else if(e.getButton()==1){
+                } else if (e.getButton() == 1) {
                     showButton = false;
 
                 }
@@ -205,7 +203,7 @@ public class GameGUI extends JPanel {
     public void paint(Graphics g) {
         // black background
         g.setColor(Color.BLACK);
-        g.fillRect(0,0, Main.CONTENT_WIDTH, Main.CONTENT_HEIGHT);
+        g.fillRect(0, 0, Main.CONTENT_WIDTH, Main.CONTENT_HEIGHT);
 
         // paint map
         map.paint(g);
@@ -214,9 +212,7 @@ public class GameGUI extends JPanel {
         this.printStats(g);
         this.printEscMenu(g);
 
-        if (this.exitButton.isVisible()) {
-            this.exitButton.paint(g);
-        }
+        super.paint(g);
 
         // sync graphic
         Toolkit.getDefaultToolkit().sync();
@@ -239,13 +235,13 @@ public class GameGUI extends JPanel {
             Color myColor = new Color(56, 56, 56, 230);
             Font titleF = new Font("SansSerif", Font.BOLD, 25);
             Font statsF = new Font("SansSerif", Font.PLAIN, 15);
-            g.drawRect(border_x, border_y, Main.CONTENT_WIDTH-2*border_x, Main.CONTENT_HEIGHT-2*border_y);
+            g.drawRect(border_x, border_y, Main.CONTENT_WIDTH - 2 * border_x, Main.CONTENT_HEIGHT - 2 * border_y);
             g.setColor(myColor);
-            g.fillRect(border_x, border_y, Main.CONTENT_WIDTH-2*border_x, Main.CONTENT_HEIGHT-2*border_y);
+            g.fillRect(border_x, border_y, Main.CONTENT_WIDTH - 2 * border_x, Main.CONTENT_HEIGHT - 2 * border_y);
             g.setFont(titleF);
             g.setColor(Color.white);
             String str = "Menu";
-            g.drawString(str, (Main.CONTENT_WIDTH-g.getFontMetrics().stringWidth(str))/2, 80);
+            g.drawString(str, (Main.CONTENT_WIDTH - g.getFontMetrics().stringWidth(str)) / 2, 80);
             g.setFont(statsF);
         }
     }
@@ -305,10 +301,10 @@ public class GameGUI extends JPanel {
             g.drawImage(this.map.player.empty.getScaledInstance(60, -1, Image.SCALE_DEFAULT), 561, 420, null);
             g.drawImage(this.map.player.empty.getScaledInstance(60, -1, Image.SCALE_DEFAULT), 622, 420, null);
             g.drawImage(this.map.player.empty.getScaledInstance(60, -1, Image.SCALE_DEFAULT), 683, 420, null);
-            if(showButton&&aktInventar!=0){
-                if(MouseInfo.getPointerInfo().getLocation().getX()-frameLocation.getX()<=mouseCoordinates[0] +255&&MouseInfo.getPointerInfo().getLocation().getX()-frameLocation.getX()>=mouseCoordinates[0] + 10&&MouseInfo.getPointerInfo().getLocation().getY()-frameLocation.getY()<=mouseCoordinates[1]+3&&MouseInfo.getPointerInfo().getLocation().getY()-frameLocation.getY()>=mouseCoordinates[1] - 30) {
+            if (showButton && aktInventar != 0) {
+                if (MouseInfo.getPointerInfo().getLocation().getX() - frameLocation.getX() <= mouseCoordinates[0] + 255 && MouseInfo.getPointerInfo().getLocation().getX() - frameLocation.getX() >= mouseCoordinates[0] + 10 && MouseInfo.getPointerInfo().getLocation().getY() - frameLocation.getY() <= mouseCoordinates[1] + 3 && MouseInfo.getPointerInfo().getLocation().getY() - frameLocation.getY() >= mouseCoordinates[1] - 30) {
                     g.drawImage(inventoryImages[1].getScaledInstance(235, -1, Image.SCALE_DEFAULT), mouseCoordinates[0] + 10, mouseCoordinates[1] - 60, null);
-                }else{
+                } else {
                     g.drawImage(inventoryImages[0].getScaledInstance(235, -1, Image.SCALE_DEFAULT), mouseCoordinates[0] + 10, mouseCoordinates[1] - 60, null);
                 }
             }
@@ -316,6 +312,7 @@ public class GameGUI extends JPanel {
     }
 
     public void update(int time) {
+        System.out.println(this.getX());
         if (!inEscMenu) {
             // update map
             map.update(time);
