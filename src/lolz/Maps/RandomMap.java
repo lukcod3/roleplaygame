@@ -26,6 +26,7 @@ public class RandomMap extends Map {
         // set entities array
         this.entities.add(this.player);
         this.entities.add(this.monster);
+        this.removeEntities = new int[this.entities.size()];
         this.monsterCount += 1;
     }
 
@@ -100,9 +101,19 @@ public class RandomMap extends Map {
         for (Entity entity : this.entities) {
             if (!(entity instanceof Player) && this.player.overlap(entity)) {
                 if (this.player.attack(entity)) {
-                    this.entities.remove(entity);
-                    this.monsterCount -= 1;
+                    this.removeEntities[this.removeIndex] = this.entities.indexOf(entity);
+                    System.out.println(this.removeEntities[this.removeIndex]);
+                    this.removeIndex += 1;
                 }
+            }
+        }
+        if (this.removeIndex != 0) {
+            int index = this.removeIndex - 1;
+            for (int i = index ; i >= 0; i --) {
+                this.entities.remove(this.removeEntities[i]);
+                this.removeEntities[i] = 0;
+                this.removeIndex -= 1;
+                this.monsterCount -= 1;
             }
         }
         for (Entity entity : this.entities) {
