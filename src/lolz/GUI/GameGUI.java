@@ -19,7 +19,6 @@ public class GameGUI extends JPanel {
     private boolean statsShown, inEscMenu;
     private JButton exitButton;
 
-    private boolean statsShown;
     private MouseEvent e;
     public Point frameLocation;
     public int aktInventar;
