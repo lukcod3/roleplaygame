@@ -64,16 +64,16 @@ public class GameGUI extends JPanel {
         }
         item = new Item[7][5];
         for (int i = 0; i <= 4; i++) {
-            item[0][i] = new Item(0, 0, 0, 0, 0, 0, 0);
-            item[1][i] = new Item(0, 0, 0, 0, 0, 1, 0);
+            item[0][i] = new Item(0, 0, 0, 0, 0, 0, i);
+            item[1][i] = new Item(0, 0, 0, 0, 0, 1, i);
             item[2][i] = new Item(0, 0, 0, 0, 0, 2, i);
-            item[3][i] = new Item(0, 0, 0, 0, 0, 3, 0);
-            item[4][i] = new Item(0, 0, 0, 0, 0, 4, 0);
-            item[5][i] = new Item(0, 0, 0, 0, 0, 5, 0);
-            item[6][i] = new Item(0, 0, 0, 0, 0, 6, 0);
+            item[3][i] = new Item(0, 0, 0, 0, 0, 3, i);
+            item[4][i] = new Item(0, 0, 0, 0, 0, 4, i);
+            item[5][i] = new Item(0, 0, 0, 0, 0, 5, i);
+            item[6][i] = new Item(0, 0, 0, 0, 0, 6, i);
         }
-        this.map.player.equipment = new Item[]{item[0][0],item[1][0],item[2][1],item[3][0],item[4][0],item[5][0],item[6][0],null,item[2][3],null,item[2][4]};
-
+        this.map.player.equipment = new Item[]{item[0][0], item[1][0], item[2][0], item[3][0], item[4][0], item[5][0], item[6][0], null, null, null, null};
+        testGeneratedRandomItemSet();
 
         this.addMouseListener(new MouseListener() {
             @Override
@@ -126,10 +126,11 @@ public class GameGUI extends JPanel {
                             for (int i = 0; i < 4; i++) {
                                 if (map.player.equipment[7 + i] == null) {
                                     map.player.equipment[7 + i] = map.player.equipment[aktInventar - 1];
+                                    map.player.equipment[aktInventar - 1] = item[aktInventar - 1][0];
                                     break;
                                 }
                             }
-                            map.player.equipment[aktInventar - 1] = item[aktInventar - 1][0];
+
                         } else {
                             Item hilf = map.player.equipment[aktInventar - 1];
                             if (map.player.equipment[hilf.typ] == item[hilf.typ][0]) {
@@ -378,5 +379,12 @@ public class GameGUI extends JPanel {
 
     public boolean isCourserInRectangle(double x1, double x2, double y1, double y2) {
         return (MouseInfo.getPointerInfo().getLocation().getX() - frameLocation.getX() <= x2 && MouseInfo.getPointerInfo().getLocation().getX() - frameLocation.getX() >= x1 && MouseInfo.getPointerInfo().getLocation().getY() - frameLocation.getY() <= y2 && MouseInfo.getPointerInfo().getLocation().getY() - frameLocation.getY() >= y1);
+    }
+    public void testGeneratedRandomItemSet(){
+        for(int i = 0; i<= 6; i++){
+            this.map.player.equipment[i] = item[i][(int)(Math.random()*5)];
+        }
+        this.map.player.equipment[7] = item[(int) (Math.random()*7)][(int) (Math.random()*4)+1];
+        this.map.player.equipment[8] = item[(int) (Math.random()*7)][(int) (Math.random()*4)+1];
     }
 }

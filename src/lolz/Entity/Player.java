@@ -60,37 +60,6 @@ public class Player extends Entity {
         // this.x -= this.width;
         this.y -= this.height;
 
-        // setup player inventory
-        /*
-        inventoryImages = new Image[7][5];
-        try {
-            inventoryImages[0][0] = ImageIO.read(new File("res/inventory/hutPlatz.png"));
-            inventoryImages[1][0] = ImageIO.read(new File("res/inventory/ruestungPlatz.png"));
-            inventoryImages[2][0] = ImageIO.read(new File("res/inventory/schwertPlatz.png"));
-            inventoryImages[3][0] = ImageIO.read(new File("res/inventory/schuhePlatz.png"));
-            inventoryImages[4][0] = ImageIO.read(new File("res/inventory/kettePlatz.png"));
-            inventoryImages[5][0] = ImageIO.read(new File("res/inventory/ringPlatz.png"));
-            inventoryImages[6][0] = ImageIO.read(new File("res/inventory/guertelPlatz.png"));
-            empty = ImageIO.read(new File("res/inventory/freiPlatz.png"));
-
-            for (int i = 1; i <= 4; i++) {
-                //inventoryImages[0][i] = ImageIO.read(new File("res/inventory/hut"+i+".png"));
-                //inventoryImages[1][i] = ImageIO.read(new File("res/inventory/ruestung"+i+".png"));
-                inventoryImages[2][i] = ImageIO.read(new File("res/inventory/schwert" + i + ".png"));
-                //inventoryImages[3][i] = ImageIO.read(new File("res/inventory/schuhe"+i+".png"));
-                //inventoryImages[4][i] = ImageIO.read(new File("res/inventory/kette"+i+".png"));
-                //inventoryImages[5][i] = ImageIO.read(new File("res/inventory/ring"+i+".png"));
-                //inventoryImages[6][i] = ImageIO.read(new File("res/inventory/guertel"+i+".png"));
-            }
-
-        } catch (Exception e) {
-            System.out.println("Fehler");
-        }
-        if(inventoryImages[2][1]==null){
-            System.out.println(1);
-        }
-
-         */
     }
 
     // set Getters and Setters for attribute hit
