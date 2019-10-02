@@ -121,12 +121,12 @@ public class GameGUI extends JPanel {
                             }
                         } else {
                             int hilf = map.player.equipment[aktInventar - 1];
-                            if(map.player.equipment[hilf / 4] == 0){
+                            if(map.player.equipment[(hilf-1) / 4] == 0){
                                 map.player.equipment[aktInventar -1] = 0;
-                                map.player.equipment[hilf / 4] = hilf % 4;
+                                map.player.equipment[(hilf-1) / 4] = ((hilf-1) % 4)+1;
                             } else {
-                                map.player.equipment[aktInventar - 1] = map.player.equipment[aktInventar - 1] - ((map.player.equipment[aktInventar - 1]) % 4) + 1 + (map.player.equipment[map.player.equipment[aktInventar - 1] % 4] - 1);
-                                map.player.equipment[hilf / 4] = hilf % 4;
+                                map.player.equipment[aktInventar - 1] = hilf - (((hilf-1) % 4)+1) + (map.player.equipment[(hilf-1) / 4] );
+                                map.player.equipment[(hilf-1) / 4] = ((hilf-1) % 4)+1;
                             }
                         }
                     } else {
@@ -332,7 +332,7 @@ public class GameGUI extends JPanel {
                     a = this.map.player.empty;
                 } else {
                     //System.out.println((this.map.player.equipment[i + 7]-1) / 4+ " "+ (this.map.player.equipment[i + 7]-1) % 4);
-                    a = this.map.player.inventoryImages[(this.map.player.equipment[i + 7]-1) / 4][(this.map.player.equipment[i + 7]) % 4];
+                    a = this.map.player.inventoryImages[(this.map.player.equipment[i + 7]-1) / 4][((this.map.player.equipment[i + 7]-1) % 4)+1];
                 }
                 g.drawImage(a.getScaledInstance(60, -1, Image.SCALE_DEFAULT), 500 + (i * 61), 420, null);
             }

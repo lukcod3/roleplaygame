@@ -61,7 +61,7 @@ public class Player extends Entity {
         this.y -= this.height;
 
         // setup player inventory
-        equipment = new int[] {0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0};
+        equipment = new int[] {0, 0, 1, 0, 0, 0, 0, 0, 10, 11, 12};
         inventoryImages = new Image[7][5];
         try {
             inventoryImages[0][0] = ImageIO.read(new File("res/inventory/hutPlatz.png"));
