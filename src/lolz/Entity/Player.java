@@ -1,5 +1,6 @@
 package lolz.Entity;
 
+import lolz.GUI.Item;
 import lolz.Main;
 import lolz.Maps.Map;
 
@@ -16,9 +17,8 @@ public class Player extends Entity {
     public boolean isMoving;
     public double animation_state;
     public final String base_char = "elf_m";
-    public int[] equipment; // 1 is hat, 2 is t-shirt, 3 is sword, 4 is shoes, 5 is necklace, 6 is ring, 7 is belt, 8-11 is depot
+    public Item[] equipment; // 1 is hat, 2 is t-shirt, 3 is sword, 4 is shoes, 5 is necklace, 6 is ring, 7 is belt, 8-11 is depot
     public Image[][] inventoryImages;
-    public Image empty;
     public boolean turnedRight;
 
     // Ingame stats
@@ -61,7 +61,7 @@ public class Player extends Entity {
         this.y -= this.height;
 
         // setup player inventory
-        equipment = new int[] {0, 0, 1, 0, 0, 0, 0, 0, 10, 11, 12};
+        /*
         inventoryImages = new Image[7][5];
         try {
             inventoryImages[0][0] = ImageIO.read(new File("res/inventory/hutPlatz.png"));
@@ -89,6 +89,8 @@ public class Player extends Entity {
         if(inventoryImages[2][1]==null){
             System.out.println(1);
         }
+
+         */
     }
 
     // set Getters and Setters for attribute hit
