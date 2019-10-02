@@ -90,4 +90,5 @@ public class Main {
     public static void drawReflectImage(Image i, Graphics g, int x, int y) {
         g.drawImage(i, x + i.getWidth(null), y, -i.getWidth(null), i.getHeight(null), null);
     }
+
 }
