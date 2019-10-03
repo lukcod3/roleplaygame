@@ -314,6 +314,7 @@ public abstract class Map {
 
     public void spawnRandomMonsters (Tile[][] tiles) {
         double randInt = 0;
+        // check for every tile that is a floor tile whether a random number (double randInt) is lower than a certain percentage (monsterPercentage); if so create a new monster there
         for (int i = 0 ; i < this.tiles.length; i ++) {
             for (int j = 0 ; j < this.tiles[0].length; j ++) {
                 if (tiles[i][j].isGround()) {
@@ -328,10 +329,14 @@ public abstract class Map {
         }
     }
 
+
+    // method returns a new monster with attributes in certain intervals (first intervals are written down at the top) which are determined by the player's level (first intervals are increased by a certain number)
     public Monster generateMonster (int x, int y) {
         return new Monster(x * Main.TILE_SIZE, (int) ((y + 0.5) * Main.TILE_SIZE), /*maxHealth*/randInt((int) (this.minMaxHealth * this.expFactor), (int) (this.maxMaxHealth * this.expFactor)), /*damage*/randInt((int) (this.minDamage * this.expFactor), (int) (this.maxDamage * this.expFactor)), /*armor*/randInt((int) (this.minArmor * this.expFactor), (int) (this.maxArmor * this.expFactor)), /*exp*/randInt((int) (this.minExp * this.expFactor), (int) (this.maxExp * this.expFactor)));
     }
 
+
+    // returns integer which is part of the interval [min; max]
     private int randInt (int min, int max) {
         return (int) (Math.random()*(max + 1 - min) + min);
     }
