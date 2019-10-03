@@ -15,6 +15,9 @@ public class RandomMap extends Map {
         // setup map
         super(20000, 15000);
 
+        // update expFactor before new map is created
+        this.expFactor = Math.pow(1.2, this.player.level);
+
         // generate map
         generateMap();
 
@@ -27,8 +30,6 @@ public class RandomMap extends Map {
         this.entities.add(this.player);
         this.entities.add(this.monster);
         this.monsterCount += 1;
-
-        this.expFactor = Math.pow(1.2, this.player.level);
     }
 
     private int numberOfTiles() {
@@ -99,7 +100,6 @@ public class RandomMap extends Map {
     @Override
     public void update(int time) {
         this.player.update(time);
-        this.expFactor = Math.pow(1.2, this.player.level);
         for (Entity entity : this.entities) {
             if (!(entity instanceof Player) && this.player.overlap(entity)) {
                 if (this.player.attack(entity)) {
