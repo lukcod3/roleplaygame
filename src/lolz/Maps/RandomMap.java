@@ -15,8 +15,6 @@ public class RandomMap extends Map {
         // setup map
         super(20000, 15000);
 
-        // update expFactor before new map is created
-        this.expFactor = Math.pow(1.2, this.player.level);
 
         // generate map
         generateMap();
@@ -25,6 +23,9 @@ public class RandomMap extends Map {
         this.player = new Player(this, (this.VIRTUAL_WIDTH / 2) * Main.TILE_SIZE, (this.VIRTUAL_HEIGHT / 2) * Main.TILE_SIZE);
         // spawn monster at player's position
         this.monster = new Monster((this.VIRTUAL_WIDTH / 2) * Main.TILE_SIZE, (this.VIRTUAL_HEIGHT / 2) * Main.TILE_SIZE, 50, 15, 10, 25);
+
+        // update expFactor before new map is created
+        this.expFactor = Math.pow(1.2, this.player.level);
 
         // set entities array
         this.entities.add(this.player);
@@ -113,7 +114,7 @@ public class RandomMap extends Map {
         // remove the monsters that are dead (health == 0) from the entities ArrayList and their index from the removeEntities array and decrease the index telling you how many monsters have to be deleted as well as the monsterCount by one
         if (this.removeIndex != 0) {
             int index = this.removeIndex - 1;
-            for (int i = index ; i >= 0; i --) {
+            for (int i = index; i >= 0; i--) {
                 this.entities.remove(this.removeEntities[i]);
                 this.removeEntities[i] = 0;
                 this.removeIndex -= 1;

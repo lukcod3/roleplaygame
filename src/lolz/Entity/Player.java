@@ -27,6 +27,7 @@ public class Player extends Entity {
     public Player(Map map, int x, int y) {
         // setup player stats
         super(x, y, 100, 10, 30, 0.15);
+        health = 5; // test
         this.level = 1;
         this.turnedRight = true;
         this.map = map;
@@ -109,6 +110,7 @@ public class Player extends Entity {
                 Main.drawReflectImage(img[0][(int) this.animation_state], g, (int) this.x - offset, (int) this.y);
             }
         }
+
     }
 
     public void update(int time) {
@@ -127,6 +129,8 @@ public class Player extends Entity {
         }
 
         overlap(map.monster);
+
+        //update player stats
 
         // old
         // this.animation_state %= 4;

@@ -150,7 +150,7 @@ public class Tile {
         } else if (this.topTiles.contains(t)) {
             this.topTiles.remove(t);
         } else {
-            System.out.println("!!!! WARNING: REMOVING STATIC_TILE " + t + " BUT DOESNT EXIST !!!!");
+            //System.out.println("!!!! WARNING: REMOVING STATIC_TILE " + t + " BUT DOESNT EXIST !!!!");
         }
     }
 

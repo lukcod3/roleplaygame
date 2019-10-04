@@ -52,6 +52,7 @@ public class GameGUI extends JPanel {
             }
         });
         this.add(exitButton);
+        // loads images for inventory
         try {
             inventoryImages = new Image[4];
             inventoryImages[0] = ImageIO.read(new File("res/inventory/gegenstandAblegen_aus.PNG"));
@@ -85,6 +86,7 @@ public class GameGUI extends JPanel {
 
             @Override
             public void mousePressed(MouseEvent e) {
+                // check if courser is on inventory field
                 if (e.getButton() == 3 && statsShown) {
                     if (isCourserInRectangle(590, 650, 130, 190) && map.player.equipment[0].itemNr != 0) {
                         aktInventar = 1;
@@ -117,7 +119,7 @@ public class GameGUI extends JPanel {
                         mouseCoordinates[0] = (int) (MouseInfo.getPointerInfo().getLocation().getX() - frameLocation.getX());
                         mouseCoordinates[1] = (int) (MouseInfo.getPointerInfo().getLocation().getY() - frameLocation.getY());
                     }
-
+                // switches Item places
                 } else if (e.getButton() == 1) {
                     if (readyForSwitch) {
                         readyForSwitch = false;
@@ -250,6 +252,16 @@ public class GameGUI extends JPanel {
 
         // paint overlay interfaces
         this.printStats(g);
+        Font font = new Font("SansSerif", Font.BOLD, 25);
+        g.setFont(font);
+        g.setColor(Color.white);
+        if(this.map.player.health <= 10) {
+            Color lowColor = new Color(100, 0, 0, 60);
+            g.setColor(lowColor);
+            g.fillRect(0, 0, Main.WIDTH, Main.HEIGHT);
+            g.setColor(Color.red);
+        }
+        g.drawString("Leben: " + this.map.player.health + "/" + this.map.player.maxHealth, 18, 28);
         this.printEscMenu(g);
 
         super.paint(g);
