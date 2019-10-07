@@ -340,16 +340,20 @@ Tim erstellte eine Methode zum Testen, ob sich ein gegebenes Monster mit dem Hel
 \myuline{Montag, 30.09.19 (Tim, Jonas):}
 
 Tim setzte ein eigenes Icon für das Fenster und versuchte sich daran, den Helden die Möglichkeit zu geben, dem Monster Schaden zufügen zu können, scheiterte aber. \\
-Jonas implementierte einen neuen Helden, der nun auch nach links schauen kann und angreifen kann.\\
+Jonas implementierte einen neuen Helden, der nun auch nach links schauen kann und angreifen kann. \\
 
 \myuline{Dienstag, 01.10.19 (Tim, Jonas):}
 
-Lukas verbesserte den Fehler in Tims \glqq{}Angriffscode\grqq{}, sodass der Held Monstern nun Schaden zufügen konnte.\\
+Lukas verbesserte den Fehler in Tims \glqq{}Angriffscode\grqq{}, sodass der Held Monstern nun Schaden zufügen konnte. \\
 Tim erstellte eine Methode, die zufällig Monster auf der Karte erzeugt und die Anzahl dieser in einer Variable mitzählt. Des Weiteren lässt er die Monster verschwinden, sobald ihre Lebenspunkte 0 sind, sie also tot sind. Tim erweiterte die zufällige Monstererstellung um eine Beeinflussung durch das Spielerlevel, sodas die Monster in ihrer Stärke an die des Spielers angepasst sind. Das Erfahrungssystem ist sonst noch nicht implementiert. \\
-Jonas implementierte ein Inventarsystem. Nun können Items des Helden an und abgelegt werden.\\
+Jonas implementierte ein Inventarsystem. Nun können Items des Helden an und abgelegt werden. \\
 
 \myuline{Mittwoch, 02.10.19 (Jonas):}
 
-Jonas implementierte das Inventarsystem neu. Die Items sind nun eine eigene Klasse und werden nicht mehr als Integer gespeichert. Außerdem wurden die Bilder für die entsprechenden Items aus dem Internet ausgeschnitten und eingefügt.\\
+Jonas implementierte das Inventarsystem neu. Die Items sind nun eine eigene Klasse und werden nicht mehr als Integer gespeichert. Außerdem wurden die Bilder für die entsprechenden Items aus dem Internet ausgeschnitten und eingefügt. \\
+
+\myuline{Mittwoch, 07.10.19 (Tim):}
+
+Tim löste das Problem, dass die Monster mit zufälligen Attributen keine Werte zugewiesen bekommen. Er erweiterte den Setter der Lebenspunkte des Helden um eine Abfrage der maximalen Lebenspunkte, damit diese nicht überschritten werden. Er fügte eine visuelle Lebensleiste ein und positionierte den Text, der die Lebenspunkte angibt, in zentrierter Weise in der Lebensleiste. Die Farbänderung der Lebensanzeige sowie des Bildschirms hat er auf einen prozentualen Wert des maximalen Lebens, statt auf einen festen Lebenspunktewert gesetzt. \\
 
 \end{document}
