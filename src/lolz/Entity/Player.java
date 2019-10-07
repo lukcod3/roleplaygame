@@ -128,8 +128,6 @@ public class Player extends Entity {
             this.animation_state %= 4;
         }
 
-        overlap(map.monster);
-
         //update player stats
 
         // old
@@ -206,12 +204,12 @@ public class Player extends Entity {
         }
     }
 
-    // check if any given monster is "touching" the hero or rather if the hero is touching it
-    public boolean overlap(Entity monster) {
-        for (int i : new int[]{0, monster.getWidth()}) { //checking for the left and right border of the monster's image
-            for (int j : new int[]{0, monster.getHeight()}) { //checking for the top and bottom border of the monster's image
-                if ((this.getX() <= monster.getX() + i) && (monster.getX() + i <= this.getX() + this.getWidth()) && (this.getY() <= monster.getY() + j) && (monster.getY() + j <= this.getY() + this.getHeight())) { //if any of the monster's boundaries can be found between any of the hero's boundaries, they touch
-                    //System.out.println("Player X: " + this.getX() + " | Y: " + this.getY() + " || Monster X: " + monster.getX() + " | Y: " + monster.getY());
+    // check if any given entity is "touching" the hero or rather if the hero is touching it
+    public boolean overlap(Entity entity) {
+        for (int i : new int[]{0, entity.getWidth()}) { //checking for the left and right border of the entity's image
+            for (int j : new int[]{0, entity.getHeight()}) { //checking for the top and bottom border of the entity's image
+                if ((this.getX() <= entity.getX() + i) && (entity.getX() + i <= this.getX() + this.getWidth()) && (this.getY() <= entity.getY() + j) && (entity.getY() + j <= this.getY() + this.getHeight())) { //if any of the entity's boundaries can be found between any of the hero's boundaries, they touch
+                    //System.out.println("Player X: " + this.getX() + " | Y: " + this.getY() + " || Monster X: " + entity.getX() + " | Y: " + entity.getY());
                     return true;
                 }
             }

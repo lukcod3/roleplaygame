@@ -1,6 +1,7 @@
 package lolz;
 
 import lolz.GUI.GameGUI;
+import lolz.GUI.HubGUI;
 import lolz.GUI.MainMenu;
 
 import javax.imageio.ImageIO;
@@ -61,9 +62,12 @@ public class Main {
             // measure time for updating game logic
             long time1 = System.currentTimeMillis();
             // System.out.println("Time delay:" + (int)(time1-time0-16));
-            if (activePanel instanceof GameGUI) {
+            if (activePanel instanceof HubGUI) {
                 updateGame((int) (time1 - time0));
             }
+            /*if (activePanel instanceof GameGUI) {
+                updateGame((int) (time1 - time0));
+            }*/
             time0 = time1;
 
             // update the frame
@@ -76,15 +80,17 @@ public class Main {
     }
 
     public void startGame() {
-        this.activePanel = new GameGUI();
+        this.activePanel = new HubGUI();
+        //this.activePanel = new GameGUI();
         frame.getContentPane().removeAll();
         frame.getContentPane().add(activePanel);
         frame.revalidate();
     }
 
     private void updateGame(int time) {
-        ((GameGUI) activePanel).update(time);
-        ((GameGUI) activePanel).frameLocation = frame.getLocationOnScreen();
+        ((HubGUI) activePanel).update(time);
+        //((GameGUI) activePanel).update(time);
+        //((GameGUI) activePanel).frameLocation = frame.getLocationOnScreen();
     }
 
     public static void drawReflectImage(Image i, Graphics g, int x, int y) {
