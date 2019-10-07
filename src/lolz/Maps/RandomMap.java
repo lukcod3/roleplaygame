@@ -27,6 +27,9 @@ public class RandomMap extends Map {
         // update expFactor before new map is created
         this.expFactor = Math.pow(1.2, this.player.level);
 
+        //spawn random monsters
+        spawnRandomMonsters(this.tiles);
+
         // set entities array
         this.entities.add(this.player);
         this.entities.add(this.monster);
@@ -94,8 +97,6 @@ public class RandomMap extends Map {
 
         // generate walls
         this.makeWalls();
-
-        spawnRandomMonsters(this.tiles);
     }
 
     @Override
