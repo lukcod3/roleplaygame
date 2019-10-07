@@ -8,6 +8,7 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.awt.geom.RoundRectangle2D;
 import java.io.File;
 
 public class GameGUI extends JPanel {
@@ -251,17 +252,30 @@ public class GameGUI extends JPanel {
         map.paint(g);
 
         // paint overlay interfaces
+
+        //fill health bar
+        g.setColor(Color.GREEN);
+        g.fillRoundRect(25, 25, (int) (200 * ((double) this.map.player.health / (double) this.map.player.getMaxHealth())), 35, 15, 15);
+
+        // draw border of health bar
+        g.setColor(Color.WHITE);
+        g.drawRoundRect(25, 25, 200, 35, 15, 15);
+
+        g.setColor(Color.BLACK);
         this.printStats(g);
         Font font = new Font("SansSerif", Font.BOLD, 25);
         g.setFont(font);
-        g.setColor(Color.white);
+        g.setColor(Color.WHITE);
         if(this.map.player.health <= 10) {
             Color lowColor = new Color(100, 0, 0, 60);
             g.setColor(lowColor);
             g.fillRect(0, 0, Main.WIDTH, Main.HEIGHT);
             g.setColor(Color.red);
         }
-        g.drawString("Leben: " + this.map.player.health + "/" + this.map.player.maxHealth, 18, 28);
+        g.drawString("" + this.map.player.health, 25 + 200 / 4 - g.getFontMetrics().stringWidth("" + this.map.player.health) / 2, 52);
+        g.drawString("/", 25 + 200 / 2 - g.getFontMetrics().stringWidth("/") / 2, 52);
+        g.drawString("" + this.map.player.maxHealth, 25 + 200 * 3 / 4 - g.getFontMetrics().stringWidth("" + this.map.player.maxHealth) / 2, 52);
+
         this.printEscMenu(g);
 
         super.paint(g);

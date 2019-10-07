@@ -32,7 +32,7 @@ public abstract class Entity {
     }
 
     public void setHealth(int health) {
-        if (health >= 0) {
+        if (health >= 0 && health <= this.getMaxHealth()) {
             this.health = health;
         } else {
             this.health = 0;
