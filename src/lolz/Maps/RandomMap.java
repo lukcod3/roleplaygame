@@ -120,7 +120,6 @@ public class RandomMap extends Map {
                 this.removeEntities[i] = 0;
                 this.removeIndex -= 1;
                 this.monsterCount -= 1;
-                System.out.println(this.monsterCount);
             }
         }
         // update all monsters
