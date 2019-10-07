@@ -272,6 +272,7 @@ public class GameGUI extends JPanel {
             g.fillRect(0, 0, Main.WIDTH, Main.HEIGHT);
             g.setColor(Color.red);
         }
+        // draw health values in somewhat centered position
         g.drawString("" + this.map.player.health, 25 + 200 / 4 - g.getFontMetrics().stringWidth("" + this.map.player.health) / 2, 52);
         g.drawString("/", 25 + 200 / 2 - g.getFontMetrics().stringWidth("/") / 2, 52);
         g.drawString("" + this.map.player.maxHealth, 25 + 200 * 3 / 4 - g.getFontMetrics().stringWidth("" + this.map.player.maxHealth) / 2, 52);
