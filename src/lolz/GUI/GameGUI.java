@@ -266,7 +266,7 @@ public class GameGUI extends JPanel {
         Font font = new Font("SansSerif", Font.BOLD, 25);
         g.setFont(font);
         g.setColor(Color.WHITE);
-        if(this.map.player.health <= 10) {
+        if((double) this.map.player.health / (double) this.map.player.getMaxHealth() <= 0.1) {
             Color lowColor = new Color(100, 0, 0, 60);
             g.setColor(lowColor);
             g.fillRect(0, 0, Main.WIDTH, Main.HEIGHT);
