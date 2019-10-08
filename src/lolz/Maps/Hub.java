@@ -15,25 +15,24 @@ public class Hub extends Map {
         this.player = new Player(this,this.WIDTH/2, this.HEIGHT/2);
 
         // setup map
-        Tile.StaticTile[][] tiles = new Tile.StaticTile[this.VIRTUAL_HEIGHT][this.VIRTUAL_WIDTH];
-        for (int y = 0; y < tiles.length; y++) {
-            for (int x = 0; x < tiles[0].length; x++) {
-                tiles[y][x] = Tile.StaticTile.FLOOR_1;
+        for (int y = 0; y < this.tiles.length; y++) {
+            for (int x = 0; x < this.tiles[0].length; x++) {
+                this.tiles[y][x].add(Tile.StaticTile.FLOOR_1);
             }
         }
 
         // setting walls
         for (int i = 0; i < tiles.length; i++) {
-            tiles[i][0] = Tile.StaticTile.WALL;
+            this.tiles[i][0].add(Tile.StaticTile.WALL);
         }
         for (int i = 0; i < this.tiles.length; i++) {
-            tiles[i][this.tiles[0].length - 1] = Tile.StaticTile.WALL;
+            this.tiles[i][this.tiles[0].length - 1].add(Tile.StaticTile.WALL);
         }
         for (int i = 0; i < this.tiles[0].length; i++) {
-            tiles[0][i] = Tile.StaticTile.WALL;
+            this.tiles[0][i].add(Tile.StaticTile.WALL);
         }
         for (int i = 0; i < this.tiles[0].length; i++) {
-            tiles[this.tiles.length - 1][i] = Tile.StaticTile.WALL;
+            this.tiles[this.tiles.length - 1][i].add(Tile.StaticTile.WALL);
         }
     }
 
@@ -45,12 +44,22 @@ public class Hub extends Map {
         // draw map
         for (int y = 0; y < this.tiles.length; y++) {
             for (int x = 0; x < this.tiles[0].length; x++) {
-                g.drawImage(Tile.tilePics.get(this.tiles[y][x]), Main.TILE_SIZE * x, Main.TILE_SIZE * y, null);
+                if (this.tiles[y][x].contains(Tile.StaticTile.FLOOR_1)) {
+                    g.drawImage(Tile.tilePics.get(Tile.StaticTile.FLOOR_1), Main.TILE_SIZE * x, Main.TILE_SIZE * y, null);
+                }
             }
         }
 
         // draw player
         this.player.paint(g);
+
+        for (int y = 0; y < this.tiles.length; y++) {
+            for (int x = 0; x < this.tiles[0].length; x++) {
+                if (this.tiles[y][x].contains(Tile.StaticTile.WALL)) {
+                    g.drawImage(Tile.tilePics.get(Tile.StaticTile.WALL), Main.TILE_SIZE * x, Main.TILE_SIZE * y, null);
+                }
+            }
+        }
     }
 
     @Override
