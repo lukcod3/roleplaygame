@@ -35,7 +35,7 @@ public class MainMenu extends JPanel {
         start.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                main.startGame();
+                main.startHub();
             }
         });
         this.add(start);
