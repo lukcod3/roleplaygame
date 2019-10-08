@@ -23,15 +23,19 @@ public class Hub extends Map {
 
         // setting walls
         for (int i = 0; i < tiles.length; i++) {
+            this.tiles[i][0].remove(Tile.StaticTile.FLOOR_1);
             this.tiles[i][0].add(Tile.StaticTile.WALL);
         }
         for (int i = 0; i < this.tiles.length; i++) {
+            this.tiles[i][this.tiles[0].length - 1].remove(Tile.StaticTile.FLOOR_1);
             this.tiles[i][this.tiles[0].length - 1].add(Tile.StaticTile.WALL);
         }
         for (int i = 0; i < this.tiles[0].length; i++) {
+            this.tiles[0][i].remove(Tile.StaticTile.FLOOR_1);
             this.tiles[0][i].add(Tile.StaticTile.WALL);
         }
         for (int i = 0; i < this.tiles[0].length; i++) {
+            this.tiles[this.tiles.length - 1][i].remove(Tile.StaticTile.FLOOR_1);
             this.tiles[this.tiles.length - 1][i].add(Tile.StaticTile.WALL);
         }
     }
@@ -39,13 +43,15 @@ public class Hub extends Map {
     @Override
     public void paint(Graphics g) {
         // translate map to player coords
-        g.translate((int)-(this.player.x - Main.WIDTH/2), (int)-(this.player.y - Main.HEIGHT/2));
+        g.translate((int) -(this.player.x - Main.WIDTH / 2), (int) -(this.player.y - Main.HEIGHT / 2));
 
         // draw map
         for (int y = 0; y < this.tiles.length; y++) {
             for (int x = 0; x < this.tiles[0].length; x++) {
                 if (this.tiles[y][x].contains(Tile.StaticTile.FLOOR_1)) {
                     g.drawImage(Tile.tilePics.get(Tile.StaticTile.FLOOR_1), Main.TILE_SIZE * x, Main.TILE_SIZE * y, null);
+                } else if (this.tiles[y][x].contains(Tile.StaticTile.WALL)) {
+                    g.drawImage(Tile.tilePics.get(Tile.StaticTile.WALL), Main.TILE_SIZE * x, Main.TILE_SIZE * y, null);
                 }
             }
         }
@@ -53,13 +59,8 @@ public class Hub extends Map {
         // draw player
         this.player.paint(g);
 
-        for (int y = 0; y < this.tiles.length; y++) {
-            for (int x = 0; x < this.tiles[0].length; x++) {
-                if (this.tiles[y][x].contains(Tile.StaticTile.WALL)) {
-                    g.drawImage(Tile.tilePics.get(Tile.StaticTile.WALL), Main.TILE_SIZE * x, Main.TILE_SIZE * y, null);
-                }
-            }
-        }
+        // translate back
+        g.translate((int) (this.player.x - Main.WIDTH / 2), (int) (this.player.y - Main.HEIGHT / 2));
     }
 
     @Override
