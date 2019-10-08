@@ -1,6 +1,7 @@
 package lolz;
 
 import lolz.GUI.GameGUI;
+import lolz.GUI.HubGUI;
 import lolz.GUI.MainMenu;
 
 import javax.imageio.ImageIO;
@@ -17,8 +18,8 @@ public class Main {
 
     public static int CONTENT_WIDTH, CONTENT_HEIGHT;
 
-    final JFrame frame;
-    JPanel activePanel;
+    private final JFrame frame;
+    private JPanel activePanel;
 
     private Main() {
 
@@ -61,7 +62,10 @@ public class Main {
             // measure time for updating game logic
             long time1 = System.currentTimeMillis();
             // System.out.println("Time delay:" + (int)(time1-time0-16));
-            if (activePanel instanceof GameGUI) {
+            if (activePanel instanceof HubGUI) {
+                updateHub((int) (time1 - time0));
+            }
+            else if (activePanel instanceof GameGUI) {
                 updateGame((int) (time1 - time0));
             }
             time0 = time1;
@@ -75,11 +79,22 @@ public class Main {
         new Main();
     }
 
-    public void startGame() {
+    public void startHub() {
+        this.activePanel = new HubGUI(this);
+        frame.getContentPane().removeAll();
+        frame.getContentPane().add(activePanel);
+        frame.revalidate();
+    }
+
+    public void startBattle() {
         this.activePanel = new GameGUI();
         frame.getContentPane().removeAll();
         frame.getContentPane().add(activePanel);
         frame.revalidate();
+    }
+
+    private void updateHub(int time) {
+        ((HubGUI) activePanel).update(time);
     }
 
     private void updateGame(int time) {

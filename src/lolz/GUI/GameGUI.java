@@ -8,7 +8,6 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import java.awt.geom.RoundRectangle2D;
 import java.io.File;
 
 public class GameGUI extends JPanel {
@@ -175,7 +174,7 @@ public class GameGUI extends JPanel {
             this.getActionMap().put(c + "Released", generateMoveKeyAction(i, false));
         }
 
-        //add the key binding for the players attack (with the space key)
+        //add the key binding for the players attack
         this.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_J, 0, false), KeyEvent.VK_J + "Pressed");
         this.getActionMap().put(KeyEvent.VK_J + "Pressed", generateAttackKeyAction());
 
