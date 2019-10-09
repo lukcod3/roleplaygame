@@ -35,13 +35,13 @@ public abstract class Map {
         this.AREA = this.WIDTH * this.HEIGHT;
         this.VIRTUAL_AREA = this.VIRTUAL_WIDTH + this.VIRTUAL_HEIGHT;
         this.entities = new ArrayList<>();
-        this.monsterPercentage = 0.1;
+        this.monsterPercentage = 1;
         // Die Dezimalzahlen, die bei jeder Initialisierung angegeben werden, muessen insgesamt 1 ergeben
-        this.ghoulPercentage = 0.25;
-        this.impPercentage = this.ghoulPercentage + 0.25;
-        this.undeadWarriorPercentage = this.impPercentage + 0.25;
-        this.executionerPercentage = this.undeadWarriorPercentage + 0.125;
-        this.fireGolemPercentage = this.executionerPercentage + 0.125;
+        this.ghoulPercentage = 0.1;
+        this.impPercentage = this.ghoulPercentage + 0.1;
+        this.undeadWarriorPercentage = this.impPercentage + 0.1;
+        this.executionerPercentage = this.undeadWarriorPercentage + 0.2;
+        this.fireGolemPercentage = this.executionerPercentage + 0.5;
         // Beispiel: 0.25 + 0.25 + 0.25 + 0.125 + 0.125
         this.removeEntities = new int[9];
 
@@ -319,12 +319,12 @@ public abstract class Map {
         }
     }
 
-    public void spawnRandomMonsters (Tile[][] tiles) {
+    protected void spawnRandomMonsters(Tile[][] tiles) {
         double randInt = 0;
         // check for every tile that is a floor tile whether a random number (double randInt) is lower than a certain percentage (monsterPercentage); if so create a new monster there
         for (int i = 0 ; i < this.tiles.length; i ++) {
             for (int j = 0 ; j < this.tiles[0].length; j ++) {
-                if (tiles[i][j].isGround()) {
+                if (tiles[i][j].isGround() && ((j == 0 && tiles[i][j+1].isGround()) || (j == this.tiles.length - 1 && tiles[i][j-1].isGround()) || (j != 0 && j != this.tiles.length - 1 && (tiles[i][j-1].isGround() || tiles[i][j+1].isGround())))) {
                     randInt = Math.random();
                     if (randInt < this.monsterPercentage) {
                         // entscheiden, welches Monster erstellt werden soll
@@ -349,7 +349,7 @@ public abstract class Map {
     }
 
     // method returns a new monster with attributes in certain intervals (first intervals are written down at the top) which are determined by the player's level (first intervals are increased by a certain number)
-    public Monster generateMonster (int x, int y, int monsterNumber) {
+    private Monster generateMonster(int x, int y, int monsterNumber) {
         return new Monster(x * Main.TILE_SIZE, (int) ((y + 0.5) * Main.TILE_SIZE), /*maxHealth*/randInt((int) (this.minMaxHealth * this.expFactor), (int) (this.maxMaxHealth * this.expFactor)), /*damage*/randInt((int) (this.minDamage * this.expFactor), (int) (this.maxDamage * this.expFactor)), /*armor*/randInt((int) (this.minArmor * this.expFactor), (int) (this.maxArmor * this.expFactor)), /*exp*/randInt((int) (this.minExp * this.expFactor), (int) (this.maxExp * this.expFactor)), monsterNumber);
     }
 
