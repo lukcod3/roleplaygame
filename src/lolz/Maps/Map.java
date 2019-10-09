@@ -19,7 +19,7 @@ public abstract class Map {
     public int AREA, VIRTUAL_AREA;
     ArrayList<Entity> entities;
     public int monsterCount;
-    private double monsterPercentage;
+    private double monsterPercentage, ghoulPercentage, impPercentage, undeadWarriorPercentage, executionerPercentage, fireGolemPercentage;
     public int[] removeEntities;
     public int removeIndex;
     private final int minMaxHealth = 25, maxMaxHealth = 50, minDamage = 10, maxDamage = 15, minArmor = 5, maxArmor = 10, minExp = 15, maxExp = 30;
@@ -35,7 +35,12 @@ public abstract class Map {
         this.AREA = this.WIDTH * this.HEIGHT;
         this.VIRTUAL_AREA = this.VIRTUAL_WIDTH + this.VIRTUAL_HEIGHT;
         this.entities = new ArrayList<>();
-        this.monsterPercentage = 0.01;
+        this.monsterPercentage = 0.1;
+        this.ghoulPercentage = 0.25;
+        this.impPercentage = this.ghoulPercentage + 0.25;
+        this.undeadWarriorPercentage = this.impPercentage + 0.25;
+        this.executionerPercentage = this.undeadWarriorPercentage + 0.125;
+        this.fireGolemPercentage = this.executionerPercentage + 0.125;
         this.removeEntities = new int[9];
 
         // set tiles to empty by default
@@ -320,7 +325,18 @@ public abstract class Map {
                 if (tiles[i][j].isGround()) {
                     randInt = Math.random();
                     if (randInt < this.monsterPercentage) {
-                        this.entities.add(generateMonster(j, i));
+                        randInt = Math.random();
+                        if (randInt < this.ghoulPercentage) {
+                            this.entities.add(generateMonster(j, i, 0));
+                        } else if (this.ghoulPercentage <= randInt && randInt < this.impPercentage) {
+                            this.entities.add(generateMonster(j, i, 1));
+                        } else if (this.impPercentage <= randInt && randInt < this.undeadWarriorPercentage) {
+                            this.entities.add(generateMonster(j, i, 2));
+                        } else if (this.undeadWarriorPercentage <= randInt && randInt < this.executionerPercentage) {
+                            this.entities.add(generateMonster(j, i, 3));
+                        } else if (this.executionerPercentage <= randInt && randInt < this.fireGolemPercentage) {
+                            this.entities.add(generateMonster(j, i, 4));
+                        }
                         this.monsterCount += 1;
                         //System.out.println(this.monsterCount + " X: " + j + " || Y: " + i);
                     }
@@ -330,8 +346,8 @@ public abstract class Map {
     }
 
     // method returns a new monster with attributes in certain intervals (first intervals are written down at the top) which are determined by the player's level (first intervals are increased by a certain number)
-    public Monster generateMonster (int x, int y) {
-        return new Monster(x * Main.TILE_SIZE, (int) ((y + 0.5) * Main.TILE_SIZE), /*maxHealth*/randInt((int) (this.minMaxHealth * this.expFactor), (int) (this.maxMaxHealth * this.expFactor)), /*damage*/randInt((int) (this.minDamage * this.expFactor), (int) (this.maxDamage * this.expFactor)), /*armor*/randInt((int) (this.minArmor * this.expFactor), (int) (this.maxArmor * this.expFactor)), /*exp*/randInt((int) (this.minExp * this.expFactor), (int) (this.maxExp * this.expFactor)));
+    public Monster generateMonster (int x, int y, int monsterNumber) {
+        return new Monster(x * Main.TILE_SIZE, (int) ((y + 0.5) * Main.TILE_SIZE), /*maxHealth*/randInt((int) (this.minMaxHealth * this.expFactor), (int) (this.maxMaxHealth * this.expFactor)), /*damage*/randInt((int) (this.minDamage * this.expFactor), (int) (this.maxDamage * this.expFactor)), /*armor*/randInt((int) (this.minArmor * this.expFactor), (int) (this.maxArmor * this.expFactor)), /*exp*/randInt((int) (this.minExp * this.expFactor), (int) (this.maxExp * this.expFactor)), monsterNumber);
     }
 
     // returns integer which is part of the interval [min; max]
