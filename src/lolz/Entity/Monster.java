@@ -40,25 +40,25 @@ public class Monster extends Entity {
     public void update(int time) {
         // update monster graphic stats
         switch(this.monsterNumber) {
-            case 0:
+            case 0: // Ghoul
 
-            case 2:
+            case 2: // Undead Warrior
                 updateAnimationState(time, 4, 6, 5);
             break;
 
-            case 1:
+            case 1: // Imp
                 updateAnimationState(time, 5, 5, 10);
             break;
 
-            case 3:
+            case 3: // Executioner
                 updateAnimationState(time, 4, 6, 6);
             break;
 
-            case 4:
+            case 4: // Fire Golem
                 updateAnimationState(time, 5, 6, 7);
             break;
 
-            default:
+            default: // Big Demon
                 updateAnimationState(time, 4, 4, 4);
             break;
         }
@@ -171,7 +171,7 @@ public class Monster extends Entity {
                 }
             break;
 
-            default:
+            default: // Big Demon
                 this.img = new Image[2][4];
                 try {
                     for (int i = 0; i < 4; i++) {

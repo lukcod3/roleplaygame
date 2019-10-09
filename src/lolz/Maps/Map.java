@@ -22,7 +22,7 @@ public abstract class Map {
     private double monsterPercentage, ghoulPercentage, impPercentage, undeadWarriorPercentage, executionerPercentage, fireGolemPercentage;
     public int[] removeEntities;
     public int removeIndex;
-    private final int minMaxHealth = 25, maxMaxHealth = 50, minDamage = 10, maxDamage = 15, minArmor = 5, maxArmor = 10, minExp = 15, maxExp = 30;
+    private final int minMaxHealth = 10, maxMaxHealth = 30, minDamage = 5, maxDamage = 10, minArmor = 1, maxArmor = 5, minExp = 10, maxExp = 20;
     public double expFactor;
 
     public Tile[][] tiles;
@@ -36,11 +36,13 @@ public abstract class Map {
         this.VIRTUAL_AREA = this.VIRTUAL_WIDTH + this.VIRTUAL_HEIGHT;
         this.entities = new ArrayList<>();
         this.monsterPercentage = 0.1;
+        // Die Dezimalzahlen, die bei jeder Initialisierung angegeben werden, muessen insgesamt 1 ergeben
         this.ghoulPercentage = 0.25;
         this.impPercentage = this.ghoulPercentage + 0.25;
         this.undeadWarriorPercentage = this.impPercentage + 0.25;
         this.executionerPercentage = this.undeadWarriorPercentage + 0.125;
         this.fireGolemPercentage = this.executionerPercentage + 0.125;
+        // Beispiel: 0.25 + 0.25 + 0.25 + 0.125 + 0.125
         this.removeEntities = new int[9];
 
         // set tiles to empty by default
@@ -325,6 +327,7 @@ public abstract class Map {
                 if (tiles[i][j].isGround()) {
                     randInt = Math.random();
                     if (randInt < this.monsterPercentage) {
+                        // entscheiden, welches Monster erstellt werden soll
                         randInt = Math.random();
                         if (randInt < this.ghoulPercentage) {
                             this.entities.add(generateMonster(j, i, 0));
