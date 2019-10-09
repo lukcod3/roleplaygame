@@ -1,8 +1,6 @@
 package lolz.Maps;
 
-import lolz.Entity.Entity;
-import lolz.Entity.Monster;
-import lolz.Entity.Player;
+import lolz.Entity.*;
 import lolz.GUI.Tile.StaticTile;
 import lolz.GUI.Walker;
 import lolz.Main;
@@ -20,7 +18,7 @@ public class RandomMap extends Map {
         generateMap();
 
         // spawn player
-        this.player = new Player(this, (this.VIRTUAL_WIDTH / 2) * Main.TILE_SIZE, (this.VIRTUAL_HEIGHT / 2) * Main.TILE_SIZE);
+        this.player = new Fighter(this, (this.VIRTUAL_WIDTH / 2) * Main.TILE_SIZE, (this.VIRTUAL_HEIGHT / 2) * Main.TILE_SIZE);
         // spawn monster at player's position
         this.monster = new Monster((this.VIRTUAL_WIDTH / 2) * Main.TILE_SIZE, (this.VIRTUAL_HEIGHT / 2) * Main.TILE_SIZE, 50, 15, 10, 25, 5);
 

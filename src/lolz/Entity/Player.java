@@ -8,22 +8,18 @@ import javax.imageio.ImageIO;
 import java.awt.*;
 import java.io.File;
 
-public class Player extends Entity {
-    private Map map;
+public abstract class Player extends Entity {
+    public Map map;
     public volatile boolean[] directions; // 0 is up, 1 is left, 2 is down, 3 is right
-    public Image[][] img;
-    public Image hitImage; // Image for hit animation didn't belong to the Image array, so it's assigned to a new attribute
     public boolean isHitting, hasDamaged; // variable true if user makes character hit
     public boolean isMoving;
     public double animation_state;
-    //public final String base_char = "elf_m";
     public Item[] equipment; // 1 is hat, 2 is t-shirt, 3 is sword, 4 is shoes, 5 is necklace, 6 is ring, 7 is belt, 8-11 is depot
-    public Image[][] inventoryImages;
     public boolean turnedRight;
     public boolean mage;
 
     // Ingame stats
-    public int abilitypower, level, exp, gold;
+    public int level, exp, gold;
 
     public Player(Map map, int x, int y) {
         // setup player stats
@@ -36,44 +32,8 @@ public class Player extends Entity {
         this.x = x;
         this.y = y;
         this.directions = new boolean[4];
-        this.img = new Image[3][];
-        this.img[0] = new Image[4];
-        this.img[1] = new Image[6];
-        this.img[2] = this.mage ? new Image[6] : new Image[5];
 
-        this.height = this.mage ? 50 : 60;
-        // 1-7 weared inventory int is level of equipment, 8-11 free inventory space contains level and type of equipment(includes int from 0-28)
-        if (!this.mage) {
-            try {
-                for (int i = 0; i < 4; i++) {
-                    img[0][i] = ImageIO.read(new File("res/Individual Sprites/adventurer-idle-0" + i + ".png")).getScaledInstance(-1, this.height, Image.SCALE_SMOOTH);
-                }
-                for (int i = 0; i < 6; i++) {
-                    img[1][i] = ImageIO.read(new File("res/Individual Sprites/adventurer-run-0" + i + ".png")).getScaledInstance(-1, this.height, Image.SCALE_SMOOTH);
-                }
-                for (int i = 0; i < 5; i++) {
-                    img[2][i] = ImageIO.read(new File("res/Individual Sprites/adventurer-attack1-0" + i + ".png")).getScaledInstance(-1, this.height, Image.SCALE_SMOOTH);
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        } else{
-            try {
-                for (int i = 0; i < 4; i++) {
-                    img[0][i] = ImageIO.read(new File("res/monster/Necromancer/Individual Sprites/necromancer-idle-0" + i + ".png")).getScaledInstance(-1, this.height, Image.SCALE_SMOOTH);
-                }
-                for (int i = 0; i < 6; i++) {
-                    img[1][i] = ImageIO.read(new File("res/monster/Necromancer/Individual Sprites/necromancer-move-0" + i + ".png")).getScaledInstance(-1, this.height, Image.SCALE_SMOOTH);
-                }
-                for (int i = 0; i < 6; i++) {
-                    img[2][i] = ImageIO.read(new File("res/monster/Necromancer/Individual Sprites/necromancer-attack-0" + i + ".png")).getScaledInstance(-1, this.height, Image.SCALE_SMOOTH);
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
         this.width = 45;
-        this.height = img[0][0].getHeight(null);
 
         // rearrange y (given x and y values are for the bottom left corner)
         // this.x -= this.width;
@@ -101,35 +61,7 @@ public class Player extends Entity {
         this.isHitting = isHitting;
     }
 
-    public void paint(Graphics g) {
-        // System.out.println(map.get_tile_at((int) (this.x), (int) (this.y + this.height)).toString());
-        // paint player
-        g.setColor(Color.BLACK);
-        if (turnedRight) {
-            if (getHitting()) { // is able to hit while running and while standing still -> always checks if hit is true regardless of moving
-                int offset = (img[2][(int) this.animation_state].getWidth(null) - this.width) / 2;
-                g.drawImage(img[2][(int) this.animation_state], (int) this.x - offset, (int) this.y, null); // set player's animation to hit animation
-            } else if (isMoving) {
-                int offset = (img[1][(int) this.animation_state].getWidth(null) - this.width) / 2;
-                g.drawImage(img[1][(int) this.animation_state], (int) this.x - offset, (int) this.y, null);
-            } else {
-                int offset = (img[0][(int) this.animation_state].getWidth(null) - this.width) / 2;
-                g.drawImage(img[0][(int) this.animation_state], (int) this.x - offset, (int) this.y, null);
-            }
-        } else {
-            if (getHitting()) { // is able to hit while running and while standing still -> always checks if hit is true regardless of moving
-                int offset = (img[2][(int) this.animation_state].getWidth(null) - this.width) / 2;
-                Main.drawReflectImage(img[2][(int) this.animation_state], g, (int) this.x - offset, (int) this.y);
-            } else if (isMoving) {
-                int offset = (img[1][(int) this.animation_state].getWidth(null) - this.width) / 2;
-                Main.drawReflectImage(img[1][(int) this.animation_state], g, (int) this.x - offset, (int) this.y);
-            } else {
-                int offset = (img[0][(int) this.animation_state].getWidth(null) - this.width) / 2;
-                Main.drawReflectImage(img[0][(int) this.animation_state], g, (int) this.x - offset, (int) this.y);
-            }
-        }
 
-    }
 
     public void update(int time) {
         // update player graphic stats
@@ -174,9 +106,9 @@ public class Player extends Entity {
             animation_state = 0;
         }
         if (this.directions[3]) {
-            turnedRight = this.mage ? false : true;
+            turnedRight = !(this instanceof Mage);
         } else if (this.directions[1]) {
-            turnedRight = this.mage ? true : false;
+            turnedRight = this instanceof Mage;
         }
 
         // calculate how much the player moves

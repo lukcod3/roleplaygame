@@ -336,8 +336,7 @@ public class GameGUI extends JPanel {
             g.setFont(statsF);
             g.drawString("Leben............................(" + this.map.player.health + "/" + this.map.player.maxHealth + ")", 200, 130);
             g.drawString("Angriffsschaden....................." + this.map.player.damage, 200, 160);
-            g.drawString("Fähigkeitsstärke....................." + this.map.player.abilitypower, 200, 190);
-            g.drawString("Rüstung..................................." + this.map.player.armor, 200, 220);
+            g.drawString("Rüstung..................................." + this.map.player.armor, 200, 190);
             g.drawString("Gold........................................" + this.map.player.gold, 200, 330);
             g.drawString("Level............." + this.map.player.level + "(" + this.map.player.exp + " XP/" + 200 + " XP)", 200, 360); // needs formula for maxXP
 

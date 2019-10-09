@@ -4,6 +4,7 @@ import java.awt.*;
 
 public abstract class Entity {
     public double x, y;
+    public Image[][] img;
     int width, height;
     public int maxHealth, health, damage, armor;
     public double speed;

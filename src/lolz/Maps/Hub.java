@@ -1,5 +1,7 @@
 package lolz.Maps;
 
+import lolz.Entity.Fighter;
+import lolz.Entity.Mage;
 import lolz.GUI.Tile;
 import lolz.Main;
 import lolz.Entity.Player;
@@ -12,7 +14,7 @@ public class Hub extends Map {
         super(600, 500);
 
         // spawn player
-        this.player = new Player(this,this.WIDTH/2, this.HEIGHT/2);
+        this.player = new Fighter(this,this.WIDTH/2, this.HEIGHT/2);
 
         // setup map
         for (int y = 0; y < this.tiles.length; y++) {

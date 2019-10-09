@@ -6,7 +6,6 @@ import java.io.File;
 import java.io.IOException;
 
 public class Monster extends Entity {
-    private Image[][] img;
     private double animation_state;
     private int exp, monsterNumber;
     private boolean isHitting, isMoving;
