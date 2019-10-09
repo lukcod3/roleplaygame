@@ -324,6 +324,7 @@ public abstract class Map {
         // check for every tile that is a floor tile whether a random number (double randInt) is lower than a certain percentage (monsterPercentage); if so create a new monster there
         for (int i = 0 ; i < this.tiles.length; i ++) {
             for (int j = 0 ; j < this.tiles[0].length; j ++) {
+                // check if monster can be spawned (only on tiles that have at least one more tile to the left or right because otherwise overlap method doesn't work)
                 if (tiles[i][j].isGround() && ((j == 0 && tiles[i][j+1].isGround()) || (j == this.tiles.length - 1 && tiles[i][j-1].isGround()) || (j != 0 && j != this.tiles.length - 1 && (tiles[i][j-1].isGround() || tiles[i][j+1].isGround())))) {
                     randInt = Math.random();
                     if (randInt < this.monsterPercentage) {
