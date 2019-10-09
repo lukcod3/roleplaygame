@@ -73,13 +73,13 @@ public class Monster extends Entity {
                 this.img[2] = new Image[5];
                 try {
                     for (int i = 0; i < 4; i++) {
-                        img[0][i] = ImageIO.read(new File("res/monster/Ghoul/Individual Sprites/ghoul-idle-0" + Integer.toString(i) + ".png")).getScaledInstance(50, -1, Image.SCALE_SMOOTH);
+                        img[0][i] = ImageIO.read(new File("res/monster/Ghoul/Individiual Sprites/ghoul-idle-0" + i + ".png")).getScaledInstance(50, -1, Image.SCALE_SMOOTH);
                     }
                     for (int i = 0; i < 6; i++) {
-                        img[1][i] = ImageIO.read(new File("res/monster/Ghoul/Individual Sprites/ghoul-run-0" + Integer.toString(i) + ".png")).getScaledInstance(50, -1, Image.SCALE_SMOOTH);
+                        img[1][i] = ImageIO.read(new File("res/monster/Ghoul/Individiual Sprites/ghoul-run-0" + i + ".png")).getScaledInstance(50, -1, Image.SCALE_SMOOTH);
                     }
                     for (int i = 0; i < 5; i++) {
-                        img[2][i] = ImageIO.read(new File("res/monster/Ghoul/Individual Sprites/ghoul-attack-0" + Integer.toString(i) + ".png")).getScaledInstance(50, -1, Image.SCALE_SMOOTH);
+                        img[2][i] = ImageIO.read(new File("res/monster/Ghoul/Individiual Sprites/ghoul-attack-0" + i + ".png")).getScaledInstance(50, -1, Image.SCALE_SMOOTH);
                     }
                 } catch (
                         IOException e) {

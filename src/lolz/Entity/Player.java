@@ -16,10 +16,11 @@ public class Player extends Entity {
     public boolean isHitting, hasDamaged; // variable true if user makes character hit
     public boolean isMoving;
     public double animation_state;
-    public final String base_char = "elf_m";
+    //public final String base_char = "elf_m";
     public Item[] equipment; // 1 is hat, 2 is t-shirt, 3 is sword, 4 is shoes, 5 is necklace, 6 is ring, 7 is belt, 8-11 is depot
     public Image[][] inventoryImages;
     public boolean turnedRight;
+    public boolean mage;
 
     // Ingame stats
     public int abilitypower, level, exp, gold;
@@ -27,8 +28,9 @@ public class Player extends Entity {
     public Player(Map map, int x, int y) {
         // setup player stats
         super(x, y, 100, 10, 30, 0.15);
-        this.health = 5; // test
+        this.health = 50; // test
         this.level = 1;
+        this.mage = true;
         this.turnedRight = true;
         this.map = map;
         this.x = x;
@@ -37,22 +39,38 @@ public class Player extends Entity {
         this.img = new Image[3][];
         this.img[0] = new Image[4];
         this.img[1] = new Image[6];
-        this.img[2] = new Image[5];
+        this.img[2] = this.mage ? new Image[6] : new Image[5];
 
-        this.width = 90;
+        this.height = this.mage ? 50 : 60;
         // 1-7 weared inventory int is level of equipment, 8-11 free inventory space contains level and type of equipment(includes int from 0-28)
-        try {
-            for (int i = 0; i < 4; i++) {
-                img[0][i] = ImageIO.read(new File("res/Individual Sprites/adventurer-idle-0" + i + ".png")).getScaledInstance(this.width, -1, Image.SCALE_SMOOTH);
+        if (!this.mage) {
+            try {
+                for (int i = 0; i < 4; i++) {
+                    img[0][i] = ImageIO.read(new File("res/Individual Sprites/adventurer-idle-0" + i + ".png")).getScaledInstance(-1, this.height, Image.SCALE_SMOOTH);
+                }
+                for (int i = 0; i < 6; i++) {
+                    img[1][i] = ImageIO.read(new File("res/Individual Sprites/adventurer-run-0" + i + ".png")).getScaledInstance(-1, this.height, Image.SCALE_SMOOTH);
+                }
+                for (int i = 0; i < 5; i++) {
+                    img[2][i] = ImageIO.read(new File("res/Individual Sprites/adventurer-attack1-0" + i + ".png")).getScaledInstance(-1, this.height, Image.SCALE_SMOOTH);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-            for (int i = 0; i < 6; i++) {
-                img[1][i] = ImageIO.read(new File("res/Individual Sprites/adventurer-run-0" + i + ".png")).getScaledInstance(this.width, -1, Image.SCALE_SMOOTH);
+        } else{
+            try {
+                for (int i = 0; i < 4; i++) {
+                    img[0][i] = ImageIO.read(new File("res/monster/Necromancer/Individual Sprites/necromancer-idle-0" + i + ".png")).getScaledInstance(-1, this.height, Image.SCALE_SMOOTH);
+                }
+                for (int i = 0; i < 6; i++) {
+                    img[1][i] = ImageIO.read(new File("res/monster/Necromancer/Individual Sprites/necromancer-move-0" + i + ".png")).getScaledInstance(-1, this.height, Image.SCALE_SMOOTH);
+                }
+                for (int i = 0; i < 6; i++) {
+                    img[2][i] = ImageIO.read(new File("res/monster/Necromancer/Individual Sprites/necromancer-attack-0" + i + ".png")).getScaledInstance(-1, this.height, Image.SCALE_SMOOTH);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-            for (int i = 0; i < 5; i++) {
-                img[2][i] = ImageIO.read(new File("res/Individual Sprites/adventurer-attack1-0" + i + ".png")).getScaledInstance(this.width, -1, Image.SCALE_SMOOTH);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
         }
         this.width = 45;
         this.height = img[0][0].getHeight(null);
@@ -156,9 +174,9 @@ public class Player extends Entity {
             animation_state = 0;
         }
         if (this.directions[3]) {
-            turnedRight = true;
+            turnedRight = this.mage ? false : true;
         } else if (this.directions[1]) {
-            turnedRight = false;
+            turnedRight = this.mage ? true : false;
         }
 
         // calculate how much the player moves
