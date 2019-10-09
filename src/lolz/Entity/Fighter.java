@@ -28,6 +28,8 @@ public class Fighter extends Player{
         } catch (Exception e) {
             e.printStackTrace();
         }
+        this.width = 45;
+        this.height = img[0][0].getHeight(null);
     }
     public void paint(Graphics g) {
         // System.out.println(map.get_tile_at((int) (this.x), (int) (this.y + this.height)).toString());
@@ -56,6 +58,5 @@ public class Fighter extends Player{
                 Main.drawReflectImage(img[0][(int) this.animation_state], g, (int) this.x - offset, (int) this.y);
             }
         }
-
     }
 }
