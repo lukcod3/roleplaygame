@@ -8,9 +8,7 @@ import java.io.File;
 import java.io.IOException;
 
 public class Monster extends Entity {
-    private double animation_state;
     private int exp, monsterNumber;
-    private boolean isHitting, isMoving, turnedRight;
 
     public Monster(int x, int y, int maxHealth, int damage, int armor, int exp, int monsterNumber) {
         super(x, y, maxHealth, damage, armor, 10);
@@ -31,36 +29,6 @@ public class Monster extends Entity {
 
     public void setExp(int exp) {
         this.exp = exp;
-    }
-
-    public void paint(Graphics g) {
-        // paint player
-
-        double k = 1.2;
-        g.setColor(Color.BLACK);
-        if (!turnedRight) {
-            if (isHitting) { // is able to hit while running and while standing still -> always checks if hit is true regardless of moving
-                int offset = (int) ((k * img[2][(int) this.animation_state].getWidth(null) - this.width) / 2);
-                g.drawImage(img[2][(int) this.animation_state], (int) this.x - offset, (int) this.y, null); // set player's animation to hit animation
-            } else if (isMoving) {
-                int offset = (int) ((k * img[1][(int) this.animation_state].getWidth(null) - this.width) / 2);
-                g.drawImage(img[1][(int) this.animation_state], (int) this.x - offset, (int) this.y, null);
-            } else {
-                int offset = (int) ((k * img[0][(int) this.animation_state].getWidth(null) - this.width) / 2);
-                g.drawImage(img[0][(int) this.animation_state], (int) this.x - offset, (int) this.y, null);
-            }
-        } else {
-            if (isHitting) { // is able to hit while running and while standing still -> always checks if hit is true regardless of moving
-                //int offset = (int) ((1*img[2][(int) this.animation_state].getWidth(null) - this.width) / 2);
-                Main.drawReflectImage(img[2][(int) this.animation_state], g, (int) this.x, (int) this.y);
-            } else if (isMoving) {
-                //int offset = (int) ((1*img[1][(int) this.animation_state].getWidth(null) - this.width) / 2);
-                Main.drawReflectImage(img[1][(int) this.animation_state], g, (int) this.x, (int) this.y);
-            } else {
-                //int offset = (int) ((1*img[0][(int) this.animation_state].getWidth(null) - this.width) / 2);
-                Main.drawReflectImage(img[0][(int) this.animation_state], g, (int) this.x, (int) this.y);
-            }
-        }
     }
 
     public void update(int time) {
@@ -208,6 +176,11 @@ public class Monster extends Entity {
                 }
                 break;
         }
+    }
+
+    public void paint(Graphics g) {
+        // paint player
+        super.paint(g, 1.2);
     }
 
     private void setHitting(boolean hitting) {

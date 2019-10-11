@@ -6,11 +6,8 @@ import lolz.Maps.Map;
 public abstract class Player extends Entity {
     public Map map;
     public volatile boolean[] directions; // 0 is up, 1 is left, 2 is down, 3 is right
-    private boolean isHitting, hasDamaged; // variable true if user makes character hit
-    public boolean isMoving;
-    public double animation_state;
+    private boolean hasDamaged; // variable true if user makes character hit
     public Item[] equipment; // 1 is hat, 2 is t-shirt, 3 is sword, 4 is shoes, 5 is necklace, 6 is ring, 7 is belt, 8-11 is depot
-    public boolean turnedRight;
     private boolean mage;
 
     // Ingame stats
@@ -147,9 +144,12 @@ public abstract class Player extends Entity {
     public boolean overlap(Entity entity) {
         for (int i : new int[]{0, entity.getWidth()}) { //checking for the left and right border of the entity's image
             for (int j : new int[]{0, entity.getHeight()}) { //checking for the top and bottom border of the entity's image
-                if ((this.getX() <= entity.getX() + i) && (entity.getX() + i <= this.getX() + this.getWidth()) && (this.getY() <= entity.getY() + j) && (entity.getY() + j <= this.getY() + this.getHeight())) { //if any of the entity's boundaries can be found between any of the hero's boundaries, they touch
-                    //System.out.println("Player X: " + this.getX() + " | Y: " + this.getY() + " || Monster X: " + entity.getX() + " | Y: " + entity.getY());
-                    return true;
+                if (this.turnedRight) {
+                    if ((this.getX() <= entity.getX() + i) && (entity.getX() + i <= this.getX() + this.getWidth()) && (this.getY() <= entity.getY() + j) && (entity.getY() + j <= this.getY() + this.getHeight())) { //if any of the entity's boundaries can be found between any of the hero's boundaries, they touch
+                        return true;
+                    }
+                } else {
+
                 }
             }
         }
