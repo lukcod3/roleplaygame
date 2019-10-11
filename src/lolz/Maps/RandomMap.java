@@ -27,8 +27,6 @@ public class RandomMap extends Map {
 
         // spawn player
         this.player = new Mage(this, (this.VIRTUAL_WIDTH / 2) * Main.TILE_SIZE, (this.VIRTUAL_HEIGHT / 2) * Main.TILE_SIZE);
-        // spawn monster at player's position
-        Monster monster = new Monster((this.VIRTUAL_WIDTH / 2) * Main.TILE_SIZE, (this.VIRTUAL_HEIGHT / 2) * Main.TILE_SIZE, 50, 15, 10, 25, 5);
 
         // update expFactor before new map is created
         this.expFactor = Math.pow(1.2, this.player.level);
@@ -38,7 +36,6 @@ public class RandomMap extends Map {
 
         // set entities array
         this.entities.add(this.player);
-        this.entities.add(monster);
         this.monsterCount += 1;
         try {
             for (int j = 0; j < 8; j++) {
@@ -176,15 +173,20 @@ public class RandomMap extends Map {
         for (Entity entity : this.entities) {
             if (entity instanceof Monster) {
                 entity.update(time);
+                // if monster in range of player it will follow him
+                if (!this.followingMonsters.contains(entity) && Math.pow(Math.pow(entity.getX() - player.getX(), 2) + Math.pow(entity.getY() - player.getY(), 2), 0.5) < 5) {
+                    this.followingMonsters.add((Monster) entity);
+                }
             }
         }
     }
-    public void paint(Graphics g){
+
+    public void paint(Graphics g) {
         super.paint(g);
-        if(portalState < 8){
+        if (portalState < 8) {
             player.allowedToMove = false;
-            g.drawImage(portal[((int)portalState)].getScaledInstance(120, -1, Image.SCALE_DEFAULT), 410, 240, null);
-        }else{
+            g.drawImage(portal[((int) portalState)].getScaledInstance(120, -1, Image.SCALE_DEFAULT), 410, 240, null);
+        } else {
             player.allowedToMove = true;
         }
     }

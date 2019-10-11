@@ -25,7 +25,7 @@ public abstract class Map {
     int removeIndex;
     private final int minMaxHealth = 10, maxMaxHealth = 30, minDamage = 5, maxDamage = 10, minArmor = 1, maxArmor = 5, minExp = 10, maxExp = 20;
     double expFactor;
-    private ArrayList<Monster> followingMonsters;
+    ArrayList<Monster> followingMonsters;
 
     public Tile[][] tiles;
 
@@ -358,7 +358,7 @@ public abstract class Map {
 
     // method returns a new monster with attributes in certain intervals (first intervals are written down at the top) which are determined by the player's level (first intervals are increased by a certain number)
     private Monster generateMonster(int x, int y, int monsterNumber) {
-        return new Monster(x * Main.TILE_SIZE, (int) ((y + 0.5) * Main.TILE_SIZE), /*maxHealth*/randInt((int) (this.minMaxHealth * this.expFactor), (int) (this.maxMaxHealth * this.expFactor)), /*damage*/randInt((int) (this.minDamage * this.expFactor), (int) (this.maxDamage * this.expFactor)), /*armor*/randInt((int) (this.minArmor * this.expFactor), (int) (this.maxArmor * this.expFactor)), /*exp*/randInt((int) (this.minExp * this.expFactor), (int) (this.maxExp * this.expFactor)), monsterNumber);
+        return new Monster(this, x * Main.TILE_SIZE, (int) ((y + 0.5) * Main.TILE_SIZE), /*maxHealth*/randInt((int) (this.minMaxHealth * this.expFactor), (int) (this.maxMaxHealth * this.expFactor)), /*damage*/randInt((int) (this.minDamage * this.expFactor), (int) (this.maxDamage * this.expFactor)), /*armor*/randInt((int) (this.minArmor * this.expFactor), (int) (this.maxArmor * this.expFactor)), /*exp*/randInt((int) (this.minExp * this.expFactor), (int) (this.maxExp * this.expFactor)), monsterNumber);
     }
 
     // returns integer which is part of the interval [min; max]

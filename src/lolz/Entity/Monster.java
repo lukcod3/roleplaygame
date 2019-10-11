@@ -1,6 +1,7 @@
 package lolz.Entity;
 
 import lolz.Main;
+import lolz.Maps.Map;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -8,10 +9,10 @@ import java.io.File;
 import java.io.IOException;
 
 public class Monster extends Entity {
-    private int exp, monsterNumber;
+    private int exp, monsterNumber, movementTime;
 
-    public Monster(int x, int y, int maxHealth, int damage, int armor, int exp, int monsterNumber) {
-        super(x, y, maxHealth, damage, armor, 10);
+    public Monster(Map map, int x, int y, int maxHealth, int damage, int armor, int exp, int monsterNumber) {
+        super(map, x, y, maxHealth, damage, armor, 0.1);
         this.exp = exp;
         this.monsterNumber = monsterNumber;
 
@@ -37,6 +38,17 @@ public class Monster extends Entity {
     }
 
     public void update(int time) {
+        double CHANGE_DIR_POSS = 0.75;
+
+        movementTime += time;
+        if (movementTime > 1000) {
+            movementTime = 0;
+            if (Math.random() < CHANGE_DIR_POSS) {
+                int dir = (int) (Math.random() * 4);
+                this.directions[dir] = !this.directions[dir];
+            }
+        }
+
         // update monster graphic stats
         switch (this.monsterNumber) {
             case 0: // Ghoul
@@ -61,6 +73,8 @@ public class Monster extends Entity {
                 updateAnimationState(time, 4, 4, 4);
                 break;
         }
+
+        this.move(time);
     }
 
     private void loadImages(int monsterNumber) {
