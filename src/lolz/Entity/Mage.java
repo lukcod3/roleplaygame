@@ -29,6 +29,8 @@ public class Mage extends Player {
         }
         this.width = Main.VIRTUAL_ENTITY_WIDTH;
         this.height = img[0][0].getHeight(null);
+
+        this.y -= this.height;
     }
 
     // check if any given entity is "touching" a given projectile  or rather if the projectile is touching it
