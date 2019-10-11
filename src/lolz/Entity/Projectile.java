@@ -1,7 +1,5 @@
 package lolz.Entity;
 
-import lolz.Main;
-
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.geom.AffineTransform;
@@ -11,7 +9,7 @@ public class Projectile {
 
     private double x, y;
     private double ix, iy, animation_state;
-    private Image img[];
+    private Image[] img;
     private TurnNumber turnNumber;
     private AffineTransform at;
     private Graphics2D g2d;
@@ -110,43 +108,43 @@ public class Projectile {
         switch (getTurnNumber()) {
             case NORTH:
                 setY(getY() - movement);
-            break;
+                break;
 
             case NORTHEAST:
                 movement *= 1.0 / Math.pow(2, 0.5);
                 setY(getY() - movement);
                 setX(getX() + movement);
-            break;
+                break;
 
             case EAST:
                 setX(getX() + movement);
-            break;
+                break;
 
             case SOUTHEAST:
                 movement *= 1.0 / Math.pow(2, 0.5);
                 setY(getY() + movement);
                 setX(getX() + movement);
-            break;
+                break;
 
             case SOUTH:
                 setY(getY() + movement);
-            break;
+                break;
 
             case SOUTHWEST:
                 movement *= 1.0 / Math.pow(2, 0.5);
                 setY(getY() + movement);
                 setX(getX() - movement);
-            break;
+                break;
 
             case WEST:
                 setX(getX() - movement);
-            break;
+                break;
 
             case NORTHWEST:
                 movement *= 1.0 / Math.pow(2, 0.5);
                 setY(getY() - movement);
                 setX(getX() - movement);
-            break;
+                break;
         }
 
         setX(getX() + 0.25 * time);
@@ -159,7 +157,7 @@ public class Projectile {
                 this.at.rotate(Math.toRadians(90));
                 this.at.translate(-getIx(), -getIy());
                 this.g2d.drawImage(img, this.at, null);
-            break;
+                break;
 
             case NORTHEAST:
 
@@ -167,7 +165,7 @@ public class Projectile {
                 this.at.rotate(Math.toRadians(-45));
                 this.at.translate(-getIx(), -getIy());
                 this.g2d.drawImage(img, this.at, null);
-            break;
+                break;
 
             case EAST:
 
@@ -175,7 +173,7 @@ public class Projectile {
                 this.at.rotate(Math.toRadians(0));
                 this.at.translate(-getIx(), -getIy());
                 this.g2d.drawImage(img, this.at, null);
-            break;
+                break;
 
             case SOUTHEAST:
 
@@ -183,13 +181,13 @@ public class Projectile {
                 this.at.rotate(Math.toRadians(45));
                 this.at.translate(-getIx(), -getIy());
                 this.g2d.drawImage(img, this.at, null);
-            break;
+                break;
 
             case SOUTH:
                 this.at.rotate(Math.toRadians(-90));
                 this.at.translate(-getIx(), -getIy());
                 this.g2d.drawImage(img, this.at, null);
-            break;
+                break;
         }
     }
 

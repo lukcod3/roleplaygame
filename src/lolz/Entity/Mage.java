@@ -65,13 +65,13 @@ public class Mage extends Player {
         g.setColor(Color.BLACK);
         if (!turnedRight) {
             if (getHitting()) { // is able to hit while running and while standing still -> always checks if hit is true regardless of moving
-                int offset = (int) ((k*img[2][(int) this.animation_state].getWidth(null) - this.width) / 2);
+                int offset = (int) ((k * img[2][(int) this.animation_state].getWidth(null) - this.width) / 2);
                 g.drawImage(img[2][(int) this.animation_state], (int) this.x - offset, (int) this.y, null); // set player's animation to hit animation
             } else if (isMoving) {
-                int offset = (int) ((k*img[1][(int) this.animation_state].getWidth(null) - this.width) / 2);
+                int offset = (int) ((k * img[1][(int) this.animation_state].getWidth(null) - this.width) / 2);
                 g.drawImage(img[1][(int) this.animation_state], (int) this.x - offset, (int) this.y, null);
             } else {
-                int offset = (int) ((k*img[0][(int) this.animation_state].getWidth(null) - this.width) / 2);
+                int offset = (int) ((k * img[0][(int) this.animation_state].getWidth(null) - this.width) / 2);
                 g.drawImage(img[0][(int) this.animation_state], (int) this.x - offset, (int) this.y, null);
             }
         } else {

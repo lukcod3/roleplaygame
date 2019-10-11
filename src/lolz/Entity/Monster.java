@@ -33,38 +33,6 @@ public class Monster extends Entity {
         this.exp = exp;
     }
 
-    /*
-    public void paint(Graphics g) {
-        // System.out.println(map.get_tile_at((int) (this.x), (int) (this.y + this.height)).toString());
-        // paint player
-        g.setColor(Color.BLACK);
-        if (turnedRight) {
-            if (isHitting) { // is able to hit while running and while standing still -> always checks if hit is true regardless of moving
-                int offset = (img[2][(int) this.animation_state].getWidth(null) - this.width) / 2;
-                g.drawImage(img[2][(int) this.animation_state], (int) this.x - offset, (int) this.y, null); // set player's animation to hit animation
-            } else if (isMoving) {
-                int offset = (img[1][(int) this.animation_state].getWidth(null) - this.width) / 2;
-                g.drawImage(img[1][(int) this.animation_state], (int) this.x - offset, (int) this.y, null);
-            } else {
-                int offset = (img[0][(int) this.animation_state].getWidth(null) - this.width) / 2;
-                g.drawImage(img[0][(int) this.animation_state], (int) this.x - offset, (int) this.y, null);
-            }
-        } else {
-            if (isHitting) { // is able to hit while running and while standing still -> always checks if hit is true regardless of moving
-                int offset = (img[2][(int) this.animation_state].getWidth(null) - this.width) / 2;
-                Main.drawReflectImage(img[2][(int) this.animation_state], g, (int) this.x - offset, (int) this.y);
-            } else if (isMoving) {
-                int offset = (img[1][(int) this.animation_state].getWidth(null) - this.width) / 2;
-                Main.drawReflectImage(img[1][(int) this.animation_state], g, (int) this.x - offset, (int) this.y);
-            } else {
-                int offset = (img[0][(int) this.animation_state].getWidth(null) - this.width) / 2;
-                Main.drawReflectImage(img[0][(int) this.animation_state], g, (int) this.x - offset, (int) this.y);
-            }
-
-        }
-    }
-    */
-
     public void paint(Graphics g) {
         // paint player
 
@@ -72,13 +40,13 @@ public class Monster extends Entity {
         g.setColor(Color.BLACK);
         if (!turnedRight) {
             if (isHitting) { // is able to hit while running and while standing still -> always checks if hit is true regardless of moving
-                int offset = (int) ((k*img[2][(int) this.animation_state].getWidth(null) - this.width) / 2);
+                int offset = (int) ((k * img[2][(int) this.animation_state].getWidth(null) - this.width) / 2);
                 g.drawImage(img[2][(int) this.animation_state], (int) this.x - offset, (int) this.y, null); // set player's animation to hit animation
             } else if (isMoving) {
-                int offset = (int) ((k*img[1][(int) this.animation_state].getWidth(null) - this.width) / 2);
+                int offset = (int) ((k * img[1][(int) this.animation_state].getWidth(null) - this.width) / 2);
                 g.drawImage(img[1][(int) this.animation_state], (int) this.x - offset, (int) this.y, null);
             } else {
-                int offset = (int) ((k*img[0][(int) this.animation_state].getWidth(null) - this.width) / 2);
+                int offset = (int) ((k * img[0][(int) this.animation_state].getWidth(null) - this.width) / 2);
                 g.drawImage(img[0][(int) this.animation_state], (int) this.x - offset, (int) this.y, null);
             }
         } else {
@@ -97,34 +65,34 @@ public class Monster extends Entity {
 
     public void update(int time) {
         // update monster graphic stats
-        switch(this.monsterNumber) {
+        switch (this.monsterNumber) {
             case 0: // Ghoul
 
             case 2: // Undead Warrior
                 updateAnimationState(time, 4, 6, 5);
-            break;
+                break;
 
             case 1: // Imp
                 updateAnimationState(time, 5, 5, 10);
-            break;
+                break;
 
             case 3: // Executioner
                 updateAnimationState(time, 4, 6, 6);
-            break;
+                break;
 
             case 4: // Fire Golem
                 updateAnimationState(time, 5, 6, 7);
-            break;
+                break;
 
             default: // Big Demon
                 updateAnimationState(time, 4, 4, 4);
-            break;
+                break;
         }
     }
 
     private void loadImages(int monsterNumber) {
         this.img = new Image[3][];
-        switch(monsterNumber) {
+        switch (monsterNumber) {
             case 0: // Ghoul
                 this.img[0] = new Image[4];
                 this.img[1] = new Image[6];
@@ -143,7 +111,7 @@ public class Monster extends Entity {
                         IOException e) {
                     e.printStackTrace();
                 }
-            break;
+                break;
 
             case 1: // Imp
                 this.img[0] = new Image[5];
@@ -163,7 +131,7 @@ public class Monster extends Entity {
                         IOException e) {
                     e.printStackTrace();
                 }
-            break;
+                break;
 
             case 2: // Undead Warrior
                 this.img[0] = new Image[4];
@@ -183,7 +151,7 @@ public class Monster extends Entity {
                         IOException e) {
                     e.printStackTrace();
                 }
-            break;
+                break;
 
             case 3: // Executioner
                 this.img[0] = new Image[4];
@@ -203,7 +171,7 @@ public class Monster extends Entity {
                         IOException e) {
                     e.printStackTrace();
                 }
-            break;
+                break;
 
             case 4: // Fire Golem
                 this.img[0] = new Image[5];
@@ -223,7 +191,7 @@ public class Monster extends Entity {
                         IOException e) {
                     e.printStackTrace();
                 }
-            break;
+                break;
 
             default: // Big Demon
                 this.img = new Image[2][4];
@@ -238,7 +206,7 @@ public class Monster extends Entity {
                         IOException e) {
                     e.printStackTrace();
                 }
-            break;
+                break;
         }
     }
 

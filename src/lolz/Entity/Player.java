@@ -57,7 +57,6 @@ public abstract class Player extends Entity {
     }
 
 
-
     public void update(int time) {
         // update player graphic stats
         if (isHitting) {
@@ -162,9 +161,7 @@ public abstract class Player extends Entity {
             this.hasDamaged = true;
             entity.setHealth(entity.getHealth() - this.damage);
             System.out.println("entity health: " + entity.getHealth());
-            if (entity.getHealth() == 0) {
-                return true;
-            }
+            return entity.getHealth() == 0;
         }
         return false;
     }
