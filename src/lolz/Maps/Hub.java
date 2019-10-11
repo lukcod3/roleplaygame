@@ -6,15 +6,23 @@ import lolz.GUI.Tile;
 import lolz.Main;
 import lolz.Entity.Player;
 
+import javax.imageio.ImageIO;
 import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
 
 public class Hub extends Map {
 
+    public BufferedImage[][] portal;
+    public double portalState;
+    public int portalStage;
+
     public Hub() {
         super(600, 500);
-
+        portalState = 0;
+        portalStage = 0;
         // spawn player
-        this.player = new Mage(this,this.WIDTH/2, this.HEIGHT/2);
+        this.player = new Mage(this, this.WIDTH / 2, this.HEIGHT / 2);
 
         // setup map
         for (int y = 0; y < this.tiles.length; y++) {
@@ -40,6 +48,19 @@ public class Hub extends Map {
             this.tiles[this.tiles.length - 1][i].remove(Tile.StaticTile.FLOOR_1);
             this.tiles[this.tiles.length - 1][i].add(Tile.StaticTile.WALL);
         }
+        portal = new BufferedImage[2][];
+        portal[0] = new BufferedImage[8];
+        portal[1] = new BufferedImage[6];
+        try {
+            for(int i = 0; i < 8; i++) {
+                portal[0][i] = ImageIO.read(new File("res/hub/Green Portal Sprite Sheet.png")).getSubimage(i*64, 0, 64, 64);
+            }
+            for(int i = 0; i < 6; i++) {
+                portal[1][i] = ImageIO.read(new File("res/hub/Green Portal Sprite Sheet.png")).getSubimage(i*64, 128, 64, 64);
+            }
+        }catch(Exception e){
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -57,21 +78,24 @@ public class Hub extends Map {
                 }
             }
         }
-
+        g.drawImage(portal[portalStage][((int)portalState)%(portal[portalStage].length)].getScaledInstance(120, -1, Image.SCALE_DEFAULT), 430, 40, null);
         // draw player
         this.player.paint(g);
 
         // translate back
         g.translate((int) (this.player.x - Main.WIDTH / 2), (int) (this.player.y - Main.HEIGHT / 2));
+
     }
-    public void respawn(){
-        this.player.x = this.WIDTH/2;
-        this.player.y = this.HEIGHT/2;
+
+    public void respawn() {
+        this.player.x = this.WIDTH / 2;
+        this.player.y = this.HEIGHT / 2;
         this.player.directions = new boolean[4];
     }
 
     @Override
     public void update(int time) {
+        portalState+= 0.1;
         this.player.update(time);
     }
 }

@@ -191,7 +191,7 @@ public class GameGUI extends JPanel {
         return new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (!inEscMenu) {
+                if (!inEscMenu && map.player.allowedToMove) {
                     // change the players directions
                     map.player.directions[dir] = pressed;
                 }

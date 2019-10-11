@@ -17,7 +17,7 @@ public abstract class Player extends Entity {
     public Item[] equipment; // 1 is hat, 2 is t-shirt, 3 is sword, 4 is shoes, 5 is necklace, 6 is ring, 7 is belt, 8-11 is depot
     public boolean turnedRight;
     public boolean mage;
-
+    public boolean allowedToMove;
     // Ingame stats
     public int level, exp, gold;
 
@@ -39,6 +39,7 @@ public abstract class Player extends Entity {
         // this.x -= this.width;
         this.y -= this.height;
 
+        allowedToMove = true;
     }
 
     // set Getters and Setters for attribute hit
