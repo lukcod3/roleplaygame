@@ -9,8 +9,8 @@ import java.io.File;
 
 public class Projectile {
 
-    private int x, y;
-    private double ix, iy;
+    private double x, y;
+    private double ix, iy, animation_state;
     private Image img[];
     private turnNumber turnNumber;
     private AffineTransform at;
@@ -18,7 +18,7 @@ public class Projectile {
 
     private enum turnNumber {NORTH, NORTHEAST, EAST, SOUTHEAST, SOUTH, SOUTHWEST, WEST, NORTHWEST}
 
-    public Projectile(int x, int y, turnNumber turnNumber) {
+    public Projectile(double x, double y, turnNumber turnNumber) {
 
         setX(x);
         setY(y);
@@ -50,19 +50,19 @@ public class Projectile {
     }
 
     // Getter & Setter
-    public int getX() {
+    public double getX() {
         return this.x;
     }
 
-    public void setX(int x) {
+    public void setX(double x) {
         this.x = x;
     }
 
-    public int getY() {
+    public double getY() {
         return this.y;
     }
 
-    public void setY(int y) {
+    public void setY(double y) {
         this.y = y;
     }
 
@@ -91,12 +91,59 @@ public class Projectile {
     }
 
 
-    public void paint() {
-
+    public void paint(Graphics g) {
+        drawRotatedImage(g, img[(int) animation_state]);
     }
 
-    public void update() {
+    public void update(int time) {
+        this.animation_state += (float) time / 100;
+        this.animation_state %= 3;
 
+        double movement = 0.25 * time;
+
+        switch (getTurnNumber()) {
+            case NORTH:
+                setY(getY() - movement);
+            break;
+
+            case NORTHEAST:
+                movement *= 1.0 / Math.pow(2, 0.5);
+                setY(getY() - movement);
+                setX(getX() + movement);
+            break;
+
+            case EAST:
+                setX(getX() + movement);
+            break;
+
+            case SOUTHEAST:
+                movement *= 1.0 / Math.pow(2, 0.5);
+                setY(getY() + movement);
+                setX(getX() + movement);
+            break;
+
+            case SOUTH:
+                setY(getY() + movement);
+            break;
+
+            case SOUTHWEST:
+                movement *= 1.0 / Math.pow(2, 0.5);
+                setY(getY() + movement);
+                setX(getX() - movement);
+            break;
+
+            case WEST:
+                setX(getX() - movement);
+            break;
+
+            case NORTHWEST:
+                movement *= 1.0 / Math.pow(2, 0.5);
+                setY(getY() - movement);
+                setX(getX() - movement);
+            break;
+        }
+
+        setX(getX() + 0.25 * time);
     }
 
     private void drawRotatedImage(Graphics g, Image img) {
@@ -119,7 +166,9 @@ public class Projectile {
             case EAST:
 
             case WEST:
-                g.drawImage(img, getX(), getY(), null);
+                this.at.rotate(Math.toRadians(0));
+                this.at.translate(-getIx(), -getIy());
+                this.g2d.drawImage(img, this.at, null);
             break;
 
             case SOUTHEAST:
