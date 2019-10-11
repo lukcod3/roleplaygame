@@ -1,22 +1,17 @@
 package lolz.Entity;
 
 import lolz.GUI.Item;
-import lolz.Main;
 import lolz.Maps.Map;
-
-import javax.imageio.ImageIO;
-import java.awt.*;
-import java.io.File;
 
 public abstract class Player extends Entity {
     public Map map;
     public volatile boolean[] directions; // 0 is up, 1 is left, 2 is down, 3 is right
-    public boolean isHitting, hasDamaged; // variable true if user makes character hit
+    private boolean isHitting, hasDamaged; // variable true if user makes character hit
     public boolean isMoving;
     public double animation_state;
     public Item[] equipment; // 1 is hat, 2 is t-shirt, 3 is sword, 4 is shoes, 5 is necklace, 6 is ring, 7 is belt, 8-11 is depot
     public boolean turnedRight;
-    public boolean mage;
+    private boolean mage;
 
     // Ingame stats
     public int level, exp, gold;
@@ -78,11 +73,6 @@ public abstract class Player extends Entity {
             this.animation_state %= 4;
         }
 
-        //update player stats
-
-        // old
-        // this.animation_state %= 4;
-
         // count how many directions are active
         int dir_count = 0;
         for (boolean b : this.directions) {
@@ -106,9 +96,9 @@ public abstract class Player extends Entity {
             animation_state = 0;
         }
         if (this.directions[3]) {
-            turnedRight = !(this instanceof Mage);
+            turnedRight = true;
         } else if (this.directions[1]) {
-            turnedRight = this instanceof Mage;
+            turnedRight = false;
         }
 
         // calculate how much the player moves

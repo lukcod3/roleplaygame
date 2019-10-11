@@ -7,30 +7,30 @@ import javax.imageio.ImageIO;
 import java.awt.*;
 import java.io.File;
 
-public class Fighter extends Player{
-    public Fighter(Map map, int x, int y){
+public class Fighter extends Player {
+    public Fighter(Map map, int x, int y) {
         super(map, x, y);
         this.img = new Image[3][];
         this.img[0] = new Image[4];
         this.img[1] = new Image[6];
         this.img[2] = new Image[5];
-        this.height = 60;
         try {
             for (int i = 0; i < 4; i++) {
-                img[0][i] = ImageIO.read(new File("res/Individual Sprites/adventurer-idle-0" + i + ".png")).getScaledInstance(-1, this.height, Image.SCALE_SMOOTH);
+                img[0][i] = ImageIO.read(new File("res/Individual Sprites/adventurer-idle-0" + i + ".png")).getScaledInstance(Main.ENTITY_WIDTH, -1, Image.SCALE_SMOOTH);
             }
             for (int i = 0; i < 6; i++) {
-                img[1][i] = ImageIO.read(new File("res/Individual Sprites/adventurer-run-0" + i + ".png")).getScaledInstance(-1, this.height, Image.SCALE_SMOOTH);
+                img[1][i] = ImageIO.read(new File("res/Individual Sprites/adventurer-run-0" + i + ".png")).getScaledInstance(Main.ENTITY_WIDTH, -1, Image.SCALE_SMOOTH);
             }
             for (int i = 0; i < 5; i++) {
-                img[2][i] = ImageIO.read(new File("res/Individual Sprites/adventurer-attack1-0" + i + ".png")).getScaledInstance(-1, this.height, Image.SCALE_SMOOTH);
+                img[2][i] = ImageIO.read(new File("res/Individual Sprites/adventurer-attack1-0" + i + ".png")).getScaledInstance(Main.ENTITY_WIDTH, -1, Image.SCALE_SMOOTH);
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
-        this.width = 45;
+        this.width = Main.VIRTUAL_ENTITY_WIDTH;
         this.height = img[0][0].getHeight(null);
     }
+
     public void paint(Graphics g) {
         // System.out.println(map.get_tile_at((int) (this.x), (int) (this.y + this.height)).toString());
         // paint player

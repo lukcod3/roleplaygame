@@ -7,7 +7,7 @@ public abstract class Entity {
     public Image[][] img;
     int width, height;
     public int maxHealth, health, damage, armor;
-    public double speed;
+    double speed;
 
     Entity(int x, int y, int maxHealth, int damage, int armor, double speed) {
         this.x = x;
@@ -28,11 +28,11 @@ public abstract class Entity {
         return maxHealth;
     }
 
-    public int getHealth() {
+    int getHealth() {
         return health;
     }
 
-    public void setHealth(int health) {
+    void setHealth(int health) {
         if (health >= 0 && health <= this.getMaxHealth()) {
             this.health = health;
         } else {

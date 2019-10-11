@@ -46,11 +46,11 @@ public class Projectile {
         }
 
         if (getTurnNumber() == TurnNumber.NORTH || getTurnNumber() == TurnNumber.SOUTH) {
-            setIx(img[0].getHeight(null) / 2);
-            setIy(img[0].getWidth(null) / 2);
+            setIx(img[0].getHeight(null) / 2.0);
+            setIy(img[0].getWidth(null) / 2.0);
         } else {
-            setIx(img[0].getWidth(null) / 2);
-            setIy(img[0].getHeight(null) / 2);
+            setIx(img[0].getWidth(null) / 2.0);
+            setIy(img[0].getHeight(null) / 2.0);
         }
 
     }
@@ -72,27 +72,27 @@ public class Projectile {
         this.y = y;
     }
 
-    public TurnNumber getTurnNumber() {
+    TurnNumber getTurnNumber() {
         return this.turnNumber;
     }
 
-    public void setTurnNumber(TurnNumber turnNumber) {
+    private void setTurnNumber(TurnNumber turnNumber) {
         this.turnNumber = turnNumber;
     }
 
-    public double getIx() {
+    double getIx() {
         return this.ix;
     }
 
-    public void setIx(double ix) {
+    private void setIx(double ix) {
         this.ix = ix;
     }
 
-    public double getIy() {
+    double getIy() {
         return this.iy;
     }
 
-    public void setIy(double iy) {
+    private void setIy(double iy) {
         this.iy = iy;
     }
 

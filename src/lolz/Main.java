@@ -18,11 +18,13 @@ public class Main {
     public static final int TILE_SIZE = 50;
 
     public static int CONTENT_WIDTH, CONTENT_HEIGHT;
+    public static int ENTITY_WIDTH = 75;
+    public static int VIRTUAL_ENTITY_WIDTH = 45;
 
     private final JFrame frame;
     private JPanel activePanel;
 
-    public HubGUI hub = new HubGUI(this);
+    private HubGUI hub = new HubGUI(this);
 
     private Main() {
 
@@ -67,8 +69,7 @@ public class Main {
             // System.out.println("Time delay:" + (int)(time1-time0-16));
             if (activePanel instanceof HubGUI) {
                 updateHub((int) (time1 - time0));
-            }
-            else if (activePanel instanceof GameGUI) {
+            } else if (activePanel instanceof GameGUI) {
                 updateGame((int) (time1 - time0));
             }
             time0 = time1;
@@ -103,9 +104,9 @@ public class Main {
     private void updateGame(int time) {
         ((GameGUI) activePanel).update(time);
         ((GameGUI) activePanel).frameLocation = frame.getLocationOnScreen();
-        if(((GameGUI) activePanel).map.monsterCount==0){
+        if (((GameGUI) activePanel).map.monsterCount == 0) {
             startHub();
-            HubGUI a =((HubGUI)activePanel);
+            HubGUI a = ((HubGUI) activePanel);
             Hub b = (Hub) a.map;
             b.respawn();
         }

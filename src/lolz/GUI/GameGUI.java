@@ -120,7 +120,7 @@ public class GameGUI extends JPanel {
                         mouseCoordinates[0] = (int) (MouseInfo.getPointerInfo().getLocation().getX() - frameLocation.getX());
                         mouseCoordinates[1] = (int) (MouseInfo.getPointerInfo().getLocation().getY() - frameLocation.getY());
                     }
-                // switches Item places
+                    // switches Item places
                 } else if (e.getButton() == 1) {
                     if (readyForSwitch) {
                         readyForSwitch = false;
@@ -266,7 +266,7 @@ public class GameGUI extends JPanel {
         Font font = new Font("SansSerif", Font.BOLD, 25);
         g.setFont(font);
         g.setColor(Color.WHITE);
-        if((double) this.map.player.health / (double) this.map.player.getMaxHealth() <= 0.1) {
+        if ((double) this.map.player.health / (double) this.map.player.getMaxHealth() <= 0.1) {
             Color lowColor = new Color(100, 0, 0, 60);
             g.setColor(lowColor);
             g.fillRect(0, 0, Main.WIDTH, Main.HEIGHT);
@@ -406,11 +406,11 @@ public class GameGUI extends JPanel {
         }
     }
 
-    public boolean isCourserInRectangle(double x1, double x2, double y1, double y2) {
+    private boolean isCourserInRectangle(double x1, double x2, double y1, double y2) {
         return (MouseInfo.getPointerInfo().getLocation().getX() - frameLocation.getX() <= x2 && MouseInfo.getPointerInfo().getLocation().getX() - frameLocation.getX() >= x1 && MouseInfo.getPointerInfo().getLocation().getY() - frameLocation.getY() <= y2 && MouseInfo.getPointerInfo().getLocation().getY() - frameLocation.getY() >= y1);
     }
 
-    public void testGeneratedRandomItemSet() {
+    private void testGeneratedRandomItemSet() {
         for (int i = 0; i <= 6; i++) {
             this.map.player.equipment[i] = item[i][(int) (Math.random() * 5)];
         }

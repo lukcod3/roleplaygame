@@ -14,23 +14,23 @@ public class Hub extends Map {
         super(600, 500);
 
         // spawn player
-        this.player = new Mage(this,this.WIDTH/2, this.HEIGHT/2);
+        this.player = new Mage(this, this.WIDTH / 2, this.HEIGHT / 2);
 
         // setup map
-        for (int y = 0; y < this.tiles.length; y++) {
+        for (Tile[] tile : this.tiles) {
             for (int x = 0; x < this.tiles[0].length; x++) {
-                this.tiles[y][x].add(Tile.StaticTile.FLOOR_1);
+                tile[x].add(Tile.StaticTile.FLOOR_1);
             }
         }
 
         // setting walls
-        for (int i = 0; i < tiles.length; i++) {
-            this.tiles[i][0].remove(Tile.StaticTile.FLOOR_1);
-            this.tiles[i][0].add(Tile.StaticTile.WALL);
+        for (Tile[] tile : tiles) {
+            tile[0].remove(Tile.StaticTile.FLOOR_1);
+            tile[0].add(Tile.StaticTile.WALL);
         }
-        for (int i = 0; i < this.tiles.length; i++) {
-            this.tiles[i][this.tiles[0].length - 1].remove(Tile.StaticTile.FLOOR_1);
-            this.tiles[i][this.tiles[0].length - 1].add(Tile.StaticTile.WALL);
+        for (Tile[] tile : this.tiles) {
+            tile[this.tiles[0].length - 1].remove(Tile.StaticTile.FLOOR_1);
+            tile[this.tiles[0].length - 1].add(Tile.StaticTile.WALL);
         }
         for (int i = 0; i < this.tiles[0].length; i++) {
             this.tiles[0][i].remove(Tile.StaticTile.FLOOR_1);
@@ -64,9 +64,10 @@ public class Hub extends Map {
         // translate back
         g.translate((int) (this.player.x - Main.WIDTH / 2), (int) (this.player.y - Main.HEIGHT / 2));
     }
-    public void respawn(){
-        this.player.x = this.WIDTH/2;
-        this.player.y = this.HEIGHT/2;
+
+    public void respawn() {
+        this.player.x = this.WIDTH / 2.0;
+        this.player.y = this.HEIGHT / 2.0;
         this.player.directions = new boolean[4];
     }
 

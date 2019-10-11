@@ -1,5 +1,7 @@
 package lolz.Entity;
 
+import lolz.Main;
+
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.io.File;
@@ -8,7 +10,7 @@ import java.io.IOException;
 public class Monster extends Entity {
     private double animation_state;
     private int exp, monsterNumber;
-    private boolean isHitting, isMoving;
+    private boolean isHitting, isMoving, turnedRight;
 
     public Monster(int x, int y, int maxHealth, int damage, int armor, int exp, int monsterNumber) {
         super(x, y, maxHealth, damage, armor, 10);
@@ -17,7 +19,8 @@ public class Monster extends Entity {
 
         loadImages(this.monsterNumber);
 
-        this.width = img[0][0].getWidth(null);
+        // this.width = img[0][0].getWidth(null);
+        this.width = Main.VIRTUAL_ENTITY_WIDTH;
         this.height = img[0][0].getHeight(null);
         this.y -= this.getHeight();
     }
@@ -30,10 +33,66 @@ public class Monster extends Entity {
         this.exp = exp;
     }
 
+    /*
     public void paint(Graphics g) {
-        // paint monster
+        // System.out.println(map.get_tile_at((int) (this.x), (int) (this.y + this.height)).toString());
+        // paint player
         g.setColor(Color.BLACK);
-        g.drawImage(img[0][(int) this.animation_state], (int) this.x, (int) this.y, null);
+        if (turnedRight) {
+            if (isHitting) { // is able to hit while running and while standing still -> always checks if hit is true regardless of moving
+                int offset = (img[2][(int) this.animation_state].getWidth(null) - this.width) / 2;
+                g.drawImage(img[2][(int) this.animation_state], (int) this.x - offset, (int) this.y, null); // set player's animation to hit animation
+            } else if (isMoving) {
+                int offset = (img[1][(int) this.animation_state].getWidth(null) - this.width) / 2;
+                g.drawImage(img[1][(int) this.animation_state], (int) this.x - offset, (int) this.y, null);
+            } else {
+                int offset = (img[0][(int) this.animation_state].getWidth(null) - this.width) / 2;
+                g.drawImage(img[0][(int) this.animation_state], (int) this.x - offset, (int) this.y, null);
+            }
+        } else {
+            if (isHitting) { // is able to hit while running and while standing still -> always checks if hit is true regardless of moving
+                int offset = (img[2][(int) this.animation_state].getWidth(null) - this.width) / 2;
+                Main.drawReflectImage(img[2][(int) this.animation_state], g, (int) this.x - offset, (int) this.y);
+            } else if (isMoving) {
+                int offset = (img[1][(int) this.animation_state].getWidth(null) - this.width) / 2;
+                Main.drawReflectImage(img[1][(int) this.animation_state], g, (int) this.x - offset, (int) this.y);
+            } else {
+                int offset = (img[0][(int) this.animation_state].getWidth(null) - this.width) / 2;
+                Main.drawReflectImage(img[0][(int) this.animation_state], g, (int) this.x - offset, (int) this.y);
+            }
+
+        }
+    }
+    */
+
+    public void paint(Graphics g) {
+        // paint player
+
+        double k = 1.2;
+        g.setColor(Color.BLACK);
+        if (!turnedRight) {
+            if (isHitting) { // is able to hit while running and while standing still -> always checks if hit is true regardless of moving
+                int offset = (int) ((k*img[2][(int) this.animation_state].getWidth(null) - this.width) / 2);
+                g.drawImage(img[2][(int) this.animation_state], (int) this.x - offset, (int) this.y, null); // set player's animation to hit animation
+            } else if (isMoving) {
+                int offset = (int) ((k*img[1][(int) this.animation_state].getWidth(null) - this.width) / 2);
+                g.drawImage(img[1][(int) this.animation_state], (int) this.x - offset, (int) this.y, null);
+            } else {
+                int offset = (int) ((k*img[0][(int) this.animation_state].getWidth(null) - this.width) / 2);
+                g.drawImage(img[0][(int) this.animation_state], (int) this.x - offset, (int) this.y, null);
+            }
+        } else {
+            if (isHitting) { // is able to hit while running and while standing still -> always checks if hit is true regardless of moving
+                //int offset = (int) ((1*img[2][(int) this.animation_state].getWidth(null) - this.width) / 2);
+                Main.drawReflectImage(img[2][(int) this.animation_state], g, (int) this.x, (int) this.y);
+            } else if (isMoving) {
+                //int offset = (int) ((1*img[1][(int) this.animation_state].getWidth(null) - this.width) / 2);
+                Main.drawReflectImage(img[1][(int) this.animation_state], g, (int) this.x, (int) this.y);
+            } else {
+                //int offset = (int) ((1*img[0][(int) this.animation_state].getWidth(null) - this.width) / 2);
+                Main.drawReflectImage(img[0][(int) this.animation_state], g, (int) this.x, (int) this.y);
+            }
+        }
     }
 
     public void update(int time) {
@@ -72,13 +131,13 @@ public class Monster extends Entity {
                 this.img[2] = new Image[5];
                 try {
                     for (int i = 0; i < 4; i++) {
-                        img[0][i] = ImageIO.read(new File("res/monster/Ghoul/Individiual Sprites/ghoul-idle-0" + i + ".png")).getScaledInstance(50, -1, Image.SCALE_SMOOTH);
+                        img[0][i] = ImageIO.read(new File("res/monster/Ghoul/Individual Sprites/ghoul-idle-0" + i + ".png")).getScaledInstance(Main.ENTITY_WIDTH, -1, Image.SCALE_SMOOTH);
                     }
                     for (int i = 0; i < 6; i++) {
-                        img[1][i] = ImageIO.read(new File("res/monster/Ghoul/Individiual Sprites/ghoul-run-0" + i + ".png")).getScaledInstance(50, -1, Image.SCALE_SMOOTH);
+                        img[1][i] = ImageIO.read(new File("res/monster/Ghoul/Individual Sprites/ghoul-run-0" + i + ".png")).getScaledInstance(Main.ENTITY_WIDTH, -1, Image.SCALE_SMOOTH);
                     }
                     for (int i = 0; i < 5; i++) {
-                        img[2][i] = ImageIO.read(new File("res/monster/Ghoul/Individiual Sprites/ghoul-attack-0" + i + ".png")).getScaledInstance(50, -1, Image.SCALE_SMOOTH);
+                        img[2][i] = ImageIO.read(new File("res/monster/Ghoul/Individual Sprites/ghoul-attack-0" + i + ".png")).getScaledInstance(Main.ENTITY_WIDTH, -1, Image.SCALE_SMOOTH);
                     }
                 } catch (
                         IOException e) {
@@ -92,13 +151,13 @@ public class Monster extends Entity {
                 this.img[2] = new Image[10];
                 try {
                     for (int i = 0; i < 5; i++) {
-                        img[0][i] = ImageIO.read(new File("res/monster/Imp/Individual Sprites/imp-idle-0" + i + ".png")).getScaledInstance(50, -1, Image.SCALE_SMOOTH);
+                        img[0][i] = ImageIO.read(new File("res/monster/Imp/Individual Sprites/imp-idle-0" + i + ".png")).getScaledInstance(Main.ENTITY_WIDTH, -1, Image.SCALE_SMOOTH);
                     }
                     for (int i = 0; i < 5; i++) {
-                        img[1][i] = ImageIO.read(new File("res/monster/Imp/Individual Sprites/imp-move-0" + i + ".png")).getScaledInstance(50, -1, Image.SCALE_SMOOTH);
+                        img[1][i] = ImageIO.read(new File("res/monster/Imp/Individual Sprites/imp-move-0" + i + ".png")).getScaledInstance(Main.ENTITY_WIDTH, -1, Image.SCALE_SMOOTH);
                     }
                     for (int i = 0; i < 10; i++) {
-                        img[2][i] = ImageIO.read(new File("res/monster/Imp/Individual Sprites/imp-attack-0" + i + ".png")).getScaledInstance(50, -1, Image.SCALE_SMOOTH);
+                        img[2][i] = ImageIO.read(new File("res/monster/Imp/Individual Sprites/imp-attack-0" + i + ".png")).getScaledInstance(Main.ENTITY_WIDTH, -1, Image.SCALE_SMOOTH);
                     }
                 } catch (
                         IOException e) {
@@ -112,13 +171,13 @@ public class Monster extends Entity {
                 this.img[2] = new Image[5];
                 try {
                     for (int i = 0; i < 4; i++) {
-                        img[0][i] = ImageIO.read(new File("res/monster/Undead Warrior/Individual Sprites/undead-warrior-idle-0" + i + ".png")).getScaledInstance(50, -1, Image.SCALE_SMOOTH);
+                        img[0][i] = ImageIO.read(new File("res/monster/Undead Warrior/Individual Sprites/undead-warrior-idle-0" + i + ".png")).getScaledInstance(Main.ENTITY_WIDTH, -1, Image.SCALE_SMOOTH);
                     }
                     for (int i = 0; i < 6; i++) {
-                        img[1][i] = ImageIO.read(new File("res/monster/Undead Warrior/Individual Sprites/undead-warrior-run-0" + i + ".png")).getScaledInstance(50, -1, Image.SCALE_SMOOTH);
+                        img[1][i] = ImageIO.read(new File("res/monster/Undead Warrior/Individual Sprites/undead-warrior-run-0" + i + ".png")).getScaledInstance(Main.ENTITY_WIDTH, -1, Image.SCALE_SMOOTH);
                     }
                     for (int i = 0; i < 5; i++) {
-                        img[2][i] = ImageIO.read(new File("res/monster/Undead Warrior/Individual Sprites/undead-warrior-attack-0" + i + ".png")).getScaledInstance(50, -1, Image.SCALE_SMOOTH);
+                        img[2][i] = ImageIO.read(new File("res/monster/Undead Warrior/Individual Sprites/undead-warrior-attack-0" + i + ".png")).getScaledInstance(Main.ENTITY_WIDTH, -1, Image.SCALE_SMOOTH);
                     }
                 } catch (
                         IOException e) {
@@ -132,13 +191,13 @@ public class Monster extends Entity {
                 this.img[2] = new Image[6];
                 try {
                     for (int i = 0; i < 4; i++) {
-                        img[0][i] = ImageIO.read(new File("res/monster/Executioner/Individual Sprites/executioner-idle-0" + i + ".png")).getScaledInstance(50, -1, Image.SCALE_SMOOTH);
+                        img[0][i] = ImageIO.read(new File("res/monster/Executioner/Individual Sprites/executioner-idle-0" + i + ".png")).getScaledInstance(Main.ENTITY_WIDTH, -1, Image.SCALE_SMOOTH);
                     }
                     for (int i = 0; i < 6; i++) {
-                        img[1][i] = ImageIO.read(new File("res/monster/Executioner/Individual Sprites/executioner-run-0" + i + ".png")).getScaledInstance(50, -1, Image.SCALE_SMOOTH);
+                        img[1][i] = ImageIO.read(new File("res/monster/Executioner/Individual Sprites/executioner-run-0" + i + ".png")).getScaledInstance(Main.ENTITY_WIDTH, -1, Image.SCALE_SMOOTH);
                     }
                     for (int i = 0; i < 6; i++) {
-                        img[2][i] = ImageIO.read(new File("res/monster/Executioner/Individual Sprites/executioner-attack-0" + i + ".png")).getScaledInstance(50, -1, Image.SCALE_SMOOTH);
+                        img[2][i] = ImageIO.read(new File("res/monster/Executioner/Individual Sprites/executioner-attack-0" + i + ".png")).getScaledInstance(Main.ENTITY_WIDTH, -1, Image.SCALE_SMOOTH);
                     }
                 } catch (
                         IOException e) {
@@ -152,13 +211,13 @@ public class Monster extends Entity {
                 this.img[2] = new Image[7];
                 try {
                     for (int i = 0; i < 5; i++) {
-                        img[0][i] = ImageIO.read(new File("res/monster/Fire Golem/Individual Sprites/fire-golem-idle-0" + i + ".png")).getScaledInstance(50, -1, Image.SCALE_SMOOTH);
+                        img[0][i] = ImageIO.read(new File("res/monster/Fire Golem/Individual Sprites/fire-golem-idle-0" + i + ".png")).getScaledInstance(Main.ENTITY_WIDTH, -1, Image.SCALE_SMOOTH);
                     }
                     for (int i = 0; i < 6; i++) {
-                        img[1][i] = ImageIO.read(new File("res/monster/Fire Golem/Individual Sprites/fire-golem-run-0" + i + ".png")).getScaledInstance(50, -1, Image.SCALE_SMOOTH);
+                        img[1][i] = ImageIO.read(new File("res/monster/Fire Golem/Individual Sprites/fire-golem-run-0" + i + ".png")).getScaledInstance(Main.ENTITY_WIDTH, -1, Image.SCALE_SMOOTH);
                     }
                     for (int i = 0; i < 7; i++) {
-                        img[2][i] = ImageIO.read(new File("res/monster/Fire Golem/Individual Sprites/fire-golem-attack-0" + i + ".png")).getScaledInstance(50, -1, Image.SCALE_SMOOTH);
+                        img[2][i] = ImageIO.read(new File("res/monster/Fire Golem/Individual Sprites/fire-golem-attack-0" + i + ".png")).getScaledInstance(Main.ENTITY_WIDTH, -1, Image.SCALE_SMOOTH);
                     }
                 } catch (
                         IOException e) {
@@ -170,10 +229,10 @@ public class Monster extends Entity {
                 this.img = new Image[2][4];
                 try {
                     for (int i = 0; i < 4; i++) {
-                        img[0][i] = ImageIO.read(new File("res/tiles/big_demon_idle_anim_f" + i + ".png")).getScaledInstance(50, -1, Image.SCALE_SMOOTH);
+                        img[0][i] = ImageIO.read(new File("res/tiles/big_demon_idle_anim_f" + i + ".png")).getScaledInstance(Main.ENTITY_WIDTH, -1, Image.SCALE_SMOOTH);
                     }
                     for (int i = 0; i < 4; i++) {
-                        img[1][i] = ImageIO.read(new File("res/tiles/big_demon_run_anim_f" + i + ".png")).getScaledInstance(50, -1, Image.SCALE_SMOOTH);
+                        img[1][i] = ImageIO.read(new File("res/tiles/big_demon_run_anim_f" + i + ".png")).getScaledInstance(Main.ENTITY_WIDTH, -1, Image.SCALE_SMOOTH);
                     }
                 } catch (
                         IOException e) {
@@ -183,7 +242,7 @@ public class Monster extends Entity {
         }
     }
 
-    public void setHitting(boolean hitting) {
+    private void setHitting(boolean hitting) {
         isHitting = hitting;
     }
 

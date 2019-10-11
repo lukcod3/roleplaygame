@@ -55,7 +55,7 @@ public class RandomMap extends Map {
         double WALKER_CHANGE_DIR_POSS = 0.2;
 
         // initialize walkers
-        ArrayList<Walker> walkers = new ArrayList<Walker>();
+        ArrayList<Walker> walkers = new ArrayList<>();
         for (int i = 0; i < NUMBER_OF_START_WALKERS; i++) {
             walkers.add(new Walker(this, this.VIRTUAL_WIDTH / 2, this.VIRTUAL_HEIGHT / 2));
         }
@@ -105,9 +105,9 @@ public class RandomMap extends Map {
             if (this.player.getHitting() && (int) (this.player.animation_state % 5) == 2) {
                 if (!this.player.isMoving) {
                     if (this.player.turnedRight) {
-                        projectiles.add(new Projectile(this.player.getX() + this.player.getWidth(), this.player.getY() + this.player.getHeight() / 2, Projectile.TurnNumber.EAST));
+                        projectiles.add(new Projectile(this.player.getX() + this.player.getWidth(), this.player.getY() + this.player.getHeight() / 2.0, Projectile.TurnNumber.EAST));
                     } else {
-                        projectiles.add(new Projectile(this.player.getX(), this.player.getY() + this.player.getHeight() / 2, Projectile.TurnNumber.WEST));
+                        projectiles.add(new Projectile(this.player.getX(), this.player.getY() + this.player.getHeight() / 2.0, Projectile.TurnNumber.WEST));
                     }
                 } else if (1 == 1 /* check which directions[] are active and decide which TurnNumber to use accordingly*/) {
 
