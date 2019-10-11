@@ -11,7 +11,7 @@ import java.awt.event.*;
 public class HubGUI extends JPanel {
 
     private Main main;
-    private Map map;
+    public Map map;
 
     public HubGUI(final Main main) {
 
@@ -30,10 +30,11 @@ public class HubGUI extends JPanel {
             this.getActionMap().put(c + "Pressed", generateMoveKeyAction(i, true));
             this.getActionMap().put(c + "Released", generateMoveKeyAction(i, false));
 
-            //add the key binding for the players attack
-            this.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_J, 0, false), KeyEvent.VK_J + "Pressed");
-            this.getActionMap().put(KeyEvent.VK_J + "Pressed", generateAttackKeyAction());
+
         }
+        //add the key binding for the players attack
+        this.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_J, 0, false), KeyEvent.VK_J + "Pressed");
+        this.getActionMap().put(KeyEvent.VK_J + "Pressed", generateAttackKeyAction());
     }
 
     private Action generateMoveKeyAction(final int dir, final boolean pressed) {

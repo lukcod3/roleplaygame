@@ -12,7 +12,7 @@ import java.io.File;
 
 public class GameGUI extends JPanel {
     private Image img;
-    private Map map;
+    public Map map;
     private boolean statsShown, inEscMenu;
     private JButton exitButton;
 

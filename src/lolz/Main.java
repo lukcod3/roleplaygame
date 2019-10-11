@@ -3,6 +3,7 @@ package lolz;
 import lolz.GUI.GameGUI;
 import lolz.GUI.HubGUI;
 import lolz.GUI.MainMenu;
+import lolz.Maps.Hub;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -20,6 +21,8 @@ public class Main {
 
     private final JFrame frame;
     private JPanel activePanel;
+
+    public HubGUI hub = new HubGUI(this);
 
     private Main() {
 
@@ -80,7 +83,7 @@ public class Main {
     }
 
     public void startHub() {
-        this.activePanel = new HubGUI(this);
+        this.activePanel = hub;
         frame.getContentPane().removeAll();
         frame.getContentPane().add(activePanel);
         frame.revalidate();
@@ -100,6 +103,12 @@ public class Main {
     private void updateGame(int time) {
         ((GameGUI) activePanel).update(time);
         ((GameGUI) activePanel).frameLocation = frame.getLocationOnScreen();
+        if(((GameGUI) activePanel).map.monsterCount==0){
+            startHub();
+            HubGUI a =((HubGUI)activePanel);
+            Hub b = (Hub) a.map;
+            b.respawn();
+        }
     }
 
     public static void drawReflectImage(Image i, Graphics g, int x, int y) {

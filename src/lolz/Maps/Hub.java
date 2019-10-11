@@ -14,7 +14,7 @@ public class Hub extends Map {
         super(600, 500);
 
         // spawn player
-        this.player = new Fighter(this,this.WIDTH/2, this.HEIGHT/2);
+        this.player = new Mage(this,this.WIDTH/2, this.HEIGHT/2);
 
         // setup map
         for (int y = 0; y < this.tiles.length; y++) {
@@ -63,6 +63,11 @@ public class Hub extends Map {
 
         // translate back
         g.translate((int) (this.player.x - Main.WIDTH / 2), (int) (this.player.y - Main.HEIGHT / 2));
+    }
+    public void respawn(){
+        this.player.x = this.WIDTH/2;
+        this.player.y = this.HEIGHT/2;
+        this.player.directions = new boolean[4];
     }
 
     @Override
