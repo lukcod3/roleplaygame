@@ -13,14 +13,13 @@ public class RandomMap extends Map {
         // setup map
         super(20000, 15000);
 
-
         // generate map
         generateMap();
 
         // spawn player
         this.player = new Mage(this, (this.VIRTUAL_WIDTH / 2) * Main.TILE_SIZE, (this.VIRTUAL_HEIGHT / 2) * Main.TILE_SIZE);
         // spawn monster at player's position
-        this.monster = new Monster((this.VIRTUAL_WIDTH / 2) * Main.TILE_SIZE, (this.VIRTUAL_HEIGHT / 2) * Main.TILE_SIZE, 50, 15, 10, 25, 5);
+        Monster monster = new Monster((this.VIRTUAL_WIDTH / 2) * Main.TILE_SIZE, (this.VIRTUAL_HEIGHT / 2) * Main.TILE_SIZE, 50, 15, 10, 25, 5);
 
         // update expFactor before new map is created
         this.expFactor = Math.pow(1.2, this.player.level);
@@ -30,7 +29,7 @@ public class RandomMap extends Map {
 
         // set entities array
         this.entities.add(this.player);
-        this.entities.add(this.monster);
+        this.entities.add(monster);
         this.monsterCount += 1;
     }
 

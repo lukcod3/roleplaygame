@@ -1,6 +1,7 @@
 package lolz.GUI;
 
 import lolz.Main;
+import lolz.Maps.Hub;
 import lolz.Maps.Map;
 import lolz.Maps.RandomMap;
 
@@ -18,13 +19,13 @@ public class GameGUI extends JPanel {
 
     private MouseEvent e;
     public Point frameLocation;
-    public int aktInventar;
-    public boolean showButton;
-    public Image[] inventoryImages;
-    public int[] mouseCoordinates;
-    public boolean readyForSwitch;
-    public Item[][] item;
-    public Image emptyInventory;
+    private int aktInventar;
+    private boolean showButton;
+    private Image[] inventoryImages;
+    private int[] mouseCoordinates;
+    private boolean readyForSwitch;
+    private Item[][] item;
+    private Image emptyInventory;
 
     //public Hub hub;
     public GameGUI() {
@@ -55,10 +56,10 @@ public class GameGUI extends JPanel {
         // loads images for inventory
         try {
             inventoryImages = new Image[4];
-            inventoryImages[0] = ImageIO.read(new File("res/inventory/gegenstandAblegen_aus.PNG"));
-            inventoryImages[1] = ImageIO.read(new File("res/inventory/gegenstandAblegen_an.PNG"));
-            inventoryImages[2] = ImageIO.read(new File("res/inventory/anlegen_aus.PNG"));
-            inventoryImages[3] = ImageIO.read(new File("res/inventory/anlegen_an.PNG"));
+            inventoryImages[0] = ImageIO.read(new File("res/inventory/gegenstandAblegen_aus.png"));
+            inventoryImages[1] = ImageIO.read(new File("res/inventory/gegenstandAblegen_an.png"));
+            inventoryImages[2] = ImageIO.read(new File("res/inventory/anlegen_aus.png"));
+            inventoryImages[3] = ImageIO.read(new File("res/inventory/anlegen_an.png"));
             emptyInventory = ImageIO.read(new File("res/inventory/freiPlatz.png"));
         } catch (Exception e) {
             e.printStackTrace();
@@ -408,11 +409,12 @@ public class GameGUI extends JPanel {
     public boolean isCourserInRectangle(double x1, double x2, double y1, double y2) {
         return (MouseInfo.getPointerInfo().getLocation().getX() - frameLocation.getX() <= x2 && MouseInfo.getPointerInfo().getLocation().getX() - frameLocation.getX() >= x1 && MouseInfo.getPointerInfo().getLocation().getY() - frameLocation.getY() <= y2 && MouseInfo.getPointerInfo().getLocation().getY() - frameLocation.getY() >= y1);
     }
-    public void testGeneratedRandomItemSet(){
-        for(int i = 0; i<= 6; i++){
-            this.map.player.equipment[i] = item[i][(int)(Math.random()*5)];
+
+    public void testGeneratedRandomItemSet() {
+        for (int i = 0; i <= 6; i++) {
+            this.map.player.equipment[i] = item[i][(int) (Math.random() * 5)];
         }
-        this.map.player.equipment[7] = item[(int) (Math.random()*7)][(int) (Math.random()*4)+1];
-        this.map.player.equipment[8] = item[(int) (Math.random()*7)][(int) (Math.random()*4)+1];
+        this.map.player.equipment[7] = item[(int) (Math.random() * 7)][(int) (Math.random() * 4) + 1];
+        this.map.player.equipment[8] = item[(int) (Math.random() * 7)][(int) (Math.random() * 4) + 1];
     }
 }

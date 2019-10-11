@@ -18,8 +18,8 @@ public class MainMenu extends JPanel {
 
     public MainMenu(final Main main) {
         this.main = main;
-        this.buttonWidth = 400/2;
-        this.buttonHeight = 128/2;
+        this.buttonWidth = 400 / 2;
+        this.buttonHeight = 128 / 2;
         try {
             bgImage = load_image("res/monsters_and_ other_atrocities/titelbildschirm.png").getScaledInstance(Main.WIDTH, Main.HEIGHT, Image.SCALE_SMOOTH);
             buttonImage = load_image("res/start_button.jpg").getScaledInstance(buttonWidth, buttonHeight, Image.SCALE_SMOOTH);
