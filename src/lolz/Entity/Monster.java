@@ -64,21 +64,21 @@ public class Monster extends Entity {
     }
 
     private void loadImages(int monsterNumber) {
+        this.img = new Image[3][];
         switch(monsterNumber) {
             case 0: // Ghoul
-                this.img = new Image[3][];
                 this.img[0] = new Image[4];
                 this.img[1] = new Image[6];
                 this.img[2] = new Image[5];
                 try {
                     for (int i = 0; i < 4; i++) {
-                        img[0][i] = ImageIO.read(new File("res/monster/Ghoul/Individiual Sprites/ghoul-idle-0" + i + ".png")).getScaledInstance(50, -1, Image.SCALE_SMOOTH);
+                        img[0][i] = ImageIO.read(new File("res/monster/Ghoul/Individual Sprites/ghoul-idle-0" + i + ".png")).getScaledInstance(50, -1, Image.SCALE_SMOOTH);
                     }
                     for (int i = 0; i < 6; i++) {
-                        img[1][i] = ImageIO.read(new File("res/monster/Ghoul/Individiual Sprites/ghoul-run-0" + i + ".png")).getScaledInstance(50, -1, Image.SCALE_SMOOTH);
+                        img[1][i] = ImageIO.read(new File("res/monster/Ghoul/Individual Sprites/ghoul-run-0" + i + ".png")).getScaledInstance(50, -1, Image.SCALE_SMOOTH);
                     }
                     for (int i = 0; i < 5; i++) {
-                        img[2][i] = ImageIO.read(new File("res/monster/Ghoul/Individiual Sprites/ghoul-attack-0" + i + ".png")).getScaledInstance(50, -1, Image.SCALE_SMOOTH);
+                        img[2][i] = ImageIO.read(new File("res/monster/Ghoul/Individual Sprites/ghoul-attack-0" + i + ".png")).getScaledInstance(50, -1, Image.SCALE_SMOOTH);
                     }
                 } catch (
                         IOException e) {
@@ -87,19 +87,18 @@ public class Monster extends Entity {
             break;
 
             case 1: // Imp
-                this.img = new Image[3][];
                 this.img[0] = new Image[5];
                 this.img[1] = new Image[5];
                 this.img[2] = new Image[10];
                 try {
                     for (int i = 0; i < 5; i++) {
-                        img[0][i] = ImageIO.read(new File("res/monster/Imp/Individual Sprites/imp-idle-0" + Integer.toString(i) + ".png")).getScaledInstance(50, -1, Image.SCALE_SMOOTH);
+                        img[0][i] = ImageIO.read(new File("res/monster/Imp/Individual Sprites/imp-idle-0" + i + ".png")).getScaledInstance(50, -1, Image.SCALE_SMOOTH);
                     }
                     for (int i = 0; i < 5; i++) {
-                        img[1][i] = ImageIO.read(new File("res/monster/Imp/Individual Sprites/imp-move-0" + Integer.toString(i) + ".png")).getScaledInstance(50, -1, Image.SCALE_SMOOTH);
+                        img[1][i] = ImageIO.read(new File("res/monster/Imp/Individual Sprites/imp-move-0" + i + ".png")).getScaledInstance(50, -1, Image.SCALE_SMOOTH);
                     }
                     for (int i = 0; i < 10; i++) {
-                        img[2][i] = ImageIO.read(new File("res/monster/Imp/Individual Sprites/imp-attack-0" + Integer.toString(i) + ".png")).getScaledInstance(50, -1, Image.SCALE_SMOOTH);
+                        img[2][i] = ImageIO.read(new File("res/monster/Imp/Individual Sprites/imp-attack-0" + i + ".png")).getScaledInstance(50, -1, Image.SCALE_SMOOTH);
                     }
                 } catch (
                         IOException e) {
@@ -108,19 +107,18 @@ public class Monster extends Entity {
             break;
 
             case 2: // Undead Warrior
-                this.img = new Image[3][];
                 this.img[0] = new Image[4];
                 this.img[1] = new Image[6];
                 this.img[2] = new Image[5];
                 try {
                     for (int i = 0; i < 4; i++) {
-                        img[0][i] = ImageIO.read(new File("res/monster/Undead Warrior/Individual Sprites/undead-warrior-idle-0" + Integer.toString(i) + ".png")).getScaledInstance(50, -1, Image.SCALE_SMOOTH);
+                        img[0][i] = ImageIO.read(new File("res/monster/Undead Warrior/Individual Sprites/undead-warrior-idle-0" + i + ".png")).getScaledInstance(50, -1, Image.SCALE_SMOOTH);
                     }
                     for (int i = 0; i < 6; i++) {
-                        img[1][i] = ImageIO.read(new File("res/monster/Undead Warrior/Individual Sprites/undead-warrior-run-0" + Integer.toString(i) + ".png")).getScaledInstance(50, -1, Image.SCALE_SMOOTH);
+                        img[1][i] = ImageIO.read(new File("res/monster/Undead Warrior/Individual Sprites/undead-warrior-run-0" + i + ".png")).getScaledInstance(50, -1, Image.SCALE_SMOOTH);
                     }
                     for (int i = 0; i < 5; i++) {
-                        img[2][i] = ImageIO.read(new File("res/monster/Undead Warrior/Individual Sprites/undead-warrior-attack-0" + Integer.toString(i) + ".png")).getScaledInstance(50, -1, Image.SCALE_SMOOTH);
+                        img[2][i] = ImageIO.read(new File("res/monster/Undead Warrior/Individual Sprites/undead-warrior-attack-0" + i + ".png")).getScaledInstance(50, -1, Image.SCALE_SMOOTH);
                     }
                 } catch (
                         IOException e) {
@@ -129,19 +127,18 @@ public class Monster extends Entity {
             break;
 
             case 3: // Executioner
-                this.img = new Image[3][];
                 this.img[0] = new Image[4];
                 this.img[1] = new Image[6];
                 this.img[2] = new Image[6];
                 try {
                     for (int i = 0; i < 4; i++) {
-                        img[0][i] = ImageIO.read(new File("res/monster/Executioner/Individual Sprites/executioner-idle-0" + Integer.toString(i) + ".png")).getScaledInstance(50, -1, Image.SCALE_SMOOTH);
+                        img[0][i] = ImageIO.read(new File("res/monster/Executioner/Individual Sprites/executioner-idle-0" + i + ".png")).getScaledInstance(50, -1, Image.SCALE_SMOOTH);
                     }
                     for (int i = 0; i < 6; i++) {
-                        img[1][i] = ImageIO.read(new File("res/monster/Executioner/Individual Sprites/executioner-run-0" + Integer.toString(i) + ".png")).getScaledInstance(50, -1, Image.SCALE_SMOOTH);
+                        img[1][i] = ImageIO.read(new File("res/monster/Executioner/Individual Sprites/executioner-run-0" + i + ".png")).getScaledInstance(50, -1, Image.SCALE_SMOOTH);
                     }
                     for (int i = 0; i < 6; i++) {
-                        img[2][i] = ImageIO.read(new File("res/monster/Executioner/Individual Sprites/executioner-attack-0" + Integer.toString(i) + ".png")).getScaledInstance(50, -1, Image.SCALE_SMOOTH);
+                        img[2][i] = ImageIO.read(new File("res/monster/Executioner/Individual Sprites/executioner-attack-0" + i + ".png")).getScaledInstance(50, -1, Image.SCALE_SMOOTH);
                     }
                 } catch (
                         IOException e) {
@@ -150,19 +147,18 @@ public class Monster extends Entity {
             break;
 
             case 4: // Fire Golem
-                this.img = new Image[3][];
                 this.img[0] = new Image[5];
                 this.img[1] = new Image[6];
                 this.img[2] = new Image[7];
                 try {
                     for (int i = 0; i < 5; i++) {
-                        img[0][i] = ImageIO.read(new File("res/monster/Fire Golem/Individual Sprites/fire-golem-idle-0" + Integer.toString(i) + ".png")).getScaledInstance(50, -1, Image.SCALE_SMOOTH);
+                        img[0][i] = ImageIO.read(new File("res/monster/Fire Golem/Individual Sprites/fire-golem-idle-0" + i + ".png")).getScaledInstance(50, -1, Image.SCALE_SMOOTH);
                     }
                     for (int i = 0; i < 6; i++) {
-                        img[1][i] = ImageIO.read(new File("res/monster/Fire Golem/Individual Sprites/fire-golem-run-0" + Integer.toString(i) + ".png")).getScaledInstance(50, -1, Image.SCALE_SMOOTH);
+                        img[1][i] = ImageIO.read(new File("res/monster/Fire Golem/Individual Sprites/fire-golem-run-0" + i + ".png")).getScaledInstance(50, -1, Image.SCALE_SMOOTH);
                     }
                     for (int i = 0; i < 7; i++) {
-                        img[2][i] = ImageIO.read(new File("res/monster/Fire Golem/Individual Sprites/fire-golem-attack-0" + Integer.toString(i) + ".png")).getScaledInstance(50, -1, Image.SCALE_SMOOTH);
+                        img[2][i] = ImageIO.read(new File("res/monster/Fire Golem/Individual Sprites/fire-golem-attack-0" + i + ".png")).getScaledInstance(50, -1, Image.SCALE_SMOOTH);
                     }
                 } catch (
                         IOException e) {
@@ -174,10 +170,10 @@ public class Monster extends Entity {
                 this.img = new Image[2][4];
                 try {
                     for (int i = 0; i < 4; i++) {
-                        img[0][i] = ImageIO.read(new File("res/tiles/big_demon_idle_anim_f" + Integer.toString(i) + ".png")).getScaledInstance(50, -1, Image.SCALE_SMOOTH);
+                        img[0][i] = ImageIO.read(new File("res/tiles/big_demon_idle_anim_f" + i + ".png")).getScaledInstance(50, -1, Image.SCALE_SMOOTH);
                     }
                     for (int i = 0; i < 4; i++) {
-                        img[1][i] = ImageIO.read(new File("res/tiles/big_demon_run_anim_f" + Integer.toString(i) + ".png")).getScaledInstance(50, -1, Image.SCALE_SMOOTH);
+                        img[1][i] = ImageIO.read(new File("res/tiles/big_demon_run_anim_f" + i + ".png")).getScaledInstance(50, -1, Image.SCALE_SMOOTH);
                     }
                 } catch (
                         IOException e) {
@@ -198,7 +194,7 @@ public class Monster extends Entity {
     private void updateAnimationState(int time, int idle, int move, int hit) {
         if (isHitting) {
             this.animation_state += (float) time / 100;
-            if (this.animation_state >= hit) {
+            if (this.animation_state > hit) {
                 this.setHitting(false);
             }
         } else if (isMoving) {

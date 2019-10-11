@@ -18,7 +18,7 @@ public class RandomMap extends Map {
         generateMap();
 
         // spawn player
-        this.player = new Fighter(this, (this.VIRTUAL_WIDTH / 2) * Main.TILE_SIZE, (this.VIRTUAL_HEIGHT / 2) * Main.TILE_SIZE);
+        this.player = new Mage(this, (this.VIRTUAL_WIDTH / 2) * Main.TILE_SIZE, (this.VIRTUAL_HEIGHT / 2) * Main.TILE_SIZE);
         // spawn monster at player's position
         this.monster = new Monster((this.VIRTUAL_WIDTH / 2) * Main.TILE_SIZE, (this.VIRTUAL_HEIGHT / 2) * Main.TILE_SIZE, 50, 15, 10, 25, 5);
 

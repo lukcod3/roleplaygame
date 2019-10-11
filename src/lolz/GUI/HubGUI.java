@@ -51,6 +51,9 @@ public class HubGUI extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 // check if player is in top right corner
+                if (!map.player.getHitting()) {
+                    map.player.setHitting(true);
+                }
                 if (map.player.getX() >= 400 && map.player.getY() <= 150) {
                     main.startBattle();
                 }

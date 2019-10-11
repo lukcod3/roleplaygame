@@ -13,7 +13,7 @@ public class Mage extends Player {
         this.img = new Image[3][];
         this.img[0] = new Image[4];
         this.img[1] = new Image[6];
-        this.img[2] = new Image[6];
+        this.img[2] = new Image[5];
         this.height = 50;
         try {
             for (int i = 0; i < 4; i++) {
@@ -22,7 +22,7 @@ public class Mage extends Player {
             for (int i = 0; i < 6; i++) {
                 img[1][i] = ImageIO.read(new File("res/monster/Necromancer/Individual Sprites/necromancer-move-0" + i + ".png")).getScaledInstance(-1, this.height, Image.SCALE_SMOOTH);
             }
-            for (int i = 0; i < 6; i++) {
+            for (int i = 0; i < 5; i++) {
                 img[2][i] = ImageIO.read(new File("res/monster/Necromancer/Individual Sprites/necromancer-attack-0" + i + ".png")).getScaledInstance(-1, this.height, Image.SCALE_SMOOTH);
             }
         } catch (Exception e) {
