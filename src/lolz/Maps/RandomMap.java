@@ -26,7 +26,7 @@ public class RandomMap extends Map {
         portalState = 0;
 
         // spawn player
-        this.player = new Mage(this, (this.VIRTUAL_WIDTH / 2) * Main.TILE_SIZE, (this.VIRTUAL_HEIGHT / 2) * Main.TILE_SIZE);
+        this.player = new Fighter(this, (this.VIRTUAL_WIDTH / 2) * Main.TILE_SIZE, (this.VIRTUAL_HEIGHT / 2) * Main.TILE_SIZE);
         // spawn monster at player's position
         Monster monster = new Monster((this.VIRTUAL_WIDTH / 2) * Main.TILE_SIZE, (this.VIRTUAL_HEIGHT / 2) * Main.TILE_SIZE, 50, 15, 10, 25, 5);
 
@@ -70,6 +70,9 @@ public class RandomMap extends Map {
         double WALKER_DELETION_POSS = 0.05;
         double WALKER_SPAWNING_POSS = 0.05;
         double WALKER_CHANGE_DIR_POSS = 0.2;
+        double ROOM_POSS = 0.01;
+        double ROOM_MIN = 5;
+        double ROOM_MAX = 10;
 
         // initialize walkers
         ArrayList<Walker> walkers = new ArrayList<>();
@@ -92,6 +95,19 @@ public class RandomMap extends Map {
 
                 // move walker
                 w.move();
+
+                // generate room
+                if (Math.random() < ROOM_POSS) {
+                    int x = (int) (Math.random() * (ROOM_MAX - ROOM_MIN) + ROOM_MIN);
+                    int y = (int) (Math.random() * (ROOM_MAX - ROOM_MIN) + ROOM_MIN);
+                    for (int x0 = w.x - x / 2; x0 < w.x - x / 2 + x; x0++) {
+                        for (int y0 = w.y - y / 2; y0 < w.y - y / 2 + y; y0++) {
+                            if (0 <= x0 && x0 < this.VIRTUAL_WIDTH && 0 <= y0 && y0 < this.VIRTUAL_HEIGHT) {
+                                this.tiles[y0][x0].add(StaticTile.FLOOR_1);
+                            }
+                        }
+                    }
+                }
 
                 // spawn new walkers
                 if (Math.random() < WALKER_SPAWNING_POSS && walkers.size() < NUMBER_OF_MAX_WALKERS) {

@@ -22,6 +22,7 @@ public abstract class Entity {
         this.setDamage(damage);
         this.setArmor(armor);
         this.speed = speed;
+        this.animation_state = Math.random() * 10;
     }
 
     public abstract void paint(Graphics g);
