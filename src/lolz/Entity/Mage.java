@@ -61,4 +61,32 @@ public class Mage extends Player {
         }
 
     }
+
+    // check if any given entity is "touching" a given projectile  or rather if the projectile is touching it
+    public boolean overlap(Entity entity, Projectile projectile) {
+        for (int i : new int[]{0, entity.getWidth()}) { //checking for the left and right border of the entity's image
+            for (int j : new int[]{0, entity.getHeight()}) { //checking for the top and bottom border of the entity's image
+                if (projectile.getTurnNumber() == Projectile.TurnNumber.EAST || projectile.getTurnNumber() == Projectile.TurnNumber.NORTHEAST || projectile.getTurnNumber() == Projectile.TurnNumber.SOUTHEAST) {
+                    if ((projectile.getX() + projectile.getIx() <= entity.getX() + i) && (entity.getX() + i <= projectile.getX() + projectile.getIx() * 2) && (projectile.getY() <= entity.getY() + j) && (entity.getY() + j <= projectile.getY() + projectile.getIy() * 2)) { //if any of the entity's boundaries can be found between any of the hero's boundaries, they touch
+                        return true;
+                    }
+                } else if (projectile.getTurnNumber() == Projectile.TurnNumber.NORTH) {
+                    if ((projectile.getX() <= entity.getX() + i) && (entity.getX() + i <= projectile.getX() + projectile.getIx() * 2) && (projectile.getY() <= entity.getY() + j) && (entity.getY() + j <= projectile.getY() + projectile.getIy())) { //if any of the entity's boundaries can be found between any of the hero's boundaries, they touch
+                        return true;
+                    }
+                } else if (projectile.getTurnNumber() == Projectile.TurnNumber.SOUTH) {
+                    if ((projectile.getX() <= entity.getX() + i) && (entity.getX() + i <= projectile.getX() + projectile.getIx() * 2) && (projectile.getY() + projectile.getIy() <= entity.getY() + j) && (entity.getY() + j <= projectile.getY() + projectile.getIy() * 2)) { //if any of the entity's boundaries can be found between any of the hero's boundaries, they touch
+                        return true;
+                    }
+                } else {
+                    if ((projectile.getX() <= entity.getX() + i) && (entity.getX() + i <= projectile.getX() + projectile.getIx()) && (projectile.getY() <= entity.getY() + j) && (entity.getY() + j <= projectile.getY() + projectile.getIy() * 2)) { //if any of the entity's boundaries can be found between any of the hero's boundaries, they touch
+                        //System.out.println("Player X: " + this.getX() + " | Y: " + this.getY() + " || Monster X: " + entity.getX() + " | Y: " + entity.getY());
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
 }

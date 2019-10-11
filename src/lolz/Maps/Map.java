@@ -3,6 +3,7 @@ package lolz.Maps;
 import lolz.Entity.Entity;
 import lolz.Entity.Monster;
 import lolz.Entity.Player;
+import lolz.Entity.Projectile;
 import lolz.GUI.Tile;
 import lolz.GUI.Tile.StaticTile;
 import lolz.Main;
@@ -18,6 +19,7 @@ public abstract class Map {
     public int VIRTUAL_WIDTH, VIRTUAL_HEIGHT;
     public int AREA, VIRTUAL_AREA;
     ArrayList<Entity> entities;
+    ArrayList<Projectile> projectiles;
     public int monsterCount;
     private double monsterPercentage, ghoulPercentage, impPercentage, undeadWarriorPercentage, executionerPercentage, fireGolemPercentage;
     public int[] removeEntities;
@@ -35,6 +37,7 @@ public abstract class Map {
         this.AREA = this.WIDTH * this.HEIGHT;
         this.VIRTUAL_AREA = this.VIRTUAL_WIDTH + this.VIRTUAL_HEIGHT;
         this.entities = new ArrayList<>();
+        this.projectiles = new ArrayList<>();
         this.monsterPercentage = 0.25;
         // Die Dezimalzahlen, die bei jeder Initialisierung angegeben werden, muessen insgesamt 1 ergeben
         this.ghoulPercentage = 0.1;
@@ -87,6 +90,10 @@ public abstract class Map {
                 }
             }
             y++;
+        }
+
+        for (Projectile p : this.projectiles) {
+            p.paint(g);
         }
 
         // translate back

@@ -68,7 +68,7 @@ public abstract class Entity {
         return y;
     }
 
-    int getWidth() {
+    public int getWidth() {
         return width;
     }
 

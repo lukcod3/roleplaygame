@@ -12,13 +12,13 @@ public class Projectile {
     private double x, y;
     private double ix, iy, animation_state;
     private Image img[];
-    private turnNumber turnNumber;
+    private TurnNumber turnNumber;
     private AffineTransform at;
     private Graphics2D g2d;
 
-    private enum turnNumber {NORTH, NORTHEAST, EAST, SOUTHEAST, SOUTH, SOUTHWEST, WEST, NORTHWEST}
+    public enum TurnNumber {NORTH, NORTHEAST, EAST, SOUTHEAST, SOUTH, SOUTHWEST, WEST, NORTHWEST}
 
-    public Projectile(double x, double y, turnNumber turnNumber) {
+    public Projectile(double x, double y, TurnNumber turnNumber) {
 
         setX(x);
         setY(y);
@@ -27,10 +27,10 @@ public class Projectile {
 
         this.img = new Image[3];
 
-        if (turnNumber == turnNumber.EAST || turnNumber == turnNumber.NORTHEAST || turnNumber == turnNumber.SOUTHEAST) {
+        if (getTurnNumber() == TurnNumber.EAST || getTurnNumber() == TurnNumber.NORTHEAST || getTurnNumber() == TurnNumber.SOUTHEAST) {
             try {
                 for (int i = 0; i < 3; i++) {
-                    img[i] = ImageIO.read(new File("res/monster/Necromancer/projectile/necromancer-projectile-projectile-0" + i + "-inverted.png")).getScaledInstance(-1, 50, Image.SCALE_SMOOTH);
+                    img[i] = ImageIO.read(new File("res/monster/Necromancer/projectile/necromancer-projectile-projectile-0" + i + "-inverted.png")).getScaledInstance(-1, 25, Image.SCALE_SMOOTH);
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -38,15 +38,21 @@ public class Projectile {
         } else {
             try {
                 for (int i = 0; i < 3; i++) {
-                    img[i] = ImageIO.read(new File("res/monster/Necromancer/projectile/necromancer-projectile-projectile-0" + i + ".png")).getScaledInstance(-1, 50, Image.SCALE_SMOOTH);
+                    img[i] = ImageIO.read(new File("res/monster/Necromancer/projectile/necromancer-projectile-projectile-0" + i + ".png")).getScaledInstance(-1, 25, Image.SCALE_SMOOTH);
                 }
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
 
-        setIx(img[0].getWidth(null) / 2);
-        setIy(img[0].getHeight(null) / 2);
+        if (getTurnNumber() == TurnNumber.NORTH || getTurnNumber() == TurnNumber.SOUTH) {
+            setIx(img[0].getHeight(null) / 2);
+            setIy(img[0].getWidth(null) / 2);
+        } else {
+            setIx(img[0].getWidth(null) / 2);
+            setIy(img[0].getHeight(null) / 2);
+        }
+
     }
 
     // Getter & Setter
@@ -66,11 +72,11 @@ public class Projectile {
         this.y = y;
     }
 
-    public turnNumber getTurnNumber() {
+    public TurnNumber getTurnNumber() {
         return this.turnNumber;
     }
 
-    public void setTurnNumber(turnNumber turnNumber) {
+    public void setTurnNumber(TurnNumber turnNumber) {
         this.turnNumber = turnNumber;
     }
 

@@ -100,16 +100,33 @@ public class RandomMap extends Map {
     @Override
     public void update(int time) {
         this.player.update(time);
-        // let the player attack monsters he overlaps with
-        for (Entity entity : this.entities) {
-            if (!(entity instanceof Player) && this.player.overlap(entity)) {
-                // if the attacked monster is dead and their index in the entities ArrayList to the removeEntities array and increase the index that tells you how many monsters have to be removed (removeIndex) by one
-                if (this.player.attack(entity)) {
-                    this.removeEntities[this.removeIndex] = this.entities.indexOf(entity);
-                    this.removeIndex += 1;
+
+        // let the mage shoot his projectile
+        if (this.player instanceof Mage) {
+            if (this.player.getHitting() && (int) (this.player.animation_state % 5) == 2) {
+                if (!this.player.isMoving) {
+                    if (this.player.turnedRight) {
+                        projectiles.add(new Projectile(this.player.getX() + this.player.getWidth(), this.player.getY() + this.player.getHeight() / 2, Projectile.TurnNumber.EAST));
+                    } else {
+                        projectiles.add(new Projectile(this.player.getX(), this.player.getY() + this.player.getHeight() / 2, Projectile.TurnNumber.WEST));
+                    }
+                } else if (1 == 1 /* check which directions[] are active and decide which TurnNumber to use accordingly*/) {
+
+                }
+            }
+        } else {
+            // let the fighter attack monsters he overlaps with
+            for (Entity entity : this.entities) {
+                if (!(entity instanceof Player) && this.player.overlap(entity)) {
+                    // if the attacked monster is dead and their index in the entities ArrayList to the removeEntities array and increase the index that tells you how many monsters have to be removed (removeIndex) by one
+                    if (this.player.attack(entity)) {
+                        this.removeEntities[this.removeIndex] = this.entities.indexOf(entity);
+                        this.removeIndex += 1;
+                    }
                 }
             }
         }
+
         // remove the monsters that are dead (health == 0) from the entities ArrayList and their index from the removeEntities array and decrease the index telling you how many monsters have to be deleted as well as the monsterCount by one
         if (this.removeIndex != 0) {
             int index = this.removeIndex - 1;
