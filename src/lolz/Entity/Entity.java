@@ -30,28 +30,30 @@ public abstract class Entity {
     public void paint(Graphics g, double k) {
         // paint player
 
+        // TODO: fix modulo quick fixes
+
         g.setColor(Color.BLACK);
         if (!turnedRight) {
             if (isHitting) { // is able to hit while running and while standing still -> always checks if hit is true regardless of moving
-                int offset = (int) ((k * img[2][(int) this.animation_state].getWidth(null) - this.width) / 2);
-                g.drawImage(img[2][(int) this.animation_state], (int) this.x - offset, (int) this.y, null); // set player's animation to hit animation
+                int offset = (int) ((k * img[2][(int) this.animation_state % 5].getWidth(null) - this.width) / 2);
+                g.drawImage(img[2][(int) this.animation_state % 5], (int) this.x - offset, (int) this.y, null); // set player's animation to hit animation
             } else if (isMoving) {
-                int offset = (int) ((k * img[1][(int) this.animation_state].getWidth(null) - this.width) / 2);
-                g.drawImage(img[1][(int) this.animation_state], (int) this.x - offset, (int) this.y, null);
+                int offset = (int) ((k * img[1][(int) this.animation_state % 6].getWidth(null) - this.width) / 2);
+                g.drawImage(img[1][(int) this.animation_state % 6], (int) this.x - offset, (int) this.y, null);
             } else {
-                int offset = (int) ((k * img[0][(int) this.animation_state].getWidth(null) - this.width) / 2);
-                g.drawImage(img[0][(int) this.animation_state], (int) this.x - offset, (int) this.y, null);
+                int offset = (int) ((k * img[0][(int) this.animation_state % 4].getWidth(null) - this.width) / 2);
+                g.drawImage(img[0][(int) this.animation_state % 4], (int) this.x - offset, (int) this.y, null);
             }
         } else {
             if (isHitting) { // is able to hit while running and while standing still -> always checks if hit is true regardless of moving
                 //int offset = (int) ((1*img[2][(int) this.animation_state].getWidth(null) - this.width) / 2);
-                Main.drawReflectImage(img[2][(int) this.animation_state], g, (int) this.x, (int) this.y);
+                Main.drawReflectImage(img[2][(int) this.animation_state % 5], g, (int) this.x, (int) this.y);
             } else if (isMoving) {
                 //int offset = (int) ((1*img[1][(int) this.animation_state].getWidth(null) - this.width) / 2);
-                Main.drawReflectImage(img[1][(int) this.animation_state], g, (int) this.x, (int) this.y);
+                Main.drawReflectImage(img[1][(int) this.animation_state % 6], g, (int) this.x, (int) this.y);
             } else {
                 //int offset = (int) ((1*img[0][(int) this.animation_state].getWidth(null) - this.width) / 2);
-                Main.drawReflectImage(img[0][(int) this.animation_state], g, (int) this.x, (int) this.y);
+                Main.drawReflectImage(img[0][(int) this.animation_state % 4], g, (int) this.x, (int) this.y);
             }
         }
     }

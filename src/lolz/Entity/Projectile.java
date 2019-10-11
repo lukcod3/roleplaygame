@@ -51,6 +51,9 @@ public class Projectile {
             setIy(img[0].getHeight(null) / 2.0);
         }
 
+        // update before being drawn
+        this.update(1);
+
     }
 
     // Getter & Setter

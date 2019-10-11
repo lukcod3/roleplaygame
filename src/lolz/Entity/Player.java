@@ -3,10 +3,6 @@ package lolz.Entity;
 import lolz.GUI.Item;
 import lolz.Maps.Map;
 
-import javax.imageio.ImageIO;
-import java.awt.*;
-import java.io.File;
-
 public abstract class Player extends Entity {
     public Map map;
     public volatile boolean[] directions; // 0 is up, 1 is left, 2 is down, 3 is right
@@ -96,6 +92,7 @@ public abstract class Player extends Entity {
             isMoving = true;
             animation_state = 0;
         }
+
         if (this.directions[3]) {
             turnedRight = true;
         } else if (this.directions[1]) {
