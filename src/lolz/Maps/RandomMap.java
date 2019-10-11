@@ -5,9 +5,16 @@ import lolz.GUI.Tile.StaticTile;
 import lolz.GUI.Walker;
 import lolz.Main;
 
+import javax.imageio.ImageIO;
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.util.ArrayList;
 
 public class RandomMap extends Map {
+
+    BufferedImage[] portal;
+    public double portalState;
 
     public RandomMap() {
         // setup map
@@ -15,6 +22,8 @@ public class RandomMap extends Map {
 
         // generate map
         generateMap();
+        portal = new BufferedImage[8];
+        portalState = 0;
 
         // spawn player
         this.player = new Mage(this, (this.VIRTUAL_WIDTH / 2) * Main.TILE_SIZE, (this.VIRTUAL_HEIGHT / 2) * Main.TILE_SIZE);
@@ -31,6 +40,14 @@ public class RandomMap extends Map {
         this.entities.add(this.player);
         this.entities.add(monster);
         this.monsterCount += 1;
+        try {
+            for (int j = 0; j < 8; j++) {
+                portal[j] = ImageIO.read(new File("res/hub/Green Portal Sprite Sheet.png")).getSubimage(j * 64, 64, 64, 64);
+            }
+        } catch (
+                Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private int numberOfTiles() {
@@ -94,10 +111,13 @@ public class RandomMap extends Map {
 
         // generate walls
         this.makeWalls();
+
     }
 
     @Override
     public void update(int time) {
+        portalState += 0.1;
+
         this.player.update(time);
 
         // let the mage shoot his projectile
@@ -141,6 +161,15 @@ public class RandomMap extends Map {
             if (entity instanceof Monster) {
                 entity.update(time);
             }
+        }
+    }
+    public void paint(Graphics g){
+        super.paint(g);
+        if(portalState < 8){
+            player.allowedToMove = false;
+            g.drawImage(portal[((int)portalState)].getScaledInstance(120, -1, Image.SCALE_DEFAULT), 410, 220, null);
+        }else{
+            player.allowedToMove = true;
         }
     }
 }

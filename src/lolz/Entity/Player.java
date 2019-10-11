@@ -3,6 +3,10 @@ package lolz.Entity;
 import lolz.GUI.Item;
 import lolz.Maps.Map;
 
+import javax.imageio.ImageIO;
+import java.awt.*;
+import java.io.File;
+
 public abstract class Player extends Entity {
     public Map map;
     public volatile boolean[] directions; // 0 is up, 1 is left, 2 is down, 3 is right
@@ -10,6 +14,8 @@ public abstract class Player extends Entity {
     public Item[] equipment; // 1 is hat, 2 is t-shirt, 3 is sword, 4 is shoes, 5 is necklace, 6 is ring, 7 is belt, 8-11 is depot
     private boolean mage;
 
+    public boolean turnedRight;
+    public boolean allowedToMove;
     // Ingame stats
     public int level, exp, gold;
 
@@ -31,6 +37,7 @@ public abstract class Player extends Entity {
         // this.x -= this.width;
         this.y -= this.height;
 
+        allowedToMove = true;
     }
 
     // set Getters and Setters for attribute hit
