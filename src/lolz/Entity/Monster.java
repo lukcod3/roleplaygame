@@ -20,6 +20,7 @@ public class Monster extends Entity {
         // this.width = img[0][0].getWidth(null);
         this.width = Main.VIRTUAL_ENTITY_WIDTH;
         this.height = img[0][0].getHeight(null);
+
         this.y -= this.getHeight();
     }
 

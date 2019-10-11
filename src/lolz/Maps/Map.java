@@ -14,17 +14,17 @@ import java.util.Comparator;
 
 public abstract class Map {
     public Player player;
-    public int WIDTH, HEIGHT;
+    int WIDTH, HEIGHT;
     public int VIRTUAL_WIDTH, VIRTUAL_HEIGHT;
-    public int AREA, VIRTUAL_AREA;
+    int AREA, VIRTUAL_AREA;
     ArrayList<Entity> entities;
     ArrayList<Projectile> projectiles;
     public int monsterCount;
     private double monsterPercentage, ghoulPercentage, impPercentage, undeadWarriorPercentage, executionerPercentage, fireGolemPercentage;
-    public int[] removeEntities;
-    public int removeIndex;
+    int[] removeEntities;
+    int removeIndex;
     private final int minMaxHealth = 10, maxMaxHealth = 30, minDamage = 5, maxDamage = 10, minArmor = 1, maxArmor = 5, minExp = 10, maxExp = 20;
-    public double expFactor;
+    double expFactor;
 
     public Tile[][] tiles;
 
