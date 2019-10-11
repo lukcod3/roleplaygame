@@ -35,10 +35,6 @@ public class HubGUI extends JPanel {
 
 
         }
-        //add the key binding for the players attack
-        this.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_J, 0, false), KeyEvent.VK_J + "Pressed");
-        this.getActionMap().put(KeyEvent.VK_J + "Pressed", generateAttackKeyAction());
-
 
     }
 
@@ -48,18 +44,6 @@ public class HubGUI extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 // change the players directions
                 map.player.directions[dir] = pressed;
-            }
-        };
-    }
-
-    private Action generateAttackKeyAction() {
-        return new AbstractAction() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                // check if player is in top right corner
-                if (!map.player.getHitting()) {
-                    map.player.setHitting(true);
-                }
             }
         };
     }
