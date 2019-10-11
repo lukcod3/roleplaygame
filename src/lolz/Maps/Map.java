@@ -35,7 +35,7 @@ public abstract class Map {
         this.AREA = this.WIDTH * this.HEIGHT;
         this.VIRTUAL_AREA = this.VIRTUAL_WIDTH + this.VIRTUAL_HEIGHT;
         this.entities = new ArrayList<>();
-        this.monsterPercentage = 1;
+        this.monsterPercentage = 0.25;
         // Die Dezimalzahlen, die bei jeder Initialisierung angegeben werden, muessen insgesamt 1 ergeben
         this.ghoulPercentage = 0.1;
         this.impPercentage = this.ghoulPercentage + 0.1;
