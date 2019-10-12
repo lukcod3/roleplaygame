@@ -135,40 +135,83 @@ public class RandomMap extends Map {
 
         // let the mage shoot his projectile
         if (this.player instanceof Mage) {
-            if (this.player.getHitting() && (int) (this.player.animation_state % 5) == 2) {
+
+            if (((Mage) this.player).hasDamaged && (int) (this.player.animation_state % 5) != 2) {
+                ((Mage) this.player).hasDamaged = false;
+            }
+
+            if (this.player.getHitting() && (int) (this.player.animation_state % 5) == 2 && !((Mage) this.player).hasDamaged) {
+                ((Mage) this.player).hasDamaged = true;
                 if (!this.player.isMoving) {
                     if (this.player.turnedRight) {
-                        projectiles.add(new Projectile(this.player.getX() + this.player.getWidth(), this.player.getY() + this.player.getHeight() / 2.0, Projectile.TurnNumber.EAST));
+                        this.projectiles.add(new Projectile(this.player.getX() + this.player.getWidth() * 2, this.player.getY() + this.player.getHeight() / 2.0, Projectile.TurnNumber.EAST));
                     } else {
-                        projectiles.add(new Projectile(this.player.getX(), this.player.getY() + this.player.getHeight() / 2.0, Projectile.TurnNumber.WEST));
+                        this.projectiles.add(new Projectile(this.player.getX() - this.player.getWidth(), this.player.getY() + this.player.getHeight() / 2.0, Projectile.TurnNumber.WEST));
                     }
                 } else if (1 == 1 /* check which directions[] are active and decide which TurnNumber to use accordingly*/) {
 
                 }
             }
+
+            // update all projectiles
+            int overlapCount = 0;
+            for (Projectile p : this.projectiles) {
+                if (get_tile_at((int) p.getX(), (int) p.getY()).isGround()) {
+                    for (Entity entity : this.entities) {
+                        if (entity instanceof Monster && p.overlap(entity)) {
+                            overlapCount += 1;
+                            entity.setHealth(entity.getHealth() - this.player.getDamage());
+                            this.removeProjectiles[this.removeProjectileIndex] = this.projectiles.indexOf(p);
+                            this.removeProjectileIndex += 1;
+                            if (entity.getHealth() == 0) {
+                                this.removeEntities[this.removeEntityIndex] = this.entities.indexOf(entity);
+                                this.removeEntityIndex += 1;
+                            }
+                        }
+                    }
+                    if (overlapCount == 0) {
+                        p.update(time);
+                    }
+                } else {
+                    this.removeProjectiles[this.removeProjectileIndex] = this.projectiles.indexOf(p);
+                    this.removeProjectileIndex += 1;
+                }
+            }
+
+            // remove projectiles
+            if (this.removeProjectileIndex != 0) {
+                int index = this.removeProjectileIndex - 1;
+                for (int i = index; i >= 0; i--) {
+                    this.projectiles.remove(this.removeProjectiles[i]);
+                    this.removeProjectiles[i] = 0;
+                    this.removeProjectileIndex -= 1;
+                }
+            }
+
         } else {
             // let the fighter attack monsters he overlaps with
             for (Entity entity : this.entities) {
-                if (!(entity instanceof Player) && this.player.overlap(entity)) {
+                if (entity instanceof Monster && this.player.overlap(entity)) {
                     // if the attacked monster is dead and their index in the entities ArrayList to the removeEntities array and increase the index that tells you how many monsters have to be removed (removeIndex) by one
-                    if (this.player.attack(entity)) {
-                        this.removeEntities[this.removeIndex] = this.entities.indexOf(entity);
-                        this.removeIndex += 1;
+                    if (((Fighter) this.player).attack(entity)) {
+                        this.removeEntities[this.removeEntityIndex] = this.entities.indexOf(entity);
+                        this.removeEntityIndex += 1;
                     }
                 }
             }
         }
 
         // remove the monsters that are dead (health == 0) from the entities ArrayList and their index from the removeEntities array and decrease the index telling you how many monsters have to be deleted as well as the monsterCount by one
-        if (this.removeIndex != 0) {
-            int index = this.removeIndex - 1;
+        if (this.removeEntityIndex != 0) {
+            int index = this.removeEntityIndex - 1;
             for (int i = index; i >= 0; i--) {
                 this.entities.remove(this.removeEntities[i]);
                 this.removeEntities[i] = 0;
-                this.removeIndex -= 1;
+                this.removeEntityIndex -= 1;
                 this.monsterCount -= 1;
             }
         }
+
         // update all monsters
         for (Entity entity : this.entities) {
             if (entity instanceof Monster) {

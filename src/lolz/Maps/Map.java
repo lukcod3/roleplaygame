@@ -21,8 +21,8 @@ public abstract class Map {
     ArrayList<Projectile> projectiles;
     public int monsterCount;
     private double monsterPercentage, ghoulPercentage, impPercentage, undeadWarriorPercentage, executionerPercentage, fireGolemPercentage;
-    int[] removeEntities;
-    int removeIndex;
+    int[] removeEntities, removeProjectiles;
+    int removeEntityIndex, removeProjectileIndex;
     private final int minMaxHealth = 10, maxMaxHealth = 30, minDamage = 5, maxDamage = 10, minArmor = 1, maxArmor = 5, minExp = 10, maxExp = 20;
     double expFactor;
     ArrayList<Monster> followingMonsters;
@@ -47,6 +47,7 @@ public abstract class Map {
         this.fireGolemPercentage = this.executionerPercentage + 0.5;
         // Beispiel: 0.25 + 0.25 + 0.25 + 0.125 + 0.125
         this.removeEntities = new int[9];
+        this.removeProjectiles = new int[9];
         this.followingMonsters = new ArrayList<>();
 
         // set tiles to empty by default
@@ -93,8 +94,10 @@ public abstract class Map {
             y++;
         }
 
-        for (Projectile p : this.projectiles) {
-            p.paint(g);
+        if (this.projectiles.size() > 0) {
+            for (Projectile p : this.projectiles) {
+                p.paint(g);
+            }
         }
 
         // translate back

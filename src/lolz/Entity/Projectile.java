@@ -22,13 +22,14 @@ public class Projectile {
         setY(y);
         setTurnNumber(turnNumber);
         this.at = AffineTransform.getTranslateInstance(getX(), getY());
+        this.at.translate(getIx(), getIy());
 
         this.img = new Image[3];
 
         if (getTurnNumber() == TurnNumber.EAST || getTurnNumber() == TurnNumber.NORTHEAST || getTurnNumber() == TurnNumber.SOUTHEAST) {
             try {
                 for (int i = 0; i < 3; i++) {
-                    img[i] = ImageIO.read(new File("res/monster/Necromancer/projectile/necromancer-projectile-projectile-0" + i + "-inverted.png")).getScaledInstance(-1, 25, Image.SCALE_SMOOTH);
+                    img[i] = ImageIO.read(new File("res/monster/Necromancer/projectile/necromancer-projectile-projectile-0" + i + "-inverted.png")).getScaledInstance(-1, 15, Image.SCALE_SMOOTH);
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -36,7 +37,7 @@ public class Projectile {
         } else {
             try {
                 for (int i = 0; i < 3; i++) {
-                    img[i] = ImageIO.read(new File("res/monster/Necromancer/projectile/necromancer-projectile-projectile-0" + i + ".png")).getScaledInstance(-1, 25, Image.SCALE_SMOOTH);
+                    img[i] = ImageIO.read(new File("res/monster/Necromancer/projectile/necromancer-projectile-projectile-0" + i + ".png")).getScaledInstance(-1, 15, Image.SCALE_SMOOTH);
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -50,6 +51,9 @@ public class Projectile {
             setIx(img[0].getWidth(null) / 2.0);
             setIy(img[0].getHeight(null) / 2.0);
         }
+
+        setX(getX() + getIx());
+        setY(getY() + getIy());
 
         // update before being drawn
         this.update(1);
@@ -149,8 +153,7 @@ public class Projectile {
                 setX(getX() - movement);
                 break;
         }
-
-        setX(getX() + 0.25 * time);
+        this.at = AffineTransform.getTranslateInstance(getX(), getY());
     }
 
     private void drawRotatedImage(Graphics g, Image img) {
@@ -158,7 +161,6 @@ public class Projectile {
         switch (getTurnNumber()) {
             case NORTH:
                 this.at.rotate(Math.toRadians(90));
-                this.at.translate(-getIx(), -getIy());
                 this.g2d.drawImage(img, this.at, null);
                 break;
 
@@ -166,7 +168,6 @@ public class Projectile {
 
             case SOUTHWEST:
                 this.at.rotate(Math.toRadians(-45));
-                this.at.translate(-getIx(), -getIy());
                 this.g2d.drawImage(img, this.at, null);
                 break;
 
@@ -174,7 +175,6 @@ public class Projectile {
 
             case WEST:
                 this.at.rotate(Math.toRadians(0));
-                this.at.translate(-getIx(), -getIy());
                 this.g2d.drawImage(img, this.at, null);
                 break;
 
@@ -182,16 +182,41 @@ public class Projectile {
 
             case NORTHWEST:
                 this.at.rotate(Math.toRadians(45));
-                this.at.translate(-getIx(), -getIy());
                 this.g2d.drawImage(img, this.at, null);
                 break;
 
             case SOUTH:
                 this.at.rotate(Math.toRadians(-90));
-                this.at.translate(-getIx(), -getIy());
                 this.g2d.drawImage(img, this.at, null);
                 break;
         }
+    }
+
+    // check if any given entity is "touching" the projectile or rather if the projectile is touching it
+    public boolean overlap(Entity entity) {
+        for (int i : new int[]{0, entity.getWidth()}) { //checking for the left and right border of the entity's image
+            for (int j : new int[]{0, entity.getHeight()}) { //checking for the top and bottom border of the entity's image
+                if (this.getTurnNumber() == Projectile.TurnNumber.EAST || this.getTurnNumber() == Projectile.TurnNumber.NORTHEAST || this.getTurnNumber() == Projectile.TurnNumber.SOUTHEAST) {
+                    if ((this.getX() <= entity.getX() + i) && (entity.getX() + i <= this.getX() + this.getIx()) && (this.getY() - this.getIy() <= entity.getY() + j) && (entity.getY() + j <= this.getY() + this.getIy())) { //if any of the entity's boundaries can be found between any of the hero's boundaries, they touch
+                        return true;
+                    }
+                } else if (this.getTurnNumber() == Projectile.TurnNumber.NORTH) {
+                    if ((this.getX() - this.getIx() <= entity.getX() + i) && (entity.getX() + i <= this.getX() + this.getIx()) && (this.getY() - this.getIy() <= entity.getY() + j) && (entity.getY() + j <= this.getY())) { //if any of the entity's boundaries can be found between any of the hero's boundaries, they touch
+                        return true;
+                    }
+                } else if (this.getTurnNumber() == Projectile.TurnNumber.SOUTH) {
+                    if ((this.getX() - this.getIx() <= entity.getX() + i) && (entity.getX() + i <= this.getX() + this.getIx()) && (this.getY() <= entity.getY() + j) && (entity.getY() + j <= this.getY() + this.getIy())) { //if any of the entity's boundaries can be found between any of the hero's boundaries, they touch
+                        return true;
+                    }
+                } else {
+                    if ((this.getX() - this.getIx() <= entity.getX() + i) && (entity.getX() + i <= this.getX()) && (this.getY() - this.getIy() <= entity.getY() + j) && (entity.getY() + j <= this.getY() + this.getIy())) { //if any of the entity's boundaries can be found between any of the hero's boundaries, they touch
+                        //System.out.println("Player X: " + this.getX() + " | Y: " + this.getY() + " || Monster X: " + entity.getX() + " | Y: " + entity.getY());
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
     }
 
 }
