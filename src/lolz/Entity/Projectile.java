@@ -85,7 +85,7 @@ public class Projectile {
         this.turnNumber = turnNumber;
     }
 
-    double getIx() {
+    public double getIx() {
         return this.ix;
     }
 
@@ -93,7 +93,7 @@ public class Projectile {
         this.ix = ix;
     }
 
-    double getIy() {
+    public double getIy() {
         return this.iy;
     }
 

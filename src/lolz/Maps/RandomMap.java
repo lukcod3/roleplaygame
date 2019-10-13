@@ -155,28 +155,35 @@ public class RandomMap extends Map {
 
             // update all projectiles
             int overlapCount = 0;
+            int groundCount = 0;
             for (Projectile p : this.projectiles) {
-                if (get_tile_at((int) p.getX(), (int) p.getY()).isGround()) {
-                    for (Entity entity : this.entities) {
-                        if (entity instanceof Monster && p.overlap(entity)) {
-                            overlapCount += 1;
-                            entity.setHealth(entity.getHealth() - this.player.getDamage());
-                            this.removeProjectiles[this.removeProjectileIndex] = this.projectiles.indexOf(p);
-                            this.removeProjectileIndex += 1;
-                            if (entity.getHealth() == 0) {
-                                this.removeEntities[this.removeEntityIndex] = this.entities.indexOf(entity);
-                                this.removeEntityIndex += 1;
+                for (int i : new int[]{0, (int) p.getIx() * 2}) {
+                    if (get_tile_at((int) p.getX() + i, (int) (p.getY() + p.getIy())).isGround()) {
+                        for (Entity entity : this.entities) {
+                            if (entity instanceof Monster && p.overlap(entity)) {
+                                overlapCount += 1;
+                                entity.setHealth(entity.getHealth() - this.player.getDamage());
+                                this.removeProjectiles[this.removeProjectileIndex] = this.projectiles.indexOf(p);
+                                this.removeProjectileIndex += 1;
+                                if (entity.getHealth() == 0) {
+                                    this.removeEntities[this.removeEntityIndex] = this.entities.indexOf(entity);
+                                    this.removeEntityIndex += 1;
+                                }
                             }
                         }
+                        if (overlapCount == 0) {
+                            p.update(time);
+                        }
+                    } else {
+                        groundCount += 1;
                     }
-                    if (overlapCount == 0) {
-                        p.update(time);
-                    }
-                } else {
+                }
+                if (groundCount != 0) {
                     this.removeProjectiles[this.removeProjectileIndex] = this.projectiles.indexOf(p);
                     this.removeProjectileIndex += 1;
                 }
             }
+            System.out.println(this.projectiles);
 
             // remove projectiles
             if (this.removeProjectileIndex != 0) {

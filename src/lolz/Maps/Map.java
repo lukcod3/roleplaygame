@@ -38,7 +38,7 @@ public abstract class Map {
         this.VIRTUAL_AREA = this.VIRTUAL_WIDTH + this.VIRTUAL_HEIGHT;
         this.entities = new ArrayList<>();
         this.projectiles = new ArrayList<>();
-        this.monsterPercentage = 0.25;
+        this.monsterPercentage = 0.01;
         // Die Dezimalzahlen, die bei jeder Initialisierung angegeben werden, muessen insgesamt 1 ergeben
         this.ghoulPercentage = 0.1;
         this.impPercentage = this.ghoulPercentage + 0.1;
@@ -330,7 +330,7 @@ public abstract class Map {
         }
     }
 
-    protected void spawnRandomMonsters(Tile[][] tiles) {
+    void spawnRandomMonsters(Tile[][] tiles) {
         double randInt = 0;
         // check for every tile that is a floor tile whether a random number (double randInt) is lower than a certain percentage (monsterPercentage); if so create a new monster there
         for (int i = 0; i < this.tiles.length; i++) {
