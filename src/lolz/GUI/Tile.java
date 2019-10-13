@@ -42,6 +42,9 @@ public class Tile {
         WALL_CORNER_BOTTOM_LEFT("wall corner bottom left", true, false),
         WALL_CORNER_BOTTOM_RIGHT("wall corner bottom right", true, false),
         WALL_SIDE_FRONT_LEFT("wall side front left", false, true),
+        SEARCHED_FIELD("temporary debugging field", false, true),  // TODO: remove
+        PLAYER_FIELD("temporary debugging field", false, true),  // TODO: remove
+        MONSTER_FIELD("temporary debugging field", false, true),  // TODO: remove
         WALL_SIDE_FRONT_RIGHT("wall side front right", false, true);
 
         public final String name;
@@ -93,6 +96,9 @@ public class Tile {
             tilePics.put(StaticTile.WALL_CORNER_BOTTOM_LEFT, load_image("res/tiles/wall_corner_bottom_left.png"));
             tilePics.put(StaticTile.WALL_CORNER_BOTTOM_RIGHT, load_image("res/tiles/wall_corner_bottom_right.png"));
             tilePics.put(StaticTile.WALL_SIDE_FRONT_LEFT, load_image("res/tiles/wall_side_front_left.png"));
+            tilePics.put(StaticTile.SEARCHED_FIELD, load_image("res/tiles/red.jpg")); // TODO: remove
+            tilePics.put(StaticTile.PLAYER_FIELD, load_image("res/tiles/blue.jpg")); // TODO: remove
+            tilePics.put(StaticTile.MONSTER_FIELD, load_image("res/tiles/yellow.jpg")); // TODO: remove
             tilePics.put(StaticTile.WALL_SIDE_FRONT_RIGHT, load_image("res/tiles/wall_side_front_right.png"));
         } catch (IOException e) {
             e.printStackTrace();
@@ -183,7 +189,8 @@ public class Tile {
     public boolean isGround() {
         return this.contains(StaticTile.FLOOR_1) || this.contains(StaticTile.FLOOR_2) || this.contains(StaticTile.FLOOR_3)
                 || this.contains(StaticTile.FLOOR_4) || this.contains(StaticTile.FLOOR_5) || this.contains(StaticTile.FLOOR_6)
-                || this.contains(StaticTile.FLOOR_7) || this.contains(StaticTile.FLOOR_8);
+                || this.contains(StaticTile.FLOOR_7) || this.contains(StaticTile.FLOOR_8) || this.contains(StaticTile.SEARCHED_FIELD)
+                || this.contains(StaticTile.PLAYER_FIELD) || this.contains(StaticTile.MONSTER_FIELD);
     }
 
     public void validate() {
@@ -192,6 +199,46 @@ public class Tile {
                 this.topTiles.removeAll(Arrays.asList(entry.getKey()));
                 this.topTiles.add(entry.getValue());
             }
+        }
+    }
+
+    // TODO: remove
+    public void isScanned() {
+        if (!(this.contains(StaticTile.PLAYER_FIELD) || this.contains(StaticTile.MONSTER_FIELD))) {
+            for (int i = 0; i < this.baseTiles.size(); i++) {
+                this.baseTiles.remove(0);
+            }
+            this.add(StaticTile.SEARCHED_FIELD);
+        }
+    }
+
+    public void isPlayer() {
+        for (int i = 0; i < this.baseTiles.size(); i++) {
+            this.baseTiles.remove(0);
+        }
+        this.add(StaticTile.PLAYER_FIELD);
+    }
+
+    public void isMonster() {
+        if (!this.contains(StaticTile.PLAYER_FIELD)) {
+            for (int i = 0; i < this.baseTiles.size(); i++) {
+                this.baseTiles.remove(0);
+            }
+            this.add(StaticTile.MONSTER_FIELD);
+        }
+    }
+
+    // TODO: remove
+    public void reconstructBase() {
+        if (this.contains(StaticTile.SEARCHED_FIELD)) {
+            this.remove(StaticTile.SEARCHED_FIELD);
+            this.add(StaticTile.FLOOR_1);
+        } else if (this.contains(StaticTile.PLAYER_FIELD)) {
+            this.remove(StaticTile.PLAYER_FIELD);
+            this.add(StaticTile.FLOOR_1);
+        } else if (this.contains(StaticTile.MONSTER_FIELD)) {
+            this.remove(StaticTile.MONSTER_FIELD);
+            this.add(StaticTile.FLOOR_1);
         }
     }
 

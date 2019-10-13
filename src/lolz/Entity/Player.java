@@ -25,10 +25,6 @@ public abstract class Player extends Entity {
 
         this.width = 45;
 
-        // rearrange y (given x and y values are for the bottom left corner)
-        // this.x -= this.width;
-        this.y -= this.height;
-
         allowedToMove = true;
     }
 
@@ -68,7 +64,14 @@ public abstract class Player extends Entity {
             this.animation_state %= 4;
         }
 
+        int oldX = this.getVirtualX();
+        int oldY = this.getVirtualY();
+
         this.move(time);
+
+        if (oldX != this.getVirtualX() || oldY != this.getVirtualY()) {
+            this.map.paintDebug();
+        }
 
     }
 

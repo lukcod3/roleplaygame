@@ -25,8 +25,8 @@ public abstract class Map {
     int removeIndex;
     private final int minMaxHealth = 10, maxMaxHealth = 30, minDamage = 5, maxDamage = 10, minArmor = 1, maxArmor = 5, minExp = 10, maxExp = 20;
     double expFactor;
-    ArrayList<Monster> followingMonsters;
-
+    public ArrayList<Monster> followingMonsters;
+    public boolean debugging;
     public Tile[][] tiles;
 
     Map(int width, int height) {
@@ -48,6 +48,7 @@ public abstract class Map {
         // Beispiel: 0.25 + 0.25 + 0.25 + 0.125 + 0.125
         this.removeEntities = new int[9];
         this.followingMonsters = new ArrayList<>();
+        this.debugging = false;
 
         // set tiles to empty by default
         this.tiles = new Tile[this.VIRTUAL_HEIGHT][this.VIRTUAL_WIDTH];
@@ -118,12 +119,33 @@ public abstract class Map {
         return this.tiles[y][x];
     }
 
+    int numberOfTiles() {
+        int n = 0;
+        for (int y = 0; y < this.VIRTUAL_HEIGHT; y++) {
+            for (int x = 0; x < this.VIRTUAL_WIDTH; x++) {
+                if (this.tiles[y][x].contains(StaticTile.FLOOR_1)) {
+                    n++;
+                }
+            }
+        }
+        return n;
+    }
+
     private boolean tile_contains(int x, int y, StaticTile ts) {
         Tile t = this.get_tile_at_virtual(x, y);
         if (t == null) {
             return false;
         } else {
             return t.contains(ts);
+        }
+    }
+
+    public boolean tile_is_ground(int x, int y) {
+        Tile t = this.get_tile_at_virtual(x,y);
+        if (t==null) {
+            return false;
+        } else {
+            return t.isGround();
         }
     }
 
@@ -353,6 +375,24 @@ public abstract class Map {
                     }
                 }
             }
+        }
+    }
+
+    public void paintDebug() {
+        if (this.debugging) {
+            for (int y = 0; y < this.VIRTUAL_HEIGHT; y++) {
+                for (int x = 0; x < this.VIRTUAL_WIDTH; x++) {
+                    this.tiles[y][x].reconstructBase();
+                }
+            }
+            this.tiles[this.player.getVirtualY()][this.player.getVirtualX()].isPlayer();
+            for (Monster m : this.followingMonsters) {
+                this.tiles[m.getVirtualY()][m.getVirtualX()].isMonster();
+            }
+        }
+        // update following monster path
+        for (Monster m : this.followingMonsters) {
+            m.makePath();
         }
     }
 
