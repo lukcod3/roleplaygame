@@ -149,11 +149,11 @@ public class RandomMap extends Map {
                         this.projectiles.add(new Projectile(this.player.getX() - this.player.getWidth() * 1.75, this.player.getY() + this.player.getHeight() / 2.0, Projectile.TurnNumber.WEST));
                     }
                 } else if (this.player.directions[0]) {
-                    this.projectiles.add(new Projectile(this.player.getX(), this.player.getY() + this.player.getHeight() / 2.0, Projectile.TurnNumber.NORTH));
+                    this.projectiles.add(new Projectile(this.player.getX() + this.player.getWidth() / 2.0, this.player.getY() - this.player.getHeight() / 1.5, Projectile.TurnNumber.NORTH));
                 } else if (this.player.directions[1]) {
                     this.projectiles.add(new Projectile(this.player.getX() - this.player.getWidth() * 1.75, this.player.getY() + this.player.getHeight() / 2.0, Projectile.TurnNumber.WEST));
                 } else if (this.player.directions[2]) {
-                    this.projectiles.add(new Projectile(this.player.getX() - this.player.getWidth(), this.player.getY() + this.player.getHeight() / 2.0, Projectile.TurnNumber.SOUTH));
+                    this.projectiles.add(new Projectile(this.player.getX() + this.player.getWidth() / 10.0, this.player.getY() + this.player.getHeight() * 1.25, Projectile.TurnNumber.SOUTH));
                 } else if (this.player.directions[3]) {
                     this.projectiles.add(new Projectile(this.player.getX(), this.player.getY() + this.player.getHeight() / 2.0, Projectile.TurnNumber.EAST));
                 }
