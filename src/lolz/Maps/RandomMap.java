@@ -171,18 +171,18 @@ public class RandomMap extends Map {
             boolean overlap = false;
             boolean outOfBounds = false;
             int removedEntityIndex = 0;
-            int removedEntityIndexOld = -1;
+            int removedEntityIndexOld = -1; // this value doesn't have a specific purpose, only needs to be different from any index of this.entities
             for (Projectile p : this.projectiles) {
                 for (int i : new int[]{0, (int) p.getIx() * 2}) {
                     if (get_tile_at((int) p.getX() + i, (int) (p.getY() + p.getIy())).isGround()) {
                         for (Entity entity : this.entities) {
-                            if (entity instanceof Monster && p.overlap(entity)) {
+                            if (entity instanceof Monster && p.overlap(entity)) { // check for every monster if it was hit by a projectile
                                 removedEntityIndex = this.entities.indexOf(entity);
                                 if (removedEntityIndex != removedEntityIndexOld) { // make sure that it doesn't try to attack / remove the same monster twice because of "for (int i : new int[]{0, (int) p.getIx() * 2}")
                                     overlap = true;
-                                    entity.setHealth(entity.getHealth() - this.player.getDamage());
+                                    entity.setHealth(entity.getHealth() - this.player.getDamage()); // player attack
                                     System.out.println(entity.getHealth());
-                                    if (entity.getHealth() == 0) {
+                                    if (entity.getHealth() == 0) { // remove dead monsters
                                         this.removeEntities[this.removeEntityIndex] = this.entities.indexOf(entity);
                                         this.removeEntityIndex += 1;
                                     }
@@ -194,10 +194,9 @@ public class RandomMap extends Map {
                     }
                     removedEntityIndexOld = removedEntityIndex;
                 }
-                if (!overlap) {
+                if (!overlap && !outOfBounds) { // only update if projectile didn't hit monster or wall
                     p.update(time);
-                }
-                if (overlap || outOfBounds) {
+                } else { // remove projectile if it overlapped with a monster or if it hit a wall
                     this.removeProjectiles[this.removeProjectileIndex] = this.projectiles.indexOf(p);
                     this.removeProjectileIndex += 1;
                 }
