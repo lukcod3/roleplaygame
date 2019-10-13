@@ -36,7 +36,7 @@ public class RandomMap extends Map {
 
         // set entities array
         this.entities.add(this.player);
-        this.monsterCount += 1;
+        // load portal image
         try {
             for (int j = 0; j < 8; j++) {
                 portal[j] = ImageIO.read(new File("res/hub/Green Portal Sprite Sheet.png")).getSubimage(j * 64, 64, 64, 64);
@@ -146,41 +146,50 @@ public class RandomMap extends Map {
                     if (this.player.turnedRight) {
                         this.projectiles.add(new Projectile(this.player.getX(), this.player.getY() + this.player.getHeight() / 2.0, Projectile.TurnNumber.EAST));
                     } else {
-                        this.projectiles.add(new Projectile(this.player.getX() - this.player.getWidth() * 2, this.player.getY() + this.player.getHeight() / 2.0, Projectile.TurnNumber.WEST));
+                        this.projectiles.add(new Projectile(this.player.getX() - this.player.getWidth() * 1.75, this.player.getY() + this.player.getHeight() / 2.0, Projectile.TurnNumber.WEST));
                     }
-                } else if (1 == 1 /* check which directions[] are active and decide which TurnNumber to use accordingly*/) {
-
+                } else if (this.player.directions[0]) {
+                    this.projectiles.add(new Projectile(this.player.getX(), this.player.getY() + this.player.getHeight() / 2.0, Projectile.TurnNumber.NORTH));
+                } else if (this.player.directions[1]) {
+                    this.projectiles.add(new Projectile(this.player.getX() - this.player.getWidth() * 1.75, this.player.getY() + this.player.getHeight() / 2.0, Projectile.TurnNumber.WEST));
+                } else if (this.player.directions[2]) {
+                    this.projectiles.add(new Projectile(this.player.getX() - this.player.getWidth(), this.player.getY() + this.player.getHeight() / 2.0, Projectile.TurnNumber.SOUTH));
+                } else if (this.player.directions[3]) {
+                    this.projectiles.add(new Projectile(this.player.getX(), this.player.getY() + this.player.getHeight() / 2.0, Projectile.TurnNumber.EAST));
                 }
             }
 
             // update all projectiles
             boolean overlap = false;
             boolean outOfBounds = false;
+            int removedEntityIndex = 0;
+            int removedEntityIndexOld = -1;
             for (Projectile p : this.projectiles) {
                 for (int i : new int[]{0, (int) p.getIx() * 2}) {
                     if (get_tile_at((int) p.getX() + i, (int) (p.getY() + p.getIy())).isGround()) {
                         for (Entity entity : this.entities) {
                             if (entity instanceof Monster && p.overlap(entity)) {
-                                overlap = true;
-                                entity.setHealth(entity.getHealth() - this.player.getDamage());
-                                System.out.println(entity.getHealth());
-                                if (entity.getHealth() == 0) {
-                                    this.removeEntities[this.removeEntityIndex] = this.entities.indexOf(entity);
-                                    this.removeEntityIndex += 1;
+                                removedEntityIndex = this.entities.indexOf(entity);
+                                if (removedEntityIndex != removedEntityIndexOld) { // make sure that it doesn't try to attack / remove the same monster twice because of "for (int i : new int[]{0, (int) p.getIx() * 2}")
+                                    overlap = true;
+                                    entity.setHealth(entity.getHealth() - this.player.getDamage());
+                                    System.out.println(entity.getHealth());
+                                    if (entity.getHealth() == 0) {
+                                        this.removeEntities[this.removeEntityIndex] = this.entities.indexOf(entity);
+                                        this.removeEntityIndex += 1;
+                                    }
                                 }
                             }
                         }
                     } else {
                         outOfBounds = true;
                     }
+                    removedEntityIndexOld = removedEntityIndex;
                 }
                 if (!overlap) {
                     p.update(time);
-                } else {
-                    this.removeProjectiles[this.removeProjectileIndex] = this.projectiles.indexOf(p);
-                    this.removeProjectileIndex += 1;
                 }
-                if (outOfBounds) {
+                if (overlap || outOfBounds) {
                     this.removeProjectiles[this.removeProjectileIndex] = this.projectiles.indexOf(p);
                     this.removeProjectileIndex += 1;
                 }
