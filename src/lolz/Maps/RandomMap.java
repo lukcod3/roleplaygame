@@ -144,9 +144,9 @@ public class RandomMap extends Map {
                 ((Mage) this.player).hasDamaged = true;
                 if (!this.player.isMoving) {
                     if (this.player.turnedRight) {
-                        this.projectiles.add(new Projectile(this.player.getX() + this.player.getWidth() * 2, this.player.getY() + this.player.getHeight() / 2.0, Projectile.TurnNumber.EAST));
+                        this.projectiles.add(new Projectile(this.player.getX(), this.player.getY() + this.player.getHeight() / 2.0, Projectile.TurnNumber.EAST));
                     } else {
-                        this.projectiles.add(new Projectile(this.player.getX() - this.player.getWidth(), this.player.getY() + this.player.getHeight() / 2.0, Projectile.TurnNumber.WEST));
+                        this.projectiles.add(new Projectile(this.player.getX() - this.player.getWidth() * 2, this.player.getY() + this.player.getHeight() / 2.0, Projectile.TurnNumber.WEST));
                     }
                 } else if (1 == 1 /* check which directions[] are active and decide which TurnNumber to use accordingly*/) {
 
@@ -154,41 +154,44 @@ public class RandomMap extends Map {
             }
 
             // update all projectiles
-            int overlapCount = 0;
-            int groundCount = 0;
+            boolean overlap = false;
+            boolean outOfBounds = false;
             for (Projectile p : this.projectiles) {
                 for (int i : new int[]{0, (int) p.getIx() * 2}) {
                     if (get_tile_at((int) p.getX() + i, (int) (p.getY() + p.getIy())).isGround()) {
                         for (Entity entity : this.entities) {
                             if (entity instanceof Monster && p.overlap(entity)) {
-                                overlapCount += 1;
+                                overlap = true;
                                 entity.setHealth(entity.getHealth() - this.player.getDamage());
-                                this.removeProjectiles[this.removeProjectileIndex] = this.projectiles.indexOf(p);
-                                this.removeProjectileIndex += 1;
+                                System.out.println(entity.getHealth());
                                 if (entity.getHealth() == 0) {
                                     this.removeEntities[this.removeEntityIndex] = this.entities.indexOf(entity);
                                     this.removeEntityIndex += 1;
                                 }
                             }
                         }
-                        if (overlapCount == 0) {
-                            p.update(time);
-                        }
                     } else {
-                        groundCount += 1;
+                        outOfBounds = true;
                     }
                 }
-                if (groundCount != 0) {
+                if (!overlap) {
+                    p.update(time);
+                } else {
+                    this.removeProjectiles[this.removeProjectileIndex] = this.projectiles.indexOf(p);
+                    this.removeProjectileIndex += 1;
+                }
+                if (outOfBounds) {
                     this.removeProjectiles[this.removeProjectileIndex] = this.projectiles.indexOf(p);
                     this.removeProjectileIndex += 1;
                 }
             }
-            System.out.println(this.projectiles);
+            //System.out.println(this.projectiles + " ArrayList.size(): " + this.projectiles.size());
 
             // remove projectiles
             if (this.removeProjectileIndex != 0) {
                 int index = this.removeProjectileIndex - 1;
                 for (int i = index; i >= 0; i--) {
+                    //System.out.println(this.projectiles + " Size in remove: " + this.projectiles.size() + " i: " + i);
                     this.projectiles.remove(this.removeProjectiles[i]);
                     this.removeProjectiles[i] = 0;
                     this.removeProjectileIndex -= 1;
