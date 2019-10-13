@@ -1,7 +1,6 @@
 package lolz.GUI;
 
 import lolz.Main;
-import lolz.Maps.Hub;
 import lolz.Maps.Map;
 import lolz.Maps.RandomMap;
 
@@ -278,7 +277,7 @@ public class GameGUI extends JPanel {
         g.drawString("" + this.map.player.maxHealth, 25 + 200 * 3 / 4 - g.getFontMetrics().stringWidth("" + this.map.player.maxHealth) / 2, 52);
 
         g.setColor(Color.WHITE);
-        g.drawString("Monster: " + this.map.monsterCount, Main.WIDTH - (g.getFontMetrics().stringWidth("Monster: " + this.map.monsterCount) + 50), 50);
+        g.drawString("Monsters: " + this.map.monsterCount, Main.WIDTH - (g.getFontMetrics().stringWidth("Monsters: " + this.map.monsterCount) + 50), 50);
 
         this.printEscMenu(g);
 

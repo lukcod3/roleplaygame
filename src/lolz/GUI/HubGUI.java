@@ -2,12 +2,10 @@ package lolz.GUI;
 
 import lolz.Main;
 import lolz.Maps.Hub;
-import lolz.Maps.Map;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
-import java.awt.image.BufferedImage;
+import java.awt.event.ActionEvent;
 
 public class HubGUI extends JPanel {
 
@@ -57,10 +55,11 @@ public class HubGUI extends JPanel {
     }
 
     public void update(int time) {
-        if (map.player.getX() >= 400 && map.player.getY() <= 150 && !teleport) {
-            teleport = true;
-            map.portalStage = 1;
-            map.portalState = 0.1;
+        if (this.map.player.getX() >= 400 && this.map.player.getY() <= 150 && !this.teleport) {
+            this.teleport = true;
+            this.map.player.allowedToMove = false;
+            this.map.portalStage = 1;
+            this.map.portalState = 0.1;
         }
 
         if(teleport && map.portalState > 5.9){

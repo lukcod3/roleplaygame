@@ -36,7 +36,7 @@ public class RandomMap extends Map {
 
         // set entities array
         this.entities.add(this.player);
-        this.monsterCount += 1;
+        // load portal image
         try {
             for (int j = 0; j < 8; j++) {
                 portal[j] = ImageIO.read(new File("res/hub/Green Portal Sprite Sheet.png")).getSubimage(j * 64, 64, 64, 64);
@@ -135,40 +135,110 @@ public class RandomMap extends Map {
 
         // let the mage shoot his projectile
         if (this.player instanceof Mage) {
-            if (this.player.getHitting() && (int) (this.player.animation_state % 5) == 2) {
+
+            if (((Mage) this.player).hasDamaged && (int) (this.player.animation_state % 5) != 2) {
+                ((Mage) this.player).hasDamaged = false;
+            }
+
+            if (this.player.getHitting() && (int) (this.player.animation_state % 5) == 2 && !((Mage) this.player).hasDamaged) {
+                ((Mage) this.player).hasDamaged = true;
                 if (!this.player.isMoving) {
                     if (this.player.turnedRight) {
-                        projectiles.add(new Projectile(this.player.getX() + this.player.getWidth(), this.player.getY() + this.player.getHeight() / 2.0, Projectile.TurnNumber.EAST));
+                        this.projectiles.add(new Projectile(this.player.getX(), this.player.getY() + this.player.getHeight() / 2.0, Projectile.TurnNumber.EAST));
                     } else {
-                        projectiles.add(new Projectile(this.player.getX(), this.player.getY() + this.player.getHeight() / 2.0, Projectile.TurnNumber.WEST));
+                        this.projectiles.add(new Projectile(this.player.getX() - this.player.getWidth() * 1.75, this.player.getY() + this.player.getHeight() / 2.0, Projectile.TurnNumber.WEST));
                     }
-                } else if (1 == 1 /* check which directions[] are active and decide which TurnNumber to use accordingly*/) {
-
+                } else if (this.player.directions[0] && this.player.directions[3]) {
+                    this.projectiles.add(new Projectile(this.player.getX() + this.player.getWidth() / 6.0, this.player.getY() + this.player.getHeight() / 2.5, Projectile.TurnNumber.NORTHEAST));
+                } else if (this.player.directions[2] && this.player.directions[3]) {
+                    this.projectiles.add(new Projectile(this.player.getX(), this.player.getY() + this.player.getHeight() / 1.5, Projectile.TurnNumber.SOUTHEAST));
+                } else if (this.player.directions[2] && this.player.directions[1]) {
+                    this.projectiles.add(new Projectile(this.player.getX() - this.player.getWidth() * 1.5, this.player.getY() + this.player.getHeight() * 1.25, Projectile.TurnNumber.SOUTHWEST));
+                } else if (this.player.directions[0]  && this.player.directions[1]) {
+                    this.projectiles.add(new Projectile(this.player.getX() - this.player.getWidth() * 1.5, this.player.getY() - this.player.getWidth() / 6.5, Projectile.TurnNumber.NORTHWEST));
+                } else if (this.player.directions[0]) {
+                    this.projectiles.add(new Projectile(this.player.getX() + this.player.getWidth() / 2.0, this.player.getY() - this.player.getHeight() / 1.5, Projectile.TurnNumber.NORTH));
+                } else if (this.player.directions[1]) {
+                    this.projectiles.add(new Projectile(this.player.getX() - this.player.getWidth() * 1.75, this.player.getY() + this.player.getHeight() / 2.0, Projectile.TurnNumber.WEST));
+                } else if (this.player.directions[2]) {
+                    this.projectiles.add(new Projectile(this.player.getX() + this.player.getWidth() / 10.0, this.player.getY() + this.player.getHeight() * 1.25, Projectile.TurnNumber.SOUTH));
+                } else if (this.player.directions[3]) {
+                    this.projectiles.add(new Projectile(this.player.getX(), this.player.getY() + this.player.getHeight() / 2.0, Projectile.TurnNumber.EAST));
                 }
             }
+
+            // update all projectiles
+            boolean overlap = false;
+            boolean outOfBounds = false;
+            int removedEntityIndex = 0;
+            int removedEntityIndexOld = -1;
+            for (Projectile p : this.projectiles) {
+                for (int i : new int[]{0, (int) p.getIx() * 2}) {
+                    if (get_tile_at((int) p.getX() + i, (int) (p.getY() + p.getIy())).isGround()) {
+                        for (Entity entity : this.entities) {
+                            if (entity instanceof Monster && p.overlap(entity)) {
+                                removedEntityIndex = this.entities.indexOf(entity);
+                                if (removedEntityIndex != removedEntityIndexOld) { // make sure that it doesn't try to attack / remove the same monster twice because of "for (int i : new int[]{0, (int) p.getIx() * 2}")
+                                    overlap = true;
+                                    entity.setHealth(entity.getHealth() - this.player.getDamage());
+                                    System.out.println(entity.getHealth());
+                                    if (entity.getHealth() == 0) {
+                                        this.removeEntities[this.removeEntityIndex] = this.entities.indexOf(entity);
+                                        this.removeEntityIndex += 1;
+                                    }
+                                }
+                            }
+                        }
+                    } else {
+                        outOfBounds = true;
+                    }
+                    removedEntityIndexOld = removedEntityIndex;
+                }
+                if (!overlap) {
+                    p.update(time);
+                }
+                if (overlap || outOfBounds) {
+                    this.removeProjectiles[this.removeProjectileIndex] = this.projectiles.indexOf(p);
+                    this.removeProjectileIndex += 1;
+                }
+            }
+            //System.out.println(this.projectiles + " ArrayList.size(): " + this.projectiles.size());
+
+            // remove projectiles
+            if (this.removeProjectileIndex != 0) {
+                int index = this.removeProjectileIndex - 1;
+                for (int i = index; i >= 0; i--) {
+                    //System.out.println(this.projectiles + " Size in remove: " + this.projectiles.size() + " i: " + i);
+                    this.projectiles.remove(this.removeProjectiles[i]);
+                    this.removeProjectiles[i] = 0;
+                    this.removeProjectileIndex -= 1;
+                }
+            }
+
         } else {
             // let the fighter attack monsters he overlaps with
             for (Entity entity : this.entities) {
-                if (!(entity instanceof Player) && this.player.overlap(entity)) {
+                if (entity instanceof Monster && this.player.overlap(entity)) {
                     // if the attacked monster is dead and their index in the entities ArrayList to the removeEntities array and increase the index that tells you how many monsters have to be removed (removeIndex) by one
-                    if (this.player.attack(entity)) {
-                        this.removeEntities[this.removeIndex] = this.entities.indexOf(entity);
-                        this.removeIndex += 1;
+                    if (((Fighter) this.player).attack(entity)) {
+                        this.removeEntities[this.removeEntityIndex] = this.entities.indexOf(entity);
+                        this.removeEntityIndex += 1;
                     }
                 }
             }
         }
 
         // remove the monsters that are dead (health == 0) from the entities ArrayList and their index from the removeEntities array and decrease the index telling you how many monsters have to be deleted as well as the monsterCount by one
-        if (this.removeIndex != 0) {
-            int index = this.removeIndex - 1;
+        if (this.removeEntityIndex != 0) {
+            int index = this.removeEntityIndex - 1;
             for (int i = index; i >= 0; i--) {
                 this.entities.remove(this.removeEntities[i]);
                 this.removeEntities[i] = 0;
-                this.removeIndex -= 1;
+                this.removeEntityIndex -= 1;
                 this.monsterCount -= 1;
             }
         }
+
         // update all monsters
         for (Entity entity : this.entities) {
             if (entity instanceof Monster) {

@@ -5,7 +5,7 @@ import lolz.Maps.Map;
 
 public abstract class Player extends Entity {
     public Map map;
-    private boolean isHitting, hasDamaged; // variable true if user makes character hit
+    boolean isHitting, hasDamaged; // variable true if user makes character hit
     public Item[] equipment; // 1 is hat, 2 is t-shirt, 3 is sword, 4 is shoes, 5 is necklace, 6 is ring, 7 is belt, 8-11 is depot
     private boolean mage;
     public boolean allowedToMove;
@@ -68,7 +68,9 @@ public abstract class Player extends Entity {
             this.animation_state %= 4;
         }
 
-        this.move(time);
+        if (this.allowedToMove) {
+            this.move(time);
+        }
 
     }
 
@@ -81,16 +83,6 @@ public abstract class Player extends Entity {
                     return true;
                 }
             }
-        }
-        return false;
-    }
-
-    public boolean attack(Entity entity) {
-        if (getHitting() && (int) animation_state % 5 == 2 && !hasDamaged) {
-            this.hasDamaged = true;
-            entity.setHealth(entity.getHealth() - this.damage);
-            System.out.println("entity health: " + entity.getHealth());
-            return entity.getHealth() == 0;
         }
         return false;
     }
