@@ -148,6 +148,14 @@ public class RandomMap extends Map {
                     } else {
                         this.projectiles.add(new Projectile(this.player.getX() - this.player.getWidth() * 1.75, this.player.getY() + this.player.getHeight() / 2.0, Projectile.TurnNumber.WEST));
                     }
+                } else if (this.player.directions[0] && this.player.directions[3]) {
+                    this.projectiles.add(new Projectile(this.player.getX() + this.player.getWidth() / 6.0, this.player.getY() + this.player.getHeight() / 2.5, Projectile.TurnNumber.NORTHEAST));
+                } else if (this.player.directions[2] && this.player.directions[3]) {
+                    this.projectiles.add(new Projectile(this.player.getX(), this.player.getY() + this.player.getHeight() / 1.5, Projectile.TurnNumber.SOUTHEAST));
+                } else if (this.player.directions[2] && this.player.directions[1]) {
+                    this.projectiles.add(new Projectile(this.player.getX() - this.player.getWidth() * 1.5, this.player.getY() + this.player.getHeight() * 1.25, Projectile.TurnNumber.SOUTHWEST));
+                } else if (this.player.directions[0]  && this.player.directions[1]) {
+                    this.projectiles.add(new Projectile(this.player.getX() - this.player.getWidth() * 1.5, this.player.getY() - this.player.getWidth() / 6.5, Projectile.TurnNumber.NORTHWEST));
                 } else if (this.player.directions[0]) {
                     this.projectiles.add(new Projectile(this.player.getX() + this.player.getWidth() / 2.0, this.player.getY() - this.player.getHeight() / 1.5, Projectile.TurnNumber.NORTH));
                 } else if (this.player.directions[1]) {
