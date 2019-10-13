@@ -64,6 +64,7 @@ public class HubGUI extends JPanel {
 
         if(teleport && map.portalState > 5.9){
             main.startBattle();
+            this.teleport = false;
         }
         // update the players position
         map.update(time);

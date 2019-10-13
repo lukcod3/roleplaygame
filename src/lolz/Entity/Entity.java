@@ -10,7 +10,7 @@ public abstract class Entity {
     public Image[][] img;
     public int width, height;
     public int maxHealth, health, damage, armor;
-    double speed;
+    public double speed;
     public double animation_state;
     public boolean turnedRight, isMoving;
     boolean isHitting;

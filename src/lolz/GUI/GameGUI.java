@@ -9,6 +9,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.File;
+import java.text.DecimalFormat;
 
 public class GameGUI extends JPanel {
     private Image img;
@@ -65,13 +66,13 @@ public class GameGUI extends JPanel {
         }
         item = new Item[7][5];
         for (int i = 0; i <= 4; i++) {
-            item[0][i] = new Item(0, 0, 0, 0, 0, 0, i);
-            item[1][i] = new Item(0, 0, 0, 0, 0, 1, i);
-            item[2][i] = new Item(0, 0, 0, 0, 0, 2, i);
-            item[3][i] = new Item(0, 0, 0, 0, 0, 3, i);
-            item[4][i] = new Item(0, 0, 0, 0, 0, 4, i);
-            item[5][i] = new Item(0, 0, 0, 0, 0, 5, i);
-            item[6][i] = new Item(0, 0, 0, 0, 0, 6, i);
+            item[0][i] = new Item(0, i);
+            item[1][i] = new Item(1, i);
+            item[2][i] = new Item( 2, i);
+            item[3][i] = new Item( 3, i);
+            item[4][i] = new Item(4, i);
+            item[5][i] = new Item(5, i);
+            item[6][i] = new Item(6, i);
         }
         this.map.player.equipment = new Item[]{item[0][0], item[1][0], item[2][0], item[3][0], item[4][0], item[5][0], item[6][0], null, null, null, null};
         testGeneratedRandomItemSet();
@@ -337,8 +338,9 @@ public class GameGUI extends JPanel {
             g.drawString("Leben............................(" + this.map.player.health + "/" + this.map.player.maxHealth + ")", 200, 130);
             g.drawString("Angriffsschaden....................." + this.map.player.damage, 200, 160);
             g.drawString("Rüstung..................................." + this.map.player.armor, 200, 190);
+            g.drawString("Lauftempo..........................." + new DecimalFormat("#.##").format(this.map.player.speed), 200, 220);
             g.drawString("Gold........................................" + this.map.player.gold, 200, 330);
-            g.drawString("Level............." + this.map.player.level + "(" + this.map.player.exp + " XP/" + 200 + " XP)", 200, 360); // needs formula for maxXP
+            g.drawString("Level............." + this.map.player.level + "(" + this.map.player.exp + " XP/" + (90 + 10 * this.map.player.level * this.map.player.level) + " XP)", 200, 360); // needs formula for maxXP
 
             if (this.map.player.turnedRight) {
                 if (this.map.player.getHitting()) { // is able to hit while running and while standing still -> always checks if hit is true regardless of moving

@@ -2,12 +2,12 @@ package lolz.Entity;
 
 import lolz.GUI.Item;
 import lolz.Maps.Map;
+import lolz.Maps.RandomMap;
 
 public abstract class Player extends Entity {
     public Map map;
     boolean isHitting, hasDamaged; // variable true if user makes character hit
     public Item[] equipment; // 1 is hat, 2 is t-shirt, 3 is sword, 4 is shoes, 5 is necklace, 6 is ring, 7 is belt, 8-11 is depot
-    private boolean mage;
     public boolean allowedToMove;
     // Ingame stats
     public int level, exp, gold;
@@ -17,7 +17,6 @@ public abstract class Player extends Entity {
         super(map, x, y, 100, 10, 30, 0.15);
         this.health = 50; // test
         this.level = 1;
-        this.mage = true;
         this.turnedRight = true;
         this.map = map;
         this.x = x;
@@ -30,6 +29,7 @@ public abstract class Player extends Entity {
         this.y -= this.height;
 
         allowedToMove = true;
+
     }
 
     // set Getters and Setters for attribute hit
@@ -72,6 +72,10 @@ public abstract class Player extends Entity {
             this.move(time);
         }
 
+        this.move(time);
+        if(this.map instanceof RandomMap) {
+            updatePlayerStats();
+        }
     }
 
     // check if any given entity is "touching" the hero or rather if the hero is touching it
@@ -85,6 +89,32 @@ public abstract class Player extends Entity {
             }
         }
         return false;
+    }
+
+    public void giveXP(int amount) {
+        if (exp + amount >= 90 + 10 * level * level) {
+            exp = exp + amount - level * 100;
+            level++;
+        } else {
+            exp += amount;
+        }
+    }
+
+    public void updatePlayerStats() {
+        maxHealth = 90 + 10 * level;
+        damage = 9 + level;
+        armor = 26 + 4 * level;
+        speed = 0.15;
+        for (int i = 0; i < 7; i++) {
+            try {
+                maxHealth += equipment[i].health;
+                damage += equipment[i].damage;
+                armor += equipment[i].armor;
+                speed += equipment[i].movementspeed;
+            } catch(Exception e){
+
+            }
+        }
     }
 
 }
