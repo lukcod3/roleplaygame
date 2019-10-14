@@ -164,7 +164,7 @@ public class RandomMap extends Map {
             if (entity instanceof Monster) {
                 entity.update(time);
                 // if monster in range of player it will follow him
-                double distance = Math.pow(Math.pow(entity.getVirtualX() - player.getVirtualX(), 2) + Math.pow(entity.getVirtualY() - player.getVirtualY(), 2), 0.5);
+                double distance = Math.pow(Math.pow(entity.getVirtualLeftX() - player.getVirtualLeftX(), 2) + Math.pow(entity.getVirtualY() - player.getVirtualY(), 2), 0.5);
                 if (!this.followingMonsters.contains(entity) && distance < 10 && distance > 1) {
                     this.followingMonsters.add((Monster) entity);
                     ((Monster) entity).isFollowing = true;

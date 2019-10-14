@@ -64,13 +64,17 @@ public abstract class Player extends Entity {
             this.animation_state %= 4;
         }
 
-        int oldX = this.getVirtualX();
+        int oldX = this.getVirtualLeftX();
         int oldY = this.getVirtualY();
 
         this.move(time);
 
-        if (oldX != this.getVirtualX() || oldY != this.getVirtualY()) {
-            this.map.paintDebug();
+        if (oldX != this.getVirtualLeftX() || oldY != this.getVirtualY()) {
+            if (this.map.debugging) {
+                this.map.paintDebug();
+            }
+            // update paths to player
+            this.map.generatePathsToPlayer();
         }
 
     }

@@ -11,6 +11,8 @@ import lolz.Main;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.HashMap;
+import java.util.List;
 
 public abstract class Map {
     public Player player;
@@ -25,7 +27,8 @@ public abstract class Map {
     int removeIndex;
     private final int minMaxHealth = 10, maxMaxHealth = 30, minDamage = 5, maxDamage = 10, minArmor = 1, maxArmor = 5, minExp = 10, maxExp = 20;
     double expFactor;
-    public ArrayList<Monster> followingMonsters;
+    public volatile ArrayList<Monster> followingMonsters;
+    public HashMap<List<Integer>, ArrayList<List<Integer>>> pathsToPlayer;
     public boolean debugging;
     public Tile[][] tiles;
 
@@ -48,6 +51,7 @@ public abstract class Map {
         // Beispiel: 0.25 + 0.25 + 0.25 + 0.125 + 0.125
         this.removeEntities = new int[9];
         this.followingMonsters = new ArrayList<>();
+        this.pathsToPlayer = new HashMap<>();
         this.debugging = false;
 
         // set tiles to empty by default
@@ -82,7 +86,7 @@ public abstract class Map {
         int y = 0;
         int entitiy_index = 0;
         while (y < this.tiles.length) {
-            while (entitiy_index < this.entities.size() && (int) (this.entities.get(entitiy_index).y + this.player.getHeight()) / Main.TILE_SIZE == y) {
+            while (entitiy_index < this.entities.size() && (int) (this.entities.get(entitiy_index).y) / Main.TILE_SIZE == y) {
                 this.entities.get(entitiy_index).paint(g);
                 entitiy_index++;
             }
@@ -349,7 +353,7 @@ public abstract class Map {
         }
     }
 
-    protected void spawnRandomMonsters(Tile[][] tiles) {
+    void spawnRandomMonsters(Tile[][] tiles) {
         double randInt = 0;
         // check for every tile that is a floor tile whether a random number (double randInt) is lower than a certain percentage (monsterPercentage); if so create a new monster there
         for (int i = 0; i < this.tiles.length; i++) {
@@ -378,6 +382,17 @@ public abstract class Map {
         }
     }
 
+    public void generatePathsToPlayer() {
+        this.pathsToPlayer.clear();
+        ArrayList<Monster> toRemove = new ArrayList<>();
+        for (Monster m : this.followingMonsters) {
+            if (m.makePath()) {
+                toRemove.add(m);
+            }
+        }
+        this.followingMonsters.removeAll(toRemove);
+    }
+
     public void paintDebug() {
         if (this.debugging) {
             for (int y = 0; y < this.VIRTUAL_HEIGHT; y++) {
@@ -385,9 +400,9 @@ public abstract class Map {
                     this.tiles[y][x].reconstructBase();
                 }
             }
-            this.tiles[this.player.getVirtualY()][this.player.getVirtualX()].isPlayer();
+            this.tiles[this.player.getVirtualY()][this.player.getVirtualLeftX()].isPlayer();
             for (Monster m : this.followingMonsters) {
-                this.tiles[m.getVirtualY()][m.getVirtualX()].isMonster();
+                this.tiles[m.getVirtualY()][m.getVirtualLeftX()].isMonster();
             }
         }
         // update following monster path

@@ -189,13 +189,18 @@ public abstract class Entity {
         return y;
     }
 
-    public int getVirtualX() {
+    public int getVirtualLeftX() {
         return (int) (this.x / Main.TILE_SIZE);
     }
 
-    public int getVirtualY() {
-        return (int) (this.y / Main.TILE_SIZE)+1;
+    public int getVirtualRightX() {
+        return (int) ((this.x + this.width) / Main.TILE_SIZE);
     }
+
+    public int getVirtualY() {
+        return (int) (this.y / Main.TILE_SIZE);
+    }
+
 
     public int getWidth() {
         return width;
