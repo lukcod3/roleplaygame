@@ -11,6 +11,7 @@ public abstract class Player extends Entity {
     public boolean allowedToMove;
     // Ingame stats
     public int level, exp, gold;
+    public double baseSpeed;
 
     public Player(Map map, int x, int y) {
         // setup player stats
@@ -41,10 +42,8 @@ public abstract class Player extends Entity {
         if (this.isHitting != isHitting) {
             if (isHitting) {
                 // slow player down while attacking
-                this.speed = 0.05;
             } else {
                 // restore speed and attacking status
-                this.speed = 0.15;
                 this.hasDamaged = false;
             }
             this.animation_state = 0;
@@ -72,7 +71,6 @@ public abstract class Player extends Entity {
             this.move(time);
         }
 
-        this.move(time);
         if(this.map instanceof RandomMap) {
             updatePlayerStats();
         }
@@ -92,29 +90,30 @@ public abstract class Player extends Entity {
     }
 
     public void giveXP(int amount) {
-        if (exp + amount >= 90 + 10 * level * level) {
-            exp = exp + amount - level * 100;
-            level++;
+        if (this.exp + amount >= 90 + 10 * this.level * this.level) {
+            this.exp = this.exp + amount - this.level * 100;
+            this.level++;
         } else {
-            exp += amount;
+            this.exp += amount;
         }
     }
 
     public void updatePlayerStats() {
-        maxHealth = 90 + 10 * level;
-        damage = 9 + level;
-        armor = 26 + 4 * level;
-        speed = 0.15;
+        this.maxHealth = 90 + 10 * this.level;
+        this.damage = 9 + this.level;
+        this.armor = 26 + 4 * this.level;
+        this.baseSpeed = 0.15;
         for (int i = 0; i < 7; i++) {
             try {
-                maxHealth += equipment[i].health;
-                damage += equipment[i].damage;
-                armor += equipment[i].armor;
-                speed += equipment[i].movementspeed;
+                this.maxHealth += this.equipment[i].health;
+                this.damage += this.equipment[i].damage;
+                this.armor += this.equipment[i].armor;
+                this.baseSpeed += this.equipment[i].movementspeed;
             } catch(Exception e){
 
             }
         }
+        this.speed = this.isHitting ? this.baseSpeed/3 : this.baseSpeed;
     }
 
 }
