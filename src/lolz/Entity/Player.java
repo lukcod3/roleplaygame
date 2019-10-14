@@ -91,7 +91,7 @@ public abstract class Player extends Entity {
 
     public void giveXP(int amount) {
         if (this.exp + amount >= 90 + 10 * this.level * this.level) {
-            this.exp = this.exp + amount - this.level * 100;
+            this.exp = this.exp + amount - (90 + 10 * this.level * this.level);
             this.level++;
         } else {
             this.exp += amount;
