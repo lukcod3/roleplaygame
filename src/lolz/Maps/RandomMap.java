@@ -26,7 +26,7 @@ public class RandomMap extends Map {
         portalState = 0;
 
         // spawn player
-        this.player = new Fighter(this, (this.VIRTUAL_WIDTH / 2) * Main.TILE_SIZE, (this.VIRTUAL_HEIGHT / 2) * Main.TILE_SIZE);
+        this.player = new Mage(this, (this.VIRTUAL_WIDTH / 2) * Main.TILE_SIZE, (this.VIRTUAL_HEIGHT / 2) * Main.TILE_SIZE);
 
         // update expFactor before new map is created
         this.expFactor = Math.pow(1.2, this.player.level);

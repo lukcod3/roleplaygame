@@ -22,7 +22,7 @@ public class Hub extends Map {
         portalState = 0;
         portalStage = 0;
         // spawn player
-        this.player = new Fighter(this, this.WIDTH / 2, this.HEIGHT / 2);
+        this.player = new Mage(this, this.WIDTH / 2, this.HEIGHT / 2);
 
         // setup map
         for (Tile[] tile : this.tiles) {
