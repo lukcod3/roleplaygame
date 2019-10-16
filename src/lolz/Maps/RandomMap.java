@@ -181,7 +181,7 @@ public class RandomMap extends Map {
                                 if (removedEntityIndex != removedEntityIndexOld) { // make sure that it doesn't try to attack / remove the same monster twice because of "for (int i : new int[]{0, (int) p.getIx() * 2}")
                                     overlap = true;
                                     entity.setHealth(entity.getHealth() - this.player.getDamage()); // player attack
-                                    System.out.println(entity.getHealth());
+                                    //System.out.println(entity.getHealth());
                                     if (entity.getHealth() == 0) { // remove dead monsters
                                         this.removeEntities[this.removeEntityIndex] = this.entities.indexOf(entity);
                                         this.removeEntityIndex += 1;

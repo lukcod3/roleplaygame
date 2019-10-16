@@ -200,11 +200,21 @@ public class Monster extends Entity {
     public void paint(Graphics g) {
         // paint player
         super.paint(g, 1.2);
+
+        //paint "hitbox"
         g.setColor(Color.WHITE);
         g.drawRoundRect((int) this.getX(), (int) this.getY(), 5, 5, 50, 50);
         g.drawRoundRect((int) this.getX() + this.getWidth(), (int) this.getY(), 5, 5, 50, 50);
         g.drawRoundRect((int) this.getX(), (int) this.getY() + this.getHeight(), 5, 5, 50, 50);
         g.drawRoundRect((int) this.getX() + this.getWidth(), (int) this.getY() + this.getHeight(), 5, 5, 50, 50);
+
+        //fill health bar
+        g.setColor(Color.GREEN);
+        g.fillRoundRect((int) this.getX(), (int) this.getY(), (int) (this.getWidth() * ((double) this.health / (double) this.getMaxHealth())), 5, 15, 15);
+
+        // draw border of health bar
+        g.setColor(Color.WHITE);
+        g.drawRoundRect((int) this.getX(), (int) this.getY(), this.getWidth(), 5, 15, 15);
     }
 
     private void setHitting(boolean hitting) {
