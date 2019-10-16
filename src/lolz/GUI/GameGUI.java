@@ -199,6 +199,10 @@ public class GameGUI extends JPanel {
         // key bindings for esc menu
         this.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0, false), KeyEvent.VK_ESCAPE + "Pressed");
         this.getActionMap().put(KeyEvent.VK_ESCAPE + "Pressed", generateEscapeAction());
+
+        // key bindings for debugging mode
+        this.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_F5, 0, false), KeyEvent.VK_F5 + "Pressed");
+        this.getActionMap().put(KeyEvent.VK_F5 + "Pressed", generateDebuggingAction());
     }
 
     private Action generateMoveKeyAction(final int dir, final boolean pressed) {
@@ -251,6 +255,22 @@ public class GameGUI extends JPanel {
                         removeEscItems();
                     }
                 }
+            }
+        };
+    }
+
+    private Action generateDebuggingAction() {
+        return new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (map.debugging) {
+                    for (int y = 0; y < map.VIRTUAL_HEIGHT; y++) {
+                        for (int x = 0; x < map.VIRTUAL_WIDTH; x++) {
+                            map.tiles[y][x].reconstructBase();
+                        }
+                    }
+                }
+                map.debugging = !map.debugging;
             }
         };
     }

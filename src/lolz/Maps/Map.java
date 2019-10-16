@@ -11,6 +11,8 @@ import lolz.Main;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.HashMap;
+import java.util.List;
 
 public abstract class Map {
     public Player player;
@@ -25,8 +27,9 @@ public abstract class Map {
     int removeEntityIndex, removeProjectileIndex;
     private final int minMaxHealth = 10, maxMaxHealth = 30, minDamage = 5, maxDamage = 10, minArmor = 1, maxArmor = 5, minExp = 10, maxExp = 20;
     double expFactor;
-    ArrayList<Monster> followingMonsters;
-
+    public volatile ArrayList<Monster> followingMonsters;
+    public HashMap<List<Integer>, ArrayList<List<Integer>>> pathsToPlayer;
+    public boolean debugging;
     public Tile[][] tiles;
 
     Map(int width, int height) {
@@ -49,6 +52,8 @@ public abstract class Map {
         this.removeEntities = new int[9];
         this.removeProjectiles = new int[9];
         this.followingMonsters = new ArrayList<>();
+        this.pathsToPlayer = new HashMap<>();
+        this.debugging = false;
 
         // set tiles to empty by default
         this.tiles = new Tile[this.VIRTUAL_HEIGHT][this.VIRTUAL_WIDTH];
@@ -82,7 +87,7 @@ public abstract class Map {
         int y = 0;
         int entitiy_index = 0;
         while (y < this.tiles.length) {
-            while (entitiy_index < this.entities.size() && (int) (this.entities.get(entitiy_index).y + this.player.getHeight()) / Main.TILE_SIZE == y) {
+            while (entitiy_index < this.entities.size() && (int) (this.entities.get(entitiy_index).y) / Main.TILE_SIZE == y) {
                 this.entities.get(entitiy_index).paint(g);
                 entitiy_index++;
             }
@@ -121,12 +126,33 @@ public abstract class Map {
         return this.tiles[y][x];
     }
 
+    int numberOfTiles() {
+        int n = 0;
+        for (int y = 0; y < this.VIRTUAL_HEIGHT; y++) {
+            for (int x = 0; x < this.VIRTUAL_WIDTH; x++) {
+                if (this.tiles[y][x].contains(StaticTile.FLOOR_1)) {
+                    n++;
+                }
+            }
+        }
+        return n;
+    }
+
     private boolean tile_contains(int x, int y, StaticTile ts) {
         Tile t = this.get_tile_at_virtual(x, y);
         if (t == null) {
             return false;
         } else {
             return t.contains(ts);
+        }
+    }
+
+    public boolean tile_is_ground(int x, int y) {
+        Tile t = this.get_tile_at_virtual(x,y);
+        if (t==null) {
+            return false;
+        } else {
+            return t.isGround();
         }
     }
 
@@ -356,6 +382,35 @@ public abstract class Map {
                     }
                 }
             }
+        }
+    }
+
+    public void generatePathsToPlayer() {
+        this.pathsToPlayer.clear();
+        ArrayList<Monster> toRemove = new ArrayList<>();
+        for (Monster m : this.followingMonsters) {
+            if (m.makePath()) {
+                toRemove.add(m);
+            }
+        }
+        this.followingMonsters.removeAll(toRemove);
+    }
+
+    public void paintDebug() {
+        if (this.debugging) {
+            for (int y = 0; y < this.VIRTUAL_HEIGHT; y++) {
+                for (int x = 0; x < this.VIRTUAL_WIDTH; x++) {
+                    this.tiles[y][x].reconstructBase();
+                }
+            }
+            this.tiles[this.player.getVirtualY()][this.player.getVirtualLeftX()].isPlayer();
+            for (Monster m : this.followingMonsters) {
+                this.tiles[m.getVirtualY()][m.getVirtualLeftX()].isMonster();
+            }
+        }
+        // update following monster path
+        for (Monster m : this.followingMonsters) {
+            m.makePath();
         }
     }
 

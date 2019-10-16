@@ -26,7 +26,7 @@ public class RandomMap extends Map {
         portalState = 0;
 
         // spawn player
-        this.player = new Mage(this, (this.VIRTUAL_WIDTH / 2) * Main.TILE_SIZE, (this.VIRTUAL_HEIGHT / 2) * Main.TILE_SIZE);
+        this.player = new Mage(this, (this.VIRTUAL_WIDTH / 2) * Main.TILE_SIZE, (this.VIRTUAL_HEIGHT / 2 + 1) * Main.TILE_SIZE);
 
         // update expFactor before new map is created
         this.expFactor = Math.pow(1.2, this.player.level);
@@ -47,17 +47,6 @@ public class RandomMap extends Map {
         }
     }
 
-    private int numberOfTiles() {
-        int n = 0;
-        for (int y = 0; y < this.VIRTUAL_HEIGHT; y++) {
-            for (int x = 0; x < this.VIRTUAL_WIDTH; x++) {
-                if (this.tiles[y][x].contains(StaticTile.FLOOR_1)) {
-                    n++;
-                }
-            }
-        }
-        return n;
-    }
 
     private void generateMap() {
         // set parameters
@@ -213,7 +202,6 @@ public class RandomMap extends Map {
                     this.removeProjectileIndex -= 1;
                 }
             }
-
         } else {
             // let the fighter attack monsters he overlaps with
             for (Entity entity : this.entities) {
@@ -239,13 +227,20 @@ public class RandomMap extends Map {
             }
         }
 
+        // update all monsters
         for (int i = 0; i < this.entities.size(); i++) {
             Entity entity = this.entities.get(i);
             if (entity instanceof Monster) {
                 entity.update(time);
                 // if monster in range of player it will follow him
-                if (!this.followingMonsters.contains(entity) && Math.pow(Math.pow(entity.getX() - player.getX(), 2) + Math.pow(entity.getY() - player.getY(), 2), 0.5) < 5) {
+                double distance = Math.pow(Math.pow(entity.getVirtualLeftX() - player.getVirtualLeftX(), 2) + Math.pow(entity.getVirtualY() - player.getVirtualY(), 2), 0.5);
+                if (!this.followingMonsters.contains(entity) && distance < 5 && distance > 1) {
                     this.followingMonsters.add((Monster) entity);
+                    ((Monster) entity).isFollowing = true;
+                    ((Monster) entity).makePath();
+                } else if (this.followingMonsters.contains(entity) && (distance > 15 || distance < 1)) {
+                    ((Monster) entity).isFollowing = false;
+                    this.followingMonsters.remove(entity);
                 }
             }
         }

@@ -25,12 +25,7 @@ public abstract class Player extends Entity {
 
         this.width = 45;
 
-        // rearrange y (given x and y values are for the bottom left corner)
-        // this.x -= this.width;
-        this.y -= this.height;
-
         allowedToMove = true;
-
     }
 
     // set Getters and Setters for attribute hit
@@ -68,7 +63,18 @@ public abstract class Player extends Entity {
         }
 
         if (this.allowedToMove) {
+            int oldX = this.getVirtualLeftX();
+            int oldY = this.getVirtualY();
+
             this.move(time);
+
+            if (oldX != this.getVirtualLeftX() || oldY != this.getVirtualY()) {
+                if (this.map.debugging) {
+                    this.map.paintDebug();
+                }
+                // update paths to player
+                this.map.generatePathsToPlayer();
+            }
         }
 
         if(this.map instanceof RandomMap) {
