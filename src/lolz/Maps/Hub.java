@@ -1,10 +1,8 @@
 package lolz.Maps;
 
-import lolz.Entity.Fighter;
 import lolz.Entity.Mage;
 import lolz.GUI.Tile;
 import lolz.Main;
-import lolz.Entity.Player;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -13,14 +11,14 @@ import java.io.File;
 
 public class Hub extends Map {
 
-    public BufferedImage[][] portal;
+    private BufferedImage[][] portal;
     public double portalState;
     public int portalStage;
 
     public Hub() {
         super(600, 500);
-        portalState = 0;
-        portalStage = 0;
+        this.portalState = 0;
+        this.portalStage = 0;
         // spawn player
         this.player = new Mage(this, this.WIDTH / 2, this.HEIGHT / 2);
 
@@ -78,7 +76,8 @@ public class Hub extends Map {
                 }
             }
         }
-        g.drawImage(portal[portalStage][((int)portalState)%(portal[portalStage].length)].getScaledInstance(120, -1, Image.SCALE_DEFAULT), 430, 40, null);
+        g.drawImage(this.portal[this.portalStage][((int) this.portalState)%(this.portal[this.portalStage].length)].getScaledInstance(120, -1, Image.SCALE_DEFAULT), 430, 40, null);
+
         // draw player
         this.player.paint(g);
 
@@ -94,7 +93,7 @@ public class Hub extends Map {
 
     @Override
     public void update(int time) {
-        portalState+= 0.1;
+        this.portalState+= 0.1;
         this.player.update(time);
     }
 }

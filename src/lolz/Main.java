@@ -91,7 +91,7 @@ public class Main {
     }
 
     public void startBattle() {
-        this.activePanel = new GameGUI();
+        this.activePanel = new GameGUI(this);
         frame.getContentPane().removeAll();
         frame.getContentPane().add(activePanel);
         frame.revalidate();
@@ -105,11 +105,18 @@ public class Main {
         ((GameGUI) activePanel).update(time);
         ((GameGUI) activePanel).frameLocation = frame.getLocationOnScreen();
         if (((GameGUI) activePanel).map.monsterCount == 0) {
-            startHub();
-            HubGUI a = ((HubGUI) activePanel);
-            Hub b = (Hub) a.map;
-            b.respawn();
+            restartHub();
         }
+    }
+
+    public void restartHub() {
+        startHub();
+        HubGUI a = ((HubGUI) activePanel);
+        Hub b = a.map;
+        a.teleport = false;
+        b.portalStage = 0;
+        b.player.allowedToMove = true;
+        b.respawn();
     }
 
     public static void drawReflectImage(Image i, Graphics g, int x, int y) {

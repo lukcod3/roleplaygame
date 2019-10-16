@@ -14,45 +14,58 @@ import java.text.DecimalFormat;
 public class GameGUI extends JPanel {
     private Image img;
     public Map map;
+    private Main main;
     private boolean statsShown, inEscMenu;
-    private JButton exitButton;
+    private JButton exitButton, hubButton;
 
     private MouseEvent e;
     public Point frameLocation;
     private int aktInventar;
-    private boolean showButton;
+    private boolean showButton, readyForSwitch;
     private Image[] inventoryImages;
     private int[] mouseCoordinates;
-    private boolean readyForSwitch;
     private Item[][] item;
     private Image emptyInventory;
 
     //public Hub hub;
-    public GameGUI() {
+    public GameGUI(Main main) {
         // call super class
         this.setLayout(null);
-        mouseCoordinates = new int[2];
+        this.mouseCoordinates = new int[2];
         // create map
         //hub = new Hub();
-        map = new RandomMap();
+        this.map = new RandomMap();
+        this.main = main;
 
         this.repaint();
         this.setOpaque(false);
 
         // add exit button
-        String str = "Exit game";
         int button_width = 300;
         int button_height = 60;
-        exitButton = new JButton("Exit game");
-        exitButton.setBounds((Main.WIDTH - button_width) / 2, 100, button_width, button_height);
-        exitButton.setVisible(false);
-        exitButton.addActionListener(new ActionListener() {
+        this.exitButton = new JButton("Exit game");
+        this.exitButton.setBounds((Main.WIDTH - button_width) / 2, 100, button_width, button_height);
+        this.exitButton.setVisible(false);
+        this.exitButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 System.exit(0);
             }
         });
-        this.add(exitButton);
+        this.add(this.exitButton);
+
+        // add exit button
+        this.hubButton = new JButton("Back to Hub");
+        this.hubButton.setBounds((Main.WIDTH - button_width) / 2, 200, button_width, button_height);
+        this.hubButton.setVisible(false);
+        this.hubButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                main.restartHub();
+            }
+        });
+        this.add(this.hubButton);
+
         // loads images for inventory
         try {
             inventoryImages = new Image[4];
@@ -293,11 +306,13 @@ public class GameGUI extends JPanel {
 
     private void addEscItems() {
         this.exitButton.setVisible(true);
+        this.hubButton.setVisible(true);
         this.revalidate();
     }
 
     private void removeEscItems() {
         this.exitButton.setVisible(false);
+        this.hubButton.setVisible(false);
         this.revalidate();
     }
 

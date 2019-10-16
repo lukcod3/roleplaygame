@@ -49,7 +49,7 @@ public class HubGUI extends JPanel {
     public void paint(Graphics g) {
 
         // paint map
-        map.paint(g);
+        this.map.paint(g);
         // sync graphic
         Toolkit.getDefaultToolkit().sync();
     }
@@ -62,14 +62,14 @@ public class HubGUI extends JPanel {
             this.map.portalState = 0.1;
         }
 
-        if(teleport && map.portalState > 5.9){
+        if(this.teleport && this.map.portalState > 5.9){
             main.startBattle();
             this.teleport = false;
             this.map.portalStage = 0;
             this.map.player.allowedToMove = true;
         }
         // update the players position
-        map.update(time);
+        this.map.update(time);
     }
 
 }
