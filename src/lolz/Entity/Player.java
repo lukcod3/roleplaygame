@@ -5,7 +5,6 @@ import lolz.Maps.Map;
 import lolz.Maps.RandomMap;
 
 public abstract class Player extends Entity {
-    public Map map;
     boolean hasDamaged; // variable true if user makes character hit
     public Item[] equipment; // 1 is hat, 2 is t-shirt, 3 is sword, 4 is shoes, 5 is necklace, 6 is ring, 7 is belt, 8-11 is depot
     public boolean allowedToMove;
@@ -18,10 +17,6 @@ public abstract class Player extends Entity {
         super(map, x, y, 100, 10, 30, 0.15);
         this.health = 50; // test
         this.level = 1;
-        this.turnedRight = true;
-        this.map = map;
-        this.x = x;
-        this.y = y;
 
         this.width = 45;
 

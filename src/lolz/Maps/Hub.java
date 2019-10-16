@@ -1,6 +1,7 @@
 package lolz.Maps;
 
 import lolz.Entity.Mage;
+import lolz.Entity.Player;
 import lolz.GUI.Tile;
 import lolz.Main;
 
@@ -15,12 +16,17 @@ public class Hub extends Map {
     public double portalState;
     public int portalStage;
 
-    public Hub() {
+    public Hub(Player player) {
         super(600, 500);
         this.portalState = 0;
         this.portalStage = 0;
         // spawn player
-        this.player = new Mage(this, this.WIDTH / 2, this.HEIGHT / 2);
+        //this.player = new Mage(this, this.WIDTH / 2, this.HEIGHT / 2);
+        this.player = player;
+        this.player.map = this;
+        this.player.x = this.WIDTH / 2.0;
+        this.player.y = this.HEIGHT / 2.0;
+        this.player.directions = new boolean[4];
 
         // setup map
         for (Tile[] tile : this.tiles) {
@@ -85,11 +91,6 @@ public class Hub extends Map {
         g.translate((int) (this.player.x - Main.WIDTH / 2), (int) (this.player.y - Main.HEIGHT / 2));
     }
 
-    public void respawn() {
-        this.player.x = this.WIDTH / 2.0;
-        this.player.y = this.HEIGHT / 2.0;
-        this.player.directions = new boolean[4];
-    }
 
     @Override
     public void update(int time) {

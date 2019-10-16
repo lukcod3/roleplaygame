@@ -1,5 +1,6 @@
 package lolz.GUI;
 
+import lolz.Entity.Player;
 import lolz.Main;
 import lolz.Maps.Hub;
 
@@ -14,12 +15,12 @@ public class HubGUI extends JPanel {
     public boolean teleport;
 
 
-    public HubGUI(final Main main) {
+    public HubGUI(final Main main, Player player) {
 
         this.main = main;
 
         //create map
-        this.map = new Hub();
+        this.map = new Hub(player);
         teleport = false;
         // add the key bindings for player movement
         char[] keys = {'W', 'A', 'S', 'D'};
@@ -55,7 +56,7 @@ public class HubGUI extends JPanel {
     }
 
     public void update(int time) {
-        if (this.map.player.getX() >= 400 && this.map.player.getY() <= 150 && !this.teleport) {
+        if (this.map.player.getX() >= 420 && this.map.player.getY() <= 100 && !this.teleport) {
             this.teleport = true;
             this.map.player.allowedToMove = false;
             this.map.portalStage = 1;
