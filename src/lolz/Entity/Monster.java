@@ -200,6 +200,11 @@ public class Monster extends Entity {
     public void paint(Graphics g) {
         // paint player
         super.paint(g, 1.2);
+        g.setColor(Color.WHITE);
+        g.drawRoundRect((int) this.getX(), (int) this.getY(), 5, 5, 50, 50);
+        g.drawRoundRect((int) this.getX() + this.getWidth(), (int) this.getY(), 5, 5, 50, 50);
+        g.drawRoundRect((int) this.getX(), (int) this.getY() + this.getHeight(), 5, 5, 50, 50);
+        g.drawRoundRect((int) this.getX() + this.getWidth(), (int) this.getY() + this.getHeight(), 5, 5, 50, 50);
     }
 
     private void setHitting(boolean hitting) {

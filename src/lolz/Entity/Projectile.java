@@ -106,8 +106,6 @@ public class Projectile {
         drawRotatedImage(g, img[(int) animation_state]);
         g.setColor(Color.WHITE);
         g.drawRoundRect((int) this.getX(), (int) this.getY(), 5, 5, 50, 50);
-        g.setColor(Color.GREEN);
-        g.drawRoundRect((int) (this.getX() + this.getIx() * 1.5), (int) (this.getY() - this.getIx() * 1.5), 5, 5, 50, 50);
     }
 
     public void update(int time) {
@@ -208,43 +206,43 @@ public class Projectile {
                         break;
 
                     case NORTHEAST:
-                        if ((this.getX() + this.getIx() <= entity.getX() + i) && (entity.getX() + i <= this.getX() + Math.cos(45) * getIx() * 2) && (this.getY() - this.getIx() * 2 <= entity.getY() + j) && (entity.getY() + j <= this.getY() - this.getIx())) { //if any of the entity's boundaries can be found between any of the hero's boundaries, they touch
+                        if ((this.getX() + Math.cos(45) * getIx() <= entity.getX() + i) && (entity.getX() + i <= this.getX() + Math.cos(45) * getIx() * 2) && (this.getY() - Math.sin(45) * this.getIx() * 2 <= entity.getY() + j) && (entity.getY() + j <= this.getY() - Math.sin(45) * this.getIx())) { //if any of the entity's boundaries can be found between any of the hero's boundaries, they touch
                             return true;
                         }
                         break;
 
                     case EAST:
-                        if ((this.getX() - this.getIx() <= entity.getX() + i) && (entity.getX() + i <= this.getX() + this.getIx()) && (this.getY() - this.getIy() <= entity.getY() + j) && (entity.getY() + j <= this.getY())) { //if any of the entity's boundaries can be found between any of the hero's boundaries, they touch
+                        if ((this.getX() + this.getIx() <= entity.getX() + i) && (entity.getX() + i <= this.getX() + this.getIx() * 2) && (this.getY() - this.getIy() * 2 <= entity.getY() + j) && (entity.getY() + j <= this.getY())) { //if any of the entity's boundaries can be found between any of the hero's boundaries, they touch
                             return true;
                         }
                         break;
 
                     case SOUTHEAST:
-                        if ((this.getX() - this.getIx() <= entity.getX() + i) && (entity.getX() + i <= this.getX() + this.getIx()) && (this.getY() - this.getIy() <= entity.getY() + j) && (entity.getY() + j <= this.getY())) { //if any of the entity's boundaries can be found between any of the hero's boundaries, they touch
+                        if ((this.getX() + Math.cos(45) * this.getIx() <= entity.getX() + i) && (entity.getX() + i <= this.getX() + Math.cos(45) * this.getIx() * 2) && (this.getY() + Math.sin(45) * this.getIy() <= entity.getY() + j) && (entity.getY() + j <= this.getY() + Math.sin(45) * this.getIy() * 2)) { //if any of the entity's boundaries can be found between any of the hero's boundaries, they touch
                             return true;
                         }
                         break;
 
                     case SOUTH:
-                        if ((this.getX() - this.getIx() <= entity.getX() + i) && (entity.getX() + i <= this.getX() + this.getIx()) && (this.getY() - this.getIy() <= entity.getY() + j) && (entity.getY() + j <= this.getY())) { //if any of the entity's boundaries can be found between any of the hero's boundaries, they touch
+                        if ((this.getX() <= entity.getX() + i) && (entity.getX() + i <= this.getX() + this.getIx() * 2) && (this.getY() - this.getIy() <= entity.getY() + j) && (entity.getY() + j <= this.getY())) { //if any of the entity's boundaries can be found between any of the hero's boundaries, they touch
                             return true;
                         }
                         break;
 
                     case SOUTHWEST:
-                        if ((this.getX() - this.getIx() <= entity.getX() + i) && (entity.getX() + i <= this.getX() + this.getIx()) && (this.getY() - this.getIy() <= entity.getY() + j) && (entity.getY() + j <= this.getY())) { //if any of the entity's boundaries can be found between any of the hero's boundaries, they touch
+                        if ((this.getX() <= entity.getX() + i) && (entity.getX() + i <= this.getX() + Math.sin(45) * this.getIx()) && (this.getY() - Math.cos(45) * this.getIy() <= entity.getY() + j) && (entity.getY() + j <= this.getY())) { //if any of the entity's boundaries can be found between any of the hero's boundaries, they touch
                             return true;
                         }
                         break;
 
                     case WEST:
-                        if ((this.getX() - this.getIx() <= entity.getX() + i) && (entity.getX() + i <= this.getX() + this.getIx()) && (this.getY() - this.getIy() <= entity.getY() + j) && (entity.getY() + j <= this.getY())) { //if any of the entity's boundaries can be found between any of the hero's boundaries, they touch
+                        if ((this.getX() <= entity.getX() + i) && (entity.getX() + i <= this.getX() + this.getIx()) && (this.getY() <= entity.getY() + j) && (entity.getY() + j <= this.getY() + this.getIy() * 2)) { //if any of the entity's boundaries can be found between any of the hero's boundaries, they touch
                             return true;
                         }
                         break;
 
                     case NORTHWEST:
-                        if ((this.getX() - this.getIx() <= entity.getX() + i) && (entity.getX() + i <= this.getX() + this.getIx()) && (this.getY() - this.getIy() <= entity.getY() + j) && (entity.getY() + j <= this.getY())) { //if any of the entity's boundaries can be found between any of the hero's boundaries, they touch
+                        if ((this.getX() - this.getIy() * 2 <= entity.getX() + i) && (entity.getX() + i <= this.getX() + this.getIy() * 2) && (this.getY() <= entity.getY() + j) && (entity.getY() + j <= this.getY() + Math.sin(45) * this.getIy())) { //if any of the entity's boundaries can be found between any of the hero's boundaries, they touch
                             return true;
                         }
                         break;
