@@ -1,7 +1,6 @@
 package lolz.GUI;
 
 import lolz.Main;
-import lolz.Maps.Hub;
 import lolz.Maps.Map;
 import lolz.Maps.RandomMap;
 
@@ -255,18 +254,18 @@ public class GameGUI extends JPanel {
         // paint overlay interfaces
 
         //fill health bar
-        g.setColor(Color.GREEN);
+        g.setColor(new Color(0, 125, 0, 50));
         g.fillRoundRect(25, 25, (int) (200 * ((double) this.map.player.health / (double) this.map.player.getMaxHealth())), 35, 15, 15);
 
         // draw border of health bar
-        g.setColor(Color.WHITE);
+        g.setColor(new Color(255, 255, 255, 50));
         g.drawRoundRect(25, 25, 200, 35, 15, 15);
 
         g.setColor(Color.BLACK);
         this.printStats(g);
         Font font = new Font("SansSerif", Font.BOLD, 25);
         g.setFont(font);
-        g.setColor(Color.WHITE);
+        g.setColor(new Color(255, 255, 255, 50));
         if ((double) this.map.player.health / (double) this.map.player.getMaxHealth() <= 0.1) {
             Color lowColor = new Color(100, 0, 0, 60);
             g.setColor(lowColor);
@@ -275,11 +274,12 @@ public class GameGUI extends JPanel {
         }
         // draw health values in somewhat centered position
         g.drawString("" + this.map.player.health, 25 + 200 / 4 - g.getFontMetrics().stringWidth("" + this.map.player.health) / 2, 52);
+        g.setColor(new Color(255, 255, 255, 50));
         g.drawString("/", 25 + 200 / 2 - g.getFontMetrics().stringWidth("/") / 2, 52);
         g.drawString("" + this.map.player.maxHealth, 25 + 200 * 3 / 4 - g.getFontMetrics().stringWidth("" + this.map.player.maxHealth) / 2, 52);
 
         g.setColor(Color.WHITE);
-        g.drawString("Monster: " + this.map.monsterCount, Main.WIDTH - (g.getFontMetrics().stringWidth("Monster: " + this.map.monsterCount) + 50), 50);
+        g.drawString("Monsters: " + this.map.monsterCount, Main.WIDTH - (g.getFontMetrics().stringWidth("Monsters: " + this.map.monsterCount) + 50), 50);
 
         this.printEscMenu(g);
 
