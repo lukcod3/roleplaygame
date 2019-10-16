@@ -239,8 +239,8 @@ public class RandomMap extends Map {
             }
         }
 
-        // update all monsters
-        for (Entity entity : this.entities) {
+        for (int i = 0; i < this.entities.size(); i++) {
+            Entity entity = this.entities.get(i);
             if (entity instanceof Monster) {
                 entity.update(time);
                 // if monster in range of player it will follow him

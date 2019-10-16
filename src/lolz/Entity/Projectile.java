@@ -13,6 +13,7 @@ public class Projectile {
     private TurnNumber turnNumber;
     private AffineTransform at;
     private Graphics2D g2d;
+    private double boxLowX, boxHighX, boxLowY, boxHighY;
 
     public enum TurnNumber {NORTH, NORTHEAST, EAST, SOUTHEAST, SOUTH, SOUTHWEST, WEST, NORTHWEST}
 
@@ -54,6 +55,63 @@ public class Projectile {
 
         setX(getX() + getIx());
         setY(getY() + getIy());
+
+        switch (getTurnNumber()) {
+            case NORTH:
+                setBoxLowX(this.getX() - this.getIx() * 2);
+                setBoxHighX(this.getX()); // weiter rechts als getBoxLowX()
+                setBoxLowY(this.getY());
+                setBoxHighY(this.getY() + this.getIy()); // weiter unten als getBoxLowY()
+                break;
+
+            case NORTHEAST:
+                setBoxLowX(this.getX() + Math.cos(45) * getIx());
+                setBoxHighX(this.getX() + Math.cos(45) * getIx() * 2); // weiter rechts als getBoxLowX()
+                setBoxLowY(this.getY() - Math.sin(45) * this.getIx() * 2);
+                setBoxHighY(this.getY() - Math.sin(45) * this.getIx()); // weiter unten als getBoxLowY()
+                break;
+
+            case EAST:
+                setBoxLowX(this.getX() + this.getIx());
+                setBoxHighX(this.getX() + this.getIx() * 2); // weiter rechts als getBoxLowX()
+                setBoxLowY(this.getY() - this.getIy() * 2);
+                setBoxHighY(this.getY()); // weiter unten als getBoxLowY()
+                break;
+
+            case SOUTHEAST:
+                setBoxLowX();
+                setBoxHighX(); // weiter rechts als getBoxLowX()
+                setBoxLowY();
+                setBoxHighY(); // weiter unten als getBoxLowY()branch
+                if ((this.getX() + Math.cos(45) * this.getIx() <= entity.getX() + i) && (entity.getX() + i <= this.getX() + Math.cos(45) * this.getIx() * 2) && (this.getY() + Math.sin(45) * this.getIy() <= entity.getY() + j) && (entity.getY() + j <= this.getY() + Math.sin(45) * this.getIy() * 2)) { //if any of the entity's boundaries can be found between any of the hero's boundaries, they touch
+                    return true;
+                }
+                break;
+
+            case SOUTH:
+                if ((this.getX() <= entity.getX() + i) && (entity.getX() + i <= this.getX() + this.getIx() * 2) && (this.getY() - this.getIy() <= entity.getY() + j) && (entity.getY() + j <= this.getY())) { //if any of the entity's boundaries can be found between any of the hero's boundaries, they touch
+                    return true;
+                }
+                break;
+
+            case SOUTHWEST:
+                if ((this.getX() <= entity.getX() + i) && (entity.getX() + i <= this.getX() + Math.sin(45) * this.getIx()) && (this.getY() - Math.cos(45) * this.getIy() <= entity.getY() + j) && (entity.getY() + j <= this.getY())) { //if any of the entity's boundaries can be found between any of the hero's boundaries, they touch
+                    return true;
+                }
+                break;
+
+            case WEST:
+                if ((this.getX() <= entity.getX() + i) && (entity.getX() + i <= this.getX() + this.getIx()) && (this.getY() <= entity.getY() + j) && (entity.getY() + j <= this.getY() + this.getIy() * 2)) { //if any of the entity's boundaries can be found between any of the hero's boundaries, they touch
+                    return true;
+                }
+                break;
+
+            case NORTHWEST:
+                if ((this.getX() - this.getIy() * 2 <= entity.getX() + i) && (entity.getX() + i <= this.getX() + this.getIy() * 2) && (this.getY() <= entity.getY() + j) && (entity.getY() + j <= this.getY() + Math.sin(45) * this.getIy())) { //if any of the entity's boundaries can be found between any of the hero's boundaries, they touch
+                    return true;
+                }
+                break;
+        }
 
         // update before being drawn
         this.update(1);
@@ -99,6 +157,38 @@ public class Projectile {
 
     private void setIy(double iy) {
         this.iy = iy;
+    }
+
+    public double getBoxLowX() {
+        return this.boxLowX;
+    }
+
+    public void setBoxLowX(double boxLowX) {
+        this.boxLowX = boxLowX;
+    }
+
+    public double getBoxHighX() {
+        return this.boxHighX;
+    }
+
+    public void setBoxHighX(double boxHighX) {
+        this.boxHighX = boxHighX;
+    }
+
+    public double getBoxLowY() {
+        return this.boxLowY;
+    }
+
+    public void setBoxLowY(double boxLowY) {
+        this.boxLowY = boxLowY;
+    }
+
+    public double getBoxHighY() {
+        return this.boxHighY;
+    }
+
+    public void setBoxHighY(double boxHighY) {
+        this.boxHighY = boxHighY;
     }
 
 
@@ -201,9 +291,9 @@ public class Projectile {
                 switch (getTurnNumber()) {
                     case NORTH:
                         if ((this.getX() - this.getIx() * 2 <= entity.getX() + i) && (entity.getX() + i <= this.getX()) && (this.getY() <= entity.getY() + j) && (entity.getY() + j <= this.getY() + this.getIy())) { //if any of the entity's boundaries can be found between any of the hero's boundaries, they touch
-                            return true;
-                        }
-                        break;
+                        return true;
+                    }
+                    break;
 
                     case NORTHEAST:
                         if ((this.getX() + Math.cos(45) * getIx() <= entity.getX() + i) && (entity.getX() + i <= this.getX() + Math.cos(45) * getIx() * 2) && (this.getY() - Math.sin(45) * this.getIx() * 2 <= entity.getY() + j) && (entity.getY() + j <= this.getY() - Math.sin(45) * this.getIx())) { //if any of the entity's boundaries can be found between any of the hero's boundaries, they touch
