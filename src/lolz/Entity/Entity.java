@@ -13,7 +13,7 @@ public abstract class Entity {
     public double speed;
     public double animation_state;
     public boolean turnedRight, isMoving;
-    boolean isHitting;
+    public boolean isHitting;
     public volatile boolean[] directions; // 0 is up, 1 is left, 2 is down, 3 is right
     public Map map;
 
@@ -127,17 +127,23 @@ public abstract class Entity {
 
         // check if player in wall => reset movement
         for (int d_x : new int[]{0, this.width}) {
-            if (!map.get_tile_at((int) (this.x + d_x), (int) (this.y)).isGround()) {
-                // player doesnt moved
-                // test if fix is possible
-                if (map.get_tile_at((int) (old_x + d_x), (int) (this.y)).isGround()) {
-                    this.x = old_x;
-                } else if (map.get_tile_at((int) (this.x + d_x), (int) (old_y)).isGround()) {
-                    this.y = old_y;
-                } else {
-                    this.x = old_x;
-                    this.y = old_y;
+
+
+            try {
+                if (!map.get_tile_at((int) (this.x + d_x), (int) (this.y + this.height)).isGround()) {
+                    // player doesnt movedd
+                    // test if fix is possible
+                    if (map.get_tile_at((int) (old_x + d_x), (int) (this.y + this.height)).isGround()) {
+                        this.x = old_x;
+                    } else if (map.get_tile_at((int) (this.x + d_x), (int) (old_y + this.height)).isGround()) {
+                        this.y = old_y;
+                    } else {
+                        this.x = old_x;
+                        this.y = old_y;
+                    }
                 }
+            } catch(Exception ignore){
+
             }
         }
     }

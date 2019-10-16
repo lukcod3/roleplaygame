@@ -1,5 +1,6 @@
 package lolz.GUI;
 
+import lolz.Entity.Player;
 import lolz.Main;
 import lolz.Maps.Map;
 import lolz.Maps.RandomMap;
@@ -28,13 +29,13 @@ public class GameGUI extends JPanel {
     private Image emptyInventory;
 
     //public Hub hub;
-    public GameGUI(Main main) {
+    public GameGUI(Main main, Player player) {
         // call super class
         this.setLayout(null);
         this.mouseCoordinates = new int[2];
         // create map
         //hub = new Hub();
-        this.map = new RandomMap();
+        this.map = new RandomMap(player);
         this.main = main;
 
         this.repaint();
@@ -61,7 +62,7 @@ public class GameGUI extends JPanel {
         this.hubButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                main.restartHub();
+                main.startHub();
             }
         });
         this.add(this.hubButton);

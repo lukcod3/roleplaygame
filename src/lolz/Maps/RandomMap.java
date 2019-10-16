@@ -16,7 +16,7 @@ public class RandomMap extends Map {
     BufferedImage[] portal;
     public double portalState;
 
-    public RandomMap() {
+    public RandomMap(Player player) {
         // setup map
         super(20000, 15000);
 
@@ -26,7 +26,12 @@ public class RandomMap extends Map {
         portalState = 0;
 
         // spawn player
-        this.player = new Mage(this, (this.VIRTUAL_WIDTH / 2) * Main.TILE_SIZE, (this.VIRTUAL_HEIGHT / 2 + 1) * Main.TILE_SIZE);
+        //this.player = new Mage(this, (this.VIRTUAL_WIDTH / 2) * Main.TILE_SIZE, (this.VIRTUAL_HEIGHT / 2) * Main.TILE_SIZE);
+        this.player = player;
+        this.player.map = this;
+        this.player.x = (this.VIRTUAL_WIDTH / 2.0) * Main.TILE_SIZE;
+        this.player.y = (this.VIRTUAL_HEIGHT / 2.0) * Main.TILE_SIZE;
+        this.player.directions = new boolean[4];
 
         // update expFactor before new map is created
         this.expFactor = Math.pow(1.2, this.player.level);

@@ -1,5 +1,7 @@
 package lolz;
 
+
+import lolz.Entity.*;
 import lolz.GUI.GameGUI;
 import lolz.GUI.HubGUI;
 import lolz.GUI.MainMenu;
@@ -24,7 +26,7 @@ public class Main {
     private final JFrame frame;
     private JPanel activePanel;
 
-    private HubGUI hub = new HubGUI(this);
+    public Player player;
 
     private Main() {
 
@@ -55,6 +57,8 @@ public class Main {
         CONTENT_WIDTH = frame.getContentPane().getWidth();
         CONTENT_HEIGHT = frame.getContentPane().getHeight();
 
+        player = new Fighter(null, 0, 0);
+
         // updating the game
         while (true) {
             try {
@@ -84,14 +88,14 @@ public class Main {
     }
 
     public void startHub() {
-        this.activePanel = hub;
+        this.activePanel = new HubGUI(this, player);
         frame.getContentPane().removeAll();
         frame.getContentPane().add(activePanel);
         frame.revalidate();
     }
 
     public void startBattle() {
-        this.activePanel = new GameGUI(this);
+        this.activePanel = new GameGUI(this, player);
         frame.getContentPane().removeAll();
         frame.getContentPane().add(activePanel);
         frame.revalidate();
@@ -105,10 +109,10 @@ public class Main {
         ((GameGUI) activePanel).update(time);
         ((GameGUI) activePanel).frameLocation = frame.getLocationOnScreen();
         if (((GameGUI) activePanel).map.monsterCount == 0) {
-            restartHub();
+            startHub();
         }
     }
-
+/*
     public void restartHub() {
         startHub();
         HubGUI a = ((HubGUI) activePanel);
@@ -118,6 +122,8 @@ public class Main {
         b.player.allowedToMove = true;
         b.respawn();
     }
+
+ */
 
     public static void drawReflectImage(Image i, Graphics g, int x, int y) {
         g.drawImage(i, x + i.getWidth(null), y, -i.getWidth(null), i.getHeight(null), null);
