@@ -278,6 +278,8 @@ public class GameGUI extends JPanel {
         g.drawString("/", 25 + 200 / 2 - g.getFontMetrics().stringWidth("/") / 2, 52);
         g.drawString("" + this.map.player.maxHealth, 25 + 200 * 3 / 4 - g.getFontMetrics().stringWidth("" + this.map.player.maxHealth) / 2, 52);
 
+        font = new Font("Avant Garde", Font.BOLD, 25);
+        g.setFont(font);
         g.setColor(Color.WHITE);
         g.drawString("Monsters: " + this.map.monsterCount, Main.WIDTH - (g.getFontMetrics().stringWidth("Monsters: " + this.map.monsterCount) + 50), 50);
 
