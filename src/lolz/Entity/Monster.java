@@ -248,6 +248,7 @@ public class Monster extends Entity {
             this.path.clear();
             this.path.addAll(this.map.pathsToPlayer.get(monsterPos));
             this.followPathInitial();
+            return false;
         } else {
             // A* algorithm
             HashMap<List<Integer>, Double> openList = new HashMap<>();  // contains f
@@ -282,6 +283,7 @@ public class Monster extends Entity {
                         this.path.add(0, currentNode);
                         currentNode = ancestor.get(currentNode);
                     }
+                    this.path.add(monsterPos);
 
                     if (this.path.isEmpty()) {
                         this.isFollowing = false;
@@ -394,6 +396,8 @@ public class Monster extends Entity {
         if (this.directions[1] && rightX != oldRightX || this.directions[3] && leftX != oldLeftX || !(this.directions[1] || this.directions[3]) && oldY != y) {
             if (this.map.debugging) {
                 this.map.paintDebug();
+            } else {
+                this.makePath();
             }
             // reset directions
             for (int i = 0; i < 4; i++) {
