@@ -213,12 +213,14 @@ public class Monster extends Entity {
         // paint player
         super.paint(g, 1.2);
 
-        //paint "hitbox"
-        g.setColor(Color.WHITE);
-        g.drawRoundRect((int) this.getX(), (int) this.getY(), 5, 5, 50, 50);
-        g.drawRoundRect((int) this.getX() + this.getWidth(), (int) this.getY(), 5, 5, 50, 50);
-        g.drawRoundRect((int) this.getX(), (int) this.getY() + this.getHeight(), 5, 5, 50, 50);
-        g.drawRoundRect((int) this.getX() + this.getWidth(), (int) this.getY() + this.getHeight(), 5, 5, 50, 50);
+        // paint "hitbox" if debugging
+        if (this.map.debugging) {
+            g.setColor(Color.WHITE);
+            g.drawRoundRect((int) this.getX(), (int) this.getY(), 5, 5, 50, 50);
+            g.drawRoundRect((int) this.getX() + this.getWidth(), (int) this.getY(), 5, 5, 50, 50);
+            g.drawRoundRect((int) this.getX(), (int) this.getY() + this.getHeight(), 5, 5, 50, 50);
+            g.drawRoundRect((int) this.getX() + this.getWidth(), (int) this.getY() + this.getHeight(), 5, 5, 50, 50);
+        }
 
         //fill health bar
         g.setColor(Color.GREEN);
@@ -306,8 +308,6 @@ public class Monster extends Entity {
                     }
 
                     ArrayList<List<Integer>> pathToPlayer = new ArrayList<>(this.path);
-                    System.out.println("1: " + this.path);
-                    System.out.println("2: " + pathToPlayer);
                     this.map.pathsToPlayer.put(monsterPos, pathToPlayer);
                     this.followPathInitial();
                     return false;
