@@ -83,17 +83,7 @@ public abstract class Player extends Entity {
     }
 
     // check if any given entity is "touching" the hero or rather if the hero is touching it
-    public boolean overlap(Entity entity) {
-        for (int i : new int[]{0, entity.getWidth()}) { //checking for the left and right border of the entity's image
-            for (int j : new int[]{0, entity.getHeight()}) { //checking for the top and bottom border of the entity's image
-                //if any of the entity's boundaries can be found between any of the hero's boundaries, they touch
-                if ((this.getX() <= entity.getX() + i) && (entity.getX() + i <= this.getX() + this.getWidth()) && (this.getY() <= entity.getY() + j) && (entity.getY() + j <= this.getY() + this.getHeight())) {
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
+
 
     public void giveXP(int amount) {
         if (this.exp + amount >= 90 + 10 * this.level * this.level) {

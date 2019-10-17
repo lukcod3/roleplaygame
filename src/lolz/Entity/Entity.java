@@ -14,6 +14,7 @@ public abstract class Entity {
     public double animation_state;
     public boolean turnedRight, isMoving;
     boolean isHitting;
+    boolean hasDamaged; // variable true if user makes character hit
     public volatile boolean[] directions; // 0 is up, 1 is left, 2 is down, 3 is right
     public Map map;
 
@@ -208,6 +209,18 @@ public abstract class Entity {
 
     public int getHeight() {
         return height;
+    }
+
+    public boolean overlap(Entity entity) {
+        for (int i : new int[]{0, entity.getWidth()}) { //checking for the left and right border of the entity's image
+            for (int j : new int[]{0, entity.getHeight()}) { //checking for the top and bottom border of the entity's image
+                //if any of the entity's boundaries can be found between the attacking entity's boundaries, they touch
+                if ((this.getX() <= entity.getX() + i) && (entity.getX() + i <= this.getX() + this.getWidth()) && (this.getY() <= entity.getY() + j) && (entity.getY() + j <= this.getY() + this.getHeight())) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
 }

@@ -15,7 +15,10 @@ import java.util.List;
 public class Monster extends Entity {
     private int exp, monsterNumber, movementTime;
     public boolean isFollowing;
+    public boolean ready;
     public ArrayList<List<Integer>> path;
+
+    private boolean waitASecond = true; //checkt ob das monster bereit ist zum angriff
 
     public Monster(Map map, int x, int y, int maxHealth, int damage, int armor, int exp, int monsterNumber) {
         super(map, x, y, maxHealth, damage, armor, 0.1);
@@ -34,12 +37,31 @@ public class Monster extends Entity {
         this.update(1);
     }
 
+    public boolean getWAS() {
+        return waitASecond;
+    }
+
+    public void setWAS(boolean x) {
+        waitASecond = x;
+    }
+
     public int getExp() {
         return exp;
     }
 
     public void setExp(int exp) {
         this.exp = exp;
+    }
+
+
+    public boolean attack(Entity entity) {
+        if (getHitting() && (int) animation_state % 5 == 2 && !hasDamaged) {
+            this.hasDamaged = true;
+            entity.setHealth(entity.getHealth() - this.getDamage());
+            System.out.println("entity health: " + entity.getHealth());
+            return entity.getHealth() == 0;
+        }
+        return false;
     }
 
     public void update(int time) {
@@ -235,6 +257,10 @@ public class Monster extends Entity {
         isHitting = hitting;
     }
 
+    private boolean getHitting() {
+        return isHitting;
+    }
+
     public void setMoving(boolean moving) {
         isMoving = moving;
     }
@@ -338,6 +364,7 @@ public class Monster extends Entity {
 
                             // calculate distance to successors
                             double tentative_g = distanceList.get(currentNode) + (i == 0 || j == 0 ? 1 : Math.pow(2, 0.5));
+
                             // System.out.println(Arrays.toString(currentNode) + " -> " + Arrays.toString(successor) + " : " + tentative_g);
 
                             int[] successorInOpenList = null;
@@ -406,6 +433,7 @@ public class Monster extends Entity {
         int rightX = this.getVirtualLeftX();
         int y = this.getVirtualY();
 
+
         // directions are only changed if current tile is changed
         //if (oldX != this.getVirtualLeftX() || oldY != this.getVirtualY()) {
         if (this.directions[1] && rightX != oldRightX || this.directions[3] && leftX != oldLeftX || !(this.directions[1] || this.directions[3]) && oldY != y) {
@@ -425,6 +453,7 @@ public class Monster extends Entity {
                 System.out.println("im there");
                 this.isFollowing = false;
                 this.map.followingMonsters.remove(this);
+                setHitting(true);
                 return;
             }
             List<Integer> next_point = this.path.get(0);
@@ -440,10 +469,13 @@ public class Monster extends Entity {
                 } else {
                     next_point = this.path.get(0);
                 }
+
             }
 
             // set directions
             this.setDirections(next_point);
         }
+
+
     }
 }

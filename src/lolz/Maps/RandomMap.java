@@ -143,7 +143,7 @@ public class RandomMap extends Map {
                     this.projectiles.add(new Projectile(this.player.getX(), this.player.getY() + this.player.getHeight() / 1.5, Projectile.TurnNumber.SOUTHEAST));
                 } else if (this.player.directions[2] && this.player.directions[1]) {
                     this.projectiles.add(new Projectile(this.player.getX() - this.player.getWidth() * 1.5, this.player.getY() + this.player.getHeight() * 1.25, Projectile.TurnNumber.SOUTHWEST));
-                } else if (this.player.directions[0]  && this.player.directions[1]) {
+                } else if (this.player.directions[0] && this.player.directions[1]) {
                     this.projectiles.add(new Projectile(this.player.getX() - this.player.getWidth() * 1.5, this.player.getY() - this.player.getWidth() / 6.5, Projectile.TurnNumber.NORTHWEST));
                 } else if (this.player.directions[0]) {
                     this.projectiles.add(new Projectile(this.player.getX() + this.player.getWidth() / 2.0, this.player.getY() - this.player.getHeight() / 1.5, Projectile.TurnNumber.NORTH));
@@ -238,13 +238,29 @@ public class RandomMap extends Map {
                     this.followingMonsters.add((Monster) entity);
                     ((Monster) entity).isFollowing = true;
                     ((Monster) entity).makePath();
-                } else if (this.followingMonsters.contains(entity) && (distance > 15 || distance < 1)) {
+                } else if (this.followingMonsters.contains(entity) && (distance <= 1)) {
+                    ((Monster) entity).isFollowing = false;
+                    ((Monster) entity).setWAS(true);
+                } else if (this.followingMonsters.contains(entity) && (distance > 15)) {
                     ((Monster) entity).isFollowing = false;
                     this.followingMonsters.remove(entity);
+                }
+                if (((Monster) entity).getWAS() == true) {
+
+                    for (Entity player : this.entities) {
+                        if (entity instanceof Monster && this.player.overlap(entity)) {
+                            // if the attacked monster is dead and their index in the entities ArrayList to the removeEntities array and increase the index that tells you how many monsters have to be removed (removeIndex) by one
+                            if (((Monster) this.entity).attack(player)) { // i have no idea how to fix this
+                                player.setHealth(player.getHealth() - (entity.getDamage() - player.getArmor()));
+                            }
+                        }
+                    }
+
                 }
             }
         }
     }
+
 
     public void paint(Graphics g) {
         super.paint(g);
@@ -256,3 +272,4 @@ public class RandomMap extends Map {
         }
     }
 }
+
