@@ -127,13 +127,12 @@ public abstract class Entity {
 
         // check if player in wall => reset movement
         for (int d_x : new int[]{0, this.width}) {
-
-            if (!map.get_tile_at((int) (this.x + d_x), (int) (this.y + this.height)).isGround()) {
+            if (!map.get_tile_at((int) (this.x + d_x), (int) this.y).isGround()) {
                 // player doesnt moveddss
                 // test if fix is possible
-                if (map.get_tile_at((int) (old_x + d_x), (int) (this.y + this.height)).isGround()) {
+                if (map.get_tile_at((int) (old_x + d_x), (int) this.y).isGround()) {
                     this.x = old_x;
-                } else if (map.get_tile_at((int) (this.x + d_x), (int) (old_y + this.height)).isGround()) {
+                } else if (map.get_tile_at((int) (this.x + d_x), (int) old_y).isGround()) {
                     this.y = old_y;
                 } else {
                     this.x = old_x;
