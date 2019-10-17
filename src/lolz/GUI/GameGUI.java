@@ -1,5 +1,6 @@
 package lolz.GUI;
 
+import lolz.Entity.Fighter;
 import lolz.Entity.Player;
 import lolz.Main;
 import lolz.Maps.Map;
@@ -191,7 +192,9 @@ public class GameGUI extends JPanel {
 
         //add the key binding for the players attack
         this.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_J, 0, false), KeyEvent.VK_J + "Pressed");
-        this.getActionMap().put(KeyEvent.VK_J + "Pressed", generateAttackKeyAction());
+        this.getActionMap().put(KeyEvent.VK_J + "Pressed", generateAttackKeyAction(true));
+        this.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_J, 0, true), KeyEvent.VK_J + "Released");
+        this.getActionMap().put(KeyEvent.VK_J + "Released", generateAttackKeyAction(false));
 
         // key bindings for player stats
         this.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_I, 0, false), KeyEvent.VK_I + "Pressed");
@@ -210,21 +213,28 @@ public class GameGUI extends JPanel {
         return new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (!inEscMenu && map.player.allowedToMove) {
-                    // change the players directions
-                    map.player.directions[dir] = pressed;
+                if ((!inEscMenu && map.player.allowedToMove) || !pressed) {
+                        // change the players directions
+                        map.player.directions[dir] = pressed;
                 }
             }
         };
     }
 
-    private Action generateAttackKeyAction() {
+    private Action generateAttackKeyAction(boolean pressed) {
         return new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (!inEscMenu && !map.player.getHitting()) {
-                    map.player.setHitting(true);
+                if (pressed) {
+                    if (!inEscMenu && !map.player.getHitting()) {
+                        map.player.setHitting(true);
+                    }
+                    map.player.allowedToMove = false;
+                } else {
+                    map.player.allowedToMove = true;
                 }
+                map.player.allowedToMove = map.player instanceof Fighter || map.player.allowedToMove;
+                map.player.holdAttack = !map.player.allowedToMove;
             }
         };
     }

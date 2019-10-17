@@ -16,6 +16,7 @@ public abstract class Entity {
     public boolean isHitting;
     public volatile boolean[] directions; // 0 is up, 1 is left, 2 is down, 3 is right
     public Map map;
+    public boolean allowedToMove;
 
     Entity(Map map, int x, int y, int maxHealth, int damage, int armor, double speed) {
         this.x = x;
@@ -28,6 +29,7 @@ public abstract class Entity {
         this.directions = new boolean[4];
         this.animation_state = Math.random() * 10;
         this.map = map;
+        this.allowedToMove = true;
     }
 
     public abstract void paint(Graphics g);
@@ -88,8 +90,9 @@ public abstract class Entity {
             return;
         }
 
-        if (!isMoving) {
+        if (!isMoving && this.allowedToMove) {
             isMoving = true;
+
             animation_state = 0;
         }
 
