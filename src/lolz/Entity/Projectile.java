@@ -292,7 +292,7 @@ public class Projectile {
     public boolean overlap(Entity entity) {
         for (double i : new double[]{getBoxLowX(), getBoxHighX()}) {
             for (double j : new double[]{getBoxLowY(), getBoxHighY()}) {
-                if (entity.getX() <= i && i <= entity.getX() + entity.getWidth() && entity.getY() <= j && j <= entity.getY() + entity.getHeight()) {
+                if (entity.getX() <= i && i <= entity.getX() + entity.getWidth() && entity.getY() - entity.getHeight() <= j && j <= entity.getY()) {
                     return true;
                 }
             }
