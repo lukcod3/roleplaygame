@@ -138,26 +138,26 @@ public class RandomMap extends Map {
                 ((Mage) this.player).hasDamaged = true;
                 if (!this.player.isMoving) {
                     if (this.player.turnedRight) {
-                        this.projectiles.add(new Projectile(this.player.getX() + this.player.getWidth(), this.player.getY() - this.player.getHeight() / 2.0, Projectile.TurnNumber.EAST));
+                        this.projectiles.add(new Projectile(this.player.getX() + this.player.getWidth() / 3.0, this.player.getY() - this.player.getHeight() / 2.0, Projectile.TurnNumber.EAST));
                     } else {
-                        this.projectiles.add(new Projectile(this.player.getX(), this.player.getY() - this.player.getHeight() / 2.0, Projectile.TurnNumber.WEST));
+                        this.projectiles.add(new Projectile(this.player.getX() - this.player.getWidth() * 1.5, this.player.getY() - this.player.getHeight() / 2.0, Projectile.TurnNumber.WEST));
                     }
                 } else if (this.player.directions[0] && this.player.directions[3]) {
-                    this.projectiles.add(new Projectile(this.player.getX() + this.player.getWidth() / 6.0, this.player.getY() + this.player.getHeight() / 2.5, Projectile.TurnNumber.NORTHEAST));
+                    this.projectiles.add(new Projectile(this.player.getX() + this.player.getWidth() / 6.0, this.player.getY() - this.player.getHeight() / 2.0, Projectile.TurnNumber.NORTHEAST));
                 } else if (this.player.directions[2] && this.player.directions[3]) {
-                    this.projectiles.add(new Projectile(this.player.getX(), this.player.getY() + this.player.getHeight() / 1.5, Projectile.TurnNumber.SOUTHEAST));
+                    this.projectiles.add(new Projectile(this.player.getX() + this.player.getWidth() / 10.0, this.player.getY() - this.player.getHeight() / 1.75, Projectile.TurnNumber.SOUTHEAST));
                 } else if (this.player.directions[2] && this.player.directions[1]) {
-                    this.projectiles.add(new Projectile(this.player.getX() - this.player.getWidth() * 1.5, this.player.getY() + this.player.getHeight() * 1.25, Projectile.TurnNumber.SOUTHWEST));
+                    this.projectiles.add(new Projectile(this.player.getX() - this.player.getWidth() * 1.5, this.player.getY(), Projectile.TurnNumber.SOUTHWEST));
                 } else if (this.player.directions[0]  && this.player.directions[1]) {
-                    this.projectiles.add(new Projectile(this.player.getX() - this.player.getWidth() * 1.5, this.player.getY() - this.player.getWidth() / 6.5, Projectile.TurnNumber.NORTHWEST));
+                    this.projectiles.add(new Projectile(this.player.getX() - this.player.getWidth() * 1.5, this.player.getY() - this.player.getHeight(), Projectile.TurnNumber.NORTHWEST));
                 } else if (this.player.directions[0]) {
-                    this.projectiles.add(new Projectile(this.player.getX() + this.player.getWidth() / 2.0, this.player.getY() - this.player.getHeight() / 1.5, Projectile.TurnNumber.NORTH));
+                    this.projectiles.add(new Projectile(this.player.getX() + this.player.getWidth() / 2.0, this.player.getY() - this.player.getHeight() * 1.5, Projectile.TurnNumber.NORTH));
                 } else if (this.player.directions[1]) {
-                    this.projectiles.add(new Projectile(this.player.getX() - this.player.getWidth() * 1.75, this.player.getY() + this.player.getHeight() / 2.0, Projectile.TurnNumber.WEST));
+                    this.projectiles.add(new Projectile(this.player.getX() - this.player.getWidth() * 1.5, this.player.getY() - this.player.getHeight() / 2.0, Projectile.TurnNumber.WEST));
                 } else if (this.player.directions[2]) {
-                    this.projectiles.add(new Projectile(this.player.getX() + this.player.getWidth() / 10.0, this.player.getY() + this.player.getHeight() * 1.25, Projectile.TurnNumber.SOUTH));
+                    this.projectiles.add(new Projectile(this.player.getX() + this.player.getWidth() / 10.0, this.player.getY(), Projectile.TurnNumber.SOUTH));
                 } else if (this.player.directions[3]) {
-                    this.projectiles.add(new Projectile(this.player.getX(), this.player.getY() + this.player.getHeight() / 2.0, Projectile.TurnNumber.EAST));
+                    this.projectiles.add(new Projectile(this.player.getX() + this.player.getWidth() / 3.0, this.player.getY() - this.player.getHeight() / 2.0, Projectile.TurnNumber.EAST));
                 }
             }
 
