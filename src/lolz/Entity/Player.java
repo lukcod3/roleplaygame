@@ -99,7 +99,7 @@ public abstract class Player extends Entity {
         }
     }
 
-    public void updatePlayerStats() {
+    private void updatePlayerStats() {
         this.maxHealth = 90 + 10 * this.level;
         this.damage = 9 + this.level;
         this.armor = 26 + 4 * this.level;

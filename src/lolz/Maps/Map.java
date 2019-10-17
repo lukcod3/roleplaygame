@@ -102,6 +102,14 @@ public abstract class Map {
         if (this.projectiles.size() > 0) {
             for (Projectile p : this.projectiles) {
                 p.paint(g);
+                if (this.debugging) {
+                    g.setColor(Color.WHITE);
+                    for (double i : new double[]{p.getBoxLowX(), p.getBoxHighX()}) {
+                        for (double j : new double[]{p.getBoxLowY(), p.getBoxHighY()}) {
+                            g.drawRoundRect((int) i, (int) j, 5, 5, 50, 50);
+                        }
+                    }
+                }
             }
         }
 

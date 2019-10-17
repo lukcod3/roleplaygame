@@ -139,12 +139,6 @@ public class Projectile {
 
     public void paint(Graphics g) {
         drawRotatedImage(g, img[(int) animation_state]);
-        g.setColor(Color.WHITE);
-        for (double i : new double[]{getBoxLowX(), getBoxHighX()}) {
-            for (double j : new double[]{getBoxLowY(), getBoxHighY()}) {
-                g.drawRoundRect((int) i, (int) j, 5, 5, 50, 50);
-            }
-        }
     }
 
     public void update(int time) {
