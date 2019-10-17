@@ -168,7 +168,8 @@ public class RandomMap extends Map {
             int removedEntityIndexOld = -1; // this value doesn't have a specific purpose, only needs to be different from any index of this.entities
             for (Projectile p : this.projectiles) {
                 for (int i : new int[]{0, (int) p.getIx() * 2}) {
-                    if (get_tile_at((int) p.getX() + i, (int) (p.getY() + p.getIy())).isGround() || get_tile_at((int) p.getX() + i, (int) (p.getY() + p.getIy())).contains(StaticTile.WALL)) {
+                    System.out.println(get_tile_at((int) p.getX() + i, (int) (p.getY() - p.getIy())));
+                    if (get_tile_at((int) p.getX() + i, (int) (p.getY() - p.getIy())).isGround() || get_tile_at((int) p.getX() + i, (int) (p.getY() - p.getIy())).contains(StaticTile.WALL) || get_tile_at((int) p.getX() + i, (int) (p.getY() - p.getIy())).contains(StaticTile.WALL_RIGHT) || get_tile_at((int) p.getX() + i, (int) (p.getY() - p.getIy())).contains(StaticTile.WALL_LEFT)) {
                         for (Entity entity : this.entities) {
                             if (entity instanceof Monster && p.overlap(entity)) { // check for every monster if it was hit by a projectile
                                 removedEntityIndex = this.entities.indexOf(entity);

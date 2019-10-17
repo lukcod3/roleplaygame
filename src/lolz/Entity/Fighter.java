@@ -37,6 +37,10 @@ public class Fighter extends Player {
     public void paint(Graphics g) {
         // System.out.println(map.get_tile_at((int) (this.x), (int) (this.y + this.height)).toString());
         // paint player
+
+        // convert y from virtual to graphic
+        this.y -= this.height;
+
         g.setColor(Color.BLACK);
         if (turnedRight) {
             if (getHitting()) { // is able to hit while running and while standing still -> always checks if hit is true regardless of moving
@@ -61,6 +65,9 @@ public class Fighter extends Player {
                 Main.drawReflectImage(img[0][(int) this.animation_state], g, (int) this.x - offset, (int) this.y);
             }
         }
+
+        // convert it back
+        this.y += this.height;
     }
 
     public boolean attack(Entity entity) {
