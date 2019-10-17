@@ -24,6 +24,7 @@ public class Main {
     private JPanel activePanel;
 
     public Player player;
+    private Color playerColor;
 
     private Main() {
 
@@ -55,6 +56,7 @@ public class Main {
         CONTENT_HEIGHT = frame.getContentPane().getHeight();
 
         this.player = new Mage(null, 0, 0);
+        this.playerColor = Color.CYAN;
 
         // updating the game
         while (true) {

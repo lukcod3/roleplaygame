@@ -1,6 +1,5 @@
 package lolz.Maps;
 
-import lolz.Entity.Mage;
 import lolz.Entity.Player;
 import lolz.GUI.Tile;
 import lolz.Main;
