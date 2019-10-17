@@ -99,6 +99,14 @@ public abstract class Map {
             y++;
         }
 
+        if (this.debugging) {
+            for (double i : new double[]{0, this.player.getWidth()}) {
+                for (double j : new double[]{0, this.player.getHeight()}) {
+                    g.drawRoundRect((int) (this.player.getX() + i), (int) (this.player.getY() - j), 5, 5, 50, 50);
+                }
+            }
+        }
+
         if (this.projectiles.size() > 0) {
             for (Projectile p : this.projectiles) {
                 p.paint(g);

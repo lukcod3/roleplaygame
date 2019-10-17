@@ -1,11 +1,11 @@
 package lolz;
 
 
-import lolz.Entity.*;
+import lolz.Entity.Mage;
+import lolz.Entity.Player;
 import lolz.GUI.GameGUI;
 import lolz.GUI.HubGUI;
 import lolz.GUI.MainMenu;
-import lolz.Maps.Hub;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -57,7 +57,7 @@ public class Main {
         CONTENT_WIDTH = frame.getContentPane().getWidth();
         CONTENT_HEIGHT = frame.getContentPane().getHeight();
 
-        player = new Fighter(null, 0, 0);
+        player = new Mage(null, 0, 0);
 
         // updating the game
         while (true) {
