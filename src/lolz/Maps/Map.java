@@ -41,16 +41,16 @@ public abstract class Map {
         this.VIRTUAL_AREA = this.VIRTUAL_WIDTH + this.VIRTUAL_HEIGHT;
         this.entities = new ArrayList<>();
         this.projectiles = new ArrayList<>();
-        this.monsterPercentage = 0.05;
+        this.monsterPercentage = 0.005;
         // Die Dezimalzahlen, die bei jeder Initialisierung angegeben werden, muessen insgesamt 1 ergeben
-        this.ghoulPercentage = 0.1;
-        this.impPercentage = this.ghoulPercentage + 0.1;
+        this.ghoulPercentage = 0.3;
+        this.impPercentage = this.ghoulPercentage + 0.2;
         this.undeadWarriorPercentage = this.impPercentage + 0.1;
-        this.executionerPercentage = this.undeadWarriorPercentage + 0.2;
-        this.fireGolemPercentage = this.executionerPercentage + 0.5;
+        this.executionerPercentage = this.undeadWarriorPercentage + 0.3;
+        this.fireGolemPercentage = this.executionerPercentage + 0.1;
         // Beispiel: 0.25 + 0.25 + 0.25 + 0.125 + 0.125
         this.removeEntities = new int[9];
-        this.removeProjectiles = new int[9];
+        this.removeProjectiles = new int[100];
         this.followingMonsters = new ArrayList<>();
         this.pathsToPlayer = new HashMap<>();
         this.debugging = false;

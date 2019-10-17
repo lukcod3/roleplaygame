@@ -167,9 +167,9 @@ public class RandomMap extends Map {
             int removedEntityIndex = 0;
             int removedEntityIndexOld = -1; // this value doesn't have a specific purpose, only needs to be different from any index of this.entities
             for (Projectile p : this.projectiles) {
-                for (int i : new int[]{0, (int) p.getIx() * 2}) {
-                    System.out.println(get_tile_at((int) p.getX() + i, (int) (p.getY() - p.getIy())));
-                    if (get_tile_at((int) p.getX() + i, (int) (p.getY() - p.getIy())).isGround() || get_tile_at((int) p.getX() + i, (int) (p.getY() - p.getIy())).contains(StaticTile.WALL) || get_tile_at((int) p.getX() + i, (int) (p.getY() - p.getIy())).contains(StaticTile.WALL_RIGHT) || get_tile_at((int) p.getX() + i, (int) (p.getY() - p.getIy())).contains(StaticTile.WALL_LEFT)) {
+                for (int i : new int[]{(int) p.getBoxLowX(), (int) p.getBoxHighX()}) {
+                    System.out.println(get_tile_at(i, (int) (p.getBoxLowY())));
+                    if (get_tile_at(i, (int) (p.getBoxLowY())).topTiles.isEmpty() && (get_tile_at(i, (int) (p.getBoxLowY())).isGround() || get_tile_at(i, (int) (p.getBoxLowY())).contains(StaticTile.WALL) || get_tile_at(i, (int) (p.getBoxLowY())).contains(StaticTile.WALL_RIGHT) || get_tile_at(i, (int) (p.getBoxLowY())).contains(StaticTile.WALL_LEFT))) {
                         for (Entity entity : this.entities) {
                             if (entity instanceof Monster && p.overlap(entity)) { // check for every monster if it was hit by a projectile
                                 removedEntityIndex = this.entities.indexOf(entity);
