@@ -6,17 +6,12 @@ import lolz.Maps.Map;
 import java.awt.*;
 
 public abstract class Entity {
-    public double x, y;
+    public double x, y, speed, animation_state;
     public Image[][] img;
-    public int width, height;
-    public int maxHealth, health, damage, armor;
-    public double speed;
-    public double animation_state;
-    public boolean turnedRight, isMoving;
-    public boolean isHitting;
+    public int width, height, maxHealth, health, damage, armor;
+    public boolean turnedRight, isMoving, isHitting, allowedToMove;
     public volatile boolean[] directions; // 0 is up, 1 is left, 2 is down, 3 is right
     public Map map;
-    public boolean allowedToMove;
 
     Entity(Map map, int x, int y, int maxHealth, int damage, int armor, double speed) {
         this.x = x;

@@ -55,7 +55,7 @@ public class Main {
         CONTENT_WIDTH = frame.getContentPane().getWidth();
         CONTENT_HEIGHT = frame.getContentPane().getHeight();
 
-        this.player = new Fighter(null, 0, 0);
+        this.player = new Mage(null, 0, 0);
         this.playerColor = Color.CYAN;
 
         // updating the game

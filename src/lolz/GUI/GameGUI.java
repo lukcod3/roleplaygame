@@ -79,6 +79,7 @@ public class GameGUI extends JPanel {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        // initialize Items
         item = new Item[7][5];
         for (int i = 0; i <= 4; i++) {
             item[0][i] = new Item(0, i);
@@ -307,6 +308,7 @@ public class GameGUI extends JPanel {
 
         g.setColor(Color.BLACK);
         this.printStats(g);
+        // draw player health rectangles
         Font font = new Font("SansSerif", Font.BOLD, 25);
         g.setFont(font);
         g.setColor(new Color(255, 255, 255, 50));
@@ -372,7 +374,7 @@ public class GameGUI extends JPanel {
 
         // paint player stats
         if (statsShown) {
-
+            // draw stats
             Color myColor = new Color(56, 56, 56, 165);
             Font titleF = new Font("SansSerif", Font.BOLD, 25);
             Font statsF = new Font("SansSerif", Font.PLAIN, 15);
@@ -390,7 +392,7 @@ public class GameGUI extends JPanel {
             g.drawString("Lauftempo..........................." + new DecimalFormat("#.##").format(this.map.player.speed), 200, 220);
             g.drawString("Gold........................................" + this.map.player.gold, 200, 330);
             g.drawString("Level............." + this.map.player.level + "(" + this.map.player.exp + " XP/" + (90 + 10 * this.map.player.level * this.map.player.level) + " XP)", 200, 360); // needs formula for maxXP
-
+            // draw player
             if (this.map.player.turnedRight) {
                 if (this.map.player.getHitting()) { // is able to hit while running and while standing still -> always checks if hit is true regardless of moving
                     g.drawImage(this.map.player.img[2][(int) this.map.player.animation_state % 5].getScaledInstance(120, -1, Image.SCALE_DEFAULT), xPositionImageInventory, yPositionImageInventory, null); // set player's animation to hit animation
@@ -408,7 +410,7 @@ public class GameGUI extends JPanel {
                     Main.drawReflectImage(this.map.player.img[0][(int) this.map.player.animation_state % 4].getScaledInstance(120, -1, Image.SCALE_DEFAULT), g, xPositionImageInventory, yPositionImageInventory);
                 }
             }
-
+            // draw inventory images
             g.drawImage(this.map.player.equipment[0].image.getScaledInstance(60, -1, Image.SCALE_DEFAULT), 590, 100, null);
             g.drawImage(this.map.player.equipment[1].image.getScaledInstance(60, -1, Image.SCALE_DEFAULT), 500, 180, null);
             g.drawImage(this.map.player.equipment[2].image.getScaledInstance(60, -1, Image.SCALE_DEFAULT), 500, 255, null);
