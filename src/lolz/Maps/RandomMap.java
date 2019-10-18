@@ -162,11 +162,15 @@ public class RandomMap extends Map {
             }
 
             // update all projectiles
-            boolean overlap = false;
-            boolean outOfBounds = false;
-            int removedEntityIndex = 0;
-            int removedEntityIndexOld = -1; // this value doesn't have a specific purpose, only needs to be different from any index of this.entities
+            boolean overlap;
+            boolean outOfBounds;
+            int removedEntityIndex;
+            int removedEntityIndexOld;
             for (Projectile p : this.projectiles) {
+                overlap = false;
+                outOfBounds = false;
+                removedEntityIndex = 0;
+                removedEntityIndexOld = -1; // this value doesn't have a specific purpose, only needs to be different from any index of this.entities
                 for (int i : new int[]{(int) p.getBoxLowX(), (int) p.getBoxHighX()}) {
                     System.out.println(get_tile_at(i, (int) (p.getBoxLowY())));
                     if (get_tile_at(i, (int) (p.getBoxLowY())).topTiles.isEmpty() && (get_tile_at(i, (int) (p.getBoxLowY())).isGround() || get_tile_at(i, (int) (p.getBoxLowY())).contains(StaticTile.WALL) || get_tile_at(i, (int) (p.getBoxLowY())).contains(StaticTile.WALL_RIGHT) || get_tile_at(i, (int) (p.getBoxLowY())).contains(StaticTile.WALL_LEFT))) {
