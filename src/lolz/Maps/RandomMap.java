@@ -248,9 +248,8 @@ public class RandomMap extends Map {
                 if (((Monster) entity).getWAS() == true) {
 
                     for (Entity player : this.entities) {
-                        if (entity instanceof Monster && this.player.overlap(entity)) {
-                            // if the attacked monster is dead and their index in the entities ArrayList to the removeEntities array and increase the index that tells you how many monsters have to be removed (removeIndex) by one
-                            if (((Monster) this.entity).attack(player)) { // i have no idea how to fix this
+                        if (entity instanceof Monster && entity.overlap(player)) {
+                            if (((Monster) entity).attack(player)) { // i have no idea how to fix this
                                 player.setHealth(player.getHealth() - (entity.getDamage() - player.getArmor()));
                             }
                         }
