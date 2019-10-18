@@ -15,14 +15,26 @@ public class Fighter extends Player {
         this.img[1] = new Image[6];
         this.img[2] = new Image[5];
         try {
-            for (int i = 0; i < 4; i++) {
-                img[0][i] = tint(this.rgba[0], this.rgba[1], this.rgba[2], this.rgba[3], ImageIO.read(new File("res/Individual Sprites/adventurer-idle-0" + i + ".png"))).getScaledInstance(Main.ENTITY_WIDTH, -1, Image.SCALE_SMOOTH);
-            }
-            for (int i = 0; i < 6; i++) {
-                img[1][i] = tint(this.rgba[0], this.rgba[1], this.rgba[2], this.rgba[3], ImageIO.read(new File("res/Individual Sprites/adventurer-run-0" + i + ".png"))).getScaledInstance(Main.ENTITY_WIDTH, -1, Image.SCALE_SMOOTH);
-            }
-            for (int i = 0; i < 5; i++) {
-                img[2][i] = tint(this.rgba[0], this.rgba[1], this.rgba[2], this.rgba[3], ImageIO.read(new File("res/Individual Sprites/adventurer-attack1-0" + i + ".png"))).getScaledInstance(Main.ENTITY_WIDTH, -1, Image.SCALE_SMOOTH);
+            if (this.rgba == null) {
+                for (int i = 0; i < 4; i++) {
+                    img[0][i] = ImageIO.read(new File("res/Individual Sprites/adventurer-idle-0" + i + ".png")).getScaledInstance(Main.ENTITY_WIDTH, -1, Image.SCALE_SMOOTH);
+                }
+                for (int i = 0; i < 6; i++) {
+                    img[1][i] = ImageIO.read(new File("res/Individual Sprites/adventurer-run-0" + i + ".png")).getScaledInstance(Main.ENTITY_WIDTH, -1, Image.SCALE_SMOOTH);
+                }
+                for (int i = 0; i < 5; i++) {
+                    img[2][i] = ImageIO.read(new File("res/Individual Sprites/adventurer-attack1-0" + i + ".png")).getScaledInstance(Main.ENTITY_WIDTH, -1, Image.SCALE_SMOOTH);
+                }
+            } else {
+                for (int i = 0; i < 4; i++) {
+                    img[0][i] = tint(this.rgba[0], this.rgba[1], this.rgba[2], this.rgba[3], ImageIO.read(new File("res/Individual Sprites/adventurer-idle-0" + i + ".png"))).getScaledInstance(Main.ENTITY_WIDTH, -1, Image.SCALE_SMOOTH);
+                }
+                for (int i = 0; i < 6; i++) {
+                    img[1][i] = tint(this.rgba[0], this.rgba[1], this.rgba[2], this.rgba[3], ImageIO.read(new File("res/Individual Sprites/adventurer-run-0" + i + ".png"))).getScaledInstance(Main.ENTITY_WIDTH, -1, Image.SCALE_SMOOTH);
+                }
+                for (int i = 0; i < 5; i++) {
+                    img[2][i] = tint(this.rgba[0], this.rgba[1], this.rgba[2], this.rgba[3], ImageIO.read(new File("res/Individual Sprites/adventurer-attack1-0" + i + ".png"))).getScaledInstance(Main.ENTITY_WIDTH, -1, Image.SCALE_SMOOTH);
+                }
             }
         } catch (Exception e) {
             e.printStackTrace();

@@ -24,6 +24,8 @@ public class Main {
     private JPanel activePanel;
 
     public Player player;
+    private enum PLAYER_COLORS {WHITE, BLACK, RED, SAFFRON, GREEN, PINK, SKYBLUE, BLUE};
+    private PLAYER_COLORS player_color;
     private float[] rgba;
 
     private Main() {
@@ -55,7 +57,41 @@ public class Main {
         CONTENT_WIDTH = frame.getContentPane().getWidth();
         CONTENT_HEIGHT = frame.getContentPane().getHeight();
 
-        this.rgba = new float[]{0.5f, 0.75f, 0.25f, 1f};
+        this.player_color = PLAYER_COLORS.WHITE;
+
+        switch (this.player_color) {
+            case BLACK:
+                this.rgba = new float[]{0f, 0f, 0f, 1f};
+                break;
+
+            case RED:
+                this.rgba = new float[]{1f, 0f, 0f, 1f};
+                break;
+
+            case GREEN:
+                this.rgba = new float[]{0f, 01f, 0f, 1f};
+                break;
+
+            case BLUE:
+                this.rgba = new float[]{0f, 0f, 1f, 1f};
+                break;
+
+            case SAFFRON:
+                this.rgba = new float[]{1f, 1f, 0f, 1f};
+                break;
+
+            case SKYBLUE:
+                this.rgba = new float[]{0f, 1f, 1f, 1f};
+                break;
+
+            case PINK:
+                this.rgba = new float[]{1f, 0f, 1f, 1f};
+                break;
+
+            default:
+                // leave rgba as null-object
+        }
+
         this.player = new Mage(null, 0, 0, this.rgba);
 
         // updating the game
