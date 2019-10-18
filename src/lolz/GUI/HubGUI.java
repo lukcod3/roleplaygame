@@ -16,26 +16,50 @@ public class HubGUI extends JPanel {
     private Main main;
     public Hub map;
     private boolean teleport;
-    private JButton black, red, saffron, green, pink, skyblue, blue;
+    private JButton standard, black, red, saffron, green, pink, skyblue, blue;
+    private boolean clicked, playerChose; //playerChose für Beenden des Auswahlprozesses -> if (player in certain coordinates && !playerChose)
 
     public HubGUI(final Main main, Player player) {
 
         this.main = main;
 
+        this.standard = new JButton("STANDARD");
+        this.standard.setBackground(Color.WHITE);
+        this.standard.setForeground(Color.BLACK);
+        this.standard.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                if (!clicked) {
+                    if (player instanceof Fighter) {
+                        ((Fighter) player).loadImages(null);
+                    } else {
+                        ((Mage) player).loadImages(null);
+                    }
+                    clicked = true;
+                } else {
+                    main.setRgba_projectiles(null);
+                    clicked = false;
+                    playerChose = true;
+                }
+            }
+        });
         this.black = new JButton("BLACK");
         this.black.setBackground(Color.BLACK);
         this.black.setForeground(Color.WHITE);
         this.black.addActionListener(new ActionListener() {
              @Override
              public void actionPerformed(ActionEvent actionEvent) {
-                 if (/*clickedCount /*wobei clickedCount speichert, ob der Benutzer bereits einmal einen der Knöpfe gedrückt hat = 0*/ 1 == 1) {
+                 if (!clicked) {
                      if (player instanceof Fighter) {
                          ((Fighter) player).loadImages(new float[]{0f, 0f, 0f, 1f});
                      } else {
                          ((Mage) player).loadImages(new float[]{0f, 0f, 0f, 1f});
                      }
+                     clicked = true;
                  } else {
                      main.setRgba_projectiles(Main.COLORS.BLACK);
+                     clicked = false;
+                     playerChose = true;
                  }
              }
         });
@@ -44,14 +68,17 @@ public class HubGUI extends JPanel {
         this.black.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                if (/*clickedCount /*wobei clickedCount speichert, ob der Benutzer bereits einmal einen der Knöpfe gedrückt hat = 0*/ 1 == 1) {
+                if (!clicked) {
                     if (player instanceof Fighter) {
                         ((Fighter) player).loadImages(new float[]{1f, 0f, 0f, 1f});
                     } else {
                         ((Mage) player).loadImages(new float[]{1f, 0f, 0f, 1f});
                     }
+                    clicked = true;
                 } else {
                     main.setRgba_projectiles(Main.COLORS.RED);
+                    clicked = false;
+                    playerChose = true;
                 }
             }
         });
@@ -60,14 +87,17 @@ public class HubGUI extends JPanel {
         this.black.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                if (/*clickedCount /*wobei clickedCount speichert, ob der Benutzer bereits einmal einen der Knöpfe gedrückt hat = 0*/ 1 == 1) {
+                if (!clicked) {
                     if (player instanceof Fighter) {
                         ((Fighter) player).loadImages(new float[]{0f, 1f, 0f, 1f});
                     } else {
                         ((Mage) player).loadImages(new float[]{0f, 1f, 0f, 1f});
                     }
+                    clicked = true;
                 } else {
                     main.setRgba_projectiles(Main.COLORS.GREEN);
+                    clicked = false;
+                    playerChose = true;
                 }
             }
         });
@@ -76,14 +106,17 @@ public class HubGUI extends JPanel {
         this.black.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                if (/*clickedCount /*wobei clickedCount speichert, ob der Benutzer bereits einmal einen der Knöpfe gedrückt hat = 0*/ 1 == 1) {
+                if (!clicked) {
                     if (player instanceof Fighter) {
                         ((Fighter) player).loadImages(new float[]{0f, 0f, 1f, 1f});
                     } else {
                         ((Mage) player).loadImages(new float[]{0f, 0f, 1f, 1f});
                     }
+                    clicked = true;
                 } else {
                     main.setRgba_projectiles(Main.COLORS.BLUE);
+                    clicked = false;
+                    playerChose = true;
                 }
             }
         });
@@ -92,14 +125,17 @@ public class HubGUI extends JPanel {
         this.black.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                if (/*clickedCount /*wobei clickedCount speichert, ob der Benutzer bereits einmal einen der Knöpfe gedrückt hat = 0*/ 1 == 1) {
+                if (!clicked) {
                     if (player instanceof Fighter) {
                         ((Fighter) player).loadImages(new float[]{1f, 1f, 0f, 1f});
                     } else {
                         ((Mage) player).loadImages(new float[]{1f, 1f, 0f, 1f});
                     }
+                    clicked = true;
                 } else {
                     main.setRgba_projectiles(Main.COLORS.SAFFRON);
+                    clicked = false;
+                    playerChose = true;
                 }
             }
         });
@@ -108,14 +144,17 @@ public class HubGUI extends JPanel {
         this.black.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                if (/*clickedCount /*wobei clickedCount speichert, ob der Benutzer bereits einmal einen der Knöpfe gedrückt hat = 0*/ 1 == 1) {
+                if (!clicked) {
                     if (player instanceof Fighter) {
                         ((Fighter) player).loadImages(new float[]{0f, 1f, 1f, 1f});
                     } else {
                         ((Mage) player).loadImages(new float[]{0f, 1f, 1f, 1f});
                     }
+                    clicked = true;
                 } else {
                     main.setRgba_projectiles(Main.COLORS.SKYBLUE);
+                    clicked = false;
+                    playerChose = true;
                 }
             }
         });
@@ -124,14 +163,17 @@ public class HubGUI extends JPanel {
         this.black.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                if (/*clickedCount /*wobei clickedCount speichert, ob der Benutzer bereits einmal einen der Knöpfe gedrückt hat = 0*/ 1 == 1) {
+                if (!clicked) {
                     if (player instanceof Fighter) {
                         ((Fighter) player).loadImages(new float[]{1f, 0f, 1f, 1f});
                     } else {
                         ((Mage) player).loadImages(new float[]{1f, 0f, 1f, 1f});
                     }
+                    clicked = true;
                 } else {
                     main.setRgba_projectiles(Main.COLORS.PINK);
+                    clicked = false;
+                    playerChose = true;
                 }
             }
         });

@@ -162,7 +162,7 @@ public class Main {
                 break;
 
             default:
-                // leave rgba as null-object
+                this.rgba_projectiles = null;
         }
     }
 
