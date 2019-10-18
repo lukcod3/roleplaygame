@@ -4,18 +4,23 @@ import lolz.GUI.Item;
 import lolz.Maps.Map;
 import lolz.Maps.RandomMap;
 
+import java.awt.*;
+import java.awt.image.BufferedImage;
+
 public abstract class Player extends Entity {
     public boolean hasDamaged, holdAttack; // variable true if user makes character hit
     public Item[] equipment; // 1 is hat, 2 is t-shirt, 3 is sword, 4 is shoes, 5 is necklace, 6 is ring, 7 is belt, 8-11 is depot
     // Ingame stats
     public int level, exp, gold;
-    public double baseSpeed;
+    private double baseSpeed;
+    float[] rgba;
 
-    public Player(Map map, int x, int y) {
+    public Player(Map map, int x, int y, float[] rgba) {
         // setup player stats
         super(map, x, y, 100, 10, 30, 0.15);
         this.health = 50; // test
         this.level = 1;
+        this.rgba = rgba;
 
         this.width = 45;
         holdAttack = false;
@@ -124,6 +129,31 @@ public abstract class Player extends Entity {
             }
         }
         this.speed = (!(this instanceof Mage))&&this.isHitting ? this.baseSpeed/3 : this.baseSpeed;
+    }
+
+    BufferedImage tint(float r, float g, float b, float a, BufferedImage sprite)
+    {
+        BufferedImage tintedSprite = new BufferedImage(sprite.getWidth(), sprite.getHeight(), BufferedImage.TRANSLUCENT);
+        Graphics2D graphics = tintedSprite.createGraphics();
+        graphics.drawImage(sprite, 0, 0, null);
+        graphics.dispose();
+
+        for (int i = 0; i < tintedSprite.getWidth(); i++)
+        {
+            for (int j = 0; j < tintedSprite.getHeight(); j++)
+            {
+                int ax = tintedSprite.getColorModel().getAlpha(tintedSprite.getRaster().getDataElements(i, j, null));
+                int rx = tintedSprite.getColorModel().getRed(tintedSprite.getRaster().getDataElements(i, j, null));
+                int gx = tintedSprite.getColorModel().getGreen(tintedSprite.getRaster().getDataElements(i, j, null));
+                int bx = tintedSprite.getColorModel().getBlue(tintedSprite.getRaster().getDataElements(i, j, null));
+                rx *= r;
+                gx *= g;
+                bx *= b;
+                ax *= a;
+                tintedSprite.setRGB(i, j, (ax << 24) | (rx << 16) | (gx << 8) | (bx));
+            }
+        }
+        return tintedSprite;
     }
 
 }

@@ -29,43 +29,6 @@ public abstract class Entity {
 
     public abstract void paint(Graphics g);
 
-    public void paint(Graphics g, double k) {
-        // paint player
-
-        // TODO: fix modulo quick fixes
-
-        // convert y from virtual to graphic
-        this.y -= this.height;
-
-        g.setColor(Color.BLACK);
-        if (!turnedRight) {
-            if (isHitting) { // is able to hit while running and while standing still -> always checks if hit is true regardless of moving
-                int offset = (int) ((k * img[2][(int) this.animation_state % 5].getWidth(null) - this.width) / 2);
-                g.drawImage(img[2][(int) this.animation_state % 5], (int) this.x - offset, (int) this.y, null); // set player's animation to hit animation
-            } else if (isMoving) {
-                int offset = (int) ((k * img[1][(int) this.animation_state % 6].getWidth(null) - this.width) / 2);
-                g.drawImage(img[1][(int) this.animation_state % 6], (int) this.x - offset, (int) this.y, null);
-            } else {
-                int offset = (int) ((k * img[0][(int) this.animation_state % 4].getWidth(null) - this.width) / 2);
-                g.drawImage(img[0][(int) this.animation_state % 4], (int) this.x - offset, (int) this.y, null);
-            }
-        } else {
-            if (isHitting) { // is able to hit while running and while standing still -> always checks if hit is true regardless of moving
-                //int offset = (int) ((1*img[2][(int) this.animation_state].getWidth(null) - this.width) / 2);
-                Main.drawReflectImage(img[2][(int) this.animation_state % 5], g, (int) this.x, (int) this.y);
-            } else if (isMoving) {
-                //int offset = (int) ((1*img[1][(int) this.animation_state].getWidth(null) - this.width) / 2);
-                Main.drawReflectImage(img[1][(int) this.animation_state % 6], g, (int) this.x, (int) this.y);
-            } else {
-                //int offset = (int) ((1*img[0][(int) this.animation_state].getWidth(null) - this.width) / 2);
-                Main.drawReflectImage(img[0][(int) this.animation_state % 4], g, (int) this.x, (int) this.y);
-            }
-        }
-
-        // convert it back
-        this.y += this.height;
-    }
-
     void move(int time) {
         // count how many directions are active
         int dir_count = 0;

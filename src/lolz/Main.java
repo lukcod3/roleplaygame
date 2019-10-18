@@ -24,7 +24,7 @@ public class Main {
     private JPanel activePanel;
 
     public Player player;
-    private Color playerColor;
+    private float[] rgba;
 
     private Main() {
 
@@ -55,8 +55,8 @@ public class Main {
         CONTENT_WIDTH = frame.getContentPane().getWidth();
         CONTENT_HEIGHT = frame.getContentPane().getHeight();
 
-        this.player = new Mage(null, 0, 0);
-        this.playerColor = Color.CYAN;
+        this.rgba = new float[]{0.5f, 0.75f, 0.25f, 1f};
+        this.player = new Mage(null, 0, 0, this.rgba);
 
         // updating the game
         while (true) {
