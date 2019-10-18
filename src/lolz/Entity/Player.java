@@ -1,8 +1,13 @@
 package lolz.Entity;
 
 import lolz.GUI.Item;
+import lolz.Main;
 import lolz.Maps.Map;
 import lolz.Maps.RandomMap;
+
+import javax.imageio.ImageIO;
+import java.awt.*;
+import java.io.File;
 
 public abstract class Player extends Entity {
     public boolean hasDamaged, holdAttack; // variable true if user makes character hit
@@ -10,14 +15,12 @@ public abstract class Player extends Entity {
     // Ingame stats
     public int level, exp, gold;
     private double baseSpeed;
-    float[] rgba;
 
-    public Player(Map map, int x, int y, float[] rgba) {
+    public Player(Map map, int x, int y) {
         // setup player stats
         super(map, x, y, 100, 10, 30, 0.15);
         this.health = 50; // test
         this.level = 1;
-        this.rgba = rgba;
 
         this.width = 45;
         holdAttack = false;
@@ -126,6 +129,34 @@ public abstract class Player extends Entity {
             }
         }
         this.speed = (!(this instanceof Mage))&&this.isHitting ? this.baseSpeed/3 : this.baseSpeed;
+    }
+
+    public void loadImages(float[] rgba, String idlePath, String runPath, String attackPath) {
+        try {
+            if (rgba == null) {
+                for (int i = 0; i < 4; i++) {
+                    this.img[0][i] = ImageIO.read(new File(idlePath + i + ".png")).getScaledInstance(Main.ENTITY_WIDTH, -1, Image.SCALE_SMOOTH);
+                }
+                for (int i = 0; i < 6; i++) {
+                    this.img[1][i] = ImageIO.read(new File(runPath + i + ".png")).getScaledInstance(Main.ENTITY_WIDTH, -1, Image.SCALE_SMOOTH);
+                }
+                for (int i = 0; i < 5; i++) {
+                    this.img[2][i] = ImageIO.read(new File(attackPath + i + ".png")).getScaledInstance(Main.ENTITY_WIDTH, -1, Image.SCALE_SMOOTH);
+                }
+            } else {
+                for (int i = 0; i < 4; i++) {
+                    this.img[0][i] = tint(rgba[0], rgba[1], rgba[2], rgba[3], ImageIO.read(new File(idlePath + i + ".png"))).getScaledInstance(Main.ENTITY_WIDTH, -1, Image.SCALE_SMOOTH);
+                }
+                for (int i = 0; i < 6; i++) {
+                    this.img[1][i] = tint(rgba[0], rgba[1], rgba[2], rgba[3], ImageIO.read(new File(runPath + i + ".png"))).getScaledInstance(Main.ENTITY_WIDTH, -1, Image.SCALE_SMOOTH);
+                }
+                for (int i = 0; i < 5; i++) {
+                    this.img[2][i] = tint(rgba[0], rgba[1], rgba[2], rgba[3], ImageIO.read(new File(attackPath + i + ".png"))).getScaledInstance(Main.ENTITY_WIDTH, -1, Image.SCALE_SMOOTH);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 }

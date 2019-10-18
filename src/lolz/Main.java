@@ -25,10 +25,7 @@ public class Main {
 
     public Player player;
 
-    public enum COLORS {WHITE, BLACK, RED, SAFFRON, GREEN, PINK, SKYBLUE, BLUE};
-    public COLORS player_color;
-    private float[] rgba_player;
-    public COLORS projectiles_color;
+    public enum COLORS {BLACK, RED, SAFFRON, GREEN, PINK, SKYBLUE, BLUE};
     public static float[] rgba_projectiles;
 
     private Main() {
@@ -60,77 +57,9 @@ public class Main {
         CONTENT_WIDTH = frame.getContentPane().getWidth();
         CONTENT_HEIGHT = frame.getContentPane().getHeight();
 
-        this.player_color = Main.COLORS.WHITE;
-
-        switch (this.player_color) {
-            case BLACK:
-                this.rgba_player = new float[]{0f, 0f, 0f, 1f};
-                break;
-
-            case RED:
-                this.rgba_player = new float[]{1f, 0f, 0f, 1f};
-                break;
-
-            case GREEN:
-                this.rgba_player = new float[]{0f, 01f, 0f, 1f};
-                break;
-
-            case BLUE:
-                this.rgba_player = new float[]{0f, 0f, 1f, 1f};
-                break;
-
-            case SAFFRON:
-                this.rgba_player = new float[]{1f, 1f, 0f, 1f};
-                break;
-
-            case SKYBLUE:
-                this.rgba_player = new float[]{0f, 1f, 1f, 1f};
-                break;
-
-            case PINK:
-                this.rgba_player = new float[]{1f, 0f, 1f, 1f};
-                break;
-
-            default:
-                // leave rgba as null-object
-        }
-
-        this.projectiles_color = COLORS.WHITE;
-
-        switch (this.projectiles_color) {
-            case BLACK:
-                this.rgba_projectiles = new float[]{0f, 0f, 0f, 1f};
-                break;
-
-            case RED:
-                this.rgba_projectiles = new float[]{1f, 0f, 0f, 1f};
-                break;
-
-            case GREEN:
-                this.rgba_projectiles = new float[]{0f, 01f, 0f, 1f};
-                break;
-
-            case BLUE:
-                this.rgba_projectiles = new float[]{0f, 0f, 1f, 1f};
-                break;
-
-            case SAFFRON:
-                this.rgba_projectiles = new float[]{1f, 1f, 0f, 1f};
-                break;
-
-            case SKYBLUE:
-                this.rgba_projectiles = new float[]{0f, 1f, 1f, 1f};
-                break;
-
-            case PINK:
-                this.rgba_projectiles = new float[]{1f, 0f, 1f, 1f};
-                break;
-
-            default:
-                // leave rgba as null-object
-        }
-
-        this.player = new Mage(null, 0, 0, this.rgba_player);
+        this.player = new Mage(null, 0, 0);
+        this.setRgba_projectiles(COLORS.RED);
+        ((Mage) player).loadImages(new float[]{0f, 1f, 1f, 1f});
 
         // updating the game
         while (true) {
@@ -200,6 +129,41 @@ public class Main {
 
     public static void drawReflectImage(Image i, Graphics g, int x, int y) {
         g.drawImage(i, x + i.getWidth(null), y, -i.getWidth(null), i.getHeight(null), null);
+    }
+
+    public void setRgba_projectiles(COLORS color) {
+        switch (color) {
+            case BLACK:
+                this.rgba_projectiles = new float[]{0f, 0f, 0f, 1f};
+                break;
+
+            case RED:
+                this.rgba_projectiles = new float[]{1f, 0f, 0f, 1f};
+                break;
+
+            case GREEN:
+                this.rgba_projectiles = new float[]{0f, 01f, 0f, 1f};
+                break;
+
+            case BLUE:
+                this.rgba_projectiles = new float[]{0f, 0f, 1f, 1f};
+                break;
+
+            case SAFFRON:
+                this.rgba_projectiles = new float[]{1f, 1f, 0f, 1f};
+                break;
+
+            case SKYBLUE:
+                this.rgba_projectiles = new float[]{0f, 1f, 1f, 1f};
+                break;
+
+            case PINK:
+                this.rgba_projectiles = new float[]{1f, 0f, 1f, 1f};
+                break;
+
+            default:
+                // leave rgba as null-object
+        }
     }
 
 }

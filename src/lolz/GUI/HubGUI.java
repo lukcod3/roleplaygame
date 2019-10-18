@@ -1,5 +1,6 @@
 package lolz.GUI;
 
+import lolz.Entity.Fighter;
 import lolz.Entity.Mage;
 import lolz.Entity.Player;
 import lolz.Main;
@@ -28,9 +29,13 @@ public class HubGUI extends JPanel {
              @Override
              public void actionPerformed(ActionEvent actionEvent) {
                  if (/*clickedCount /*wobei clickedCount speichert, ob der Benutzer bereits einmal einen der Knöpfe gedrückt hat = 0*/ 1 == 1) {
-                     main.player_color = Main.COLORS.BLACK;
+                     if (player instanceof Fighter) {
+                         ((Fighter) player).loadImages(new float[]{0f, 0f, 0f, 1f});
+                     } else {
+                         ((Mage) player).loadImages(new float[]{0f, 0f, 0f, 1f});
+                     }
                  } else {
-                     main.projectiles_color = Main.COLORS.BLACK;
+                     main.setRgba_projectiles(Main.COLORS.BLACK);
                  }
              }
         });
@@ -40,21 +45,13 @@ public class HubGUI extends JPanel {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 if (/*clickedCount /*wobei clickedCount speichert, ob der Benutzer bereits einmal einen der Knöpfe gedrückt hat = 0*/ 1 == 1) {
-                    main.player_color = Main.COLORS.RED;
+                    if (player instanceof Fighter) {
+                        ((Fighter) player).loadImages(new float[]{1f, 0f, 0f, 1f});
+                    } else {
+                        ((Mage) player).loadImages(new float[]{1f, 0f, 0f, 1f});
+                    }
                 } else {
-                    main.projectiles_color = Main.COLORS.RED;
-                }
-            }
-        });
-        this.saffron = new JButton("SAFFRON");
-        this.saffron.setBackground(Color.YELLOW);
-        this.black.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
-                if (/*clickedCount /*wobei clickedCount speichert, ob der Benutzer bereits einmal einen der Knöpfe gedrückt hat = 0*/ 1 == 1) {
-                    main.player_color = Main.COLORS.SAFFRON;
-                } else {
-                    main.projectiles_color = Main.COLORS.SAFFRON;
+                    main.setRgba_projectiles(Main.COLORS.RED);
                 }
             }
         });
@@ -64,33 +61,13 @@ public class HubGUI extends JPanel {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 if (/*clickedCount /*wobei clickedCount speichert, ob der Benutzer bereits einmal einen der Knöpfe gedrückt hat = 0*/ 1 == 1) {
-                    main.player_color = Main.COLORS.GREEN;
+                    if (player instanceof Fighter) {
+                        ((Fighter) player).loadImages(new float[]{0f, 1f, 0f, 1f});
+                    } else {
+                        ((Mage) player).loadImages(new float[]{0f, 1f, 0f, 1f});
+                    }
                 } else {
-                    main.projectiles_color = Main.COLORS.GREEN;
-                }
-            }
-        });
-        this.pink = new JButton("PINK");
-        this.pink.setBackground(Color.PINK);
-        this.black.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
-                if (/*clickedCount /*wobei clickedCount speichert, ob der Benutzer bereits einmal einen der Knöpfe gedrückt hat = 0*/ 1 == 1) {
-                    main.player_color = Main.COLORS.PINK;
-                } else {
-                    main.projectiles_color = Main.COLORS.PINK;
-                }
-            }
-        });
-        this.skyblue = new JButton("SKYBLUE");
-        this.skyblue.setBackground(new Color(0, 255, 255));
-        this.black.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
-                if (/*clickedCount /*wobei clickedCount speichert, ob der Benutzer bereits einmal einen der Knöpfe gedrückt hat = 0*/ 1 == 1) {
-                    main.player_color = Main.COLORS.SKYBLUE;
-                } else {
-                    main.projectiles_color = Main.COLORS.SKYBLUE;
+                    main.setRgba_projectiles(Main.COLORS.GREEN);
                 }
             }
         });
@@ -100,9 +77,61 @@ public class HubGUI extends JPanel {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 if (/*clickedCount /*wobei clickedCount speichert, ob der Benutzer bereits einmal einen der Knöpfe gedrückt hat = 0*/ 1 == 1) {
-                    main.player_color = Main.COLORS.BLUE;
+                    if (player instanceof Fighter) {
+                        ((Fighter) player).loadImages(new float[]{0f, 0f, 1f, 1f});
+                    } else {
+                        ((Mage) player).loadImages(new float[]{0f, 0f, 1f, 1f});
+                    }
                 } else {
-                    main.projectiles_color = Main.COLORS.BLUE;
+                    main.setRgba_projectiles(Main.COLORS.BLUE);
+                }
+            }
+        });
+        this.saffron = new JButton("SAFFRON");
+        this.saffron.setBackground(Color.YELLOW);
+        this.black.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                if (/*clickedCount /*wobei clickedCount speichert, ob der Benutzer bereits einmal einen der Knöpfe gedrückt hat = 0*/ 1 == 1) {
+                    if (player instanceof Fighter) {
+                        ((Fighter) player).loadImages(new float[]{1f, 1f, 0f, 1f});
+                    } else {
+                        ((Mage) player).loadImages(new float[]{1f, 1f, 0f, 1f});
+                    }
+                } else {
+                    main.setRgba_projectiles(Main.COLORS.SAFFRON);
+                }
+            }
+        });
+        this.skyblue = new JButton("SKYBLUE");
+        this.skyblue.setBackground(new Color(0, 255, 255));
+        this.black.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                if (/*clickedCount /*wobei clickedCount speichert, ob der Benutzer bereits einmal einen der Knöpfe gedrückt hat = 0*/ 1 == 1) {
+                    if (player instanceof Fighter) {
+                        ((Fighter) player).loadImages(new float[]{0f, 1f, 1f, 1f});
+                    } else {
+                        ((Mage) player).loadImages(new float[]{0f, 1f, 1f, 1f});
+                    }
+                } else {
+                    main.setRgba_projectiles(Main.COLORS.SKYBLUE);
+                }
+            }
+        });
+        this.pink = new JButton("PINK");
+        this.pink.setBackground(Color.PINK);
+        this.black.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                if (/*clickedCount /*wobei clickedCount speichert, ob der Benutzer bereits einmal einen der Knöpfe gedrückt hat = 0*/ 1 == 1) {
+                    if (player instanceof Fighter) {
+                        ((Fighter) player).loadImages(new float[]{1f, 0f, 1f, 1f});
+                    } else {
+                        ((Mage) player).loadImages(new float[]{1f, 0f, 1f, 1f});
+                    }
+                } else {
+                    main.setRgba_projectiles(Main.COLORS.PINK);
                 }
             }
         });
