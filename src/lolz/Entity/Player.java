@@ -1,5 +1,6 @@
 package lolz.Entity;
 
+import lolz.GUI.Inventory;
 import lolz.GUI.Item;
 import lolz.Main;
 import lolz.Maps.Map;
@@ -11,10 +12,10 @@ import java.io.File;
 
 public abstract class Player extends Entity {
     public boolean hasDamaged, holdAttack; // variable true if user makes character hit
-    public Item[] equipment; // 1 is hat, 2 is t-shirt, 3 is sword, 4 is shoes, 5 is necklace, 6 is ring, 7 is belt, 8-11 is depot
     // Ingame stats
     public int level, exp, gold;
     private double baseSpeed;
+    public Inventory inventory;
 
     public Player(Map map, int x, int y) {
         // setup player stats
@@ -24,6 +25,7 @@ public abstract class Player extends Entity {
 
         this.width = 45;
         holdAttack = false;
+        inventory = new Inventory(this);
     }
 
     // set Getters and Setters for attribute hit
@@ -86,9 +88,7 @@ public abstract class Player extends Entity {
             }
         }
 
-        if(this.map instanceof RandomMap) {
-            updatePlayerStats();
-        }
+        updatePlayerStats();
     }
 
     // check if any given entity is "touching" the hero or rather if the hero is touching it
@@ -120,10 +120,10 @@ public abstract class Player extends Entity {
         this.baseSpeed = 0.15;
         for (int i = 0; i < 7; i++) {
             try {
-                this.maxHealth += this.equipment[i].health;
-                this.damage += this.equipment[i].damage;
-                this.armor += this.equipment[i].armor;
-                this.baseSpeed += this.equipment[i].movementspeed;
+                this.maxHealth += this.inventory.equipment[i].health;
+                this.damage += this.inventory.equipment[i].damage;
+                this.armor += this.inventory.equipment[i].armor;
+                this.baseSpeed += this.inventory.equipment[i].movementspeed;
             } catch(Exception e){
 
             }

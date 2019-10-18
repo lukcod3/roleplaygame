@@ -26,6 +26,7 @@ public class Hub extends Map {
         this.player.x = this.WIDTH / 2.0;
         this.player.y = this.HEIGHT / 2.0;
         this.player.directions = new boolean[4];
+        this.player.animation_state = 0;
 
         // setup map
         for (Tile[] tile : this.tiles) {

@@ -8,18 +8,19 @@ import lolz.Maps.Hub;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.*;
 
 public class HubGUI extends JPanel {
 
     private Main main;
     public Hub map;
     private boolean teleport;
-    private JButton standard, black, red, saffron, green, pink, skyblue, blue;
     private boolean clicked, playerChose; //playerChose für Beenden des Auswahlprozesses -> if (player in certain coordinates && !playerChose)
+    private JButton standard, black, red, saffron, green, pink, skyblue, blue;
+    private boolean inEscMenu;
 
     public HubGUI(final Main main, Player player) {
+        this.setLayout(null);
 
         this.main = main;
 
@@ -178,6 +179,7 @@ public class HubGUI extends JPanel {
             }
         });
 
+
         //create map
         this.map = new Hub(player);
         teleport = false;
@@ -190,11 +192,62 @@ public class HubGUI extends JPanel {
             this.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(c, 0, true), c + "Released");
             this.getActionMap().put(c + "Pressed", generateMoveKeyAction(i, true));
             this.getActionMap().put(c + "Released", generateMoveKeyAction(i, false));
-
-
         }
+        // inventory key binding
+        this.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_I, 0, false), KeyEvent.VK_I + "Pressed");
+        this.getActionMap().put(KeyEvent.VK_I + "Pressed", generateInventoryKeyAction());
 
+        this.addMouseListener(new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                map.player.inventory.updateInventory(e);
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+            }
+        });
+
+        this.addMouseMotionListener(new MouseMotionListener() {
+            @Override
+            public void mouseDragged(MouseEvent e) {
+                map.player.inventory.mouseCoordinates[0] = e.getX();
+                map.player.inventory.mouseCoordinates[1] = e.getY();
+            }
+
+            @Override
+            public void mouseMoved(MouseEvent e) {
+                map.player.inventory.mouseCoordinates[0] = e.getX();
+                map.player.inventory.mouseCoordinates[1] = e.getY();
+            }
+        });
     }
+
+    private Action generateInventoryKeyAction() {
+        return new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // change the players directions
+                if (!inEscMenu) {
+                    map.player.inventory.statsShown = !map.player.inventory.statsShown;
+                }
+            }
+        };
+    }
+
 
     private Action generateMoveKeyAction(final int dir, final boolean pressed) {
         return new AbstractAction() {
@@ -210,6 +263,7 @@ public class HubGUI extends JPanel {
 
         // paint map
         this.map.paint(g);
+        this.map.player.inventory.printStats(g);
         // sync graphic
         Toolkit.getDefaultToolkit().sync();
     }

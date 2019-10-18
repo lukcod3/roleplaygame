@@ -174,7 +174,7 @@ public class RandomMap extends Map {
                 removedEntityIndex = 0;
                 removedEntityIndexOld = -1; // this value doesn't have a specific purpose, only needs to be different from any index of this.entities
                 for (int i : new int[]{(int) p.getBoxLowX(), (int) p.getBoxHighX()}) {
-                    System.out.println(get_tile_at(i, (int) (p.getBoxLowY())));
+                    //System.out.println(get_tile_at(i, (int) (p.getBoxLowY())));
                     if (get_tile_at(i, (int) (p.getBoxLowY())).topTiles.isEmpty() && (get_tile_at(i, (int) (p.getBoxLowY())).isGround() || get_tile_at(i, (int) (p.getBoxLowY())).contains(StaticTile.WALL) || get_tile_at(i, (int) (p.getBoxLowY())).contains(StaticTile.WALL_RIGHT) || get_tile_at(i, (int) (p.getBoxLowY())).contains(StaticTile.WALL_LEFT))) {
                         for (Entity entity : this.entities) {
                             if (entity instanceof Monster && p.overlap(entity)) { // check for every monster if it was hit by a projectile
@@ -222,7 +222,6 @@ public class RandomMap extends Map {
                     if (((Fighter) this.player).attack(entity)) {
                         this.removeEntities[this.removeEntityIndex] = this.entities.indexOf(entity);
                         this.removeEntityIndex += 1;
-                        this.player.giveXP(10);
                     }
                 }
             }
@@ -236,6 +235,7 @@ public class RandomMap extends Map {
                 this.removeEntities[i] = 0;
                 this.removeEntityIndex -= 1;
                 this.monsterCount -= 1;
+                this.player.giveXP((int)(Math.random()*10) + 12);
             }
         }
 
