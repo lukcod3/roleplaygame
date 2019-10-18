@@ -60,7 +60,7 @@ public class Item {
                     }
                     break;
                 case 3:
-                    this.movementspeed = 0.05 + (int) ((Math.random()+1)*(itemNr+1))*0.05;
+                    this.movementspeed = 0.05 + (int) ((Math.random()+1)*(itemNr))*0.04;
                     break;
                 case 4:
                     if(Math.random() < 0.3 + this.itemNr * 0.13){

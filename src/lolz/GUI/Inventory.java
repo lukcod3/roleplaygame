@@ -46,6 +46,7 @@ public class Inventory extends JPanel {
             item[1][i] = new Item(1, i);
             item[2][i] = new Item(2, i);
             item[3][i] = new Item(3, i);
+            
             item[4][i] = new Item(4, i);
             item[5][i] = new Item(5, i);
             item[6][i] = new Item(6, i);

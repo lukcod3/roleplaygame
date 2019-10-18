@@ -1,6 +1,7 @@
 package lolz.Maps;
 
 import lolz.Entity.Player;
+import lolz.Entity.Shopkeeper;
 import lolz.GUI.Tile;
 import lolz.Main;
 
@@ -14,6 +15,7 @@ public class Hub extends Map {
     private BufferedImage[][] portal;
     public double portalState;
     public int portalStage;
+    public Shopkeeper shopkeeper;
 
     public Hub(Player player) {
         super(600, 500);
@@ -27,6 +29,8 @@ public class Hub extends Map {
         this.player.y = this.HEIGHT / 2.0;
         this.player.directions = new boolean[4];
         this.player.animation_state = 0;
+
+        shopkeeper = new Shopkeeper();
 
         // setup map
         for (Tile[] tile : this.tiles) {
@@ -83,7 +87,7 @@ public class Hub extends Map {
             }
         }
         g.drawImage(this.portal[this.portalStage][((int) this.portalState)%(this.portal[this.portalStage].length)].getScaledInstance(120, -1, Image.SCALE_DEFAULT), 430, 40, null);
-
+        this.shopkeeper.paint(g);
         // draw player
         this.player.paint(g);
 
@@ -96,5 +100,6 @@ public class Hub extends Map {
     public void update(int time) {
         this.portalState+= 0.1;
         this.player.update(time);
+        this.shopkeeper.update();
     }
 }
