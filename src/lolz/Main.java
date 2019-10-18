@@ -55,8 +55,8 @@ public class Main {
         CONTENT_WIDTH = frame.getContentPane().getWidth();
         CONTENT_HEIGHT = frame.getContentPane().getHeight();
 
+        this.rgba = new float[]{0.5f, 0.75f, 0.25f, 1f};
         this.player = new Mage(null, 0, 0, this.rgba);
-        this.rgba = new float[]{0.5f, 0.5f, 0.5f, 0.5f};
 
         // updating the game
         while (true) {
