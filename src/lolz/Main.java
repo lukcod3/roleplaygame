@@ -25,11 +25,10 @@ public class Main {
 
     public Player player;
 
-    private enum PLAYER_COLORS {WHITE, BLACK, RED, SAFFRON, GREEN, PINK, SKYBLUE, BLUE};
-    private PLAYER_COLORS player_color;
+    public enum COLORS {WHITE, BLACK, RED, SAFFRON, GREEN, PINK, SKYBLUE, BLUE};
+    public COLORS player_color;
     private float[] rgba_player;
-    private enum PROJECTILE_COLORS {WHITE, BLACK, RED, SAFFRON, GREEN, PINK, SKYBLUE, BLUE};
-    private PROJECTILE_COLORS projectiles_color;
+    public COLORS projectiles_color;
     public static float[] rgba_projectiles;
 
     private Main() {
@@ -61,7 +60,7 @@ public class Main {
         CONTENT_WIDTH = frame.getContentPane().getWidth();
         CONTENT_HEIGHT = frame.getContentPane().getHeight();
 
-        this.player_color = PLAYER_COLORS.WHITE;
+        this.player_color = Main.COLORS.WHITE;
 
         switch (this.player_color) {
             case BLACK:
@@ -96,7 +95,7 @@ public class Main {
                 // leave rgba as null-object
         }
 
-        this.projectiles_color = PROJECTILE_COLORS.WHITE;
+        this.projectiles_color = COLORS.WHITE;
 
         switch (this.projectiles_color) {
             case BLACK:
