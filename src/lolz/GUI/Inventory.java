@@ -1,5 +1,6 @@
 package lolz.GUI;
 
+import lolz.Entity.Fighter;
 import lolz.Entity.Player;
 import lolz.Main;
 
@@ -77,21 +78,47 @@ public class Inventory extends JPanel {
             g.drawString("Gold........................................" + this.player.gold, 200, 330);
             g.drawString("Level............." + this.player.level + "(" + this.player.exp + " XP/" + (90 + 10 * this.player.level * this.player.level) + " XP)", 200, 360); // needs formula for maxXP
             // draw player
-            if (this.player.turnedRight) {
-                if (this.player.getHitting()) { // is able to hit while running and while standing still -> always checks if hit is true regardless of moving
-                    g.drawImage(this.player.img[2][(int) this.player.animation_state % 5].getScaledInstance(120, -1, Image.SCALE_DEFAULT), X_POSITION_IMAGE_INVENTORY, Y_POSITION_IMAGE_INVENTORY, null); // set player's animation to hit animation
-                } else if (this.player.isMoving) {
-                    g.drawImage(this.player.img[1][(int) this.player.animation_state % 6].getScaledInstance(120, -1, Image.SCALE_DEFAULT), X_POSITION_IMAGE_INVENTORY, Y_POSITION_IMAGE_INVENTORY, null);
+            if (this.player instanceof Fighter) {
+                if (this.player.turnedRight) {
+                    if (this.player.getHitting()) { // is able to hit while running and while standing still -> always checks if hit is true regardless of moving
+                        g.drawImage(this.player.img[2][(int) this.player.animation_state % 5].getScaledInstance(120, -1, Image.SCALE_DEFAULT), X_POSITION_IMAGE_INVENTORY, Y_POSITION_IMAGE_INVENTORY, null); // set player's animation to hit animation
+                    } else if (this.player.isMoving) {
+                        g.drawImage(this.player.img[1][(int) this.player.animation_state % 6].getScaledInstance(120, -1, Image.SCALE_DEFAULT), X_POSITION_IMAGE_INVENTORY, Y_POSITION_IMAGE_INVENTORY, null);
+                    } else {
+                        g.drawImage(this.player.img[0][(int) this.player.animation_state % 4].getScaledInstance(120, -1, Image.SCALE_DEFAULT), X_POSITION_IMAGE_INVENTORY, Y_POSITION_IMAGE_INVENTORY, null);
+                    }
                 } else {
-                    g.drawImage(this.player.img[0][(int) this.player.animation_state % 4].getScaledInstance(120, -1, Image.SCALE_DEFAULT), X_POSITION_IMAGE_INVENTORY, Y_POSITION_IMAGE_INVENTORY, null);
+                    if (this.player.getHitting()) { // is able to hit while running and while standing still -> always checks if hit is true regardless of moving
+                        Main.drawReflectImage(this.player.img[2][(int) this.player.animation_state % 5].getScaledInstance(120, -1, Image.SCALE_DEFAULT), g, X_POSITION_IMAGE_INVENTORY, Y_POSITION_IMAGE_INVENTORY);
+                    } else if (this.player.isMoving) {
+                        Main.drawReflectImage(this.player.img[1][(int) this.player.animation_state % 6].getScaledInstance(120, -1, Image.SCALE_DEFAULT), g, X_POSITION_IMAGE_INVENTORY, Y_POSITION_IMAGE_INVENTORY);
+                    } else {
+                        Main.drawReflectImage(this.player.img[0][(int) this.player.animation_state % 4].getScaledInstance(120, -1, Image.SCALE_DEFAULT), g, X_POSITION_IMAGE_INVENTORY, Y_POSITION_IMAGE_INVENTORY);
+                    }
                 }
             } else {
-                if (this.player.getHitting()) { // is able to hit while running and while standing still -> always checks if hit is true regardless of moving
-                    Main.drawReflectImage(this.player.img[2][(int) this.player.animation_state % 5].getScaledInstance(120, -1, Image.SCALE_DEFAULT), g, X_POSITION_IMAGE_INVENTORY, Y_POSITION_IMAGE_INVENTORY);
-                } else if (this.player.isMoving) {
-                    Main.drawReflectImage(this.player.img[1][(int) this.player.animation_state % 6].getScaledInstance(120, -1, Image.SCALE_DEFAULT), g, X_POSITION_IMAGE_INVENTORY, Y_POSITION_IMAGE_INVENTORY);
+                if (!this.player.turnedRight) {
+                    if (this.player.isHitting) { // is able to hit while running and while standing still -> always checks if hit is true regardless of moving
+                        int offset = (int) ((1.6 * this.player.img[2][(int) this.player.animation_state % 5].getWidth(null) - this.player.width) / 2);
+                        g.drawImage(this.player.img[2][(int) this.player.animation_state % 5].getScaledInstance(120, -1, Image.SCALE_DEFAULT), X_POSITION_IMAGE_INVENTORY - offset, Y_POSITION_IMAGE_INVENTORY, null); // set player's animation to hit animation
+                    } else if (this.player.isMoving) {
+                        int offset = (int) ((1.6 * this.player.img[1][(int) this.player.animation_state % 6].getWidth(null) - this.player.width) / 2);
+                        g.drawImage(this.player.img[1][(int) this.player.animation_state % 6].getScaledInstance(120, -1, Image.SCALE_DEFAULT), X_POSITION_IMAGE_INVENTORY - offset, Y_POSITION_IMAGE_INVENTORY, null);
+                    } else {
+                        int offset = (int) ((1.6 * this.player.img[0][(int) this.player.animation_state % 4].getWidth(null) - this.player.width) / 2);
+                        g.drawImage(this.player.img[0][(int) this.player.animation_state % 4].getScaledInstance(120, -1, Image.SCALE_DEFAULT), X_POSITION_IMAGE_INVENTORY - offset, Y_POSITION_IMAGE_INVENTORY, null);
+                    }
                 } else {
-                    Main.drawReflectImage(this.player.img[0][(int) this.player.animation_state % 4].getScaledInstance(120, -1, Image.SCALE_DEFAULT), g, X_POSITION_IMAGE_INVENTORY, Y_POSITION_IMAGE_INVENTORY);
+                    if (this.player.isHitting) { // is able to hit while running and while standing still -> always checks if hit is true regardless of moving
+                        int offset = (int) ((1.6 * this.player.img[2][(int) this.player.animation_state % 5].getWidth(null) - this.player.width) / 2);
+                        Main.drawReflectImage(this.player.img[2][(int) this.player.animation_state % 5].getScaledInstance(120, -1, Image.SCALE_DEFAULT), g, X_POSITION_IMAGE_INVENTORY + offset, Y_POSITION_IMAGE_INVENTORY);
+                    } else if (this.player.isMoving) {
+                        int offset = (int) ((1.6 * this.player.img[1][(int) this.player.animation_state % 6].getWidth(null) - this.player.width) / 2);
+                        Main.drawReflectImage(this.player.img[1][(int) this.player.animation_state % 6].getScaledInstance(120, -1, Image.SCALE_DEFAULT), g, X_POSITION_IMAGE_INVENTORY + offset, Y_POSITION_IMAGE_INVENTORY);
+                    } else {
+                        int offset = (int) ((1.6 * this.player.img[0][(int) this.player.animation_state % 4].getWidth(null) - this.player.width) / 2);
+                        Main.drawReflectImage(this.player.img[0][(int) this.player.animation_state % 4].getScaledInstance(120, -1, Image.SCALE_DEFAULT), g, X_POSITION_IMAGE_INVENTORY + offset, Y_POSITION_IMAGE_INVENTORY);
+                    }
                 }
             }
             // draw inventory images
