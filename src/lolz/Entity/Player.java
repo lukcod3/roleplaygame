@@ -5,9 +5,8 @@ import lolz.Maps.Map;
 import lolz.Maps.RandomMap;
 
 public abstract class Player extends Entity {
-    boolean hasDamaged; // variable true if user makes character hit
+    public boolean hasDamaged, holdAttack; // variable true if user makes character hit
     public Item[] equipment; // 1 is hat, 2 is t-shirt, 3 is sword, 4 is shoes, 5 is necklace, 6 is ring, 7 is belt, 8-11 is depot
-    public boolean allowedToMove;
     // Ingame stats
     public int level, exp, gold;
     public double baseSpeed;
@@ -19,8 +18,7 @@ public abstract class Player extends Entity {
         this.level = 1;
 
         this.width = 45;
-
-        allowedToMove = true;
+        holdAttack = false;
     }
 
     // set Getters and Setters for attribute hit
@@ -46,8 +44,19 @@ public abstract class Player extends Entity {
         // update player graphic stats
         if (isHitting) {
             this.animation_state += (float) time / 100;
-            if (this.animation_state >= 5) {
-                this.setHitting(false);
+            if(this instanceof Mage) {
+                this.allowedToMove = false;
+                if (this.animation_state >= 5 && !this.holdAttack) {
+                    this.setHitting(false);
+                    this.allowedToMove = true;
+                }
+                if (this.animation_state > 5.5) {
+                    animation_state -= 5;
+                }
+            } else{
+                if(this.animation_state >= 5){
+                    this.setHitting(false);
+                }
             }
         } else if (isMoving) {
             this.animation_state += (float) time / 100;
@@ -114,7 +123,7 @@ public abstract class Player extends Entity {
 
             }
         }
-        this.speed = this.isHitting ? this.baseSpeed/3 : this.baseSpeed;
+        this.speed = (!(this instanceof Mage))&&this.isHitting ? this.baseSpeed/3 : this.baseSpeed;
     }
 
 }

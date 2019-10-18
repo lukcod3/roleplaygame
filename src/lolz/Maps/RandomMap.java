@@ -15,6 +15,7 @@ public class RandomMap extends Map {
 
     BufferedImage[] portal;
     public double portalState;
+    public boolean playerPortChanneled;
 
     public RandomMap(Player player) {
         // setup map
@@ -24,6 +25,7 @@ public class RandomMap extends Map {
         generateMap();
         portal = new BufferedImage[8];
         portalState = 0;
+        this.playerPortChanneled = false;
 
         // spawn player
         //this.player = new Mage(this, (this.VIRTUAL_WIDTH / 2) * Main.TILE_SIZE, (this.VIRTUAL_HEIGHT / 2) * Main.TILE_SIZE);
@@ -258,11 +260,12 @@ public class RandomMap extends Map {
 
     public void paint(Graphics g) {
         super.paint(g);
-        if (portalState < 8) {
-            player.allowedToMove = false;
-            g.drawImage(portal[((int) portalState)].getScaledInstance(120, -1, Image.SCALE_DEFAULT), 410, 240, null);
-        } else {
+        if (this.portalState < 8) {
+            this.player.allowedToMove = false;
+            g.drawImage(portal[((int) portalState)].getScaledInstance(120, -1, Image.SCALE_DEFAULT), 410, 180, null);
+        } else if(!this.playerPortChanneled){
             player.allowedToMove = true;
+            this.playerPortChanneled = true;
         }
     }
 }

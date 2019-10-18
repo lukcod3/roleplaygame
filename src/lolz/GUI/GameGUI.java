@@ -1,5 +1,6 @@
 package lolz.GUI;
 
+import lolz.Entity.Fighter;
 import lolz.Entity.Player;
 import lolz.Main;
 import lolz.Maps.Map;
@@ -78,6 +79,7 @@ public class GameGUI extends JPanel {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        // initialize Items
         item = new Item[7][5];
         for (int i = 0; i <= 4; i++) {
             item[0][i] = new Item(0, i);
@@ -191,7 +193,9 @@ public class GameGUI extends JPanel {
 
         //add the key binding for the players attack
         this.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_J, 0, false), KeyEvent.VK_J + "Pressed");
-        this.getActionMap().put(KeyEvent.VK_J + "Pressed", generateAttackKeyAction());
+        this.getActionMap().put(KeyEvent.VK_J + "Pressed", generateAttackKeyAction(true));
+        this.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_J, 0, true), KeyEvent.VK_J + "Released");
+        this.getActionMap().put(KeyEvent.VK_J + "Released", generateAttackKeyAction(false));
 
         // key bindings for player stats
         this.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_I, 0, false), KeyEvent.VK_I + "Pressed");
@@ -210,21 +214,28 @@ public class GameGUI extends JPanel {
         return new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (!inEscMenu && map.player.allowedToMove) {
-                    // change the players directions
-                    map.player.directions[dir] = pressed;
+                if ((!inEscMenu && map.player.allowedToMove) || !pressed) {
+                        // change the players directions
+                        map.player.directions[dir] = pressed;
                 }
             }
         };
     }
 
-    private Action generateAttackKeyAction() {
+    private Action generateAttackKeyAction(boolean pressed) {
         return new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (!inEscMenu && !map.player.getHitting()) {
-                    map.player.setHitting(true);
+                if (pressed) {
+                    if (!inEscMenu && !map.player.getHitting()) {
+                        map.player.setHitting(true);
+                    }
+                    map.player.allowedToMove = false;
+                } else {
+                    map.player.allowedToMove = true;
                 }
+                map.player.allowedToMove = map.player instanceof Fighter || map.player.allowedToMove;
+                map.player.holdAttack = !map.player.allowedToMove;
             }
         };
     }
@@ -297,6 +308,7 @@ public class GameGUI extends JPanel {
 
         g.setColor(Color.BLACK);
         this.printStats(g);
+        // draw player health rectangles
         Font font = new Font("SansSerif", Font.BOLD, 25);
         g.setFont(font);
         g.setColor(new Color(255, 255, 255, 50));
@@ -362,7 +374,7 @@ public class GameGUI extends JPanel {
 
         // paint player stats
         if (statsShown) {
-
+            // draw stats
             Color myColor = new Color(56, 56, 56, 165);
             Font titleF = new Font("SansSerif", Font.BOLD, 25);
             Font statsF = new Font("SansSerif", Font.PLAIN, 15);
@@ -380,7 +392,7 @@ public class GameGUI extends JPanel {
             g.drawString("Lauftempo..........................." + new DecimalFormat("#.##").format(this.map.player.speed), 200, 220);
             g.drawString("Gold........................................" + this.map.player.gold, 200, 330);
             g.drawString("Level............." + this.map.player.level + "(" + this.map.player.exp + " XP/" + (90 + 10 * this.map.player.level * this.map.player.level) + " XP)", 200, 360); // needs formula for maxXP
-
+            // draw player
             if (this.map.player.turnedRight) {
                 if (this.map.player.getHitting()) { // is able to hit while running and while standing still -> always checks if hit is true regardless of moving
                     g.drawImage(this.map.player.img[2][(int) this.map.player.animation_state % 5].getScaledInstance(120, -1, Image.SCALE_DEFAULT), xPositionImageInventory, yPositionImageInventory, null); // set player's animation to hit animation
@@ -398,7 +410,7 @@ public class GameGUI extends JPanel {
                     Main.drawReflectImage(this.map.player.img[0][(int) this.map.player.animation_state % 4].getScaledInstance(120, -1, Image.SCALE_DEFAULT), g, xPositionImageInventory, yPositionImageInventory);
                 }
             }
-
+            // draw inventory images
             g.drawImage(this.map.player.equipment[0].image.getScaledInstance(60, -1, Image.SCALE_DEFAULT), 590, 100, null);
             g.drawImage(this.map.player.equipment[1].image.getScaledInstance(60, -1, Image.SCALE_DEFAULT), 500, 180, null);
             g.drawImage(this.map.player.equipment[2].image.getScaledInstance(60, -1, Image.SCALE_DEFAULT), 500, 255, null);

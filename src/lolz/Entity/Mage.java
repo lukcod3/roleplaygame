@@ -17,6 +17,7 @@ public class Mage extends Player {
         this.img[0] = new Image[4];
         this.img[1] = new Image[6];
         this.img[2] = new Image[5];
+        // load images
         try {
             for (int i = 0; i < 4; i++) {
                 img[0][i] = ImageIO.read(new File("res/monster/Necromancer/Individual Sprites/necromancer-idle-0" + i + ".png")).getScaledInstance(Main.ENTITY_WIDTH, -1, Image.SCALE_SMOOTH);

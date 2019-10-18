@@ -57,12 +57,12 @@ public class HubGUI extends JPanel {
     }
 
     public void update(int time) {
-        if (((this.map.player instanceof Mage && this.map.player.getY() <= 170) ||(this.map.player.getY() <= 100)) && this.map.player.getX() >= 420 && !this.teleport) {
+        this.map.update(time);
+        if (((this.map.player instanceof Mage && this.map.player.getY() <= 170) ||(this.map.player.getY() <= 150)) && this.map.player.getX() >= 420 && !this.teleport) {
             this.teleport = true;
             this.map.player.allowedToMove = false;
             this.map.portalStage = 1;
             this.map.portalState = 0.1;
-            this.map.player.directions = new boolean[4];
         }
 
         if(this.teleport && this.map.portalState > 5.9){
@@ -72,7 +72,6 @@ public class HubGUI extends JPanel {
             this.map.player.allowedToMove = true;
         }
         // update the players position
-        this.map.update(time);
     }
 
 }
