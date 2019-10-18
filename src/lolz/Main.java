@@ -130,7 +130,7 @@ public class Main {
                 // leave rgba as null-object
         }
 
-        this.player = new Mage(null, 0, 0, this.rgba_player);
+        this.player = new Fighter(null, 0, 0, this.rgba_player);
 
         // updating the game
         while (true) {
@@ -180,7 +180,7 @@ public class Main {
 
     private void updateGame(int time) {
         ((GameGUI) activePanel).update(time);
-        ((GameGUI) activePanel).frameLocation = frame.getLocationOnScreen();
+        ((GameGUI) activePanel).map.player.inventory.frameLocation = frame.getLocationOnScreen();
         if (((GameGUI) activePanel).map.monsterCount == 0) {
             startHub();
         }
