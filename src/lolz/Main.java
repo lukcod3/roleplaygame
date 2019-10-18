@@ -24,9 +24,13 @@ public class Main {
     private JPanel activePanel;
 
     public Player player;
+
     private enum PLAYER_COLORS {WHITE, BLACK, RED, SAFFRON, GREEN, PINK, SKYBLUE, BLUE};
     private PLAYER_COLORS player_color;
-    private float[] rgba;
+    private float[] rgba_player;
+    private enum PROJECTILE_COLORS {WHITE, BLACK, RED, SAFFRON, GREEN, PINK, SKYBLUE, BLUE};
+    private PROJECTILE_COLORS projectiles_color;
+    public static float[] rgba_projectiles;
 
     private Main() {
 
@@ -61,38 +65,73 @@ public class Main {
 
         switch (this.player_color) {
             case BLACK:
-                this.rgba = new float[]{0f, 0f, 0f, 1f};
+                this.rgba_player = new float[]{0f, 0f, 0f, 1f};
                 break;
 
             case RED:
-                this.rgba = new float[]{1f, 0f, 0f, 1f};
+                this.rgba_player = new float[]{1f, 0f, 0f, 1f};
                 break;
 
             case GREEN:
-                this.rgba = new float[]{0f, 01f, 0f, 1f};
+                this.rgba_player = new float[]{0f, 01f, 0f, 1f};
                 break;
 
             case BLUE:
-                this.rgba = new float[]{0f, 0f, 1f, 1f};
+                this.rgba_player = new float[]{0f, 0f, 1f, 1f};
                 break;
 
             case SAFFRON:
-                this.rgba = new float[]{1f, 1f, 0f, 1f};
+                this.rgba_player = new float[]{1f, 1f, 0f, 1f};
                 break;
 
             case SKYBLUE:
-                this.rgba = new float[]{0f, 1f, 1f, 1f};
+                this.rgba_player = new float[]{0f, 1f, 1f, 1f};
                 break;
 
             case PINK:
-                this.rgba = new float[]{1f, 0f, 1f, 1f};
+                this.rgba_player = new float[]{1f, 0f, 1f, 1f};
                 break;
 
             default:
                 // leave rgba as null-object
         }
 
-        this.player = new Mage(null, 0, 0, this.rgba);
+        this.projectiles_color = PROJECTILE_COLORS.WHITE;
+
+        switch (this.projectiles_color) {
+            case BLACK:
+                this.rgba_projectiles = new float[]{0f, 0f, 0f, 1f};
+                break;
+
+            case RED:
+                this.rgba_projectiles = new float[]{1f, 0f, 0f, 1f};
+                break;
+
+            case GREEN:
+                this.rgba_projectiles = new float[]{0f, 01f, 0f, 1f};
+                break;
+
+            case BLUE:
+                this.rgba_projectiles = new float[]{0f, 0f, 1f, 1f};
+                break;
+
+            case SAFFRON:
+                this.rgba_projectiles = new float[]{1f, 1f, 0f, 1f};
+                break;
+
+            case SKYBLUE:
+                this.rgba_projectiles = new float[]{0f, 1f, 1f, 1f};
+                break;
+
+            case PINK:
+                this.rgba_projectiles = new float[]{1f, 0f, 1f, 1f};
+                break;
+
+            default:
+                // leave rgba as null-object
+        }
+
+        this.player = new Mage(null, 0, 0, this.rgba_player);
 
         // updating the game
         while (true) {

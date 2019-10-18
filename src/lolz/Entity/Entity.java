@@ -4,6 +4,7 @@ import lolz.Main;
 import lolz.Maps.Map;
 
 import java.awt.*;
+import java.awt.image.BufferedImage;
 
 public abstract class Entity {
     public double x, y, speed, animation_state;
@@ -122,6 +123,31 @@ public abstract class Entity {
         }
     }
 
+    static BufferedImage tint(float r, float g, float b, float a, BufferedImage sprite)
+    {
+        BufferedImage tintedSprite = new BufferedImage(sprite.getWidth(), sprite.getHeight(), BufferedImage.TRANSLUCENT);
+        Graphics2D graphics = tintedSprite.createGraphics();
+        graphics.drawImage(sprite, 0, 0, null);
+        graphics.dispose();
+
+        for (int i = 0; i < tintedSprite.getWidth(); i++)
+        {
+            for (int j = 0; j < tintedSprite.getHeight(); j++)
+            {
+                int ax = tintedSprite.getColorModel().getAlpha(tintedSprite.getRaster().getDataElements(i, j, null));
+                int rx = tintedSprite.getColorModel().getRed(tintedSprite.getRaster().getDataElements(i, j, null));
+                int gx = tintedSprite.getColorModel().getGreen(tintedSprite.getRaster().getDataElements(i, j, null));
+                int bx = tintedSprite.getColorModel().getBlue(tintedSprite.getRaster().getDataElements(i, j, null));
+                rx *= r;
+                gx *= g;
+                bx *= b;
+                ax *= a;
+                tintedSprite.setRGB(i, j, (ax << 24) | (rx << 16) | (gx << 8) | (bx));
+            }
+        }
+        return tintedSprite;
+    }
+
     private void setMaxHealth(int maxHealth) {
         this.maxHealth = maxHealth;
     }
@@ -161,7 +187,6 @@ public abstract class Entity {
     public int getVirtualY() {
         return (int) (this.y / Main.TILE_SIZE);
     }
-
 
     public int getWidth() {
         return width;
