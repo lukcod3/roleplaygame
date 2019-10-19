@@ -153,10 +153,10 @@ public class Item {
         }
         if(inShop) {
             g.drawString("Kaufpreis: " + kaufen, Main.mouseCoordinates[0] - 100, Main.mouseCoordinates[1] - 30 - neededSpace);
-            g.drawImage(Main.goldImage.getScaledInstance(-1, 18, Image.SCALE_DEFAULT), Main.mouseCoordinates[0] + 20, Main.mouseCoordinates[1] - 45 - neededSpace, null);
+            g.drawImage(Main.goldImage.getScaledInstance(-1, 18, Image.SCALE_DEFAULT), Main.mouseCoordinates[0] + 5, Main.mouseCoordinates[1] - 45 - neededSpace, null);
         } else{
             g.drawString("Verkaufpreis: " + verkaufen, Main.mouseCoordinates[0] - 100, Main.mouseCoordinates[1] - 30 - neededSpace);
-            g.drawImage(Main.goldImage.getScaledInstance(-1, 18, Image.SCALE_DEFAULT), Main.mouseCoordinates[0] + 20, Main.mouseCoordinates[1] - 45 - neededSpace, null);
+            g.drawImage(Main.goldImage.getScaledInstance(-1, 18, Image.SCALE_DEFAULT), Main.mouseCoordinates[0] + 23, Main.mouseCoordinates[1] - 45 - neededSpace, null);
         }
     }
 }

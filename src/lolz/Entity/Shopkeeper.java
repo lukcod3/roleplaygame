@@ -148,13 +148,21 @@ public class Shopkeeper {
                     g.drawImage(inventoryImages[2].getScaledInstance(235, -1, Image.SCALE_DEFAULT), oldCoordinates[0] + 10, oldCoordinates[1] - 30, null);
                     readyForBuy = false;
                 }
+            } else if (showButton && aktShopInventar > 0 && aktShopInventar < 7) {
+                if (isCourserInRectangle(oldCoordinates[0] + 10, oldCoordinates[0] + 255, oldCoordinates[1] - 30, oldCoordinates[1] + 3)) {
+                    g.drawImage(inventoryImages[1].getScaledInstance(235, -1, Image.SCALE_DEFAULT), oldCoordinates[0] + 10, oldCoordinates[1] - 30, null);
+                    readyForBuy = true;
+                } else {
+                    g.drawImage(inventoryImages[0].getScaledInstance(235, -1, Image.SCALE_DEFAULT), oldCoordinates[0] + 10, oldCoordinates[1] - 30, null);
+                    readyForBuy = false;
+                }
             } else {
                 readyForBuy = false;
                 if (hoverInventory != 0) {
                     this.player.inventory.equipment[hoverInventory - 1].drawItemStats(g, false);
                 }
-                if (hoverShop != 0){
-                    this.shop[hoverShop-1].drawItemStats(g, true);
+                if (hoverShop != 0) {
+                    this.shop[hoverShop - 1].drawItemStats(g, true);
                 }
             }
         }
@@ -225,7 +233,7 @@ public class Shopkeeper {
                 oldCoordinates[1] = Main.mouseCoordinates[1];
             }
             if (aktShopInventar != 0) {
-                //showButton = true;
+                showButton = true;
                 oldCoordinates[0] = Main.mouseCoordinates[0];
                 oldCoordinates[1] = Main.mouseCoordinates[1];
             }
@@ -235,22 +243,15 @@ public class Shopkeeper {
                 readyForBuy = false;
                 showButton = false;
                 if (aktInventar > 0 && aktInventar < 8) {
-                    for (int i = 0; i < 4; i++) {
-                        if (this.player.inventory.equipment[7 + i] == null) {
-                            this.player.inventory.equipment[7 + i] = this.player.inventory.equipment[aktInventar - 1];
-                            this.player.inventory.equipment[aktInventar - 1] = player.inventory.item[aktInventar - 1][0];
-                            break;
-                        }
+                    this.player.gold += this.player.inventory.equipment[aktInventar - 1].verkaufen;
+                    this.player.inventory.equipment[aktInventar - 1] = this.player.inventory.item[this.player.inventory.equipment[aktInventar-1].typ][0];
+                } else if(aktInventar > 7 && aktInventar < 12){
+                    this.player.gold += this.player.inventory.equipment[aktInventar - 1].verkaufen;
+                    this.player.inventory.equipment[aktInventar - 1] = null;
+                } else if(aktShopInventar > 0 && aktShopInventar < 7 && this.shop[aktShopInventar-1].kaufen <= this.player.gold){
+                    if(this.player.inventory.equipment[shop[aktShopInventar-1].typ].itemNr == 0){
+                        this.player.inventory.equipment[shop[aktShopInventar-1].typ] = shop[aktShopInventar-1];
                     }
-
-                } else {
-                    Item hilf = this.player.inventory.equipment[aktInventar - 1];
-                    if (this.player.inventory.equipment[hilf.typ] == player.inventory.item[hilf.typ][0]) {
-                        this.player.inventory.equipment[aktInventar - 1] = null;
-                    } else {
-                        this.player.inventory.equipment[aktInventar - 1] = this.player.inventory.equipment[hilf.typ];
-                    }
-                    this.player.inventory.equipment[hilf.typ] = hilf;
                 }
             } else {
                 showButton = false;
