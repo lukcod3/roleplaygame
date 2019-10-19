@@ -16,13 +16,13 @@ public class Item {
         generateItemStats();
         try {
             switch (typ){
-                case 0: image = ImageIO.read(new File("res/inventory/hut" + itemNr + ".png")); break;
-                case 1: image = ImageIO.read(new File("res/inventory/ruestung" + itemNr + ".png")); break;
-                case 2: image = ImageIO.read(new File("res/inventory/schwert" + itemNr + ".png")); break;
-                case 3: image = ImageIO.read(new File("res/inventory/schuhe" + itemNr + ".png")); break;
-                case 4: image = ImageIO.read(new File("res/inventory/kette" + itemNr + ".png")); break;
-                case 5: image = ImageIO.read(new File("res/inventory/ring" + itemNr + ".png")); break;
-                case 6: image = ImageIO.read(new File("res/inventory/guertel" + itemNr + ".png")); break;
+                case 0: image = ImageIO.read(new File("res/inventory/hut" + itemNr + ".png")).getScaledInstance(60, -1, Image.SCALE_DEFAULT); break;
+                case 1: image = ImageIO.read(new File("res/inventory/ruestung" + itemNr + ".png")).getScaledInstance(60, -1, Image.SCALE_DEFAULT); break;
+                case 2: image = ImageIO.read(new File("res/inventory/schwert" + itemNr + ".png")).getScaledInstance(60, -1, Image.SCALE_DEFAULT); break;
+                case 3: image = ImageIO.read(new File("res/inventory/schuhe" + itemNr + ".png")).getScaledInstance(60, -1, Image.SCALE_DEFAULT); break;
+                case 4: image = ImageIO.read(new File("res/inventory/kette" + itemNr + ".png")).getScaledInstance(60, -1, Image.SCALE_DEFAULT); break;
+                case 5: image = ImageIO.read(new File("res/inventory/ring" + itemNr + ".png")).getScaledInstance(60, -1, Image.SCALE_DEFAULT); break;
+                case 6: image = ImageIO.read(new File("res/inventory/guertel" + itemNr + ".png")).getScaledInstance(60, -1, Image.SCALE_DEFAULT); break;
             }
         } catch (Exception e){
             e.printStackTrace();

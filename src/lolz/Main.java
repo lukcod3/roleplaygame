@@ -57,9 +57,9 @@ public class Main {
         CONTENT_WIDTH = frame.getContentPane().getWidth();
         CONTENT_HEIGHT = frame.getContentPane().getHeight();
 
-        this.player = new Mage(null, 0, 0);
+        this.player = new Fighter(null, 0, 0);
         this.setRgba_projectiles(COLORS.RED);
-        ((Mage) player).loadImages(new float[]{0f, 1f, 1f, 1f});
+        if(player instanceof  Mage) ((Mage) player).loadImages(new float[]{0f, 1f, 1f, 1f});
 
         // updating the game
         while (true) {

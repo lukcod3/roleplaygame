@@ -30,7 +30,7 @@ public class Hub extends Map {
         this.player.directions = new boolean[4];
         this.player.animation_state = 0;
 
-        shopkeeper = new Shopkeeper();
+        shopkeeper = new Shopkeeper(this.player);
 
         // setup map
         for (Tile[] tile : this.tiles) {
@@ -93,6 +93,7 @@ public class Hub extends Map {
 
         // translate back
         g.translate((int) (this.player.x - Main.WIDTH / 2), (int) (this.player.y - Main.HEIGHT / 2));
+        this.shopkeeper.printShop(g);
     }
 
 

@@ -35,7 +35,7 @@ public class Inventory extends JPanel {
             inventoryImages[1] = ImageIO.read(new File("res/inventory/gegenstandAblegen_an.png"));
             inventoryImages[2] = ImageIO.read(new File("res/inventory/anlegen_aus.png"));
             inventoryImages[3] = ImageIO.read(new File("res/inventory/anlegen_an.png"));
-            emptyInventory = ImageIO.read(new File("res/inventory/freiPlatz.png"));
+            emptyInventory = ImageIO.read(new File("res/inventory/freiPlatz.png")).getScaledInstance(60, -1, Image.SCALE_DEFAULT);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -46,7 +46,7 @@ public class Inventory extends JPanel {
             item[1][i] = new Item(1, i);
             item[2][i] = new Item(2, i);
             item[3][i] = new Item(3, i);
-            
+
             item[4][i] = new Item(4, i);
             item[5][i] = new Item(5, i);
             item[6][i] = new Item(6, i);
@@ -123,13 +123,13 @@ public class Inventory extends JPanel {
                 }
             }
             // draw inventory images
-            g.drawImage(this.equipment[0].image.getScaledInstance(60, -1, Image.SCALE_DEFAULT), 590, 100, null);
-            g.drawImage(this.equipment[1].image.getScaledInstance(60, -1, Image.SCALE_DEFAULT), 500, 180, null);
-            g.drawImage(this.equipment[2].image.getScaledInstance(60, -1, Image.SCALE_DEFAULT), 500, 255, null);
-            g.drawImage(this.equipment[3].image.getScaledInstance(60, -1, Image.SCALE_DEFAULT), 590, 330, null);
-            g.drawImage(this.equipment[4].image.getScaledInstance(60, -1, Image.SCALE_DEFAULT), 680, 155, null);
-            g.drawImage(this.equipment[5].image.getScaledInstance(60, -1, Image.SCALE_DEFAULT), 680, 230, null);
-            g.drawImage(this.equipment[6].image.getScaledInstance(60, -1, Image.SCALE_DEFAULT), 680, 305, null);
+            g.drawImage(this.equipment[0].image, 590, 100, null);
+            g.drawImage(this.equipment[1].image, 500, 180, null);
+            g.drawImage(this.equipment[2].image, 500, 255, null);
+            g.drawImage(this.equipment[3].image, 590, 330, null);
+            g.drawImage(this.equipment[4].image, 680, 155, null);
+            g.drawImage(this.equipment[5].image, 680, 230, null);
+            g.drawImage(this.equipment[6].image, 680, 305, null);
             for (int i = 0; i <= 3; i++) {
                 Image a;
                 if (this.equipment[i + 7] == null) {
@@ -137,7 +137,7 @@ public class Inventory extends JPanel {
                 } else {
                     a = this.equipment[i + 7].image;
                 }
-                g.drawImage(a.getScaledInstance(60, -1, Image.SCALE_DEFAULT), 500 + (i * 61), 420, null);
+                g.drawImage(a, 500 + (i * 61), 420, null);
             }
             if (showButton && aktInventar > 0 && aktInventar < 8) {
                 if (isCourserInRectangle(oldCoordinates[0] + 10, oldCoordinates[0] + 255, oldCoordinates[1] - 30, oldCoordinates[1] + 3)) {

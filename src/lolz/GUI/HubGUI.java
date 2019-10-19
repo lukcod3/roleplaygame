@@ -194,8 +194,13 @@ public class HubGUI extends JPanel {
             this.getActionMap().put(c + "Released", generateMoveKeyAction(i, false));
         }
         // inventory key binding
-        this.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_I, 0, false), KeyEvent.VK_I + "Pressed");
-        this.getActionMap().put(KeyEvent.VK_I + "Pressed", generateInventoryKeyAction());
+        this.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_I, 0, true), KeyEvent.VK_I + "Released");
+        this.getActionMap().put(KeyEvent.VK_I + "Released", generateInventoryKeyAction());
+
+        this.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_U, 0, true), KeyEvent.VK_U + "Released");
+        this.getActionMap().put(KeyEvent.VK_U + "Released", generateShopKeyAction());
+
+
 
         this.addMouseListener(new MouseListener() {
             @Override
@@ -242,7 +247,29 @@ public class HubGUI extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 // change the players directions
                 if (!inEscMenu) {
+                    if(!map.shopkeeper.showShop)
                     map.player.inventory.statsShown = !map.player.inventory.statsShown;
+                    else {
+                        map.shopkeeper.showShop = false;
+                        map.player.allowedToMove = true;
+                    }
+                }
+            }
+        };
+    }
+
+    private Action generateShopKeyAction() {
+        return new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // change the players directions
+                if (!inEscMenu) {
+                    if(!map.player.inventory.statsShown && map.player.x <200 && map.player.y > 340) {
+                        map.shopkeeper.showShop = !map.shopkeeper.showShop;
+                        map.player.allowedToMove = !map.player.allowedToMove;
+                        map.player.isMoving = false;
+                    }
+                    else map.player.inventory.statsShown = false;
                 }
             }
         };
@@ -275,6 +302,7 @@ public class HubGUI extends JPanel {
             this.map.player.allowedToMove = false;
             this.map.portalStage = 1;
             this.map.portalState = 0.1;
+            this.map.player.isMoving = false;
         }
 
         if(this.teleport && this.map.portalState > 5.9){
@@ -283,7 +311,7 @@ public class HubGUI extends JPanel {
             this.map.portalStage = 0;
             this.map.player.allowedToMove = true;
         }
-        // update the players position
+
     }
 
 }
