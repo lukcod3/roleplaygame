@@ -4,17 +4,13 @@ import lolz.Main;
 import lolz.Maps.Map;
 
 import java.awt.*;
+import java.awt.image.BufferedImage;
 
 public abstract class Entity {
-    public double x, y;
+    public double x, y, speed, animation_state;
     public Image[][] img;
-    public int width, height;
-    public int maxHealth, health, damage, armor;
-    public double speed;
-    public double animation_state;
-    public boolean turnedRight, isMoving;
-    boolean isHitting;
-    boolean hasDamaged; // variable true if user makes character hit
+    public int width, height, maxHealth, health, damage, armor;
+    public boolean turnedRight, isMoving, isHitting, allowedToMove;
     public volatile boolean[] directions; // 0 is up, 1 is left, 2 is down, 3 is right
     public Map map;
 
@@ -29,46 +25,10 @@ public abstract class Entity {
         this.directions = new boolean[4];
         this.animation_state = Math.random() * 10;
         this.map = map;
+        this.allowedToMove = true;
     }
 
     public abstract void paint(Graphics g);
-
-    public void paint(Graphics g, double k) {
-        // paint player
-
-        // TODO: fix modulo quick fixes
-
-        // convert y from virtual to graphic
-        this.y -= this.height;
-
-        g.setColor(Color.BLACK);
-        if (!turnedRight) {
-            if (isHitting) { // is able to hit while running and while standing still -> always checks if hit is true regardless of moving
-                int offset = (int) ((k * img[2][(int) this.animation_state % 5].getWidth(null) - this.width) / 2);
-                g.drawImage(img[2][(int) this.animation_state % 5], (int) this.x - offset, (int) this.y, null); // set player's animation to hit animation
-            } else if (isMoving) {
-                int offset = (int) ((k * img[1][(int) this.animation_state % 6].getWidth(null) - this.width) / 2);
-                g.drawImage(img[1][(int) this.animation_state % 6], (int) this.x - offset, (int) this.y, null);
-            } else {
-                int offset = (int) ((k * img[0][(int) this.animation_state % 4].getWidth(null) - this.width) / 2);
-                g.drawImage(img[0][(int) this.animation_state % 4], (int) this.x - offset, (int) this.y, null);
-            }
-        } else {
-            if (isHitting) { // is able to hit while running and while standing still -> always checks if hit is true regardless of moving
-                //int offset = (int) ((1*img[2][(int) this.animation_state].getWidth(null) - this.width) / 2);
-                Main.drawReflectImage(img[2][(int) this.animation_state % 5], g, (int) this.x, (int) this.y);
-            } else if (isMoving) {
-                //int offset = (int) ((1*img[1][(int) this.animation_state].getWidth(null) - this.width) / 2);
-                Main.drawReflectImage(img[1][(int) this.animation_state % 6], g, (int) this.x, (int) this.y);
-            } else {
-                //int offset = (int) ((1*img[0][(int) this.animation_state].getWidth(null) - this.width) / 2);
-                Main.drawReflectImage(img[0][(int) this.animation_state % 4], g, (int) this.x, (int) this.y);
-            }
-        }
-
-        // convert it back
-        this.y += this.height;
-    }
 
     void move(int time) {
         // count how many directions are active
@@ -89,8 +49,9 @@ public abstract class Entity {
             return;
         }
 
-        if (!isMoving) {
+        if (!isMoving && this.allowedToMove) {
             isMoving = true;
+
             animation_state = 0;
         }
 
@@ -128,12 +89,12 @@ public abstract class Entity {
 
         // check if player in wall => reset movement
         for (int d_x : new int[]{0, this.width}) {
-            if (!map.get_tile_at((int) (this.x + d_x), (int) (this.y)).isGround()) {
-                // player doesnt moved
+            if (!map.get_tile_at((int) (this.x + d_x), (int) this.y).isGround()) {
+                // player doesnt moveddss
                 // test if fix is possible
-                if (map.get_tile_at((int) (old_x + d_x), (int) (this.y)).isGround()) {
+                if (map.get_tile_at((int) (old_x + d_x), (int) this.y).isGround()) {
                     this.x = old_x;
-                } else if (map.get_tile_at((int) (this.x + d_x), (int) (old_y)).isGround()) {
+                } else if (map.get_tile_at((int) (this.x + d_x), (int) old_y).isGround()) {
                     this.y = old_y;
                 } else {
                     this.x = old_x;
@@ -160,6 +121,31 @@ public abstract class Entity {
         } else {
             this.health = 0;
         }
+    }
+
+    static BufferedImage tint(float r, float g, float b, float a, BufferedImage sprite)
+    {
+        BufferedImage tintedSprite = new BufferedImage(sprite.getWidth(), sprite.getHeight(), BufferedImage.TRANSLUCENT);
+        Graphics2D graphics = tintedSprite.createGraphics();
+        graphics.drawImage(sprite, 0, 0, null);
+        graphics.dispose();
+
+        for (int i = 0; i < tintedSprite.getWidth(); i++)
+        {
+            for (int j = 0; j < tintedSprite.getHeight(); j++)
+            {
+                int ax = tintedSprite.getColorModel().getAlpha(tintedSprite.getRaster().getDataElements(i, j, null));
+                int rx = tintedSprite.getColorModel().getRed(tintedSprite.getRaster().getDataElements(i, j, null));
+                int gx = tintedSprite.getColorModel().getGreen(tintedSprite.getRaster().getDataElements(i, j, null));
+                int bx = tintedSprite.getColorModel().getBlue(tintedSprite.getRaster().getDataElements(i, j, null));
+                rx *= r;
+                gx *= g;
+                bx *= b;
+                ax *= a;
+                tintedSprite.setRGB(i, j, (ax << 24) | (rx << 16) | (gx << 8) | (bx));
+            }
+        }
+        return tintedSprite;
     }
 
     private void setMaxHealth(int maxHealth) {
@@ -201,7 +187,6 @@ public abstract class Entity {
     public int getVirtualY() {
         return (int) (this.y / Main.TILE_SIZE);
     }
-
 
     public int getWidth() {
         return width;

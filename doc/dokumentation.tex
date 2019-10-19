@@ -239,7 +239,7 @@ Informatik Leistungskurs 12 MLL\\[0.8cm]
 \textbf{Priorität C} \\
 
 \textbf{UR010} \\
-\textbf{Aussage} Das Role-Play-Game soll bis zum 16.10 fertiggestellt und dem Kunden übergeben werden.\\
+\textbf{Aussage} Das Role-Play-Game soll bis zum 21.10.19 fertiggestellt und dem Kunden übergeben werden.\\
 \textbf{Priorität A}
 
 \newpage
@@ -272,11 +272,11 @@ Informatik Leistungskurs 12 MLL\\[0.8cm]
 \textbf{Priorität C} \\
 
 \textbf{FR007} \\
-\{Aussage} Vom Startbildschirm aus soll der Benutzer zu einer Art Hauptmenü - ein \glqq{}Hub\grqq{}, der ebenfalls einer Karte, auf die von oben herabgesehen, wird entspricht - gelangen. (siehe UR001) \\
+\textbf{Aussage} Vom Startbildschirm aus soll der Benutzer zu einer Art Hauptmenü - ein \glqq{}Hub\grqq{}, der ebenfalls einer Karte, auf die von oben herabgesehen, wird entspricht - gelangen. (siehe UR001) \\
 \textbf{Priorität B} \\
 
 \textbf{FR008} \\
-\{Aussage} Im Hauptmenü soll der Benutzer beispielsweise den Kampf gegen Monster starten können oder seinen Charakter wählen bzw. bearbeiten können. (siehe UR001/UR003/UR006/UR0099) \\
+\textbf{Aussage} Im Hauptmenü soll der Benutzer beispielsweise den Kampf gegen Monster starten können oder seinen Charakter wählen bzw. bearbeiten können. (siehe UR001/UR003/UR006/UR0099) \\
 \textbf{Priorität B} \\
 
 \textbf{FR009} \\
@@ -292,7 +292,7 @@ Informatik Leistungskurs 12 MLL\\[0.8cm]
 \textbf{Priorität C} \\
 
 \textbf{FR012} \\
-\textbf{Aussage} Das Projekt soll bis zum 16.10.19 fertig gestellt werden. (siehe UR009) \\
+\textbf{Aussage} Das Projekt soll bis zum 21.10.19 fertig gestellt werden. (siehe UR009) \\
 \textbf{Priorität A} \\
 
 \newpage
@@ -391,8 +391,23 @@ Die Gruppe besprach, welche Aufgaben zu erledigen sind und verteilte diese auf d
 
 Philipp N. beschließt, dass es dem Spiel noch an atmosphärischer Musik fehlt und kümmerte sich, nach Absprache mit Lukas, um die Organisation eines Komponisten für exklusive Musik. Diese wird, falls sie im Zeitraum fertiggestellt wird, am Ende in das Projekt eingefügt. \\
 
-\myuline{Mittwoch, 16.10.19 (Tim):}
+\myuline{Mittwoch, 16.10.19 (Tim, Jonas):}
 
 Tim vollendete die Projektile, sodass eine Überlappung mit einem Monster nun korrekt erkannt wird, fügte eine Lebensleiste für Monster sowie einen \glqq{}Back to Hub\grqq{} - Knopf ein, der den Spieler aus dem Kampf wieder zurück in den Hub bringt. \\
+Jonas fixte den Bug, dass die Angriffsanimation des Magiers nicht erschienen ist und löste das Problem, dass im Hub und in der eigentlichen Map unterschiedliche Spieler referenziert wurden und fügte diese zu einem zusammen. \\
+
+\myuline{Donnerstag, 17.10.19 (Tim, Joas):}
+
+Tim löste das Problem nach dem Merge mit Lukas Branch, dass das Programm noch nicht an die andere X- und Y- Koordinatenspeicherung angepasst war, wie Lukas es verwendet hatte. Des Weiteren ermöglichte es, das Projektile nun auch vor Wänden entlang fliegen können. Er begann mit der Arbeit an durch den Benutzer auswählbaren Farben, in denen der Held dargestellt werden soll, sodass der Spieler seinen Charakter individualisieren kann. \\
+Jonas erstellte eine Liste in welcher er detailliert 9 aktuelle Bugs beschreibt und machte kleine Gameplay Anpassungen.\\
+
+\myuline{Freitag, 18.10.19 (Tim, Jonas):}
+
+Tim löste eines der Probleme von Jonas' Liste, wegen welchem fast alle Projektile entfernt wurden, nachdem nur eines die Wand oder ein Monster getroffen hatte. Er bereitete ebenso weiter vor, dass der Benutzer den Helden sowie die Projektile in gewissen Farben auswählen kann. \\
+Jonas erstellte eine eigene Klasse für das Inventar welche nun auch im Hub funktioniert und begann mit der Implementation eines Shopkeepers im Hub. Außerdem kann das Inventar jetzt auch von Ubuntu-Usern korrekt genutzt werden.\\
+
+\myuline{Freitag, 18.10.19 (Tim, Jonas):}
+
+Jonas erstellte eine Levelbar, eine Goldanzeige und setzte die Implementation des Shopkeepers fort. Er implementierte eine Anzeige für die Stats der Items wenn der Spieler im Inventar mit der Maus über die Items fährt.
 
 \end{document}

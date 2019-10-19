@@ -1,9 +1,8 @@
 package lolz;
 
-import lolz.GUI.GameGUI;
-import lolz.GUI.HubGUI;
-import lolz.GUI.MainMenu;
-import lolz.Maps.Hub;
+
+import lolz.Entity.*;
+import lolz.GUI.*;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -20,16 +19,23 @@ public class Main {
     public static int CONTENT_WIDTH, CONTENT_HEIGHT;
     public static int ENTITY_WIDTH = 75;
     public static int VIRTUAL_ENTITY_WIDTH = 45;
+    public static Image goldImage;
+
+    public static int[] mouseCoordinates = new int[2];
 
     private final JFrame frame;
     private JPanel activePanel;
 
-    private HubGUI hub = new HubGUI(this);
+    public Player player;
+
+    public enum COLORS {BLACK, RED, SAFFRON, GREEN, PINK, SKYBLUE, BLUE};
+    public static float[] rgba_projectiles;
 
     private Main() {
 
         // setup main frame
         frame = new JFrame();
+
 
         // main game jpanel
         activePanel = new MainMenu(this);
@@ -41,6 +47,7 @@ public class Main {
         frame.setBackground(Color.BLACK);
         try {
             frame.setIconImage(ImageIO.read(new File("res/tiles/knight_f_hit_anim_f0.png")));
+            goldImage = ImageIO.read(new File("res/inventory/gold.png"));
         } catch (IOException e) {
             System.out.println("Whoops...");
         }
@@ -54,6 +61,10 @@ public class Main {
 
         CONTENT_WIDTH = frame.getContentPane().getWidth();
         CONTENT_HEIGHT = frame.getContentPane().getHeight();
+
+        this.player = new Fighter(null, 0, 0);
+        this.setRgba_projectiles(COLORS.RED);
+        if(player instanceof  Mage) ((Mage) player).loadImages(new float[]{0f, 1f, 1f, 1f});
 
         // updating the game
         while (true) {
@@ -84,14 +95,15 @@ public class Main {
     }
 
     public void startHub() {
-        this.activePanel = hub;
+        this.activePanel = new HubGUI(this, player);
+        player.allowedToMove = true;
         frame.getContentPane().removeAll();
         frame.getContentPane().add(activePanel);
         frame.revalidate();
     }
 
     public void startBattle() {
-        this.activePanel = new GameGUI(this);
+        this.activePanel = new GameGUI(this, player);
         frame.getContentPane().removeAll();
         frame.getContentPane().add(activePanel);
         frame.revalidate();
@@ -103,12 +115,12 @@ public class Main {
 
     private void updateGame(int time) {
         ((GameGUI) activePanel).update(time);
-        ((GameGUI) activePanel).frameLocation = frame.getLocationOnScreen();
+        ((GameGUI) activePanel).map.player.inventory.frameLocation = frame.getLocationOnScreen();
         if (((GameGUI) activePanel).map.monsterCount == 0) {
-            restartHub();
+            startHub();
         }
     }
-
+/*
     public void restartHub() {
         startHub();
         HubGUI a = ((HubGUI) activePanel);
@@ -119,8 +131,45 @@ public class Main {
         b.respawn();
     }
 
+ */
+
     public static void drawReflectImage(Image i, Graphics g, int x, int y) {
         g.drawImage(i, x + i.getWidth(null), y, -i.getWidth(null), i.getHeight(null), null);
+    }
+
+    public void setRgba_projectiles(COLORS color) {
+        switch (color) {
+            case BLACK:
+                this.rgba_projectiles = new float[]{0f, 0f, 0f, 1f};
+                break;
+
+            case RED:
+                this.rgba_projectiles = new float[]{1f, 0f, 0f, 1f};
+                break;
+
+            case GREEN:
+                this.rgba_projectiles = new float[]{0f, 01f, 0f, 1f};
+                break;
+
+            case BLUE:
+                this.rgba_projectiles = new float[]{0f, 0f, 1f, 1f};
+                break;
+
+            case SAFFRON:
+                this.rgba_projectiles = new float[]{1f, 1f, 0f, 1f};
+                break;
+
+            case SKYBLUE:
+                this.rgba_projectiles = new float[]{0f, 1f, 1f, 1f};
+                break;
+
+            case PINK:
+                this.rgba_projectiles = new float[]{1f, 0f, 1f, 1f};
+                break;
+
+            default:
+                this.rgba_projectiles = null;
+        }
     }
 
 }

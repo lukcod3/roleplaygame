@@ -15,8 +15,9 @@ public class RandomMap extends Map {
 
     BufferedImage[] portal;
     public double portalState;
+    public boolean playerPortChanneled;
 
-    public RandomMap() {
+    public RandomMap(Player player) {
         // setup map
         super(20000, 15000);
 
@@ -24,9 +25,15 @@ public class RandomMap extends Map {
         generateMap();
         portal = new BufferedImage[8];
         portalState = 0;
+        this.playerPortChanneled = false;
 
         // spawn player
-        this.player = new Mage(this, (this.VIRTUAL_WIDTH / 2) * Main.TILE_SIZE, (this.VIRTUAL_HEIGHT / 2 + 1) * Main.TILE_SIZE);
+        //this.player = new Mage(this, (this.VIRTUAL_WIDTH / 2) * Main.TILE_SIZE, (this.VIRTUAL_HEIGHT / 2) * Main.TILE_SIZE);
+        this.player = player;
+        this.player.map = this;
+        this.player.x = (this.VIRTUAL_WIDTH / 2.0) * Main.TILE_SIZE;
+        this.player.y = (this.VIRTUAL_HEIGHT / 2.0) * Main.TILE_SIZE;
+        this.player.directions = new boolean[4];
 
         // update expFactor before new map is created
         this.expFactor = Math.pow(1.2, this.player.level);
@@ -133,37 +140,42 @@ public class RandomMap extends Map {
                 ((Mage) this.player).hasDamaged = true;
                 if (!this.player.isMoving) {
                     if (this.player.turnedRight) {
-                        this.projectiles.add(new Projectile(this.player.getX(), this.player.getY() + this.player.getHeight() / 2.0, Projectile.TurnNumber.EAST));
+                        this.projectiles.add(new Projectile(this.player.getX() + this.player.getWidth() / 3.0, this.player.getY() - this.player.getHeight() / 2.0, Projectile.TurnNumber.EAST, Main.rgba_projectiles));
                     } else {
-                        this.projectiles.add(new Projectile(this.player.getX() - this.player.getWidth() * 1.75, this.player.getY() + this.player.getHeight() / 2.0, Projectile.TurnNumber.WEST));
+                        this.projectiles.add(new Projectile(this.player.getX() - this.player.getWidth() * 1.5, this.player.getY() - this.player.getHeight() / 2.0, Projectile.TurnNumber.WEST, Main.rgba_projectiles));
                     }
                 } else if (this.player.directions[0] && this.player.directions[3]) {
-                    this.projectiles.add(new Projectile(this.player.getX() + this.player.getWidth() / 6.0, this.player.getY() + this.player.getHeight() / 2.5, Projectile.TurnNumber.NORTHEAST));
+                    this.projectiles.add(new Projectile(this.player.getX() + this.player.getWidth() / 6.0, this.player.getY() - this.player.getHeight() / 2.0, Projectile.TurnNumber.NORTHEAST, Main.rgba_projectiles));
                 } else if (this.player.directions[2] && this.player.directions[3]) {
-                    this.projectiles.add(new Projectile(this.player.getX(), this.player.getY() + this.player.getHeight() / 1.5, Projectile.TurnNumber.SOUTHEAST));
+                    this.projectiles.add(new Projectile(this.player.getX() + this.player.getWidth() / 10.0, this.player.getY() - this.player.getHeight() / 1.75, Projectile.TurnNumber.SOUTHEAST, Main.rgba_projectiles));
                 } else if (this.player.directions[2] && this.player.directions[1]) {
-                    this.projectiles.add(new Projectile(this.player.getX() - this.player.getWidth() * 1.5, this.player.getY() + this.player.getHeight() * 1.25, Projectile.TurnNumber.SOUTHWEST));
-                } else if (this.player.directions[0] && this.player.directions[1]) {
-                    this.projectiles.add(new Projectile(this.player.getX() - this.player.getWidth() * 1.5, this.player.getY() - this.player.getWidth() / 6.5, Projectile.TurnNumber.NORTHWEST));
+                    this.projectiles.add(new Projectile(this.player.getX() - this.player.getWidth() * 1.5, this.player.getY(), Projectile.TurnNumber.SOUTHWEST, Main.rgba_projectiles));
+                } else if (this.player.directions[0]  && this.player.directions[1]) {
+                    this.projectiles.add(new Projectile(this.player.getX() - this.player.getWidth() * 1.5, this.player.getY() - this.player.getHeight(), Projectile.TurnNumber.NORTHWEST, Main.rgba_projectiles));
                 } else if (this.player.directions[0]) {
-                    this.projectiles.add(new Projectile(this.player.getX() + this.player.getWidth() / 2.0, this.player.getY() - this.player.getHeight() / 1.5, Projectile.TurnNumber.NORTH));
+                    this.projectiles.add(new Projectile(this.player.getX() + this.player.getWidth() / 2.0, this.player.getY() - this.player.getHeight() * 1.5, Projectile.TurnNumber.NORTH, Main.rgba_projectiles));
                 } else if (this.player.directions[1]) {
-                    this.projectiles.add(new Projectile(this.player.getX() - this.player.getWidth() * 1.75, this.player.getY() + this.player.getHeight() / 2.0, Projectile.TurnNumber.WEST));
+                    this.projectiles.add(new Projectile(this.player.getX() - this.player.getWidth() * 1.5, this.player.getY() - this.player.getHeight() / 2.0, Projectile.TurnNumber.WEST, Main.rgba_projectiles));
                 } else if (this.player.directions[2]) {
-                    this.projectiles.add(new Projectile(this.player.getX() + this.player.getWidth() / 10.0, this.player.getY() + this.player.getHeight() * 1.25, Projectile.TurnNumber.SOUTH));
+                    this.projectiles.add(new Projectile(this.player.getX() + this.player.getWidth() / 10.0, this.player.getY(), Projectile.TurnNumber.SOUTH, Main.rgba_projectiles));
                 } else if (this.player.directions[3]) {
-                    this.projectiles.add(new Projectile(this.player.getX(), this.player.getY() + this.player.getHeight() / 2.0, Projectile.TurnNumber.EAST));
+                    this.projectiles.add(new Projectile(this.player.getX() + this.player.getWidth() / 3.0, this.player.getY() - this.player.getHeight() / 2.0, Projectile.TurnNumber.EAST, Main.rgba_projectiles));
                 }
             }
 
             // update all projectiles
-            boolean overlap = false;
-            boolean outOfBounds = false;
-            int removedEntityIndex = 0;
-            int removedEntityIndexOld = -1; // this value doesn't have a specific purpose, only needs to be different from any index of this.entities
+            boolean overlap;
+            boolean outOfBounds;
+            int removedEntityIndex;
+            int removedEntityIndexOld;
             for (Projectile p : this.projectiles) {
-                for (int i : new int[]{0, (int) p.getIx() * 2}) {
-                    if (get_tile_at((int) p.getX() + i, (int) (p.getY() + p.getIy())).isGround()) {
+                overlap = false;
+                outOfBounds = false;
+                removedEntityIndex = 0;
+                removedEntityIndexOld = -1; // this value doesn't have a specific purpose, only needs to be different from any index of this.entities
+                for (int i : new int[]{(int) p.getBoxLowX(), (int) p.getBoxHighX()}) {
+                    //System.out.println(get_tile_at(i, (int) (p.getBoxLowY())));
+                    if (get_tile_at(i, (int) (p.getBoxLowY())).topTiles.isEmpty() && (get_tile_at(i, (int) (p.getBoxLowY())).isGround() || get_tile_at(i, (int) (p.getBoxLowY())).contains(StaticTile.WALL) || get_tile_at(i, (int) (p.getBoxLowY())).contains(StaticTile.WALL_RIGHT) || get_tile_at(i, (int) (p.getBoxLowY())).contains(StaticTile.WALL_LEFT))) {
                         for (Entity entity : this.entities) {
                             if (entity instanceof Monster && p.overlap(entity)) { // check for every monster if it was hit by a projectile
                                 removedEntityIndex = this.entities.indexOf(entity);
@@ -210,7 +222,6 @@ public class RandomMap extends Map {
                     if (((Fighter) this.player).attack(entity)) {
                         this.removeEntities[this.removeEntityIndex] = this.entities.indexOf(entity);
                         this.removeEntityIndex += 1;
-                        this.player.giveXP(10);
                     }
                 }
             }
@@ -224,6 +235,8 @@ public class RandomMap extends Map {
                 this.removeEntities[i] = 0;
                 this.removeEntityIndex -= 1;
                 this.monsterCount -= 1;
+                this.player.giveXP((int)(Math.random()*8) + 12);
+                this.player.gold += (int)(Math.random()*3 + 2);
             }
         }
 
@@ -263,11 +276,12 @@ public class RandomMap extends Map {
 
     public void paint(Graphics g) {
         super.paint(g);
-        if (portalState < 8) {
-            player.allowedToMove = false;
-            g.drawImage(portal[((int) portalState)].getScaledInstance(120, -1, Image.SCALE_DEFAULT), 410, 240, null);
-        } else {
+        if (this.portalState < 8) {
+            this.player.allowedToMove = false;
+            g.drawImage(portal[((int) portalState)].getScaledInstance(120, -1, Image.SCALE_DEFAULT), 410, 180, null);
+        } else if(!this.playerPortChanneled){
             player.allowedToMove = true;
+            this.playerPortChanneled = true;
         }
     }
 }

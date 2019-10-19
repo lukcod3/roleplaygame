@@ -17,7 +17,7 @@ public class Projectile {
 
     public enum TurnNumber {NORTH, NORTHEAST, EAST, SOUTHEAST, SOUTH, SOUTHWEST, WEST, NORTHWEST}
 
-    public Projectile(double x, double y, TurnNumber turnNumber) {
+    public Projectile(double x, double y, TurnNumber turnNumber, float[] rgba) {
 
         setX(x);
         setY(y);
@@ -29,16 +29,28 @@ public class Projectile {
 
         if (getTurnNumber() == TurnNumber.EAST || getTurnNumber() == TurnNumber.NORTHEAST || getTurnNumber() == TurnNumber.SOUTHEAST) {
             try {
-                for (int i = 0; i < 3; i++) {
-                    img[i] = ImageIO.read(new File("res/monster/Necromancer/projectile/necromancer-projectile-projectile-0" + i + "-inverted.png")).getScaledInstance(-1, 15, Image.SCALE_SMOOTH);
+                if (rgba == null) {
+                    for (int i = 0; i < 3; i++) {
+                        img[i] = ImageIO.read(new File("res/monster/Necromancer/projectile/necromancer-projectile-projectile-0" + i + "-inverted.png")).getScaledInstance(-1, 15, Image.SCALE_SMOOTH);
+                    }
+                } else {
+                    for (int i = 0; i < 3; i++) {
+                        img[i] = Entity.tint(rgba[0], rgba[1], rgba[2], rgba[3], ImageIO.read(new File("res/monster/Necromancer/projectile/necromancer-projectile-projectile-0" + i + "-inverted.png"))).getScaledInstance(-1, 15, Image.SCALE_SMOOTH);
+                    }
                 }
             } catch (Exception e) {
                 e.printStackTrace();
             }
         } else {
             try {
-                for (int i = 0; i < 3; i++) {
-                    img[i] = ImageIO.read(new File("res/monster/Necromancer/projectile/necromancer-projectile-projectile-0" + i + ".png")).getScaledInstance(-1, 15, Image.SCALE_SMOOTH);
+                if (rgba == null) {
+                    for (int i = 0; i < 3; i++) {
+                        img[i] = ImageIO.read(new File("res/monster/Necromancer/projectile/necromancer-projectile-projectile-0" + i + ".png")).getScaledInstance(-1, 15, Image.SCALE_SMOOTH);
+                    }
+                } else {
+                    for (int i = 0; i < 3; i++) {
+                        img[i] = Entity.tint(rgba[0], rgba[1], rgba[2], rgba[3], ImageIO.read(new File("res/monster/Necromancer/projectile/necromancer-projectile-projectile-0" + i + ".png"))).getScaledInstance(-1, 15, Image.SCALE_SMOOTH);
+                    }
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -139,12 +151,6 @@ public class Projectile {
 
     public void paint(Graphics g) {
         drawRotatedImage(g, img[(int) animation_state]);
-        g.setColor(Color.WHITE);
-        for (double i : new double[]{getBoxLowX(), getBoxHighX()}) {
-            for (double j : new double[]{getBoxLowY(), getBoxHighY()}) {
-                g.drawRoundRect((int) i, (int) j, 5, 5, 50, 50);
-            }
-        }
     }
 
     public void update(int time) {
@@ -298,7 +304,7 @@ public class Projectile {
     public boolean overlap(Entity entity) {
         for (double i : new double[]{getBoxLowX(), getBoxHighX()}) {
             for (double j : new double[]{getBoxLowY(), getBoxHighY()}) {
-                if (entity.getX() <= i && i <= entity.getX() + entity.getWidth() && entity.getY() <= j && j <= entity.getY() + entity.getHeight()) {
+                if (entity.getX() <= i && i <= entity.getX() + entity.getWidth() && entity.getY() - entity.getHeight() <= j && j <= entity.getY()) {
                     return true;
                 }
             }

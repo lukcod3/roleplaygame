@@ -43,14 +43,14 @@ public abstract class Map {
         this.projectiles = new ArrayList<>();
         this.monsterPercentage = 0.05;
         // Die Dezimalzahlen, die bei jeder Initialisierung angegeben werden, muessen insgesamt 1 ergeben
-        this.ghoulPercentage = 0.1;
-        this.impPercentage = this.ghoulPercentage + 0.1;
+        this.ghoulPercentage = 0.3;
+        this.impPercentage = this.ghoulPercentage + 0.2;
         this.undeadWarriorPercentage = this.impPercentage + 0.1;
-        this.executionerPercentage = this.undeadWarriorPercentage + 0.2;
-        this.fireGolemPercentage = this.executionerPercentage + 0.5;
+        this.executionerPercentage = this.undeadWarriorPercentage + 0.3;
+        this.fireGolemPercentage = this.executionerPercentage + 0.1;
         // Beispiel: 0.25 + 0.25 + 0.25 + 0.125 + 0.125
         this.removeEntities = new int[9];
-        this.removeProjectiles = new int[9];
+        this.removeProjectiles = new int[100];
         this.followingMonsters = new ArrayList<>();
         this.pathsToPlayer = new HashMap<>();
         this.debugging = false;
@@ -99,9 +99,25 @@ public abstract class Map {
             y++;
         }
 
+        if (this.debugging) {
+            for (double i : new double[]{0, this.player.getWidth()}) {
+                for (double j : new double[]{0, this.player.getHeight()}) {
+                    g.drawRoundRect((int) (this.player.getX() + i), (int) (this.player.getY() - j), 5, 5, 50, 50);
+                }
+            }
+        }
+
         if (this.projectiles.size() > 0) {
             for (Projectile p : this.projectiles) {
                 p.paint(g);
+                if (this.debugging) {
+                    g.setColor(Color.WHITE);
+                    for (double i : new double[]{p.getBoxLowX(), p.getBoxHighX()}) {
+                        for (double j : new double[]{p.getBoxLowY(), p.getBoxHighY()}) {
+                            g.drawRoundRect((int) i, (int) j, 5, 5, 50, 50);
+                        }
+                    }
+                }
             }
         }
 

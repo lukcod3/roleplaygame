@@ -1,40 +1,30 @@
 package lolz.GUI;
 
+import lolz.Entity.Fighter;
+import lolz.Entity.Player;
 import lolz.Main;
 import lolz.Maps.Map;
 import lolz.Maps.RandomMap;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import java.io.File;
-import java.text.DecimalFormat;
 
 public class GameGUI extends JPanel {
-    private Image img;
     public Map map;
     private Main main;
-    private boolean statsShown, inEscMenu;
+    private boolean inEscMenu;
     private JButton exitButton, hubButton;
 
-    private MouseEvent e;
-    public Point frameLocation;
-    private int aktInventar;
-    private boolean showButton, readyForSwitch;
-    private Image[] inventoryImages;
-    private int[] mouseCoordinates;
-    private Item[][] item;
-    private Image emptyInventory;
 
     //public Hub hub;
-    public GameGUI(Main main) {
+    public GameGUI(Main main, Player player) {
         // call super class
         this.setLayout(null);
-        this.mouseCoordinates = new int[2];
+
         // create map
         //hub = new Hub();
-        this.map = new RandomMap();
+        this.map = new RandomMap(player);
         this.main = main;
 
         this.repaint();
@@ -61,119 +51,15 @@ public class GameGUI extends JPanel {
         this.hubButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                main.restartHub();
+                main.startHub();
             }
         });
         this.add(this.hubButton);
 
         // loads images for inventory
-        try {
-            inventoryImages = new Image[4];
-            inventoryImages[0] = ImageIO.read(new File("res/inventory/gegenstandAblegen_aus.png"));
-            inventoryImages[1] = ImageIO.read(new File("res/inventory/gegenstandAblegen_an.png"));
-            inventoryImages[2] = ImageIO.read(new File("res/inventory/anlegen_aus.png"));
-            inventoryImages[3] = ImageIO.read(new File("res/inventory/anlegen_an.png"));
-            emptyInventory = ImageIO.read(new File("res/inventory/freiPlatz.png"));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        item = new Item[7][5];
-        for (int i = 0; i <= 4; i++) {
-            item[0][i] = new Item(0, i);
-            item[1][i] = new Item(1, i);
-            item[2][i] = new Item(2, i);
-            item[3][i] = new Item(3, i);
-            item[4][i] = new Item(4, i);
-            item[5][i] = new Item(5, i);
-            item[6][i] = new Item(6, i);
-        }
-        this.map.player.equipment = new Item[]{item[0][0], item[1][0], item[2][0], item[3][0], item[4][0], item[5][0], item[6][0], null, null, null, null};
-        testGeneratedRandomItemSet();
 
-        this.addMouseListener(new MouseListener() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                Point p = MouseInfo.getPointerInfo().getLocation();
-                //System.out.println("x: " + ((int) (p.x + map.player.x) - (map.VIRTUAL_WIDTH / 2) * Main.TILE_SIZE) / Main.TILE_SIZE +
-                //        " | y: " + ((int) (p.y + map.player.y) - (map.VIRTUAL_HEIGHT / 2) * Main.TILE_SIZE) / Main.TILE_SIZE);
-            }
 
-            @Override
-            public void mousePressed(MouseEvent e) {
-                // check if courser is on inventory field
-                if (e.getButton() == 3 && statsShown) {
-                    if (isCourserInRectangle(590, 650, 130, 190) && map.player.equipment[0].itemNr != 0) {
-                        aktInventar = 1;
-                    } else if (isCourserInRectangle(500, 560, 210, 270) && map.player.equipment[1].itemNr != 0) {
-                        aktInventar = 2;
-                    } else if (isCourserInRectangle(500, 560, 285, 345) && map.player.equipment[2].itemNr != 0) {
-                        aktInventar = 3;
-                    } else if (isCourserInRectangle(590, 640, 360, 420) && map.player.equipment[3].itemNr != 0) {
-                        aktInventar = 4;
-                    } else if (isCourserInRectangle(680, 730, 185, 245) && map.player.equipment[4].itemNr != 0) {
-                        aktInventar = 5;
-                    } else if (isCourserInRectangle(680, 730, 260, 320) && map.player.equipment[5].itemNr != 0) {
-                        aktInventar = 6;
-                    } else if (isCourserInRectangle(680, 730, 335, 395) && map.player.equipment[6].itemNr != 0) {
-                        aktInventar = 7;
-                    } else if (isCourserInRectangle(500, 560, 450, 510) && map.player.equipment[7] != null) {
-                        aktInventar = 8;
-                    } else if (isCourserInRectangle(561, 621, 450, 510) && map.player.equipment[8] != null) {
-                        aktInventar = 9;
-                    } else if (isCourserInRectangle(622, 682, 450, 510) && map.player.equipment[9] != null) {
-                        aktInventar = 10;
-                    } else if (isCourserInRectangle(683, 743, 450, 510) && map.player.equipment[10] != null) {
-                        aktInventar = 11;
 
-                    } else {
-                        aktInventar = 0;
-                    }
-                    if (aktInventar != 0) {
-                        showButton = true;
-                        mouseCoordinates[0] = (int) (MouseInfo.getPointerInfo().getLocation().getX() - frameLocation.getX());
-                        mouseCoordinates[1] = (int) (MouseInfo.getPointerInfo().getLocation().getY() - frameLocation.getY());
-                    }
-                    // switches Item places
-                } else if (e.getButton() == 1) {
-                    if (readyForSwitch) {
-                        readyForSwitch = false;
-                        showButton = false;
-                        if (aktInventar > 0 && aktInventar < 8) {
-                            for (int i = 0; i < 4; i++) {
-                                if (map.player.equipment[7 + i] == null) {
-                                    map.player.equipment[7 + i] = map.player.equipment[aktInventar - 1];
-                                    map.player.equipment[aktInventar - 1] = item[aktInventar - 1][0];
-                                    break;
-                                }
-                            }
-
-                        } else {
-                            Item hilf = map.player.equipment[aktInventar - 1];
-                            if (map.player.equipment[hilf.typ] == item[hilf.typ][0]) {
-                                map.player.equipment[aktInventar - 1] = null;
-                            } else {
-                                map.player.equipment[aktInventar - 1] = map.player.equipment[hilf.typ];
-                            }
-                            map.player.equipment[hilf.typ] = hilf;
-                        }
-                    } else {
-                        showButton = false;
-                    }
-                }
-            }
-
-            @Override
-            public void mouseReleased(MouseEvent e) {
-            }
-
-            @Override
-            public void mouseEntered(MouseEvent e) {
-            }
-
-            @Override
-            public void mouseExited(MouseEvent e) {
-            }
-        });
 
         // add the key bindings for player movement
         char[] keys = {'W', 'A', 'S', 'D'};
@@ -190,7 +76,9 @@ public class GameGUI extends JPanel {
 
         //add the key binding for the players attack
         this.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_J, 0, false), KeyEvent.VK_J + "Pressed");
-        this.getActionMap().put(KeyEvent.VK_J + "Pressed", generateAttackKeyAction());
+        this.getActionMap().put(KeyEvent.VK_J + "Pressed", generateAttackKeyAction(true));
+        this.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_J, 0, true), KeyEvent.VK_J + "Released");
+        this.getActionMap().put(KeyEvent.VK_J + "Released", generateAttackKeyAction(false));
 
         // key bindings for player stats
         this.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_I, 0, false), KeyEvent.VK_I + "Pressed");
@@ -203,27 +91,74 @@ public class GameGUI extends JPanel {
         // key bindings for debugging mode
         this.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_F5, 0, false), KeyEvent.VK_F5 + "Pressed");
         this.getActionMap().put(KeyEvent.VK_F5 + "Pressed", generateDebuggingAction());
+
+        this.addMouseListener(new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                map.player.inventory.updateInventory(e);
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+            }
+        });
+        this.addMouseMotionListener(new MouseMotionListener() {
+            @Override
+            public void mouseDragged(MouseEvent e) {
+                Main.mouseCoordinates[0] = e.getX();
+                Main.mouseCoordinates[1] = e.getY();
+                map.player.inventory.updateInventory(e);
+            }
+
+            @Override
+            public void mouseMoved(MouseEvent e) {
+                Main.mouseCoordinates[0] = e.getX();
+                Main.mouseCoordinates[1] = e.getY();
+                map.player.inventory.updateInventory(e);
+
+            }
+        });
     }
 
     private Action generateMoveKeyAction(final int dir, final boolean pressed) {
         return new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (!inEscMenu && map.player.allowedToMove) {
-                    // change the players directions
-                    map.player.directions[dir] = pressed;
+                if ((!inEscMenu && map.player.allowedToMove) || !pressed) {
+                        // change the players directions
+                        map.player.directions[dir] = pressed;
                 }
             }
         };
     }
 
-    private Action generateAttackKeyAction() {
+    private Action generateAttackKeyAction(boolean pressed) {
         return new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (!inEscMenu && !map.player.getHitting()) {
-                    map.player.setHitting(true);
+                if (pressed) {
+                    if (!inEscMenu && !map.player.getHitting()) {
+                        map.player.setHitting(true);
+                    }
+                    map.player.allowedToMove = false;
+                } else {
+                    map.player.allowedToMove = true;
                 }
+                map.player.allowedToMove = map.player instanceof Fighter || map.player.allowedToMove;
+                map.player.holdAttack = !map.player.allowedToMove;
             }
         };
     }
@@ -234,7 +169,7 @@ public class GameGUI extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 // change the players directions
                 if (!inEscMenu) {
-                    statsShown = !statsShown;
+                    map.player.inventory.statsShown = !map.player.inventory.statsShown;
                 }
             }
         };
@@ -245,8 +180,8 @@ public class GameGUI extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 System.out.println();
-                if (statsShown) {
-                    statsShown = false;
+                if (map.player.inventory.statsShown) {
+                    map.player.inventory.statsShown = false;
                 } else {
                     inEscMenu = !inEscMenu;
                     if (inEscMenu) {
@@ -286,35 +221,25 @@ public class GameGUI extends JPanel {
 
         // paint overlay interfaces
 
-        //fill health bar
-        g.setColor(new Color(0, 125, 0, 50));
-        g.fillRoundRect(25, 25, (int) (200 * ((double) this.map.player.health / (double) this.map.player.getMaxHealth())), 35, 15, 15);
 
-        // draw border of health bar
-        g.setColor(new Color(255, 255, 255, 50));
-        g.drawRoundRect(25, 25, 200, 35, 15, 15);
 
-        g.setColor(Color.BLACK);
-        this.printStats(g);
+        this.map.player.inventory.printStats(g);
+        // draw player health rectangles
         Font font = new Font("SansSerif", Font.BOLD, 25);
         g.setFont(font);
-        g.setColor(new Color(255, 255, 255, 50));
+        g.setColor(Color.white);
+        drawLevel(g);
+        //g.setColor(new Color(255, 255, 255, 50));
+        drawHealth(g);
         if ((double) this.map.player.health / (double) this.map.player.getMaxHealth() <= 0.1) {
             Color lowColor = new Color(100, 0, 0, 60);
             g.setColor(lowColor);
             g.fillRect(0, 0, Main.WIDTH, Main.HEIGHT);
             g.setColor(Color.red);
         }
-        // draw health values in somewhat centered position
-        g.drawString("" + this.map.player.health, 25 + 200 / 4 - g.getFontMetrics().stringWidth("" + this.map.player.health) / 2, 52);
-        g.setColor(new Color(255, 255, 255, 50));
-        g.drawString("/", 25 + 200 / 2 - g.getFontMetrics().stringWidth("/") / 2, 52);
-        g.drawString("" + this.map.player.maxHealth, 25 + 200 * 3 / 4 - g.getFontMetrics().stringWidth("" + this.map.player.maxHealth) / 2, 52);
 
-        font = new Font("Avant Garde", Font.BOLD, 25);
-        g.setFont(font);
-        g.setColor(Color.WHITE);
-        g.drawString("Monsters: " + this.map.monsterCount, Main.WIDTH - (g.getFontMetrics().stringWidth("Monsters: " + this.map.monsterCount) + 50), 50);
+
+
 
         this.printEscMenu(g);
 
@@ -354,106 +279,46 @@ public class GameGUI extends JPanel {
         }
     }
 
+    public void drawLevel(Graphics g){
 
-    private void printStats(Graphics g) {
-        int xPositionImageInventory = 560;
-        int yPositionImageInventory = 185;
+        g.drawString(""+this.map.player.level, 20, 95);
+        g.setColor(new Color(0, 255, 0, 255));
+        g.fillRect(40, 83, (int)(100 *((double)this.map.player.exp /  (double)(90 + 10 * this.map.player.level * this.map.player.level))), 5);
 
-        // paint player stats
-        if (statsShown) {
+        // draw border of health bar
+        g.setColor(new Color(255, 255, 255, 255));
+        g.drawRect(40, 83, 100, 5);
+    }
 
-            Color myColor = new Color(56, 56, 56, 165);
-            Font titleF = new Font("SansSerif", Font.BOLD, 25);
-            Font statsF = new Font("SansSerif", Font.PLAIN, 15);
-            g.drawRect(150, 50, 660, 440);
-            g.setColor(myColor);
-            g.fillRect(150, 50, 660, 440);
-            g.setFont(titleF);
-            g.setColor(Color.white);
-            g.drawString("Profil", 260, 80);
-            g.drawString("Inventar", 570, 80);
-            g.setFont(statsF);
-            g.drawString("Leben............................(" + this.map.player.health + "/" + this.map.player.maxHealth + ")", 200, 130);
-            g.drawString("Angriffsschaden....................." + this.map.player.damage, 200, 160);
-            g.drawString("Rüstung..................................." + this.map.player.armor, 200, 190);
-            g.drawString("Lauftempo..........................." + new DecimalFormat("#.##").format(this.map.player.speed), 200, 220);
-            g.drawString("Gold........................................" + this.map.player.gold, 200, 330);
-            g.drawString("Level............." + this.map.player.level + "(" + this.map.player.exp + " XP/" + (90 + 10 * this.map.player.level * this.map.player.level) + " XP)", 200, 360); // needs formula for maxXP
+    public void drawHealth(Graphics g){
+        //fill health bar
+        g.setColor(new Color(0, 125, 0, 255));
+        g.fillRoundRect(25, 25, (int) (200 * ((double) this.map.player.health / (double) this.map.player.getMaxHealth())), 35, 15, 15);
 
-            if (this.map.player.turnedRight) {
-                if (this.map.player.getHitting()) { // is able to hit while running and while standing still -> always checks if hit is true regardless of moving
-                    g.drawImage(this.map.player.img[2][(int) this.map.player.animation_state % 5].getScaledInstance(120, -1, Image.SCALE_DEFAULT), xPositionImageInventory, yPositionImageInventory, null); // set player's animation to hit animation
-                } else if (this.map.player.isMoving) {
-                    g.drawImage(this.map.player.img[1][(int) this.map.player.animation_state % 6].getScaledInstance(120, -1, Image.SCALE_DEFAULT), xPositionImageInventory, yPositionImageInventory, null);
-                } else {
-                    g.drawImage(this.map.player.img[0][(int) this.map.player.animation_state % 4].getScaledInstance(120, -1, Image.SCALE_DEFAULT), xPositionImageInventory, yPositionImageInventory, null);
-                }
-            } else {
-                if (this.map.player.getHitting()) { // is able to hit while running and while standing still -> always checks if hit is true regardless of moving
-                    Main.drawReflectImage(this.map.player.img[2][(int) this.map.player.animation_state % 5].getScaledInstance(120, -1, Image.SCALE_DEFAULT), g, xPositionImageInventory, yPositionImageInventory);
-                } else if (this.map.player.isMoving) {
-                    Main.drawReflectImage(this.map.player.img[1][(int) this.map.player.animation_state % 6].getScaledInstance(120, -1, Image.SCALE_DEFAULT), g, xPositionImageInventory, yPositionImageInventory);
-                } else {
-                    Main.drawReflectImage(this.map.player.img[0][(int) this.map.player.animation_state % 4].getScaledInstance(120, -1, Image.SCALE_DEFAULT), g, xPositionImageInventory, yPositionImageInventory);
-                }
-            }
+        // draw border of health bar
+        g.setColor(new Color(255, 255, 255, 255));
+        g.drawRoundRect(25, 25, 200, 35, 15, 15);
 
-            g.drawImage(this.map.player.equipment[0].image.getScaledInstance(60, -1, Image.SCALE_DEFAULT), 590, 100, null);
-            g.drawImage(this.map.player.equipment[1].image.getScaledInstance(60, -1, Image.SCALE_DEFAULT), 500, 180, null);
-            g.drawImage(this.map.player.equipment[2].image.getScaledInstance(60, -1, Image.SCALE_DEFAULT), 500, 255, null);
-            g.drawImage(this.map.player.equipment[3].image.getScaledInstance(60, -1, Image.SCALE_DEFAULT), 590, 330, null);
-            g.drawImage(this.map.player.equipment[4].image.getScaledInstance(60, -1, Image.SCALE_DEFAULT), 680, 155, null);
-            g.drawImage(this.map.player.equipment[5].image.getScaledInstance(60, -1, Image.SCALE_DEFAULT), 680, 230, null);
-            g.drawImage(this.map.player.equipment[6].image.getScaledInstance(60, -1, Image.SCALE_DEFAULT), 680, 305, null);
-            for (int i = 0; i <= 3; i++) {
-                Image a;
-                if (this.map.player.equipment[i + 7] == null) {
-                    a = emptyInventory;
-                } else {
-                    //System.out.println((this.map.player.equipment[i + 7]-1) / 4+ " "+ (this.map.player.equipment[i + 7]-1) % 4);
-                    a = this.map.player.equipment[i + 7].image;
-                }
-                g.drawImage(a.getScaledInstance(60, -1, Image.SCALE_DEFAULT), 500 + (i * 61), 420, null);
-            }
-            if (showButton && aktInventar > 0 && aktInventar < 8) {
-                if (isCourserInRectangle(mouseCoordinates[0] + 10, mouseCoordinates[0] + 255, mouseCoordinates[1] - 30, mouseCoordinates[1] + 3)) {
-                    g.drawImage(inventoryImages[1].getScaledInstance(235, -1, Image.SCALE_DEFAULT), mouseCoordinates[0] + 10, mouseCoordinates[1] - 60, null);
-                    readyForSwitch = true;
-                } else {
-                    g.drawImage(inventoryImages[0].getScaledInstance(235, -1, Image.SCALE_DEFAULT), mouseCoordinates[0] + 10, mouseCoordinates[1] - 60, null);
-                    readyForSwitch = false;
-                }
-            } else if (showButton && aktInventar > 7 && aktInventar < 12) {
-                if (isCourserInRectangle(mouseCoordinates[0] + 10, mouseCoordinates[0] + 255, mouseCoordinates[1] - 30, mouseCoordinates[1] + 3)) {
-                    g.drawImage(inventoryImages[3].getScaledInstance(235, -1, Image.SCALE_DEFAULT), mouseCoordinates[0] + 10, mouseCoordinates[1] - 60, null);
-                    readyForSwitch = true;
-                } else {
-                    g.drawImage(inventoryImages[2].getScaledInstance(235, -1, Image.SCALE_DEFAULT), mouseCoordinates[0] + 10, mouseCoordinates[1] - 60, null);
-                    readyForSwitch = false;
-                }
-            } else {
-                readyForSwitch = false;
-            }
-        }
+        // draw health values in somewhat centered position
+        g.drawString("" + this.map.player.health, 25 + 200 / 4 - g.getFontMetrics().stringWidth("" + this.map.player.health) / 2, 52);
+        g.setColor(new Color(255, 255, 255, 255));
+        g.drawString("/", 25 + 200 / 2 - g.getFontMetrics().stringWidth("/") / 2, 52);
+        g.drawString("" + this.map.player.maxHealth, 25 + 200 * 3 / 4 - g.getFontMetrics().stringWidth("" + this.map.player.maxHealth) / 2, 52);
+
+        Font font = new Font("Avant Garde", Font.BOLD, 25);
+        g.setFont(font);
+        g.setColor(Color.WHITE);
+        g.drawString("Monsters: " + this.map.monsterCount, Main.WIDTH - (g.getFontMetrics().stringWidth("Monsters: " + this.map.monsterCount) + 50), 50);
     }
 
     public void update(int time) {
-        //System.out.println(this.getX());
         if (!inEscMenu) {
             // update map
             map.update(time);
         }
     }
 
-    private boolean isCourserInRectangle(double x1, double x2, double y1, double y2) {
-        return (MouseInfo.getPointerInfo().getLocation().getX() - frameLocation.getX() <= x2 && MouseInfo.getPointerInfo().getLocation().getX() - frameLocation.getX() >= x1 && MouseInfo.getPointerInfo().getLocation().getY() - frameLocation.getY() <= y2 && MouseInfo.getPointerInfo().getLocation().getY() - frameLocation.getY() >= y1);
-    }
 
-    private void testGeneratedRandomItemSet() {
-        for (int i = 0; i <= 6; i++) {
-            this.map.player.equipment[i] = item[i][(int) (Math.random() * 5)];
-        }
-        this.map.player.equipment[7] = item[(int) (Math.random() * 7)][(int) (Math.random() * 4) + 1];
-        this.map.player.equipment[8] = item[(int) (Math.random() * 7)][(int) (Math.random() * 4) + 1];
-    }
+
+
 }

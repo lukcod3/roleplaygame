@@ -1,31 +1,34 @@
 package lolz.Entity;
 
+
+import lolz.GUI.Inventory;
 import lolz.GUI.Item;
+import lolz.Main;
 import lolz.Maps.Map;
 import lolz.Maps.RandomMap;
 
+import javax.imageio.ImageIO;
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
+
 public abstract class Player extends Entity {
-    public Map map;
-    boolean hasDamaged; // variable true if user makes character hit
-    public Item[] equipment; // 1 is hat, 2 is t-shirt, 3 is sword, 4 is shoes, 5 is necklace, 6 is ring, 7 is belt, 8-11 is depot
-    public boolean allowedToMove;
+    public boolean hasDamaged, holdAttack; // variable true if user makes character hit
     // Ingame stats
     public int level, exp, gold;
-    public double baseSpeed;
+    private double baseSpeed;
+    public Inventory inventory;
 
     public Player(Map map, int x, int y) {
         // setup player stats
         super(map, x, y, 100, 10, 30, 0.15);
         this.health = 50; // test
         this.level = 1;
-        this.turnedRight = true;
-        this.map = map;
-        this.x = x;
-        this.y = y;
 
         this.width = 45;
-
-        allowedToMove = true;
+        holdAttack = false;
+        inventory = new Inventory(this);
+        this.gold = 0;
     }
 
     // set Getters and Setters for attribute hit
@@ -51,8 +54,19 @@ public abstract class Player extends Entity {
         // update player graphic stats
         if (isHitting) {
             this.animation_state += (float) time / 100;
-            if (this.animation_state >= 5) {
-                this.setHitting(false);
+            if(this instanceof Mage) {
+                this.allowedToMove = false;
+                if (this.animation_state >= 5 && !this.holdAttack) {
+                    this.setHitting(false);
+                    this.allowedToMove = true;
+                }
+                if (this.animation_state > 5.5) {
+                    animation_state -= 5;
+                }
+            } else{
+                if(this.animation_state >= 5){
+                    this.setHitting(false);
+                }
             }
         } else if (isMoving) {
             this.animation_state += (float) time / 100;
@@ -77,9 +91,7 @@ public abstract class Player extends Entity {
             }
         }
 
-        if(this.map instanceof RandomMap) {
-            updatePlayerStats();
-        }
+        updatePlayerStats();
     }
 
     // check if any given entity is "touching" the hero or rather if the hero is touching it
@@ -94,22 +106,51 @@ public abstract class Player extends Entity {
         }
     }
 
-    public void updatePlayerStats() {
+    private void updatePlayerStats() {
         this.maxHealth = 90 + 10 * this.level;
         this.damage = 9 + this.level;
         this.armor = 26 + 4 * this.level;
         this.baseSpeed = 0.15;
         for (int i = 0; i < 7; i++) {
             try {
-                this.maxHealth += this.equipment[i].health;
-                this.damage += this.equipment[i].damage;
-                this.armor += this.equipment[i].armor;
-                this.baseSpeed += this.equipment[i].movementspeed;
-            } catch(Exception e){
+                this.maxHealth += this.inventory.equipment[i].health;
+                this.damage += this.inventory.equipment[i].damage;
+                this.armor += this.inventory.equipment[i].armor;
+                this.baseSpeed += this.inventory.equipment[i].movementspeed;
+            } catch(Exception ignore){
 
             }
         }
-        this.speed = this.isHitting ? this.baseSpeed/3 : this.baseSpeed;
+        this.speed = (!(this instanceof Mage))&&this.isHitting ? this.baseSpeed/3 : this.baseSpeed;
+        this.health = Math.min(this.health, this.maxHealth);
+    }
+
+    public void loadImages(float[] rgba, String idlePath, String runPath, String attackPath) {
+        try {
+            if (rgba == null) {
+                for (int i = 0; i < 4; i++) {
+                    this.img[0][i] = ImageIO.read(new File(idlePath + i + ".png")).getScaledInstance(Main.ENTITY_WIDTH, -1, Image.SCALE_SMOOTH);
+                }
+                for (int i = 0; i < 6; i++) {
+                    this.img[1][i] = ImageIO.read(new File(runPath + i + ".png")).getScaledInstance(Main.ENTITY_WIDTH, -1, Image.SCALE_SMOOTH);
+                }
+                for (int i = 0; i < 5; i++) {
+                    this.img[2][i] = ImageIO.read(new File(attackPath + i + ".png")).getScaledInstance(Main.ENTITY_WIDTH, -1, Image.SCALE_SMOOTH);
+                }
+            } else {
+                for (int i = 0; i < 4; i++) {
+                    this.img[0][i] = tint(rgba[0], rgba[1], rgba[2], rgba[3], ImageIO.read(new File(idlePath + i + ".png"))).getScaledInstance(Main.ENTITY_WIDTH, -1, Image.SCALE_SMOOTH);
+                }
+                for (int i = 0; i < 6; i++) {
+                    this.img[1][i] = tint(rgba[0], rgba[1], rgba[2], rgba[3], ImageIO.read(new File(runPath + i + ".png"))).getScaledInstance(Main.ENTITY_WIDTH, -1, Image.SCALE_SMOOTH);
+                }
+                for (int i = 0; i < 5; i++) {
+                    this.img[2][i] = tint(rgba[0], rgba[1], rgba[2], rgba[3], ImageIO.read(new File(attackPath + i + ".png"))).getScaledInstance(Main.ENTITY_WIDTH, -1, Image.SCALE_SMOOTH);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 }

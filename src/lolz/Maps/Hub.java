@@ -1,6 +1,7 @@
 package lolz.Maps;
 
-import lolz.Entity.Mage;
+import lolz.Entity.Player;
+import lolz.Entity.Shopkeeper;
 import lolz.GUI.Tile;
 import lolz.Main;
 
@@ -14,13 +15,23 @@ public class Hub extends Map {
     private BufferedImage[][] portal;
     public double portalState;
     public int portalStage;
+    public Shopkeeper shopkeeper;
 
-    public Hub() {
+    public Hub(Player player) {
         super(600, 500);
         this.portalState = 0;
         this.portalStage = 0;
         // spawn player
-        this.player = new Mage(this, this.WIDTH / 2, this.HEIGHT / 2);
+        //this.player = new Mage(this, this.WIDTH / 2, this.HEIGHT / 2);
+        this.player = player;
+        this.player.map = this;
+        this.player.x = this.WIDTH / 2.0;
+        this.player.y = this.HEIGHT / 2.0;
+        this.player.directions = new boolean[4];
+        this.player.animation_state = 0;
+        this.player.health = this.player.maxHealth;
+
+        shopkeeper = new Shopkeeper(this.player);
 
         // setup map
         for (Tile[] tile : this.tiles) {
@@ -77,23 +88,20 @@ public class Hub extends Map {
             }
         }
         g.drawImage(this.portal[this.portalStage][((int) this.portalState)%(this.portal[this.portalStage].length)].getScaledInstance(120, -1, Image.SCALE_DEFAULT), 430, 40, null);
-
+        this.shopkeeper.paint(g);
         // draw player
         this.player.paint(g);
 
         // translate back
         g.translate((int) (this.player.x - Main.WIDTH / 2), (int) (this.player.y - Main.HEIGHT / 2));
+        this.shopkeeper.printShop(g);
     }
 
-    public void respawn() {
-        this.player.x = this.WIDTH / 2.0;
-        this.player.y = this.HEIGHT / 2.0;
-        this.player.directions = new boolean[4];
-    }
 
     @Override
     public void update(int time) {
         this.portalState+= 0.1;
         this.player.update(time);
+        this.shopkeeper.update();
     }
 }

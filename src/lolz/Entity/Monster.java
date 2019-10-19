@@ -232,25 +232,65 @@ public class Monster extends Entity {
     }
 
     public void paint(Graphics g) {
-        // paint player
-        super.paint(g, 1.2);
+
+        // convert y from virtual to graphic
+        this.y -= this.height;
+
+        g.setColor(Color.BLACK);
+        if (!turnedRight) {
+            if (isHitting) { // is able to hit while running and while standing still -> always checks if hit is true regardless of moving
+                int offset = (int) ((1.2 * img[2][(int) this.animation_state].getWidth(null) - this.width) / 2);
+                g.drawImage(img[2][(int) this.animation_state], (int) this.x - offset, (int) this.y, null); // set player's animation to hit animation
+            } else if (isMoving) {
+                int offset = (int) ((1.2 * img[1][(int) this.animation_state].getWidth(null) - this.width) / 2);
+                g.drawImage(img[1][(int) this.animation_state], (int) this.x - offset, (int) this.y, null);
+            } else {
+                int offset = (int) ((1.2 * img[0][(int) this.animation_state].getWidth(null) - this.width) / 2);
+                g.drawImage(img[0][(int) this.animation_state], (int) this.x - offset, (int) this.y, null);
+            }
+        } else {
+            if (isHitting) { // is able to hit while running and while standing still -> always checks if hit is true regardless of moving
+                //int offset = (int) ((1*img[2][(int) this.animation_state].getWidth(null) - this.width) / 2);
+                Main.drawReflectImage(img[2][(int) this.animation_state], g, (int) this.x, (int) this.y);
+            } else if (isMoving) {
+                //int offset = (int) ((1*img[1][(int) this.animation_state].getWidth(null) - this.width) / 2);
+                Main.drawReflectImage(img[1][(int) this.animation_state], g, (int) this.x, (int) this.y);
+            } else {
+                //int offset = (int) ((1*img[0][(int) this.animation_state].getWidth(null) - this.width) / 2);
+                Main.drawReflectImage(img[0][(int) this.animation_state], g, (int) this.x, (int) this.y);
+            }
+        }
+
+        // convert it back
+        this.y += this.height;
 
         // paint "hitbox" if debugging
         if (this.map.debugging) {
             g.setColor(Color.WHITE);
             g.drawRoundRect((int) this.getX(), (int) this.getY(), 5, 5, 50, 50);
             g.drawRoundRect((int) this.getX() + this.getWidth(), (int) this.getY(), 5, 5, 50, 50);
-            g.drawRoundRect((int) this.getX(), (int) this.getY() + this.getHeight(), 5, 5, 50, 50);
-            g.drawRoundRect((int) this.getX() + this.getWidth(), (int) this.getY() + this.getHeight(), 5, 5, 50, 50);
+            g.drawRoundRect((int) this.getX(), (int) this.getY() - this.getHeight(), 5, 5, 50, 50);
+            g.drawRoundRect((int) this.getX() + this.getWidth(), (int) this.getY() - this.getHeight(), 5, 5, 50, 50);
         }
 
-        //fill health bar
-        g.setColor(Color.GREEN);
-        g.fillRoundRect((int) this.getX(), (int) this.getY(), (int) (this.getWidth() * ((double) this.health / (double) this.getMaxHealth())), 5, 15, 15);
+        if (monsterNumber == 0) {
+            //fill health bar
+            g.setColor(Color.GREEN);
+            g.fillRoundRect((int) this.getX(), (int) (this.getY() - this.getHeight() * 1.5), (int) (this.getWidth() * ((double) this.health / (double) this.getMaxHealth())), 5, 15, 15);
 
-        // draw border of health bar
-        g.setColor(Color.WHITE);
-        g.drawRoundRect((int) this.getX(), (int) this.getY(), this.getWidth(), 5, 15, 15);
+            // draw border of health bar
+            g.setColor(Color.WHITE);
+            g.drawRoundRect((int) this.getX(), (int) (this.getY() - this.getHeight() * 1.5), this.getWidth(), 5, 15, 15);
+        } else {
+            //fill health bar
+            g.setColor(Color.GREEN);
+            g.fillRoundRect((int) this.getX(), (int) this.getY() - this.getHeight(), (int) (this.getWidth() * ((double) this.health / (double) this.getMaxHealth())), 5, 15, 15);
+
+            // draw border of health bar
+            g.setColor(Color.WHITE);
+            g.drawRoundRect((int) this.getX(), (int) this.getY() - this.getHeight(), this.getWidth(), 5, 15, 15);
+        }
+
     }
 
     private void setHitting(boolean hitting) {
