@@ -140,7 +140,8 @@ public class HubGUI extends JPanel {
         this.mage.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Player newPlayer = new Mage(map, (int) map.player.getX(), (int) map.player.getY());
+                Mage newPlayer = new Mage(map, (int) map.player.getX(), (int) map.player.getY());
+                newPlayer.loadImages(new float[]{0f, 1f, 1f, 1f});
                 newPlayer.level = map.player.level;
                 newPlayer.exp = map.player.exp;
                 newPlayer.gold = map.player.gold;
@@ -160,7 +161,8 @@ public class HubGUI extends JPanel {
         this.fighter.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Player newPlayer = new Fighter(map, (int) map.player.getX(), (int) map.player.getY());
+                Fighter newPlayer = new Fighter(map, (int) map.player.getX(), (int) map.player.getY());
+                newPlayer.loadImages(new float[]{0f, 1f, 1f, 1f});
                 newPlayer.level = map.player.level;
                 newPlayer.exp = map.player.exp;
                 newPlayer.gold = map.player.gold;

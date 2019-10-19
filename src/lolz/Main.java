@@ -32,7 +32,7 @@ public class Main {
     public static int[] mouseCoordinates = new int[2];
 
     private final JFrame frame;
-    private JPanel activePanel;
+    public JPanel activePanel;
 
     public Player player;
 
