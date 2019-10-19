@@ -13,7 +13,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 
 public abstract class Player extends Entity {
-    public boolean hasDamaged, holdAttack; // variable true if user makes character hit
+
     // Ingame stats
     public int level, exp, gold;
     private double baseSpeed;

@@ -150,7 +150,7 @@ public class RandomMap extends Map {
                     this.projectiles.add(new Projectile(this.player.getX() + this.player.getWidth() / 10.0, this.player.getY() - this.player.getHeight() / 1.75, Projectile.TurnNumber.SOUTHEAST, Main.rgba_projectiles));
                 } else if (this.player.directions[2] && this.player.directions[1]) {
                     this.projectiles.add(new Projectile(this.player.getX() - this.player.getWidth() * 1.5, this.player.getY(), Projectile.TurnNumber.SOUTHWEST, Main.rgba_projectiles));
-                } else if (this.player.directions[0]  && this.player.directions[1]) {
+                } else if (this.player.directions[0] && this.player.directions[1]) {
                     this.projectiles.add(new Projectile(this.player.getX() - this.player.getWidth() * 1.5, this.player.getY() - this.player.getHeight(), Projectile.TurnNumber.NORTHWEST, Main.rgba_projectiles));
                 } else if (this.player.directions[0]) {
                     this.projectiles.add(new Projectile(this.player.getX() + this.player.getWidth() / 2.0, this.player.getY() - this.player.getHeight() * 1.5, Projectile.TurnNumber.NORTH, Main.rgba_projectiles));
@@ -235,8 +235,8 @@ public class RandomMap extends Map {
                 this.removeEntities[i] = 0;
                 this.removeEntityIndex -= 1;
                 this.monsterCount -= 1;
-                this.player.giveXP((int)(Math.random()*8) + 12);
-                this.player.gold += (int)(Math.random()*3 + 2);
+                this.player.giveXP((int) (Math.random() * 8) + 12);
+                this.player.gold += (int) (Math.random() * 3 + 2);
             }
         }
 
@@ -253,22 +253,19 @@ public class RandomMap extends Map {
                     ((Monster) entity).makePath();
                 } else if (this.followingMonsters.contains(entity) && (distance <= 1)) {
                     ((Monster) entity).isFollowing = false;
-                    ((Monster) entity).setWAS(true);
+                    ((Monster) entity).setHitting(true);
+                    if (entity instanceof Monster) {
+                            if (entity.overlap(player)) {
+                                if (((Monster) entity).attack(player)) {
+                                    setLoose(true);
+                                }
+                            }
+                    }
                 } else if (this.followingMonsters.contains(entity) && (distance > 15)) {
                     ((Monster) entity).isFollowing = false;
                     this.followingMonsters.remove(entity);
                 }
-                if (((Monster) entity).getWAS() == true) {
 
-                    for (Entity player : this.entities) {
-                        if (entity instanceof Monster && entity.overlap(player)) {
-                            if (((Monster) entity).attack(player)) { // i have no idea how to fix this
-                                player.setHealth(player.getHealth() - (entity.getDamage() - player.getArmor()));
-                            }
-                        }
-                    }
-
-                }//blabl
             }
         }
     }
@@ -279,7 +276,7 @@ public class RandomMap extends Map {
         if (this.portalState < 8) {
             this.player.allowedToMove = false;
             g.drawImage(portal[((int) portalState)].getScaledInstance(120, -1, Image.SCALE_DEFAULT), 410, 180, null);
-        } else if(!this.playerPortChanneled){
+        } else if (!this.playerPortChanneled) {
             player.allowedToMove = true;
             this.playerPortChanneled = true;
         }

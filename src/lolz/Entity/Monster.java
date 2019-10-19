@@ -14,12 +14,9 @@ import java.util.List;
 
 public class Monster extends Entity {
     private int exp, monsterNumber, movementTime;
-    public boolean isFollowing;
-    public boolean ready;
+    public boolean isFollowing,  ready;
     public ArrayList<List<Integer>> path;
-
-    private boolean waitASecond = true; //checkt ob das monster bereit ist zum angriff
-
+    public double waitASecond;
     public Monster(Map map, int x, int y, int maxHealth, int damage, int armor, int exp, int monsterNumber) {
         super(map, x, y, maxHealth, damage, armor, 0.1);
         this.exp = exp;
@@ -37,11 +34,11 @@ public class Monster extends Entity {
         this.update(1);
     }
 
-    public boolean getWAS() {
+    public double getWAS() {
         return waitASecond;
     }
 
-    public void setWAS(boolean x) {
+    public void setWAS(double x) {
         waitASecond = x;
     }
 
@@ -54,12 +51,14 @@ public class Monster extends Entity {
     }
 
 
-    public boolean attack(Entity entity) {
+    public boolean attack(Player player) {
         if (getHitting() && (int) animation_state % 5 == 2 && !hasDamaged) {
             this.hasDamaged = true;
-            entity.setHealth(entity.getHealth() - this.getDamage());
-            System.out.println("entity health: " + entity.getHealth());
-            return entity.getHealth() == 0;
+            if (this.getDamage() > player.getArmor()) {
+                player.setHealth(player.getHealth() - (this.getDamage() - player.getArmor()));
+            }
+            System.out.println("entity health: " + player.getHealth());
+            return player.getHealth() == 0;
         }
         return false;
     }
@@ -293,11 +292,11 @@ public class Monster extends Entity {
 
     }
 
-    private void setHitting(boolean hitting) {
+    public void setHitting(boolean hitting) {
         isHitting = hitting;
     }
 
-    private boolean getHitting() {
+    public boolean getHitting() {
         return isHitting;
     }
 
@@ -307,10 +306,15 @@ public class Monster extends Entity {
 
     private void updateAnimationState(int time, int idle, int move, int hit) {
         if (isHitting) {
+            setWAS(getSpeed());
+            setSpeed(0);
             this.animation_state += (float) time / 100;
             if (this.animation_state > hit) {
                 this.setHitting(false);
             }
+            setSpeed(getWAS());
+            setWAS(0);
+            setAllowedToMove(true);
         } else if (isMoving) {
             this.animation_state += (float) time / 100;
             this.animation_state %= move;

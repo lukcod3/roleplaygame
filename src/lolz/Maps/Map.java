@@ -29,7 +29,7 @@ public abstract class Map {
     double expFactor;
     public volatile ArrayList<Monster> followingMonsters;
     public HashMap<List<Integer>, ArrayList<List<Integer>>> pathsToPlayer;
-    public boolean debugging;
+    public boolean debugging,loose;
     public Tile[][] tiles;
 
     Map(int width, int height) {
@@ -62,6 +62,14 @@ public abstract class Map {
                 tiles[y][x] = new Tile();
             }
         }
+    }
+
+    public boolean getLoose(){
+        return loose;
+    }
+
+    public void setLoose(boolean x){
+        loose =x;
     }
 
     public void paint(Graphics g) {

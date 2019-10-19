@@ -6,11 +6,11 @@ import lolz.Maps.Map;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
-public abstract class Entity {
+public abstract class Entity { // variable true if user makes character hit
     public double x, y, speed, animation_state;
     public Image[][] img;
     public int width, height, maxHealth, health, damage, armor;
-    public boolean turnedRight, isMoving, isHitting, allowedToMove;
+    public boolean turnedRight, isMoving, isHitting, allowedToMove, hasDamaged, holdAttack;
     public volatile boolean[] directions; // 0 is up, 1 is left, 2 is down, 3 is right
     public Map map;
 
@@ -27,6 +27,22 @@ public abstract class Entity {
         this.map = map;
         this.allowedToMove = true;
     }
+
+    public boolean getAllowedToMove(){
+        return allowedToMove;
+    }
+
+    public void setSpeed(double x){
+        speed = x;
+    }
+
+    public double getSpeed(){
+        return speed;
+    }
+
+   public void setAllowedToMove(boolean x){
+        allowedToMove = x;
+   }
 
     public abstract void paint(Graphics g);
 
