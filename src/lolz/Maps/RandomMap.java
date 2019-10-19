@@ -265,7 +265,7 @@ public class RandomMap extends Map {
                     ((Monster) entity).isFollowing = false;
                     this.followingMonsters.remove(entity);
                 }
-
+//ztdzd
             }
         }
     }
