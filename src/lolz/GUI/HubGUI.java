@@ -197,8 +197,13 @@ public class HubGUI extends JPanel {
         this.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_I, 0, true), KeyEvent.VK_I + "Released");
         this.getActionMap().put(KeyEvent.VK_I + "Released", generateInventoryKeyAction());
 
+        // shop key binding
         this.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_U, 0, true), KeyEvent.VK_U + "Released");
         this.getActionMap().put(KeyEvent.VK_U + "Released", generateShopKeyAction());
+
+        // save game key binding
+        this.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_S, InputEvent.CTRL_DOWN_MASK), "saveGame");
+        this.getActionMap().put("saveGame", generateSaveAction());
 
 
 
@@ -287,6 +292,15 @@ public class HubGUI extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 // change the players directions
                 map.player.directions[dir] = pressed;
+            }
+        };
+    }
+
+    private Action generateSaveAction() {
+        return new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Main.saveGame(map.player);
             }
         };
     }

@@ -129,6 +129,7 @@ $RECYCLE.BIN/
 # User-specific stuff
 .idea
 /res/monster/
+save.txt
 
 # Gradle and Maven with auto-import
 # When using Gradle or Maven with auto-import, you should exclude module files,
@@ -163,7 +164,3 @@ com_crashlytics_export_strings.xml
 crashlytics.properties
 crashlytics-build.properties
 fabric.properties
-
-
-
-/res/monster/

@@ -123,17 +123,14 @@ public abstract class Entity {
         }
     }
 
-    static BufferedImage tint(float r, float g, float b, float a, BufferedImage sprite)
-    {
+    static BufferedImage tint(float r, float g, float b, float a, BufferedImage sprite) {
         BufferedImage tintedSprite = new BufferedImage(sprite.getWidth(), sprite.getHeight(), BufferedImage.TRANSLUCENT);
         Graphics2D graphics = tintedSprite.createGraphics();
         graphics.drawImage(sprite, 0, 0, null);
         graphics.dispose();
 
-        for (int i = 0; i < tintedSprite.getWidth(); i++)
-        {
-            for (int j = 0; j < tintedSprite.getHeight(); j++)
-            {
+        for (int i = 0; i < tintedSprite.getWidth(); i++) {
+            for (int j = 0; j < tintedSprite.getHeight(); j++) {
                 int ax = tintedSprite.getColorModel().getAlpha(tintedSprite.getRaster().getDataElements(i, j, null));
                 int rx = tintedSprite.getColorModel().getRed(tintedSprite.getRaster().getDataElements(i, j, null));
                 int gx = tintedSprite.getColorModel().getGreen(tintedSprite.getRaster().getDataElements(i, j, null));

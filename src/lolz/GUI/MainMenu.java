@@ -27,8 +27,9 @@ public class MainMenu extends JPanel {
             e.printStackTrace();
         }
 
-        // create start button
         this.setLayout(null);
+
+        // create start button
         JButton start = new JButton();
         start.setBounds((Main.WIDTH - buttonWidth) / 2, (Main.HEIGHT - buttonHeight) / 2, buttonWidth, buttonHeight);
         start.setIcon(new ImageIcon(buttonImage));
@@ -39,6 +40,18 @@ public class MainMenu extends JPanel {
             }
         });
         this.add(start);
+
+        // create load game button
+        JButton loadGame = new JButton("Load Game");
+        loadGame.setBounds((Main.WIDTH - buttonWidth) / 2, (int) ((Main.HEIGHT - buttonHeight) / 2 + buttonHeight * 1.2), buttonWidth, buttonHeight);
+        loadGame.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                main.loadGame();
+            }
+        });
+        loadGame.setEnabled(Main.gameIsSaved());
+        this.add(loadGame);
     }
 
     protected void paintComponent(Graphics g) {
