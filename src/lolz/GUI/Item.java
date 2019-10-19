@@ -46,6 +46,10 @@ public class Item {
         }
     }
 
+    public String getStats() {
+        return this.typ + "\n" + this.itemNr;
+    }
+
     public void generateItemStats() {
         if (itemNr != 0) {
             switch (this.typ) {

@@ -6,9 +6,6 @@ import lolz.Maps.Map;
 import java.awt.*;
 
 public class Mage extends Player {
-
-    public boolean hasDamaged;
-
     public Mage(Map map, int x, int y) {
         super(map, x, y);
         this.img = new Image[3][];

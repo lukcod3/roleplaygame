@@ -1,14 +1,23 @@
 package lolz;
 
 
-import lolz.Entity.*;
-import lolz.GUI.*;
+import lolz.Entity.Fighter;
+import lolz.Entity.Mage;
+import lolz.Entity.Player;
+import lolz.GUI.GameGUI;
+import lolz.GUI.HubGUI;
+import lolz.GUI.MainMenu;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 
 public class Main {
@@ -27,9 +36,6 @@ public class Main {
     private JPanel activePanel;
 
     public Player player;
-
-    public enum COLORS {BLACK, RED, SAFFRON, GREEN, PINK, SKYBLUE, BLUE};
-    public static float[] rgba_projectiles;
 
     private Main() {
 
@@ -62,9 +68,9 @@ public class Main {
         CONTENT_WIDTH = frame.getContentPane().getWidth();
         CONTENT_HEIGHT = frame.getContentPane().getHeight();
 
-        this.player = new Fighter(null, 0, 0);
+        this.player = new Mage(null, 0, 0);
         this.setRgba_projectiles(COLORS.RED);
-        if(player instanceof  Mage) ((Mage) player).loadImages(new float[]{0f, 1f, 1f, 1f});
+        if (player instanceof Mage) ((Mage) player).loadImages(new float[]{0f, 1f, 1f, 1f});
 
         // updating the game
         while (true) {
@@ -90,6 +96,18 @@ public class Main {
         }
     }
 
+    public static float[] rgba_projectiles;
+
+    public static void saveGame(Player player) {
+        try {
+            FileWriter fw = new FileWriter(new File("save.txt"), false);
+            fw.write(player.getStats());
+            fw.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     public static void main(String[] args) {
         new Main();
     }
@@ -107,6 +125,89 @@ public class Main {
         frame.getContentPane().removeAll();
         frame.getContentPane().add(activePanel);
         frame.revalidate();
+    }
+
+    public static boolean gameIsSaved() {
+        File f = new File("save.txt");
+        return f.exists() && !f.isDirectory();
+    }
+
+    public Player loadGame() {
+        // parse saved game
+        assert gameIsSaved();
+        String saved = "";
+        try {
+            saved = new String(Files.readAllBytes(Paths.get("save.txt")));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        String[] parsed = saved.split("\n");
+        System.out.println(Arrays.toString(parsed));
+        boolean isMage = Boolean.parseBoolean(parsed[0]);
+        ArrayList<Integer> data = new ArrayList<>();
+        for (int i = 1; i < parsed.length; i++) {
+            data.add(Integer.parseInt(parsed[i]));
+        }
+
+        // generate player
+        Player player;
+        if (isMage) {
+            player = new Mage(null, 0, 0);
+        } else {
+            player = new Fighter(null, 0, 0);
+        }
+
+        // set player stats
+        player.level = data.get(0);
+        player.exp = data.get(1);
+        player.gold = data.get(2);
+        data.remove(0);
+        data.remove(0);
+        data.remove(0);
+
+        // set player inventory
+        while (!data.isEmpty()) {
+            int index = data.get(0);
+            int typ = 0;
+            int itemNr = 0;
+        }
+
+        return player;
+    }
+
+    public void setRgba_projectiles(COLORS color) {
+        switch (color) {
+            case BLACK:
+                rgba_projectiles = new float[]{0f, 0f, 0f, 1f};
+                break;
+
+            case RED:
+                rgba_projectiles = new float[]{1f, 0f, 0f, 1f};
+                break;
+
+            case GREEN:
+                rgba_projectiles = new float[]{0f, 01f, 0f, 1f};
+                break;
+
+            case BLUE:
+                rgba_projectiles = new float[]{0f, 0f, 1f, 1f};
+                break;
+
+            case SAFFRON:
+                rgba_projectiles = new float[]{1f, 1f, 0f, 1f};
+                break;
+
+            case SKYBLUE:
+                rgba_projectiles = new float[]{0f, 1f, 1f, 1f};
+                break;
+
+            case PINK:
+                rgba_projectiles = new float[]{1f, 0f, 1f, 1f};
+                break;
+
+            default:
+                rgba_projectiles = null;
+        }
     }
 
     private void updateHub(int time) {
@@ -137,39 +238,6 @@ public class Main {
         g.drawImage(i, x + i.getWidth(null), y, -i.getWidth(null), i.getHeight(null), null);
     }
 
-    public void setRgba_projectiles(COLORS color) {
-        switch (color) {
-            case BLACK:
-                this.rgba_projectiles = new float[]{0f, 0f, 0f, 1f};
-                break;
-
-            case RED:
-                this.rgba_projectiles = new float[]{1f, 0f, 0f, 1f};
-                break;
-
-            case GREEN:
-                this.rgba_projectiles = new float[]{0f, 01f, 0f, 1f};
-                break;
-
-            case BLUE:
-                this.rgba_projectiles = new float[]{0f, 0f, 1f, 1f};
-                break;
-
-            case SAFFRON:
-                this.rgba_projectiles = new float[]{1f, 1f, 0f, 1f};
-                break;
-
-            case SKYBLUE:
-                this.rgba_projectiles = new float[]{0f, 1f, 1f, 1f};
-                break;
-
-            case PINK:
-                this.rgba_projectiles = new float[]{1f, 0f, 1f, 1f};
-                break;
-
-            default:
-                this.rgba_projectiles = null;
-        }
-    }
+    public enum COLORS {BLACK, RED, SAFFRON, GREEN, PINK, SKYBLUE, BLUE}
 
 }

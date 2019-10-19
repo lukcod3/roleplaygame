@@ -5,10 +5,8 @@ import lolz.Entity.Player;
 import lolz.Main;
 
 import javax.imageio.ImageIO;
-import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.io.File;
 import java.text.DecimalFormat;
 
@@ -55,6 +53,16 @@ public class Inventory {
 
         testGeneratedRandomItemSet();
         hoverInventory = 0;
+    }
+
+    public String getStats() {
+        StringBuilder s = new StringBuilder();
+        for (int i = 0; i < this.equipment.length; i++) {
+            if (this.equipment[i] != null) {
+                s.append("\n").append(i).append("\n").append(this.equipment[i].getStats());
+            }
+        }
+        return s.toString();
     }
 
     public void printStats(Graphics g) {
