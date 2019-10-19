@@ -124,7 +124,7 @@ public abstract class Player extends Entity {
                 this.damage += this.inventory.equipment[i].damage;
                 this.armor += this.inventory.equipment[i].armor;
                 this.baseSpeed += this.inventory.equipment[i].movementspeed;
-            } catch(Exception e){
+            } catch(Exception ignore){
 
             }
         }

@@ -1,11 +1,14 @@
 package lolz.GUI;
 
+import lolz.Main;
+
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.io.File;
+import java.text.DecimalFormat;
 
 public class Item {
-    public int health, damage, abilitypower, armor;
+    public int health, damage, armor;
     public int typ, itemNr; //schwert, hut etc. (0-6);  stufe(0-4)
     public double movementspeed;
     public Image image;
@@ -88,6 +91,45 @@ public class Item {
                     this.health = 20+ (int) (Math.random()* (itemNr+4))*10;
                     break;
             }
+        }
+
+    }
+    public void drawItemStats(Graphics g){
+
+        int neededSpace = 0;
+        if(movementspeed!=0){
+            neededSpace += 20;
+        }
+        if(armor!=0){
+            neededSpace += 20;
+        }
+        if(health!=0){
+            neededSpace += 20;
+        }
+        if(damage!=0){
+            neededSpace += 20;
+        }
+        Color color = g.getColor();
+        g.setColor(new Color(160, 160, 160, 200));
+        g.fillRect(Main.mouseCoordinates[0]-110, Main.mouseCoordinates[1]-35-neededSpace, 200, 20 + neededSpace);
+        g.setColor(Color.black);
+        g.drawRect(Main.mouseCoordinates[0]-110, Main.mouseCoordinates[1]-35-neededSpace, 200, 20 + neededSpace);
+        g.setColor(color);
+        neededSpace = 0;
+        if(movementspeed!=0){
+            g.drawString("Lauftempo: " + new DecimalFormat("#.##").format(movementspeed), Main.mouseCoordinates[0] - 100, Main.mouseCoordinates[1]-30-neededSpace);
+            neededSpace += 20;
+        }
+        if(armor!=0){
+            g.drawString("Rüstung: " + armor, Main.mouseCoordinates[0] - 100, Main.mouseCoordinates[1]-30-neededSpace);
+            neededSpace += 20;
+        }
+        if(health!=0){
+            g.drawString("Leben: " + health, Main.mouseCoordinates[0] - 100, Main.mouseCoordinates[1]-30-neededSpace);
+            neededSpace += 20;
+        }
+        if(damage!=0){
+            g.drawString("Angriffsschaden: " + damage, Main.mouseCoordinates[0] - 100, Main.mouseCoordinates[1]-30-neededSpace);
         }
 
     }

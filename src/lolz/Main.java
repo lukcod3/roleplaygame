@@ -20,6 +20,8 @@ public class Main {
     public static int ENTITY_WIDTH = 75;
     public static int VIRTUAL_ENTITY_WIDTH = 45;
 
+    public static int[] mouseCoordinates = new int[2];
+
     private final JFrame frame;
     private JPanel activePanel;
 

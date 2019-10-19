@@ -121,14 +121,16 @@ public class GameGUI extends JPanel {
         this.addMouseMotionListener(new MouseMotionListener() {
             @Override
             public void mouseDragged(MouseEvent e) {
-                map.player.inventory.mouseCoordinates[0] = e.getX();
-                map.player.inventory.mouseCoordinates[1] = e.getY();
+                Main.mouseCoordinates[0] = e.getX();
+                Main.mouseCoordinates[1] = e.getY();
+                map.player.inventory.updateInventory(e);
             }
 
             @Override
             public void mouseMoved(MouseEvent e) {
-                map.player.inventory.mouseCoordinates[0] = e.getX();
-                map.player.inventory.mouseCoordinates[1] = e.getY();
+                Main.mouseCoordinates[0] = e.getX();
+                Main.mouseCoordinates[1] = e.getY();
+                map.player.inventory.updateInventory(e);
             }
         });
     }
@@ -227,6 +229,7 @@ public class GameGUI extends JPanel {
         // draw player health rectangles
         Font font = new Font("SansSerif", Font.BOLD, 25);
         g.setFont(font);
+        g.setColor(Color.white);
         drawLevel(g);
         //g.setColor(new Color(255, 255, 255, 50));
         drawHealth(g);

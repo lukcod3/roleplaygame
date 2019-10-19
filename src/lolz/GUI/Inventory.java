@@ -12,7 +12,7 @@ import java.awt.event.MouseListener;
 import java.io.File;
 import java.text.DecimalFormat;
 
-public class Inventory extends JPanel {
+public class Inventory {
     public Item[] equipment; // 1 is hat, 2 is t-shirt, 3 is sword, 4 is shoes, 5 is necklace, 6 is ring, 7 is belt, 8-11 is depot
     public int aktInventar;
     public Image[] inventoryImages;
@@ -20,13 +20,13 @@ public class Inventory extends JPanel {
     public Image emptyInventory;
     public boolean showButton, readyForSwitch, statsShown;
     public Point frameLocation;
-    public int[] mouseCoordinates, oldCoordinates;
+    public int[] oldCoordinates;
     int X_POSITION_IMAGE_INVENTORY = 560;
     int Y_POSITION_IMAGE_INVENTORY = 185;
     public Player player;
+    public int hoverInventory;
 
     public Inventory(Player player) {
-        this.mouseCoordinates = new int[2];
         this.oldCoordinates = new int[2];
         this.player = player;
         try {
@@ -54,6 +54,7 @@ public class Inventory extends JPanel {
         this.equipment = new Item[]{item[0][0], item[1][0], item[2][0], item[3][0], item[4][0], item[5][0], item[6][0], null, null, null, null};
 
         testGeneratedRandomItemSet();
+        hoverInventory = 0;
     }
 
     public void printStats(Graphics g) {
@@ -64,6 +65,7 @@ public class Inventory extends JPanel {
             Color myColor = new Color(56, 56, 56, 165);
             Font titleF = new Font("SansSerif", Font.BOLD, 25);
             Font statsF = new Font("SansSerif", Font.PLAIN, 15);
+            g.setColor(Color.black);
             g.drawRect(150, 50, 660, 440);
             g.setColor(myColor);
             g.fillRect(150, 50, 660, 440);
@@ -157,12 +159,15 @@ public class Inventory extends JPanel {
                 }
             } else {
                 readyForSwitch = false;
+                if(hoverInventory != 0){
+                    equipment[hoverInventory-1].drawItemStats(g);
+                }
             }
         }
     }
 
     private boolean isCourserInRectangle(double x1, double x2, double y1, double y2) {
-        return (mouseCoordinates[0] <= x2 && mouseCoordinates[0] >= x1 && mouseCoordinates[1] <= y2 && mouseCoordinates[1] >= y1);
+        return ((Main.mouseCoordinates[0] <= x2) && (Main.mouseCoordinates[0] >= x1) && (Main.mouseCoordinates[1] <= y2) && (Main.mouseCoordinates[1] >= y1));
     }
 
     private void testGeneratedRandomItemSet() {
@@ -175,6 +180,7 @@ public class Inventory extends JPanel {
 
     public void updateInventory(MouseEvent e) {
         // check if courser is on inventory field
+        hoverInventory = 0;
         if (e.getButton() == 3 && statsShown) {
             if (isCourserInRectangle(590, 650, 100, 160) && equipment[0].itemNr != 0) {
                 aktInventar = 1;
@@ -204,8 +210,8 @@ public class Inventory extends JPanel {
             }
             if (aktInventar != 0) {
                 showButton = true;
-                oldCoordinates[0] = mouseCoordinates[0];
-                oldCoordinates[1] = mouseCoordinates[1];
+                oldCoordinates[0] = Main.mouseCoordinates[0];
+                oldCoordinates[1] = Main.mouseCoordinates[1];
             }
             // switches Item places
         } else if (e.getButton() == 1) {
@@ -232,6 +238,30 @@ public class Inventory extends JPanel {
                 }
             } else {
                 showButton = false;
+            }
+        } else{
+            if (isCourserInRectangle(590, 650, 100, 160) && equipment[0].itemNr != 0) {
+                hoverInventory = 1;
+            } else if (isCourserInRectangle(500, 560, 180, 240) && equipment[1].itemNr != 0) {
+                hoverInventory = 2;
+            } else if (isCourserInRectangle(500, 560, 255, 315) && equipment[2].itemNr != 0) {
+                hoverInventory = 3;
+            } else if (isCourserInRectangle(590, 640, 330, 390) && equipment[3].itemNr != 0) {
+                hoverInventory = 4;
+            } else if (isCourserInRectangle(680, 730, 155, 215) && equipment[4].itemNr != 0) {
+                hoverInventory = 5;
+            } else if (isCourserInRectangle(680, 730, 230, 290) && equipment[5].itemNr != 0) {
+                hoverInventory = 6;
+            } else if (isCourserInRectangle(680, 730, 305, 365) && equipment[6].itemNr != 0) {
+                hoverInventory = 7;
+            } else if (isCourserInRectangle(500, 560, 420, 480) && equipment[7] != null) {
+                hoverInventory = 8;
+            } else if (isCourserInRectangle(561, 621, 420, 480) && equipment[8] != null) {
+                hoverInventory = 9;
+            } else if (isCourserInRectangle(622, 682, 420, 480) && equipment[9] != null) {
+                hoverInventory = 10;
+            } else if (isCourserInRectangle(683, 743, 420, 480) && equipment[10] != null) {
+                hoverInventory = 11;
             }
         }
     }

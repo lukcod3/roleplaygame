@@ -229,14 +229,16 @@ public class HubGUI extends JPanel {
         this.addMouseMotionListener(new MouseMotionListener() {
             @Override
             public void mouseDragged(MouseEvent e) {
-                map.player.inventory.mouseCoordinates[0] = e.getX();
-                map.player.inventory.mouseCoordinates[1] = e.getY();
+                Main.mouseCoordinates[0] = e.getX();
+                Main.mouseCoordinates[1] = e.getY();
+                map.player.inventory.updateInventory(e);
             }
 
             @Override
             public void mouseMoved(MouseEvent e) {
-                map.player.inventory.mouseCoordinates[0] = e.getX();
-                map.player.inventory.mouseCoordinates[1] = e.getY();
+                Main.mouseCoordinates[0] = e.getX();
+                Main.mouseCoordinates[1] = e.getY();
+                map.player.inventory.updateInventory(e);
             }
         });
     }
@@ -293,8 +295,8 @@ public class HubGUI extends JPanel {
         this.map.player.inventory.printStats(g);
         Font font = new Font("SansSerif", Font.BOLD, 25);
         g.setFont(font);
+        g.setColor(Color.white);
         drawLevel(g);
-        //g.setColor(new Color(255, 255, 255, 50));
         drawHealth(g);
         // sync graphic
         Toolkit.getDefaultToolkit().sync();
@@ -345,10 +347,6 @@ public class HubGUI extends JPanel {
         g.drawString("/", 25 + 200 / 2 - g.getFontMetrics().stringWidth("/") / 2, 52);
         g.drawString("" + this.map.player.maxHealth, 25 + 200 * 3 / 4 - g.getFontMetrics().stringWidth("" + this.map.player.maxHealth) / 2, 52);
 
-        Font font = new Font("Avant Garde", Font.BOLD, 25);
-        g.setFont(font);
-        g.setColor(Color.WHITE);
-        g.drawString("Monsters: " + this.map.monsterCount, Main.WIDTH - (g.getFontMetrics().stringWidth("Monsters: " + this.map.monsterCount) + 50), 50);
     }
 
 }
