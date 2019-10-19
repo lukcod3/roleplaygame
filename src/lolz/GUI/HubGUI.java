@@ -16,8 +16,9 @@ public class HubGUI extends JPanel {
     public Hub map;
     private boolean teleport;
     private boolean clicked, playerChose; //playerChose für Beenden des Auswahlprozesses -> if (player in certain coordinates && !playerChose)
-    private JButton standard, black, red, saffron, green, pink, skyblue, blue, exitButton, hubButton, characterwahl;
+    private JButton standard, black, red, saffron, green, pink, skyblue, blue, exitButton, characterwahl, mage, fighter, returnB;
     private boolean inEscMenu;
+    private boolean inCharMenu;
 
     public HubGUI(final Main main, Player player) {
         this.setLayout(null);
@@ -101,18 +102,77 @@ public class HubGUI extends JPanel {
         });
         this.add(this.exitButton);
 
-        // add exit button
-        this.hubButton = new JButton("Back to Hub");
-        this.hubButton.setBounds((Main.WIDTH - button_width) / 2, 200, button_width, button_height);
-        this.hubButton.setVisible(false);
-        this.hubButton.addActionListener(new ActionListener() {
+        // characterwahl
+        this.characterwahl = new JButton("Character");
+        this.characterwahl.setBounds((Main.WIDTH - button_width) / 2, 200, button_width, button_height);
+        this.characterwahl.setVisible(false);
+        this.characterwahl.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                main.startHub();
+                inCharMenu = !inCharMenu;
+                if (inCharMenu) {
+                    addCharItems();
+                } else {
+                    removeCharItems();
+                }
+            }
+
+        });
+        this.add(this.characterwahl);
+
+        this.returnB = new JButton("return");
+        this.returnB.setBounds((Main.WIDTH - button_width) / 2, 300, button_width, button_height);
+        this.returnB.setVisible(false);
+        this.returnB.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                removeCharItems();
+                addEscItems();
+
             }
         });
-        this.add(this.hubButton);
+        this.add(this.characterwahl);
 
+        //auswahl Mage/Fighter
+        this.mage = new JButton("Mage");
+        this.mage.setBounds((Main.WIDTH - button_width) / 2, 100, button_width, button_height);
+        this.mage.setVisible(false);
+        this.mage.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Player newPlayer = new Mage(map, (int) map.player.getX(), (int) map.player.getY());
+                newPlayer.level = map.player.level;
+                newPlayer.exp = map.player.exp;
+                newPlayer.gold = map.player.gold;
+                newPlayer.inventory = map.player.inventory;
+                newPlayer.health = map.player.health;
+                map.player = newPlayer;
+                inCharMenu = false;
+                inEscMenu = false;
+                removeCharItems();
+            }
+        });
+        this.add(this.mage);
+
+        this.fighter = new JButton("Fighter");
+        this.fighter.setBounds((Main.WIDTH - button_width) / 2, 200, button_width, button_height);
+        this.fighter.setVisible(false);
+        this.fighter.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Player newPlayer = new Fighter(map, (int) map.player.getX(), (int) map.player.getY());
+                newPlayer.level = map.player.level;
+                newPlayer.exp = map.player.exp;
+                newPlayer.gold = map.player.gold;
+                newPlayer.inventory = map.player.inventory;
+                newPlayer.health = map.player.health;
+                map.player = newPlayer;
+                inCharMenu = false;
+                inEscMenu = false;
+                removeCharItems();
+            }
+        });
+        this.add(this.fighter);
 
         this.green = new JButton("GREEN");
         this.green.setBackground(Color.GREEN);
@@ -423,14 +483,40 @@ public class HubGUI extends JPanel {
 
     private void addEscItems() {
         this.exitButton.setVisible(true);
-        this.hubButton.setVisible(true);
+        this.characterwahl.setVisible(true);
         this.revalidate();
     }
 
+
     private void removeEscItems() {
         this.exitButton.setVisible(false);
-        this.hubButton.setVisible(false);
+        this.characterwahl.setVisible(false);
+        if (this.inCharMenu) {
+            this.removeCharItems();
+        }
         this.revalidate();
+    }
+
+
+    private void addCharItems() {
+        this.mage.setVisible(true);
+        this.fighter.setVisible(true);
+        this.characterwahl.setVisible(false);
+        this.exitButton.setVisible(false);
+        this.returnB.setVisible(true);
+        this.revalidate();
+    }
+
+    private void removeCharItems() {
+        this.mage.setVisible(false);
+        this.fighter.setVisible(false);
+        this.returnB.setVisible(false);
+        this.revalidate();
+    }
+
+    private void charStart() {
+        addCharItems();
+
     }
 
 }
