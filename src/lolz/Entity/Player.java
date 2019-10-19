@@ -1,6 +1,6 @@
 package lolz.Entity;
 
-import lolz.GUI.Gold;
+
 import lolz.GUI.Inventory;
 import lolz.GUI.Item;
 import lolz.Main;
@@ -15,8 +15,7 @@ import java.io.File;
 public abstract class Player extends Entity {
     public boolean hasDamaged, holdAttack; // variable true if user makes character hit
     // Ingame stats
-    public int level, exp;
-    public Gold gold;
+    public int level, exp, gold;
     private double baseSpeed;
     public Inventory inventory;
 
@@ -29,7 +28,7 @@ public abstract class Player extends Entity {
         this.width = 45;
         holdAttack = false;
         inventory = new Inventory(this);
-        this.gold = new Gold();
+        this.gold = 0;
     }
 
     // set Getters and Setters for attribute hit

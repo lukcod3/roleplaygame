@@ -19,6 +19,7 @@ public class Main {
     public static int CONTENT_WIDTH, CONTENT_HEIGHT;
     public static int ENTITY_WIDTH = 75;
     public static int VIRTUAL_ENTITY_WIDTH = 45;
+    public static Image goldImage;
 
     public static int[] mouseCoordinates = new int[2];
 
@@ -35,6 +36,7 @@ public class Main {
         // setup main frame
         frame = new JFrame();
 
+
         // main game jpanel
         activePanel = new MainMenu(this);
         frame.add(activePanel);
@@ -45,6 +47,7 @@ public class Main {
         frame.setBackground(Color.BLACK);
         try {
             frame.setIconImage(ImageIO.read(new File("res/tiles/knight_f_hit_anim_f0.png")));
+            goldImage = ImageIO.read(new File("res/inventory/gold.png"));
         } catch (IOException e) {
             System.out.println("Whoops...");
         }

@@ -230,7 +230,6 @@ public class GameGUI extends JPanel {
         drawLevel(g);
         //g.setColor(new Color(255, 255, 255, 50));
         drawHealth(g);
-        map.player.gold.paint(g);
         if ((double) this.map.player.health / (double) this.map.player.getMaxHealth() <= 0.1) {
             Color lowColor = new Color(100, 0, 0, 60);
             g.setColor(lowColor);
@@ -312,7 +311,6 @@ public class GameGUI extends JPanel {
     }
 
     public void update(int time) {
-        this.map.player.gold.update();
         if (!inEscMenu) {
             // update map
             map.update(time);

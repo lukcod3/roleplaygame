@@ -1,3 +1,6 @@
+
+// USELESS CLASS
+/*
 package lolz.GUI;
 
 import javax.imageio.ImageIO;
@@ -34,3 +37,4 @@ public class Gold {
         animation_state += 0.1;
     }
 }
+ */

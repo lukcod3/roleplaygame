@@ -58,7 +58,10 @@ public class Inventory {
     }
 
     public void printStats(Graphics g) {
-
+        g.setColor(Color.white);
+        g.setFont(new Font("SansSerif", Font.BOLD, 25));
+        g.drawString(""+ player.gold, 20, 130);
+        g.drawImage(Main.goldImage, 60, 107 ,null);
         // paint player stats
         if (statsShown) {
             // draw stats
