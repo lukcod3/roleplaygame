@@ -254,18 +254,19 @@ public class RandomMap extends Map {
                 } else if (this.followingMonsters.contains(entity) && (distance <= 1)) {
                     ((Monster) entity).isFollowing = false;
                     ((Monster) entity).setHitting(true);
-                    if (entity instanceof Monster) {
-                            if (entity.overlap(player)) {
-                                if (((Monster) entity).attack(player)) {
-                                    setLoose(true);
-                                }
+                    for (Entity x : this.entities) {
+                        if (entity.overlap(x)) {
+                            if (((Monster) entity).attack(player)) {
+                                setLoose(true);
                             }
+                        }
+
                     }
                 } else if (this.followingMonsters.contains(entity) && (distance > 15)) {
                     ((Monster) entity).isFollowing = false;
                     this.followingMonsters.remove(entity);
                 }
-//ztdzd
+
             }
         }
     }
