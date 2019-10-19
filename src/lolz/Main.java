@@ -17,7 +17,6 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 
 public class Main {
@@ -68,7 +67,7 @@ public class Main {
         CONTENT_WIDTH = frame.getContentPane().getWidth();
         CONTENT_HEIGHT = frame.getContentPane().getHeight();
 
-        this.player = new Mage(null, 0, 0);
+        this.player = new Fighter(null, 0, 0);
         this.setRgba_projectiles(COLORS.RED);
         if (player instanceof Mage) ((Mage) player).loadImages(new float[]{0f, 1f, 1f, 1f});
 
@@ -132,47 +131,62 @@ public class Main {
         return f.exists() && !f.isDirectory();
     }
 
-    public Player loadGame() {
-        // parse saved game
-        assert gameIsSaved();
-        String saved = "";
+    public void loadGame() {
         try {
-            saved = new String(Files.readAllBytes(Paths.get("save.txt")));
-        } catch (IOException e) {
+            // parse saved game
+            String saved = "";
+            try {
+                saved = new String(Files.readAllBytes(Paths.get("save.txt")));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            String[] parsed = saved.split("\n");
+            boolean isMage = Boolean.parseBoolean(parsed[0]);
+            ArrayList<Integer> data = new ArrayList<>();
+            for (int i = 1; i < parsed.length; i++) {
+                data.add(Integer.parseInt(parsed[i]));
+            }
+
+            // generate player
+            Player player;
+            if (isMage) {
+                player = new Mage(null, 0, 0);
+                ((Mage) player).loadImages(new float[]{0f, 1f, 1f, 1f});
+            } else {
+                player = new Fighter(null, 0, 0);
+            }
+
+            // set player stats
+            player.level = data.get(0);
+            player.exp = data.get(1);
+            player.gold = data.get(2);
+            data.remove(0);
+            data.remove(0);
+            data.remove(0);
+
+            // set player inventory
+            while (!data.isEmpty()) {
+                // load item stats
+                int index = data.get(0);
+                int typ = 0;
+                int itemNr = 0;
+
+                // set player inventory
+                player.inventory.equipment[index] = player.inventory.item[typ][itemNr];
+
+                // delete item stats
+                data.remove(0);
+                data.remove(0);
+                data.remove(0);
+            }
+
+            this.player = player;
+            this.startHub();
+        } catch (IndexOutOfBoundsException | NumberFormatException e) {
             e.printStackTrace();
+            System.out.println("Fatal error while loading saved game!");
+            System.exit(1);
         }
-        String[] parsed = saved.split("\n");
-        System.out.println(Arrays.toString(parsed));
-        boolean isMage = Boolean.parseBoolean(parsed[0]);
-        ArrayList<Integer> data = new ArrayList<>();
-        for (int i = 1; i < parsed.length; i++) {
-            data.add(Integer.parseInt(parsed[i]));
-        }
-
-        // generate player
-        Player player;
-        if (isMage) {
-            player = new Mage(null, 0, 0);
-        } else {
-            player = new Fighter(null, 0, 0);
-        }
-
-        // set player stats
-        player.level = data.get(0);
-        player.exp = data.get(1);
-        player.gold = data.get(2);
-        data.remove(0);
-        data.remove(0);
-        data.remove(0);
-
-        // set player inventory
-        while (!data.isEmpty()) {
-            int index = data.get(0);
-            int typ = 0;
-            int itemNr = 0;
-        }
-
-        return player;
     }
 
     public void setRgba_projectiles(COLORS color) {
