@@ -29,6 +29,7 @@ public class Hub extends Map {
         this.player.y = this.HEIGHT / 2.0;
         this.player.directions = new boolean[4];
         this.player.animation_state = 0;
+        this.player.health = this.player.maxHealth;
 
         shopkeeper = new Shopkeeper(this.player);
 

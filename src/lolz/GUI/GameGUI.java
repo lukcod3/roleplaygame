@@ -221,36 +221,24 @@ public class GameGUI extends JPanel {
 
         // paint overlay interfaces
 
-        //fill health bar
-        g.setColor(new Color(0, 125, 0, 50));
-        g.fillRoundRect(25, 25, (int) (200 * ((double) this.map.player.health / (double) this.map.player.getMaxHealth())), 35, 15, 15);
 
-        // draw border of health bar
-        g.setColor(new Color(255, 255, 255, 50));
-        g.drawRoundRect(25, 25, 200, 35, 15, 15);
 
-        g.setColor(Color.BLACK);
         this.map.player.inventory.printStats(g);
         // draw player health rectangles
         Font font = new Font("SansSerif", Font.BOLD, 25);
         g.setFont(font);
-        g.setColor(new Color(255, 255, 255, 50));
+        drawLevel(g);
+        //g.setColor(new Color(255, 255, 255, 50));
+        drawHealth(g);
         if ((double) this.map.player.health / (double) this.map.player.getMaxHealth() <= 0.1) {
             Color lowColor = new Color(100, 0, 0, 60);
             g.setColor(lowColor);
             g.fillRect(0, 0, Main.WIDTH, Main.HEIGHT);
             g.setColor(Color.red);
         }
-        // draw health values in somewhat centered position
-        g.drawString("" + this.map.player.health, 25 + 200 / 4 - g.getFontMetrics().stringWidth("" + this.map.player.health) / 2, 52);
-        g.setColor(new Color(255, 255, 255, 50));
-        g.drawString("/", 25 + 200 / 2 - g.getFontMetrics().stringWidth("/") / 2, 52);
-        g.drawString("" + this.map.player.maxHealth, 25 + 200 * 3 / 4 - g.getFontMetrics().stringWidth("" + this.map.player.maxHealth) / 2, 52);
 
-        font = new Font("Avant Garde", Font.BOLD, 25);
-        g.setFont(font);
-        g.setColor(Color.WHITE);
-        g.drawString("Monsters: " + this.map.monsterCount, Main.WIDTH - (g.getFontMetrics().stringWidth("Monsters: " + this.map.monsterCount) + 50), 50);
+
+
 
         this.printEscMenu(g);
 
@@ -290,8 +278,37 @@ public class GameGUI extends JPanel {
         }
     }
 
+    public void drawLevel(Graphics g){
 
+        g.drawString(""+this.map.player.level, 20, 95);
+        g.setColor(new Color(0, 255, 0, 255));
+        g.fillRect(40, 83, (int)(100 *((double)this.map.player.exp /  (double)(90 + 10 * this.map.player.level * this.map.player.level))), 5);
 
+        // draw border of health bar
+        g.setColor(new Color(255, 255, 255, 255));
+        g.drawRect(40, 83, 100, 5);
+    }
+
+    public void drawHealth(Graphics g){
+        //fill health bar
+        g.setColor(new Color(0, 125, 0, 50));
+        g.fillRoundRect(25, 25, (int) (200 * ((double) this.map.player.health / (double) this.map.player.getMaxHealth())), 35, 15, 15);
+
+        // draw border of health bar
+        g.setColor(new Color(255, 255, 255, 50));
+        g.drawRoundRect(25, 25, 200, 35, 15, 15);
+
+        // draw health values in somewhat centered position
+        g.drawString("" + this.map.player.health, 25 + 200 / 4 - g.getFontMetrics().stringWidth("" + this.map.player.health) / 2, 52);
+        g.setColor(new Color(255, 255, 255, 50));
+        g.drawString("/", 25 + 200 / 2 - g.getFontMetrics().stringWidth("/") / 2, 52);
+        g.drawString("" + this.map.player.maxHealth, 25 + 200 * 3 / 4 - g.getFontMetrics().stringWidth("" + this.map.player.maxHealth) / 2, 52);
+
+        Font font = new Font("Avant Garde", Font.BOLD, 25);
+        g.setFont(font);
+        g.setColor(Color.WHITE);
+        g.drawString("Monsters: " + this.map.monsterCount, Main.WIDTH - (g.getFontMetrics().stringWidth("Monsters: " + this.map.monsterCount) + 50), 50);
+    }
 
     public void update(int time) {
         //System.out.println(this.getX());
