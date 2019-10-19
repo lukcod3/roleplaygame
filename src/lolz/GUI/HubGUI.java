@@ -24,6 +24,9 @@ public class HubGUI extends JPanel {
 
         this.main = main;
 
+        this.repaint();
+        this.setOpaque(false);
+
         this.standard = new JButton("STANDARD");
         this.standard.setBackground(Color.WHITE);
         this.standard.setForeground(Color.BLACK);
@@ -111,9 +114,7 @@ public class HubGUI extends JPanel {
         this.add(this.hubButton);
 
 
-        this.green = new
-
-                JButton("GREEN");
+        this.green = new JButton("GREEN");
         this.green.setBackground(Color.GREEN);
         this.black.addActionListener(new ActionListener() {
             @Override
@@ -348,6 +349,7 @@ public class HubGUI extends JPanel {
         drawLevel(g);
         drawHealth(g);
         this.printEscMenu(g);
+        super.paint(g);
         // sync graphic
         Toolkit.getDefaultToolkit().sync();
     }
