@@ -339,7 +339,6 @@ public class HubGUI extends JPanel {
     }
 
     public void paint(Graphics g) {
-
         // paint map
         this.map.paint(g);
         this.map.player.inventory.printStats(g);
@@ -348,13 +347,7 @@ public class HubGUI extends JPanel {
         g.setColor(Color.white);
         drawLevel(g);
         drawHealth(g);
-        // sync graphic
-        Toolkit.getDefaultToolkit().sync();
-
         this.printEscMenu(g);
-
-        super.paint(g);
-
         // sync graphic
         Toolkit.getDefaultToolkit().sync();
     }
