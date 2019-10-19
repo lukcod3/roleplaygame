@@ -5,6 +5,7 @@ import lolz.Main;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
+import java.awt.event.MouseEvent;
 import java.io.File;
 
 public class Shopkeeper {
@@ -15,13 +16,25 @@ public class Shopkeeper {
     int X_POSITION_IMAGE_SHOP = 560;
     int Y_POSITION_IMAGE_SHOP = 185;
     public Item[] shop;
+    public boolean showButton, readyForBuy;
+    public int[] oldCoordinates;;
+    public int aktInventar, hoverInventory;
+    public Image[] inventoryImages;
+    public int aktShopInventar;
 
     public Shopkeeper(Player player){
+        this.oldCoordinates = new int[2];
         images = new Image[4];
+        inventoryImages = new Image[4];
+        aktShopInventar = 0;
         try{
             for(int i = 0; i<= 3; i++){
                 images[i] = ImageIO.read(new File("res/monster/Phantom Knight/Individual Sprites/phantom knight-idle-0" + i + ".png")).getScaledInstance(100, -1, Image.SCALE_DEFAULT);
             }
+            inventoryImages[0] = ImageIO.read(new File("res/inventory/kaufen_aus.png"));
+            inventoryImages[1] = ImageIO.read(new File("res/inventory/kaufen_an.png"));
+            inventoryImages[2] = ImageIO.read(new File("res/inventory/verkaufen_aus.png"));
+            inventoryImages[3] = ImageIO.read(new File("res/inventory/verkaufen_an.png"));
         } catch (Exception e){
             e.printStackTrace();
         }
@@ -50,6 +63,7 @@ public class Shopkeeper {
             g.setColor(Color.white);
             g.drawString("Shop", 260, 80);
             g.drawString("Inventar", 570, 80);
+            g.setFont(new Font("SansSerif", Font.PLAIN, 15));
 
             // draw player
             if (this.player instanceof Fighter) {
@@ -122,6 +136,20 @@ public class Shopkeeper {
                     g.drawImage(shop[3*i + j].image, 200 + 61* j, 300 + 61 * i, null);
                 }
             }
+            if (showButton && aktInventar > 0 && aktInventar < 12) {
+                if (isCourserInRectangle(oldCoordinates[0] + 10, oldCoordinates[0] + 255, oldCoordinates[1] - 30, oldCoordinates[1] + 3)) {
+                    g.drawImage(inventoryImages[3].getScaledInstance(235, -1, Image.SCALE_DEFAULT), oldCoordinates[0] + 10, oldCoordinates[1] - 30, null);
+                    readyForBuy = true;
+                } else {
+                    g.drawImage(inventoryImages[2].getScaledInstance(235, -1, Image.SCALE_DEFAULT), oldCoordinates[0] + 10, oldCoordinates[1] - 30, null);
+                    readyForBuy = false;
+                }
+            } else {
+                readyForBuy = false;
+                if (hoverInventory != 0) {
+                    this.player.inventory.equipment[hoverInventory - 1].drawItemStats(g);
+                }
+            }
         }
     }
     public void getShopItems(){
@@ -141,4 +169,93 @@ public class Shopkeeper {
             shop[i] = this.player.inventory.item[(int) (Math.random()*7)][stufe];
         }
     }
+    public void updateShop(MouseEvent e){
+        hoverInventory = 0;
+        if (e.getButton() == 3 && showShop) {
+            if (isCourserInRectangle(590, 650, 100, 160) && this.player.inventory.equipment[0].itemNr != 0) {
+                aktInventar = 1;
+            } else if (isCourserInRectangle(500, 560, 180, 240) && this.player.inventory.equipment[1].itemNr != 0) {
+                aktInventar = 2;
+            } else if (isCourserInRectangle(500, 560, 255, 315) && this.player.inventory.equipment[2].itemNr != 0) {
+                aktInventar = 3;
+            } else if (isCourserInRectangle(590, 650, 330, 390) && this.player.inventory.equipment[3].itemNr != 0) {
+                aktInventar = 4;
+            } else if (isCourserInRectangle(680, 740, 155, 215) && this.player.inventory.equipment[4].itemNr != 0) {
+                aktInventar = 5;
+            } else if (isCourserInRectangle(680, 740, 230, 290) && this.player.inventory.equipment[5].itemNr != 0) {
+                aktInventar = 6;
+            } else if (isCourserInRectangle(680, 740, 305, 365) && this.player.inventory.equipment[6].itemNr != 0) {
+                aktInventar = 7;
+            } else if (isCourserInRectangle(500, 560, 420, 480) && this.player.inventory.equipment[7] != null) {
+                aktInventar = 8;
+            } else if (isCourserInRectangle(561, 621, 420, 480) && this.player.inventory.equipment[8] != null) {
+                aktInventar = 9;
+            } else if (isCourserInRectangle(622, 682, 420, 480) && this.player.inventory.equipment[9] != null) {
+                aktInventar = 10;
+            } else if (isCourserInRectangle(683, 743, 420, 480) && this.player.inventory.equipment[10] != null) {
+                aktInventar = 11;
+
+            } else {
+                aktInventar = 0;
+            }
+            if (aktInventar != 0) {
+                showButton = true;
+                oldCoordinates[0] = Main.mouseCoordinates[0];
+                oldCoordinates[1] = Main.mouseCoordinates[1];
+            }
+            // switches Item places
+        } else if (e.getButton() == 1) {
+            if (readyForBuy) {
+                readyForBuy = false;
+                showButton = false;
+                if (aktInventar > 0 && aktInventar < 8) {
+                    for (int i = 0; i < 4; i++) {
+                        if (this.player.inventory.equipment[7 + i] == null) {
+                            this.player.inventory.equipment[7 + i] = this.player.inventory.equipment[aktInventar - 1];
+                            this.player.inventory.equipment[aktInventar - 1] = player.inventory.item[aktInventar - 1][0];
+                            break;
+                        }
+                    }
+
+                } else {
+                    Item hilf = this.player.inventory.equipment[aktInventar - 1];
+                    if (this.player.inventory.equipment[hilf.typ] == player.inventory.item[hilf.typ][0]) {
+                        this.player.inventory.equipment[aktInventar - 1] = null;
+                    } else {
+                        this.player.inventory.equipment[aktInventar - 1] = this.player.inventory.equipment[hilf.typ];
+                    }
+                    this.player.inventory.equipment[hilf.typ] = hilf;
+                }
+            } else {
+                showButton = false;
+            }
+        } else {
+            if (isCourserInRectangle(590, 650, 100, 160) && this.player.inventory.equipment[0].itemNr != 0) {
+                hoverInventory = 1;
+            } else if (isCourserInRectangle(500, 560, 180, 240) && this.player.inventory.equipment[1].itemNr != 0) {
+                hoverInventory = 2;
+            } else if (isCourserInRectangle(500, 560, 255, 315) && this.player.inventory.equipment[2].itemNr != 0) {
+                hoverInventory = 3;
+            } else if (isCourserInRectangle(590, 650, 330, 390) && this.player.inventory.equipment[3].itemNr != 0) {
+                hoverInventory = 4;
+            } else if (isCourserInRectangle(680, 740, 155, 215) && this.player.inventory.equipment[4].itemNr != 0) {
+                hoverInventory = 5;
+            } else if (isCourserInRectangle(680, 740, 230, 290) && this.player.inventory.equipment[5].itemNr != 0) {
+                hoverInventory = 6;
+            } else if (isCourserInRectangle(680, 740, 305, 365) && this.player.inventory.equipment[6].itemNr != 0) {
+                hoverInventory = 7;
+            } else if (isCourserInRectangle(500, 560, 420, 480) && this.player.inventory.equipment[7] != null) {
+                hoverInventory = 8;
+            } else if (isCourserInRectangle(561, 621, 420, 480) && this.player.inventory.equipment[8] != null) {
+                hoverInventory = 9;
+            } else if (isCourserInRectangle(622, 682, 420, 480) && this.player.inventory.equipment[9] != null) {
+                hoverInventory = 10;
+            } else if (isCourserInRectangle(683, 743, 420, 480) && this.player.inventory.equipment[10] != null) {
+                hoverInventory = 11;
+            }
+        }
+    }
+        private boolean isCourserInRectangle(double x1, double x2, double y1, double y2) {
+            return ((Main.mouseCoordinates[0] <= x2) && (Main.mouseCoordinates[0] >= x1) && (Main.mouseCoordinates[1] <= y2) && (Main.mouseCoordinates[1] >= y1));
+        }
 }

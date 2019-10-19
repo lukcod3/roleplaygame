@@ -206,6 +206,7 @@ public class HubGUI extends JPanel {
             @Override
             public void mouseClicked(MouseEvent e) {
                 map.player.inventory.updateInventory(e);
+                map.shopkeeper.updateShop(e);
             }
 
             @Override
@@ -232,6 +233,7 @@ public class HubGUI extends JPanel {
                 Main.mouseCoordinates[0] = e.getX();
                 Main.mouseCoordinates[1] = e.getY();
                 map.player.inventory.updateInventory(e);
+                map.shopkeeper.updateShop(e);
             }
 
             @Override
@@ -239,6 +241,7 @@ public class HubGUI extends JPanel {
                 Main.mouseCoordinates[0] = e.getX();
                 Main.mouseCoordinates[1] = e.getY();
                 map.player.inventory.updateInventory(e);
+                map.shopkeeper.updateShop(e);
             }
         });
     }

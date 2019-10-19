@@ -128,6 +128,7 @@ public class GameGUI extends JPanel {
                 Main.mouseCoordinates[0] = e.getX();
                 Main.mouseCoordinates[1] = e.getY();
                 map.player.inventory.updateInventory(e);
+
             }
         });
     }
