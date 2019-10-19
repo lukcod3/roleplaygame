@@ -115,132 +115,108 @@ public class HubGUI extends JPanel {
 
                 JButton("GREEN");
         this.green.setBackground(Color.GREEN);
-        this.black.addActionListener(new
-
-                                             ActionListener() {
-                                                 @Override
-                                                 public void actionPerformed(ActionEvent actionEvent) {
-                                                     if (!clicked) {
-                                                         if (player instanceof Fighter) {
-                                                             ((Fighter) player).loadImages(new float[]{0f, 1f, 0f, 1f});
-                                                         } else {
-                                                             ((Mage) player).loadImages(new float[]{0f, 1f, 0f, 1f});
-                                                         }
-                                                         clicked = true;
-                                                     } else {
-                                                         main.setRgba_projectiles(Main.COLORS.GREEN);
-                                                         clicked = false;
-                                                         playerChose = true;
-                                                     }
-                                                 }
-                                             });
-        this.blue = new
-
-                JButton("BLUE");
+        this.black.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                if (!clicked) {
+                    if (player instanceof Fighter) {
+                        ((Fighter) player).loadImages(new float[]{0f, 1f, 0f, 1f});
+                    } else {
+                        ((Mage) player).loadImages(new float[]{0f, 1f, 0f, 1f});
+                    }
+                    clicked = true;
+                } else {
+                    main.setRgba_projectiles(Main.COLORS.GREEN);
+                    clicked = false;
+                    playerChose = true;
+                }
+            }
+        });
+        this.blue = new JButton("BLUE");
         this.blue.setBackground(Color.BLUE);
-        this.black.addActionListener(new
-
-                                             ActionListener() {
-                                                 @Override
-                                                 public void actionPerformed(ActionEvent actionEvent) {
-                                                     if (!clicked) {
-                                                         if (player instanceof Fighter) {
-                                                             ((Fighter) player).loadImages(new float[]{0f, 0f, 1f, 1f});
-                                                         } else {
-                                                             ((Mage) player).loadImages(new float[]{0f, 0f, 1f, 1f});
-                                                         }
-                                                         clicked = true;
-                                                     } else {
-                                                         main.setRgba_projectiles(Main.COLORS.BLUE);
-                                                         clicked = false;
-                                                         playerChose = true;
-                                                     }
-                                                 }
-                                             });
-        this.saffron = new
-
-                JButton("SAFFRON");
+        this.black.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                if (!clicked) {
+                    if (player instanceof Fighter) {
+                        ((Fighter) player).loadImages(new float[]{0f, 0f, 1f, 1f});
+                    } else {
+                        ((Mage) player).loadImages(new float[]{0f, 0f, 1f, 1f});
+                    }
+                    clicked = true;
+                } else {
+                    main.setRgba_projectiles(Main.COLORS.BLUE);
+                    clicked = false;
+                    playerChose = true;
+                }
+            }
+        });
+        this.saffron = new JButton("SAFFRON");
         this.saffron.setBackground(Color.YELLOW);
-        this.black.addActionListener(new
-
-                                             ActionListener() {
-                                                 @Override
-                                                 public void actionPerformed(ActionEvent actionEvent) {
-                                                     if (!clicked) {
-                                                         if (player instanceof Fighter) {
-                                                             ((Fighter) player).loadImages(new float[]{1f, 1f, 0f, 1f});
-                                                         } else {
-                                                             ((Mage) player).loadImages(new float[]{1f, 1f, 0f, 1f});
-                                                         }
-                                                         clicked = true;
-                                                     } else {
-                                                         main.setRgba_projectiles(Main.COLORS.SAFFRON);
-                                                         clicked = false;
-                                                         playerChose = true;
-                                                     }
-                                                 }
-                                             });
-        this.skyblue = new
-
-                JButton("SKYBLUE");
-        this.skyblue.setBackground(new
-
-                Color(0, 255, 255));
-        this.black.addActionListener(new
-
-                                             ActionListener() {
-                                                 @Override
-                                                 public void actionPerformed(ActionEvent actionEvent) {
-                                                     if (!clicked) {
-                                                         if (player instanceof Fighter) {
-                                                             ((Fighter) player).loadImages(new float[]{0f, 1f, 1f, 1f});
-                                                         } else {
-                                                             ((Mage) player).loadImages(new float[]{0f, 1f, 1f, 1f});
-                                                         }
-                                                         clicked = true;
-                                                     } else {
-                                                         main.setRgba_projectiles(Main.COLORS.SKYBLUE);
-                                                         clicked = false;
-                                                         playerChose = true;
-                                                     }
-                                                 }
-                                             });
-        this.pink = new
-
-                JButton("PINK");
+        this.black.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                if (!clicked) {
+                    if (player instanceof Fighter) {
+                        ((Fighter) player).loadImages(new float[]{1f, 1f, 0f, 1f});
+                    } else {
+                        ((Mage) player).loadImages(new float[]{1f, 1f, 0f, 1f});
+                    }
+                    clicked = true;
+                } else {
+                    main.setRgba_projectiles(Main.COLORS.SAFFRON);
+                    clicked = false;
+                    playerChose = true;
+                }
+            }
+        });
+        this.skyblue = new JButton("SKYBLUE");
+        this.skyblue.setBackground(new Color(0, 255, 255));
+        this.black.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                if (!clicked) {
+                    if (player instanceof Fighter) {
+                        ((Fighter) player).loadImages(new float[]{0f, 1f, 1f, 1f});
+                    } else {
+                        ((Mage) player).loadImages(new float[]{0f, 1f, 1f, 1f});
+                    }
+                    clicked = true;
+                } else {
+                    main.setRgba_projectiles(Main.COLORS.SKYBLUE);
+                    clicked = false;
+                    playerChose = true;
+                }
+            }
+        });
+        this.pink = new JButton("PINK");
         this.pink.setBackground(Color.PINK);
-        this.black.addActionListener(new
-
-                                             ActionListener() {
-                                                 @Override
-                                                 public void actionPerformed(ActionEvent actionEvent) {
-                                                     if (!clicked) {
-                                                         if (player instanceof Fighter) {
-                                                             ((Fighter) player).loadImages(new float[]{1f, 0f, 1f, 1f});
-                                                         } else {
-                                                             ((Mage) player).loadImages(new float[]{1f, 0f, 1f, 1f});
-                                                         }
-                                                         clicked = true;
-                                                     } else {
-                                                         main.setRgba_projectiles(Main.COLORS.PINK);
-                                                         clicked = false;
-                                                         playerChose = true;
-                                                     }
-                                                 }
-                                             });
+        this.black.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                if (!clicked) {
+                    if (player instanceof Fighter) {
+                        ((Fighter) player).loadImages(new float[]{1f, 0f, 1f, 1f});
+                    } else {
+                        ((Mage) player).loadImages(new float[]{1f, 0f, 1f, 1f});
+                    }
+                    clicked = true;
+                } else {
+                    main.setRgba_projectiles(Main.COLORS.PINK);
+                    clicked = false;
+                    playerChose = true;
+                }
+            }
+        });
 
 
         //create map
-        this.map = new
-
-                Hub(player);
+        this.map = new Hub(player);
 
         teleport = false;
         // add the key bindings for player movement
         char[] keys = {'W', 'A', 'S', 'D'};
-        for (
-                int i = 0;
-                i < 4; i++) {
+        for (int i = 0; i < 4; i++) {
             char c = keys[i];
             // add the key binding for pressing and releasing wasd keys
             this.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(c, 0, false), c + "Pressed");
@@ -249,83 +225,54 @@ public class HubGUI extends JPanel {
             this.getActionMap().put(c + "Released", generateMoveKeyAction(i, false));
         }
         // inventory key binding
-        this.
+        this.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_I, 0, true), KeyEvent.VK_I + "Released");
+        this.getActionMap().put(KeyEvent.VK_I + "Released", generateInventoryKeyAction());
 
-                getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).
-
-                put(KeyStroke.getKeyStroke(KeyEvent.VK_I, 0, true), KeyEvent.VK_I + "Released");
-        this.
-
-                getActionMap().
-
-                put(KeyEvent.VK_I + "Released", generateInventoryKeyAction());
-
-        this.
-
-                getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).
-
-                put(KeyStroke.getKeyStroke(KeyEvent.VK_U, 0, true), KeyEvent.VK_U + "Released");
-        this.
-
-                getActionMap().
-
-                put(KeyEvent.VK_U + "Released", generateShopKeyAction());
+        this.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_U, 0, true), KeyEvent.VK_U + "Released");
+        this.getActionMap().put(KeyEvent.VK_U + "Released", generateShopKeyAction());
 
         // key bindings for esc menu
-        this.
+        this.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0, false), KeyEvent.VK_ESCAPE + "Pressed");
+        this.getActionMap().put(KeyEvent.VK_ESCAPE + "Pressed", generateEscapeAction());
+        this.addMouseListener(new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                map.player.inventory.updateInventory(e);
+            }
 
-                getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).
+            @Override
+            public void mousePressed(MouseEvent e) {
 
-                put(KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0, false), KeyEvent.VK_ESCAPE + "Pressed");
-        this.
+            }
 
-                getActionMap().
+            @Override
+            public void mouseReleased(MouseEvent e) {
+            }
 
-                put(KeyEvent.VK_ESCAPE + "Pressed", generateEscapeAction());
+            @Override
+            public void mouseEntered(MouseEvent e) {
+            }
 
-        this.
+            @Override
+            public void mouseExited(MouseEvent e) {
+            }
+        });
 
-                addMouseListener(new MouseListener() {
-                    @Override
-                    public void mouseClicked(MouseEvent e) {
-                        map.player.inventory.updateInventory(e);
-                    }
+        this.addMouseMotionListener(new MouseMotionListener() {
+            @Override
+            public void mouseDragged(MouseEvent e) {
+                Main.mouseCoordinates[0] = e.getX();
+                Main.mouseCoordinates[1] = e.getY();
+                map.player.inventory.updateInventory(e);
+            }
 
-                    @Override
-                    public void mousePressed(MouseEvent e) {
-
-                    }
-
-                    @Override
-                    public void mouseReleased(MouseEvent e) {
-                    }
-
-                    @Override
-                    public void mouseEntered(MouseEvent e) {
-                    }
-
-                    @Override
-                    public void mouseExited(MouseEvent e) {
-                    }
-                });
-
-        this.
-
-                addMouseMotionListener(new MouseMotionListener() {
-                    @Override
-                    public void mouseDragged(MouseEvent e) {
-                        Main.mouseCoordinates[0] = e.getX();
-                        Main.mouseCoordinates[1] = e.getY();
-                        map.player.inventory.updateInventory(e);
-                    }
-
-                    @Override
-                    public void mouseMoved(MouseEvent e) {
-                        Main.mouseCoordinates[0] = e.getX();
-                        Main.mouseCoordinates[1] = e.getY();
-                        map.player.inventory.updateInventory(e);
-                    }
-                });
+            @Override
+            public void mouseMoved(MouseEvent e) {
+                Main.mouseCoordinates[0] = e.getX();
+                Main.mouseCoordinates[1] = e.getY();
+                map.player.inventory.updateInventory(e);
+            }
+        });
     }
 
     private Action generateInventoryKeyAction() {
