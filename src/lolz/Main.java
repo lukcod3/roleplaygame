@@ -96,6 +96,7 @@ public class Main {
 
     public void startHub() {
         this.activePanel = new HubGUI(this, player);
+        player.allowedToMove = true;
         frame.getContentPane().removeAll();
         frame.getContentPane().add(activePanel);
         frame.revalidate();
