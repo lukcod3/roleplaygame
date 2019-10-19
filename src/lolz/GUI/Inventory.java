@@ -162,7 +162,7 @@ public class Inventory {
             } else {
                 readyForSwitch = false;
                 if (hoverInventory != 0) {
-                    equipment[hoverInventory - 1].drawItemStats(g);
+                    equipment[hoverInventory - 1].drawItemStats(g, false);
                 }
             }
         }

@@ -17,25 +17,26 @@ public class Shopkeeper {
     int Y_POSITION_IMAGE_SHOP = 185;
     public Item[] shop;
     public boolean showButton, readyForBuy;
-    public int[] oldCoordinates;;
+    public int[] oldCoordinates;
     public int aktInventar, hoverInventory;
     public Image[] inventoryImages;
-    public int aktShopInventar;
+    public int aktShopInventar, hoverShop;
 
-    public Shopkeeper(Player player){
+    public Shopkeeper(Player player) {
         this.oldCoordinates = new int[2];
         images = new Image[4];
         inventoryImages = new Image[4];
         aktShopInventar = 0;
-        try{
-            for(int i = 0; i<= 3; i++){
+        hoverShop = 0;
+        try {
+            for (int i = 0; i <= 3; i++) {
                 images[i] = ImageIO.read(new File("res/monster/Phantom Knight/Individual Sprites/phantom knight-idle-0" + i + ".png")).getScaledInstance(100, -1, Image.SCALE_DEFAULT);
             }
             inventoryImages[0] = ImageIO.read(new File("res/inventory/kaufen_aus.png"));
             inventoryImages[1] = ImageIO.read(new File("res/inventory/kaufen_an.png"));
             inventoryImages[2] = ImageIO.read(new File("res/inventory/verkaufen_aus.png"));
             inventoryImages[3] = ImageIO.read(new File("res/inventory/verkaufen_an.png"));
-        } catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
@@ -44,16 +45,19 @@ public class Shopkeeper {
         this.player = player;
         getShopItems();
     }
-    public void update(){
+
+    public void update() {
         animation_state += 0.1;
         animation_state %= 4;
     }
-    public void paint(Graphics g){
+
+    public void paint(Graphics g) {
         Main.drawReflectImage(images[(int) (animation_state)], g, 60, 330);
     }
+
     // called in hub
-    public void printShop(Graphics g){
-        if(showShop) {
+    public void printShop(Graphics g) {
+        if (showShop) {
             Color myColor = new Color(56, 56, 56, 230);
             Font titleF = new Font("SansSerif", Font.BOLD, 25);
             g.drawRect(150, 50, 660, 440);
@@ -131,9 +135,9 @@ public class Shopkeeper {
             Main.drawReflectImage(images[(int) animation_state].getScaledInstance(140, -1, Image.SCALE_DEFAULT), g, 235, 130);
 
             // draw Shopitems
-            for(int i = 0; i<= 1; i++){
-                for(int j = 0; j<= 2; j++){
-                    g.drawImage(shop[3*i + j].image, 200 + 61* j, 300 + 61 * i, null);
+            for (int i = 0; i <= 1; i++) {
+                for (int j = 0; j <= 2; j++) {
+                    g.drawImage(shop[3 * i + j].image, 200 + 61 * j, 300 + 61 * i, null);
                 }
             }
             if (showButton && aktInventar > 0 && aktInventar < 12) {
@@ -147,31 +151,39 @@ public class Shopkeeper {
             } else {
                 readyForBuy = false;
                 if (hoverInventory != 0) {
-                    this.player.inventory.equipment[hoverInventory - 1].drawItemStats(g);
+                    this.player.inventory.equipment[hoverInventory - 1].drawItemStats(g, false);
+                }
+                if (hoverShop != 0){
+                    this.shop[hoverShop-1].drawItemStats(g, true);
                 }
             }
         }
     }
-    public void getShopItems(){
+
+    public void getShopItems() {
         shop = new Item[6];
-        for(int i = 0; i<= 5; i++){
+        for (int i = 0; i <= 5; i++) {
             int stufe;
 
-            if((int)(1+Math.random()*10)*this.player.level > 60){
+            if ((int) (1 + Math.random() * 10) * this.player.level > 60) {
                 stufe = 4;
-            } else if ((int)(1+Math.random()*10)*this.player.level > 40){
+            } else if ((int) (1 + Math.random() * 10) * this.player.level > 40) {
                 stufe = 3;
-            } else if ((int)(1+Math.random()*10)*this.player.level > 15){
+            } else if ((int) (1 + Math.random() * 10) * this.player.level > 15) {
                 stufe = 2;
-            } else{
+            } else {
                 stufe = 1;
             }
-            shop[i] = this.player.inventory.item[(int) (Math.random()*7)][stufe];
+            shop[i] = this.player.inventory.item[(int) (Math.random() * 7)][stufe];
         }
     }
-    public void updateShop(MouseEvent e){
+
+    public void updateShop(MouseEvent e) {
         hoverInventory = 0;
+        hoverShop = 0;
         if (e.getButton() == 3 && showShop) {
+            aktInventar = 0;
+            aktShopInventar = 0;
             if (isCourserInRectangle(590, 650, 100, 160) && this.player.inventory.equipment[0].itemNr != 0) {
                 aktInventar = 1;
             } else if (isCourserInRectangle(500, 560, 180, 240) && this.player.inventory.equipment[1].itemNr != 0) {
@@ -194,12 +206,26 @@ public class Shopkeeper {
                 aktInventar = 10;
             } else if (isCourserInRectangle(683, 743, 420, 480) && this.player.inventory.equipment[10] != null) {
                 aktInventar = 11;
-
-            } else {
-                aktInventar = 0;
+            } else if (isCourserInRectangle(200, 260, 300, 360)) {
+                aktShopInventar = 1;
+            } else if (isCourserInRectangle(261, 321, 300, 360)) {
+                aktShopInventar = 2;
+            } else if (isCourserInRectangle(322, 382, 300, 360)) {
+                aktShopInventar = 3;
+            } else if (isCourserInRectangle(200, 260, 361, 421)) {
+                aktShopInventar = 4;
+            } else if (isCourserInRectangle(261, 321, 361, 421)) {
+                aktShopInventar = 5;
+            } else if (isCourserInRectangle(322, 382, 361, 421)) {
+                aktShopInventar = 6;
             }
             if (aktInventar != 0) {
                 showButton = true;
+                oldCoordinates[0] = Main.mouseCoordinates[0];
+                oldCoordinates[1] = Main.mouseCoordinates[1];
+            }
+            if (aktShopInventar != 0) {
+                //showButton = true;
                 oldCoordinates[0] = Main.mouseCoordinates[0];
                 oldCoordinates[1] = Main.mouseCoordinates[1];
             }
@@ -252,10 +278,24 @@ public class Shopkeeper {
                 hoverInventory = 10;
             } else if (isCourserInRectangle(683, 743, 420, 480) && this.player.inventory.equipment[10] != null) {
                 hoverInventory = 11;
+            } else if (isCourserInRectangle(200, 260, 300, 360)) {
+                hoverShop = 1;
+            } else if (isCourserInRectangle(261, 321, 300, 360)) {
+                hoverShop = 2;
+            } else if (isCourserInRectangle(322, 382, 300, 360)) {
+                hoverShop = 3;
+            } else if (isCourserInRectangle(200, 260, 361, 421)) {
+                hoverShop = 4;
+            } else if (isCourserInRectangle(261, 321, 361, 421)) {
+                hoverShop = 5;
+            } else if (isCourserInRectangle(322, 382, 361, 421)) {
+                hoverShop = 6;
             }
         }
+
     }
-        private boolean isCourserInRectangle(double x1, double x2, double y1, double y2) {
-            return ((Main.mouseCoordinates[0] <= x2) && (Main.mouseCoordinates[0] >= x1) && (Main.mouseCoordinates[1] <= y2) && (Main.mouseCoordinates[1] >= y1));
-        }
+
+    private boolean isCourserInRectangle(double x1, double x2, double y1, double y2) {
+        return ((Main.mouseCoordinates[0] <= x2) && (Main.mouseCoordinates[0] >= x1) && (Main.mouseCoordinates[1] <= y2) && (Main.mouseCoordinates[1] >= y1));
+    }
 }

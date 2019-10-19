@@ -12,6 +12,7 @@ public class Item {
     public int typ, itemNr; //schwert, hut etc. (0-6);  stufe(0-4)
     public double movementspeed;
     public Image image;
+    public boolean shopItem;
 
     public Item(int typ, int itemNr) {
         this.typ = typ;
@@ -106,13 +107,13 @@ public class Item {
                     this.health = 20 + (int) (Math.random() * (itemNr + 4)) * 10;
                     break;
             }
-            verkaufen = (int) (Math.random() * 5 + 2 * itemNr) * itemNr;
+            verkaufen = (int) (Math.random() * 7 + 4 * itemNr) * itemNr;
             kaufen = (int) (verkaufen * 1.6);
         }
 
     }
 
-    public void drawItemStats(Graphics g) {
+    public void drawItemStats(Graphics g, boolean inShop) {
 
         int neededSpace = 20;
         if (movementspeed != 0) {
@@ -150,7 +151,12 @@ public class Item {
             g.drawString("Angriffsschaden: " + damage, Main.mouseCoordinates[0] - 100, Main.mouseCoordinates[1] - 30 - neededSpace);
             neededSpace += 20;
         }
-        g.drawString("Verkaufspreis: " + verkaufen, Main.mouseCoordinates[0] - 100, Main.mouseCoordinates[1] - 30 - neededSpace);
-        g.drawImage(Main.goldImage.getScaledInstance(-1, 18, Image.SCALE_DEFAULT), Main.mouseCoordinates[0]+20, Main.mouseCoordinates[1] - 45 - neededSpace, null);
+        if(inShop) {
+            g.drawString("Kaufpreis: " + kaufen, Main.mouseCoordinates[0] - 100, Main.mouseCoordinates[1] - 30 - neededSpace);
+            g.drawImage(Main.goldImage.getScaledInstance(-1, 18, Image.SCALE_DEFAULT), Main.mouseCoordinates[0] + 20, Main.mouseCoordinates[1] - 45 - neededSpace, null);
+        } else{
+            g.drawString("Verkaufpreis: " + verkaufen, Main.mouseCoordinates[0] - 100, Main.mouseCoordinates[1] - 30 - neededSpace);
+            g.drawImage(Main.goldImage.getScaledInstance(-1, 18, Image.SCALE_DEFAULT), Main.mouseCoordinates[0] + 20, Main.mouseCoordinates[1] - 45 - neededSpace, null);
+        }
     }
 }
