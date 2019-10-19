@@ -298,11 +298,13 @@ public class HubGUI extends JPanel {
         g.setColor(Color.white);
         drawLevel(g);
         drawHealth(g);
+        this.map.player.gold.paint(g);
         // sync graphic
         Toolkit.getDefaultToolkit().sync();
     }
 
     public void update(int time) {
+        this.map.player.gold.update();
         this.map.update(time);
         if (((this.map.player instanceof Mage && this.map.player.getY() <= 170) ||(this.map.player.getY() <= 150)) && this.map.player.getX() >= 420 && !this.teleport) {
             this.teleport = true;

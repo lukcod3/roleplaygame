@@ -1,5 +1,6 @@
 package lolz.Entity;
 
+import lolz.GUI.Gold;
 import lolz.GUI.Inventory;
 import lolz.GUI.Item;
 import lolz.Main;
@@ -8,12 +9,14 @@ import lolz.Maps.RandomMap;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.io.File;
 
 public abstract class Player extends Entity {
     public boolean hasDamaged, holdAttack; // variable true if user makes character hit
     // Ingame stats
-    public int level, exp, gold;
+    public int level, exp;
+    public Gold gold;
     private double baseSpeed;
     public Inventory inventory;
 
@@ -26,6 +29,7 @@ public abstract class Player extends Entity {
         this.width = 45;
         holdAttack = false;
         inventory = new Inventory(this);
+        this.gold = new Gold();
     }
 
     // set Getters and Setters for attribute hit

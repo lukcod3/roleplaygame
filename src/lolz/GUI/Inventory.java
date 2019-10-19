@@ -78,8 +78,7 @@ public class Inventory {
             g.drawString("Angriffsschaden....................." + this.player.damage, 200, 160);
             g.drawString("Rüstung..................................." + this.player.armor, 200, 190);
             g.drawString("Lauftempo..........................." + new DecimalFormat("#.##").format(this.player.speed), 200, 220);
-            g.drawString("Gold........................................" + this.player.gold, 200, 330);
-            g.drawString("Level............." + this.player.level + "(" + this.player.exp + " XP/" + (90 + 10 * this.player.level * this.player.level) + " XP)", 200, 360); // needs formula for maxXP
+
             // draw player
             if (this.player instanceof Fighter) {
                 if (this.player.turnedRight) {
@@ -159,8 +158,8 @@ public class Inventory {
                 }
             } else {
                 readyForSwitch = false;
-                if(hoverInventory != 0){
-                    equipment[hoverInventory-1].drawItemStats(g);
+                if (hoverInventory != 0) {
+                    equipment[hoverInventory - 1].drawItemStats(g);
                 }
             }
         }
@@ -239,7 +238,7 @@ public class Inventory {
             } else {
                 showButton = false;
             }
-        } else{
+        } else {
             if (isCourserInRectangle(590, 650, 100, 160) && equipment[0].itemNr != 0) {
                 hoverInventory = 1;
             } else if (isCourserInRectangle(500, 560, 180, 240) && equipment[1].itemNr != 0) {
