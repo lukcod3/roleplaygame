@@ -3,15 +3,15 @@ package lolz.Entity;
 
 import lolz.GUI.Inventory;
 import lolz.Main;
+import lolz.Maps.Hub;
 import lolz.Maps.Map;
-import lolz.Maps.RandomMap;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.io.File;
 
 public abstract class Player extends Entity {
-    public boolean hasDamaged, holdAttack; // variable true if user makes character hit
+    public boolean holdAttack; // variable true if user makes character hit
     // Ingame stats
     public int level, exp, gold;
     private double baseSpeed;
@@ -55,24 +55,6 @@ public abstract class Player extends Entity {
 
     public String getStats() {
         return (this instanceof Mage) + "\n" + this.level + "\n" + this.exp + "\n" + this.gold + this.inventory.getStats();
-    }
-
-    // set Getters and Setters for attribute hit
-    public boolean getHitting() {
-        return isHitting;
-    }
-
-    public void setHitting(boolean isHitting) {
-        if (this.isHitting != isHitting) {
-            if (isHitting) {
-                // slow player down while attacking
-            } else {
-                // restore speed and attacking status
-                this.hasDamaged = false;
-            }
-            this.animation_state = 0;
-        }
-        this.isHitting = isHitting;
     }
 
     public void paint(Graphics g) {
@@ -144,19 +126,6 @@ public abstract class Player extends Entity {
         updatePlayerStats();
     }
 
-    // check if any given entity is "touching" the hero or rather if the hero is touching it
-    public boolean overlap(Entity entity) {
-        for (int i : new int[]{0, entity.getWidth()}) { //checking for the left and right border of the entity's image
-            for (int j : new int[]{0, entity.getHeight()}) { //checking for the top and bottom border of the entity's image
-                //if any of the entity's boundaries can be found between any of the hero's boundaries, they touch
-                if ((this.getX() <= entity.getX() + i) && (entity.getX() + i <= this.getX() + this.getWidth()) && (this.getY() - this.getHeight() <= entity.getY() - j) && (entity.getY() - j <= this.getY())) {
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
-
     public void giveXP(int amount) {
         if (this.exp + amount >= 90 + 10 * this.level * this.level) {
             this.exp = this.exp + amount - (90 + 10 * this.level * this.level);
@@ -183,7 +152,7 @@ public abstract class Player extends Entity {
         }
         this.speed = (!(this instanceof Mage)) && this.isHitting ? this.baseSpeed / 3 : this.baseSpeed;
         this.health = Math.min(this.health, this.maxHealth);
-        if (this.map instanceof RandomMap) {
+        if (this.map instanceof Hub) {
             this.health = this.maxHealth;
         }
     }

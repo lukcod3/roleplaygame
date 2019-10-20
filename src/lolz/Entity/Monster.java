@@ -45,6 +45,12 @@ public class Monster extends Entity {
     public void update(int time) {
         double CHANGE_DIR_POSS = 0.75;
 
+        if (this.getHitting()) {
+            if (this.animation_state > this.img[2].length - 1) {
+                setHitting(false);
+            }
+        }
+
         movementTime += time;
 
         if (isFollowing) {
@@ -217,8 +223,8 @@ public class Monster extends Entity {
         g.setColor(Color.BLACK);
         if (!turnedRight) {
             if (isHitting) { // is able to hit while running and while standing still -> always checks if hit is true regardless of moving
-                int offset = (int) ((1.2 * img[2][(int) this.animation_state].getWidth(null) - this.width) / 2);
-                g.drawImage(img[2][(int) this.animation_state], (int) this.x - offset, (int) this.y, null); // set player's animation to hit animation
+                int offset = (int) ((1.2 * img[2][(int) this.animation_state % this.img[2].length].getWidth(null) - this.width) / 2);
+                g.drawImage(img[2][(int) this.animation_state % this.img[2].length], (int) this.x - offset, (int) this.y, null); // set player's animation to hit animation
             } else if (isMoving) {
                 int offset = (int) ((1.2 * img[1][(int) this.animation_state].getWidth(null) - this.width) / 2);
                 g.drawImage(img[1][(int) this.animation_state], (int) this.x - offset, (int) this.y, null);
@@ -229,7 +235,7 @@ public class Monster extends Entity {
         } else {
             if (isHitting) { // is able to hit while running and while standing still -> always checks if hit is true regardless of moving
                 //int offset = (int) ((1*img[2][(int) this.animation_state].getWidth(null) - this.width) / 2);
-                Main.drawReflectImage(img[2][(int) this.animation_state], g, (int) this.x, (int) this.y);
+                Main.drawReflectImage(img[2][(int) this.animation_state % this.img[2].length], g, (int) this.x, (int) this.y);
             } else if (isMoving) {
                 //int offset = (int) ((1*img[1][(int) this.animation_state].getWidth(null) - this.width) / 2);
                 Main.drawReflectImage(img[1][(int) this.animation_state], g, (int) this.x, (int) this.y);
@@ -271,7 +277,7 @@ public class Monster extends Entity {
 
     }
 
-    private void setHitting(boolean hitting) {
+    public void setHitting(boolean hitting) {
         isHitting = hitting;
     }
 

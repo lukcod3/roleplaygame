@@ -393,7 +393,7 @@ public abstract class Map {
     }
 
     void spawnRandomMonsters(Tile[][] tiles) {
-        double randInt = 0;
+        double randInt;
         // check for every tile that is a floor tile whether a random number (double randInt) is lower than a certain percentage (monsterPercentage); if so create a new monster there
         for (int i = 0; i < this.tiles.length; i++) {
             for (int j = 0; j < this.tiles[0].length; j++) {
