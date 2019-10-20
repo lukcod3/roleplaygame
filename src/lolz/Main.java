@@ -44,17 +44,15 @@ public class Main {
     public static float[] rgba_player;
 
     public MusicPlayer mp;
-    private boolean battleMusic;
 
     private Main() {
         // setup main frame
         frame = new JFrame();
 
         // main game jpanel
-        this.battleMusic = true;
         activePanel = new MainMenu(this);
         frame.add(activePanel);
-
+        playMusic();
         frame.setTitle("Monsters & Magic");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setResizable(false);
@@ -303,13 +301,31 @@ public class Main {
     }
 
     public void playMusic(){
-        MusicPlayer mp = new MusicPlayer();
-        if (activePanel instanceof GameGUI && !this.battleMusic) {
-            mp.starteAbspielen("res/audio/The Dark Amulet.mp3");
-            this.battleMusic = true;
-        } else if (!(activePanel instanceof GameGUI) && this.battleMusic) {
-            mp.starteAbspielen("res/audio/magical_theme.mp3");
-            this.battleMusic = false;
-        }
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                MusicPlayer mp = new MusicPlayer();
+                boolean battleMusic = true;
+                System.out.println(1);
+                while (true){
+                    try {
+                        Thread.sleep(200);
+                    } catch (Exception e){
+                        e.printStackTrace();
+                    }
+                    if(activePanel instanceof GameGUI && !battleMusic) {
+                        mp.stop();
+                        mp = new MusicPlayer();
+                        battleMusic = true;
+                        mp.starteAbspielen("res/audio/The Dark Amulet.mp3");
+                    } else if(activePanel instanceof HubGUI && battleMusic){
+                        mp.stop();
+                        mp = new MusicPlayer();
+                        battleMusic = false;
+                        mp.starteAbspielen("res/audio/magical_theme.mp3");
+                    }
+                }
+            }
+        }).start();
     }
 }
