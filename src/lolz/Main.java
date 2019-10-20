@@ -300,7 +300,7 @@ public class Main {
         g.drawImage(i, x + i.getWidth(null), y, -i.getWidth(null), i.getHeight(null), null);
     }
 
-    public void playMusic(){
+    private void playMusic(){
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -318,7 +318,7 @@ public class Main {
                         mp = new MusicPlayer();
                         battleMusic = true;
                         mp.starteAbspielen("res/audio/The Dark Amulet.mp3");
-                    } else if(activePanel instanceof HubGUI && battleMusic){
+                    } else if(!(activePanel instanceof GameGUI) && battleMusic){
                         mp.stop();
                         mp = new MusicPlayer();
                         battleMusic = false;
