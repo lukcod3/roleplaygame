@@ -235,18 +235,6 @@ public class Main {
             startHub();
         }
     }
-/*
-    public void restartHub() {
-        startHub();
-        HubGUI a = ((HubGUI) activePanel);
-        Hub b = a.map;
-        a.teleport = false;
-        b.portalStage = 0;
-        b.player.allowedToMove = true;
-        b.respawn();
-    }
-
- */
 
     public static void drawReflectImage(Image i, Graphics g, int x, int y) {
         g.drawImage(i, x + i.getWidth(null), y, -i.getWidth(null), i.getHeight(null), null);

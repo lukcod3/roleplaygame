@@ -19,8 +19,8 @@ public class Inventory {
     public boolean showButton, readyForSwitch, statsShown;
     public Point frameLocation;
     public int[] oldCoordinates;
-    int X_POSITION_IMAGE_INVENTORY = 560;
-    int Y_POSITION_IMAGE_INVENTORY = 185;
+    final int X_POSITION_IMAGE_INVENTORY = 560;
+    final int Y_POSITION_IMAGE_INVENTORY = 185;
     public Player player;
     public int hoverInventory;
 
