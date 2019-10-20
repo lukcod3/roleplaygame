@@ -179,7 +179,7 @@ public abstract class Entity {
     public boolean attack(Entity entity) {
         if (getHitting() && (int) animation_state % 5 == 2 && !hasDamaged) {
             this.hasDamaged = true;
-            entity.setHealth(entity.getHealth() - this.getDamage() * 100 / (100 + entity.getArmor()));
+            entity.setHealth((int) (entity.getHealth() - this.getDamage() * 100.0 / (100.0 + entity.getArmor())));
             //System.out.println("entity health: " + entity.getHealth());
             return entity.getHealth() == 0;
         }
