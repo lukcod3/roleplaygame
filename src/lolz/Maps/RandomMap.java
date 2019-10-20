@@ -319,6 +319,7 @@ public class RandomMap extends Map {
         if (this.portalState < 8) {
             this.player.allowedToMove = false;
             g.drawImage(portal[1][((int) portalState)], 410, 180, null);
+            this.player.health = this.player.maxHealth;
         } else if (!this.playerPortChanneled) {
             player.allowedToMove = true;
             this.playerPortChanneled = true;
