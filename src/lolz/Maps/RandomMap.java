@@ -242,7 +242,7 @@ public class RandomMap extends Map {
                         this.entities.remove(this.removeEntities[i]);
                         this.monsterCount -= 1;
                     } else {
-                        System.out.println("Fortnite");
+                        //System.out.println("Der Spieler soll nicht gelöscht werden!");
                     }
                 } catch (Exception ignore) {
 

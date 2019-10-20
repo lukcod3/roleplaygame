@@ -55,7 +55,7 @@ public abstract class Map {
         this.executionerPercentage = this.undeadWarriorPercentage + 0.3;
         this.fireGolemPercentage = this.executionerPercentage + 0.1;
         // Beispiel: 0.25 + 0.25 + 0.25 + 0.125 + 0.125
-        this.removeEntities = new int[9];
+        this.removeEntities = new int[100];
         this.removeProjectiles = new int[100];
         this.followingMonsters = new ArrayList<>();
         this.pathsToPlayer = new HashMap<>();
