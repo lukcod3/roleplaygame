@@ -68,8 +68,6 @@ public class Main {
         CONTENT_HEIGHT = frame.getContentPane().getHeight();
 
         this.player = new Fighter(null, 0, 0);
-        this.setRgba_projectiles(COLORS.RED);
-        if (player instanceof Mage) ((Mage) player).loadImages(new float[]{0f, 1f, 1f, 1f});
 
         // updating the game
         while (true) {
@@ -151,7 +149,6 @@ public class Main {
             Player player;
             if (isMage) {
                 player = new Mage(null, 0, 0);
-                ((Mage) player).loadImages(new float[]{0f, 1f, 1f, 1f});
             } else {
                 player = new Fighter(null, 0, 0);
             }
@@ -190,37 +187,41 @@ public class Main {
     }
 
     public void setRgba_projectiles(COLORS color) {
-        switch (color) {
-            case BLACK:
-                rgba_projectiles = new float[]{0f, 0f, 0f, 1f};
-                break;
+        if (color == null) {
+            rgba_projectiles = null;
+        } else {
+            switch (color) {
+                case BLACK:
+                    rgba_projectiles = new float[]{0f, 0f, 0f, 1f};
+                    break;
 
-            case RED:
-                rgba_projectiles = new float[]{1f, 0f, 0f, 1f};
-                break;
+                case RED:
+                    rgba_projectiles = new float[]{1f, 0f, 0f, 1f};
+                    break;
 
-            case GREEN:
-                rgba_projectiles = new float[]{0f, 01f, 0f, 1f};
-                break;
+                case GREEN:
+                    rgba_projectiles = new float[]{0f, 01f, 0f, 1f};
+                    break;
 
-            case BLUE:
-                rgba_projectiles = new float[]{0f, 0f, 1f, 1f};
-                break;
+                case BLUE:
+                    rgba_projectiles = new float[]{0f, 0f, 1f, 1f};
+                    break;
 
-            case SAFFRON:
-                rgba_projectiles = new float[]{1f, 1f, 0f, 1f};
-                break;
+                case SAFFRON:
+                    rgba_projectiles = new float[]{1f, 1f, 0f, 1f};
+                    break;
 
-            case SKYBLUE:
-                rgba_projectiles = new float[]{0f, 1f, 1f, 1f};
-                break;
+                case SKYBLUE:
+                    rgba_projectiles = new float[]{0f, 1f, 1f, 1f};
+                    break;
 
-            case PINK:
-                rgba_projectiles = new float[]{1f, 0f, 1f, 1f};
-                break;
+                case PINK:
+                    rgba_projectiles = new float[]{1f, 0f, 1f, 1f};
+                    break;
 
-            default:
-                rgba_projectiles = null;
+                default:
+                    rgba_projectiles = null;
+            }
         }
     }
 
