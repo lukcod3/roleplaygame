@@ -26,7 +26,7 @@ public class Mage extends Player {
         // paint player
 
         // TODO: fix modulo quick fixes
-
+        super.paint(g);
         // convert y from virtual to graphic
         this.y -= this.height;
 

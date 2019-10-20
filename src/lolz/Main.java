@@ -7,6 +7,7 @@ import lolz.Entity.Player;
 import lolz.GUI.GameGUI;
 import lolz.GUI.HubGUI;
 import lolz.GUI.MainMenu;
+import lolz.Maps.RandomMap;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -231,9 +232,10 @@ public class Main {
     private void updateGame(int time) {
         ((GameGUI) activePanel).update(time);
         ((GameGUI) activePanel).map.player.inventory.frameLocation = frame.getLocationOnScreen();
-        if (((GameGUI) activePanel).map.monsterCount == 0) {
+        if (((GameGUI) activePanel).map.player.goBack) {
             startHub();
         }
+
     }
 
     public static void drawReflectImage(Image i, Graphics g, int x, int y) {

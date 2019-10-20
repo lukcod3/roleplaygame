@@ -111,6 +111,9 @@ public class Item {
                     this.health = 20 + (int) (Math.random() * (itemNr + 4)) * 10;
                     break;
             }
+            if(health== 0 && armor == 0 && movementspeed == 0 && damage == 0){
+                health = 1;
+            }
             verkaufen = (int) (Math.random() * 7 + 4 * itemNr) * itemNr;
             kaufen = (int) (verkaufen * 1.6);
         }

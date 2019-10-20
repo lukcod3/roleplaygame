@@ -16,6 +16,11 @@ public abstract class Player extends Entity {
     public int level, exp, gold;
     private double baseSpeed;
     public Inventory inventory;
+    Image[][] portal;
+    public double portalState;
+    public boolean goBack, backport;
+    public int[] oldCoordinates;
+    public boolean readyToPort;
 
     public Player(Map map, int x, int y) {
         // setup player stats
@@ -23,10 +28,27 @@ public abstract class Player extends Entity {
         this.health = 50; // test
         this.level = 1;
 
+        oldCoordinates = new int[2];
         this.width = 45;
         holdAttack = false;
         inventory = new Inventory(this);
         this.gold = 0;
+        portal = new Image[3][8];
+
+        try {
+            for (int j = 0; j < 8; j++) {
+                portal[0][j] = ImageIO.read(new File("res/hub/Green Portal Sprite Sheet.png")).getSubimage(j * 64, 0, 64, 64).getScaledInstance(120, -1, Image.SCALE_DEFAULT);
+            }
+            for (int j = 0; j < 8; j++) {
+                portal[1][j] = ImageIO.read(new File("res/hub/Green Portal Sprite Sheet.png")).getSubimage(j * 64, 64, 64, 64).getScaledInstance(120, -1, Image.SCALE_DEFAULT);
+            }
+            for (int j = 0; j < 5; j++) {
+                portal[2][j] = ImageIO.read(new File("res/hub/Green Portal Sprite Sheet.png")).getSubimage(j * 64, 64, 64, 64).getScaledInstance(120, -1, Image.SCALE_DEFAULT);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        portalState = 0;
     }
 
     public String getStats() {
@@ -51,12 +73,36 @@ public abstract class Player extends Entity {
         this.isHitting = isHitting;
     }
 
+    public void paint(Graphics g) {
+        if (backport) {
+            if (readyToPort) {
+                if (portalState < 5) {
+                    g.drawImage(portal[2][(int) portalState], oldCoordinates[0] + 50, oldCoordinates[1] + 50, null);
+                } else {
+                    goBack = true;
+                    readyToPort = false;
+                    backport = false;
+                }
+
+            } else if (portalState < 8) {
+                g.drawImage(portal[1][(int) portalState], oldCoordinates[0] + 50, oldCoordinates[1] + 50, null);
+            } else {
+                g.drawImage(portal[0][(int) portalState % 8], oldCoordinates[0] + 50, oldCoordinates[1] + 50, null);
+                if (x < oldCoordinates[0] + 150 && x > oldCoordinates[0] + 70 && y < oldCoordinates[1] + 160 && y > oldCoordinates[1] + 60) {
+                    readyToPort = true;
+                    allowedToMove = false;
+                    portalState = 0;
+                }
+            }
+        }
+    }
 
     public void update(int time) {
         // update player graphic stats
+        if (backport) portalState += 0.1;
         if (isHitting) {
             this.animation_state += (float) time / 100;
-            if(this instanceof Mage) {
+            if (this instanceof Mage) {
                 this.allowedToMove = false;
                 if (this.animation_state >= 5 && !this.holdAttack) {
                     this.setHitting(false);
@@ -65,8 +111,8 @@ public abstract class Player extends Entity {
                 if (this.animation_state > 5.5) {
                     animation_state -= 5;
                 }
-            } else{
-                if(this.animation_state >= 5){
+            } else {
+                if (this.animation_state >= 5) {
                     this.setHitting(false);
                 }
             }
@@ -129,13 +175,13 @@ public abstract class Player extends Entity {
                 this.damage += this.inventory.equipment[i].damage;
                 this.armor += this.inventory.equipment[i].armor;
                 this.baseSpeed += this.inventory.equipment[i].movementspeed;
-            } catch(Exception ignore){
+            } catch (Exception ignore) {
 
             }
         }
-        this.speed = (!(this instanceof Mage))&&this.isHitting ? this.baseSpeed/3 : this.baseSpeed;
+        this.speed = (!(this instanceof Mage)) && this.isHitting ? this.baseSpeed / 3 : this.baseSpeed;
         this.health = Math.min(this.health, this.maxHealth);
-        if(this.map instanceof RandomMap){
+        if (this.map instanceof RandomMap) {
             this.health = this.maxHealth;
         }
     }
