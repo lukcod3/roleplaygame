@@ -56,9 +56,8 @@ public class Monster extends Entity {
     public boolean attack(Player player) {
         if (getHitting() && (int) animation_state % 5 == 2 && !hasDamaged) {
             this.hasDamaged = true;
-            if (this.getDamage() > player.getArmor()) {
-                player.setHealth(player.getHealth() - (this.getDamage() - player.getArmor()));
-            }
+            player.setHealth(player.getHealth() - (this.getDamage() * 100 / 100 + player.getArmor()));
+
             System.out.println("entity health: " + player.getHealth());
             return player.getHealth() == 0;
         }
