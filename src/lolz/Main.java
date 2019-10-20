@@ -7,7 +7,6 @@ import lolz.Entity.Player;
 import lolz.GUI.GameGUI;
 import lolz.GUI.HubGUI;
 import lolz.GUI.MainMenu;
-import lolz.Maps.RandomMap;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -166,8 +165,8 @@ public class Main {
             while (!data.isEmpty()) {
                 // load item stats
                 int index = data.get(0);
-                int typ = 0;
-                int itemNr = 0;
+                int typ = data.get(1);
+                int itemNr = data.get(2);
 
                 // set player inventory
                 player.inventory.equipment[index] = player.inventory.item[typ][itemNr];

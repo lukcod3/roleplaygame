@@ -298,14 +298,9 @@ public class Monster extends Entity {
         return Math.pow(Math.pow(p1.get(0) - p2.get(0), 2) + Math.pow(p1.get(1) - p2.get(1), 2), 0.5);
     }
 
-    public boolean makePath() {
-        // check if path already calculated
-        List<Integer> monsterPos = Arrays.asList(this.getVirtualLeftX(), this.getVirtualY());
+    private ArrayList<List<Integer>> makePath(List<Integer> monsterPos) {
         if (this.map.pathsToPlayer.containsKey(monsterPos)) {
-            this.path.clear();
-            this.path.addAll(this.map.pathsToPlayer.get(monsterPos));
-            this.followPathInitial();
-            return false;
+            return this.map.pathsToPlayer.get(monsterPos);
         } else {
             // A* algorithm
             HashMap<List<Integer>, Double> openList = new HashMap<>();  // contains f
@@ -335,22 +330,17 @@ public class Monster extends Entity {
                 }
 
                 if (currentNode.equals(player)) {
-                    this.path = new ArrayList<>();
+                    ArrayList<List<Integer>> path = new ArrayList<>();
                     while (currentNode != monsterPos) {
-                        this.path.add(0, currentNode);
+                        path.add(0, currentNode);
                         currentNode = ancestor.get(currentNode);
                     }
-                    this.path.add(monsterPos);
-
-                    if (this.path.isEmpty()) {
-                        this.isFollowing = false;
-                        return true;
-                    }
+                    path.add(monsterPos);
 
                     ArrayList<List<Integer>> pathToPlayer = new ArrayList<>(this.path);
                     this.map.pathsToPlayer.put(monsterPos, pathToPlayer);
-                    this.followPathInitial();
-                    return false;
+
+                    return path;
                 }
 
                 closedList.add(currentNode);
@@ -404,6 +394,20 @@ public class Monster extends Entity {
             System.out.println("Player not found!!!");
         }
         System.out.println("oh nein");
+        return new ArrayList<>();
+    }
+
+    public boolean makePath() {
+        // check if path already calculated
+        List<Integer> monsterPosLeft = Arrays.asList(this.getVirtualLeftX(), this.getVirtualY());
+        List<Integer> monsterPosRight = Arrays.asList(this.getVirtualRightX(), this.getVirtualY());
+        ArrayList<List<Integer>> pathLeft = this.makePath(monsterPosLeft);
+        ArrayList<List<Integer>> pathRight = this.makePath(monsterPosRight);
+        if (pathLeft.size() == 0 || pathRight.size() == 0) {
+            return true;
+        }
+        this.path = pathLeft.size() > pathRight.size() ? pathLeft : pathRight;
+        this.followPathInitial();
         return false;
     }
 
