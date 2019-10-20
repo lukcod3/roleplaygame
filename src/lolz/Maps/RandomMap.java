@@ -16,7 +16,7 @@ public class RandomMap extends Map {
     public double portalState;
     public boolean playerPortChanneled;
     public int[] oldPlayerCoordinates;
-
+//j
 
     public RandomMap(Player player) {
         // setup map

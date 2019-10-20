@@ -1,12 +1,12 @@
 package lolz;
 
-
 import lolz.Entity.Fighter;
 import lolz.Entity.Mage;
 import lolz.Entity.Player;
 import lolz.GUI.GameGUI;
 import lolz.GUI.HubGUI;
 import lolz.GUI.MainMenu;
+import lolz.GUI.MusicPlayer;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -32,22 +32,26 @@ public class Main {
     public static int[] mouseCoordinates = new int[2];
 
     private final JFrame frame;
-    public JPanel activePanel;
+    private JPanel activePanel;
 
     public Player player;
+    private Fighter fighter;
+    private Mage mage;
 
     public enum COLORS {BLACK, RED, SAFFRON, GREEN, PINK, SKYBLUE, BLUE}
 
     public static float[] rgba_projectiles;
     public static float[] rgba_player;
 
-    private Main() {
+    public MusicPlayer mp;
+    private boolean battleMusic;
 
+    private Main() {
         // setup main frame
         frame = new JFrame();
 
-
         // main game jpanel
+        this.battleMusic = true;
         activePanel = new MainMenu(this);
         frame.add(activePanel);
 
@@ -72,7 +76,9 @@ public class Main {
         CONTENT_WIDTH = frame.getContentPane().getWidth();
         CONTENT_HEIGHT = frame.getContentPane().getHeight();
 
-        this.player = new Fighter(null, 0, 0);
+        this.fighter = new Fighter(null, 0, 0);
+        this.mage = new Mage(null, 0, 0);
+        this.player = this.fighter;
 
         // updating the game
         while (true) {
@@ -292,7 +298,18 @@ public class Main {
     }
 
     public static void drawReflectImage(Image i, Graphics g, int x, int y) {
+
         g.drawImage(i, x + i.getWidth(null), y, -i.getWidth(null), i.getHeight(null), null);
     }
 
+    public void playMusic(){
+        MusicPlayer mp = new MusicPlayer();
+        if (activePanel instanceof GameGUI && !this.battleMusic) {
+            mp.starteAbspielen("res/audio/The Dark Amulet.mp3");
+            this.battleMusic = true;
+        } else if (!(activePanel instanceof GameGUI) && this.battleMusic) {
+            mp.starteAbspielen("res/audio/magical_theme.mp3");
+            this.battleMusic = false;
+        }
+    }
 }

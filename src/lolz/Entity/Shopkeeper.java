@@ -9,18 +9,18 @@ import java.awt.event.MouseEvent;
 import java.io.File;
 
 public class Shopkeeper {
-    public Image[] images;
+    private Image[] images;
     public double animation_state;
     public boolean showShop;
     public Player player;
-    int X_POSITION_IMAGE_SHOP = 560;
-    int Y_POSITION_IMAGE_SHOP = 185;
-    public Item[] shop;
-    public boolean showButton, readyForBuy;
-    public int[] oldCoordinates;
-    public int aktInventar, hoverInventory;
-    public Image[] inventoryImages;
-    public int aktShopInventar, hoverShop;
+    private int X_POSITION_IMAGE_SHOP = 560;
+    private int Y_POSITION_IMAGE_SHOP = 185;
+    private Item[] shop;
+    private boolean showButton, readyForBuy;
+    private int[] oldCoordinates;
+    private int aktInventar, hoverInventory;
+    private Image[] inventoryImages;
+    private int aktShopInventar, hoverShop;
 
     public Shopkeeper(Player player) {
         this.oldCoordinates = new int[2];
@@ -172,7 +172,7 @@ public class Shopkeeper {
         }
     }
 
-    public void getShopItems() {
+    private void getShopItems() {
         shop = new Item[6];
         for (int i = 0; i <= 5; i++) {
             int stufe;

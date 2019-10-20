@@ -17,10 +17,10 @@ public abstract class Player extends Entity {
     private double baseSpeed;
     public Inventory inventory;
     Image[][] portal;
-    public double portalState;
+    private double portalState;
     public boolean goBack, backport;
     public int[] oldCoordinates;
-    public boolean readyToPort;
+    private boolean readyToPort;
     public int lastDirection;
 
     public Player(Map map, int x, int y) {
@@ -53,6 +53,29 @@ public abstract class Player extends Entity {
         portalState = 0;
     }
 
+    public int getLevel(){
+        return level;
+    }
+
+    public void setLevel(int x){
+        level = x;
+    }
+
+    public int getExp(){
+        return exp;
+    }
+
+    public void setExp(int x){
+        exp = x;
+    }
+
+    public int getGold(){
+        return gold;
+    }
+
+    public void setGold(int x){
+        gold = x;
+    }
     public String getStats() {
         return (this instanceof Mage) + "\n" + this.level + "\n" + this.exp + "\n" + this.gold + this.inventory.getStats();
     }
@@ -157,7 +180,7 @@ public abstract class Player extends Entity {
         }
     }
 
-    public void loadImages(float[] rgba, String idlePath, String runPath, String attackPath) {
+    void loadImages(float[] rgba, String idlePath, String runPath, String attackPath) {
         try {
             if (rgba == null) {
                 for (int i = 0; i < 4; i++) {

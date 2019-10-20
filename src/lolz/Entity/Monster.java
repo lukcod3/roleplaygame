@@ -15,7 +15,7 @@ import java.util.List;
 public class Monster extends Entity {
     private int exp, monsterNumber, movementTime;
     public boolean isFollowing;
-    public ArrayList<List<Integer>> path;
+    private ArrayList<List<Integer>> path;
 
     public Monster(Map map, int x, int y, int maxHealth, int damage, int armor, int exp, int monsterNumber) {
         super(map, x, y, maxHealth, damage, armor, 0.1);

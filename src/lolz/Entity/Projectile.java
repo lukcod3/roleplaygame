@@ -100,7 +100,7 @@ public class Projectile {
         this.turnNumber = turnNumber;
     }
 
-    public double getIx() {
+    private double getIx() {
         return this.ix;
     }
 
@@ -108,7 +108,7 @@ public class Projectile {
         this.ix = ix;
     }
 
-    public double getIy() {
+    private double getIy() {
         return this.iy;
     }
 
