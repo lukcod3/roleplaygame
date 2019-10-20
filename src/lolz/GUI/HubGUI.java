@@ -22,6 +22,16 @@ public class HubGUI extends JPanel {
 
         this.main = main;
 
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                if (main.mp != null) {
+                    main.mp.stop();
+                }
+                main.playMusic();
+            }
+        }).start();
+
         this.repaint();
         this.setOpaque(false);
 

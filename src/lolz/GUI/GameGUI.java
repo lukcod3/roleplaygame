@@ -27,6 +27,16 @@ public class GameGUI extends JPanel {
         this.map = new RandomMap(player);
         this.main = main;
 
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                if (main.mp != null) {
+                    main.mp.stop();
+                }
+                main.playMusic();
+            }
+        }).start();
+
         this.repaint();
         this.setOpaque(false);
 
