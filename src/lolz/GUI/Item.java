@@ -14,7 +14,7 @@ public class Item {
     public Image image;
     public boolean shopItem;
 
-    public Item(int typ, int itemNr) {
+    Item(int typ, int itemNr) {
         this.typ = typ;
         this.itemNr = itemNr;
         generateItemStats();
@@ -47,11 +47,11 @@ public class Item {
         }
     }
 
-    public String getStats() {
+    String getStats() {
         return this.typ + "\n" + this.itemNr;
     }
 
-    public void generateItemStats() {
+    private void generateItemStats() {
         if (itemNr != 0) {
             switch (this.typ) {
                 case 0:

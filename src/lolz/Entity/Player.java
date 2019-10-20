@@ -17,10 +17,10 @@ public abstract class Player extends Entity {
     private double baseSpeed;
     public Inventory inventory;
     Image[][] portal;
-    public double portalState;
+    private double portalState;
     public boolean goBack, backport;
     public int[] oldCoordinates;
-    public boolean readyToPort;
+    private boolean readyToPort;
     public int lastDirection;
 
     public Player(Map map, int x, int y) {
@@ -180,7 +180,7 @@ public abstract class Player extends Entity {
         }
     }
 
-    public void loadImages(float[] rgba, String idlePath, String runPath, String attackPath) {
+    void loadImages(float[] rgba, String idlePath, String runPath, String attackPath) {
         try {
             if (rgba == null) {
                 for (int i = 0; i < 4; i++) {

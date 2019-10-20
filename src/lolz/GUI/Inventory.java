@@ -12,17 +12,17 @@ import java.text.DecimalFormat;
 
 public class Inventory {
     public Item[] equipment; // 1 is hat, 2 is t-shirt, 3 is sword, 4 is shoes, 5 is necklace, 6 is ring, 7 is belt, 8-11 is depot
-    public int aktInventar;
-    public Image[] inventoryImages;
+    private int aktInventar;
+    private Image[] inventoryImages;
     public Item[][] item;
     public Image emptyInventory;
-    public boolean showButton, readyForSwitch, statsShown;
+    boolean showButton, readyForSwitch, statsShown;
     public Point frameLocation;
-    public int[] oldCoordinates;
+    private int[] oldCoordinates;
     final int X_POSITION_IMAGE_INVENTORY = 560;
     final int Y_POSITION_IMAGE_INVENTORY = 185;
     public Player player;
-    public int hoverInventory;
+    private int hoverInventory;
 
     public Inventory(Player player) {
         this.oldCoordinates = new int[2];
@@ -64,7 +64,7 @@ public class Inventory {
         return s.toString();
     }
 
-    public void printStats(Graphics g) {
+    void printStats(Graphics g) {
         g.setColor(Color.white);
         g.setFont(new Font("SansSerif", Font.BOLD, 25));
         g.drawString(""+ player.gold, 20, 130);
@@ -187,7 +187,7 @@ public class Inventory {
         this.equipment[8] = item[(int) (Math.random() * 7)][(int) (Math.random() * 4) + 1];
     }
 
-    public void updateInventory(MouseEvent e) {
+    void updateInventory(MouseEvent e) {
         // check if courser is on inventory field
         hoverInventory = 0;
         if (e.getButton() == 3 && statsShown) {
