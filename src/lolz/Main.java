@@ -100,8 +100,28 @@ public class Main {
 
     public static void saveGame(Player player) {
         try {
+            // add rgb colors
+            StringBuilder colors = new StringBuilder();
+            if (rgba_player == null) {
+                colors.append("null" + "\n");
+            } else {
+                colors.append(rgba_player.length).append("\n");
+                for (float f : rgba_player) {
+                    colors.append(f).append("\n");
+                }
+            }
+            if (rgba_projectiles == null) {
+                colors.append("null" + "\n");
+            } else {
+                colors.append(rgba_projectiles.length).append("\n");
+                for (float f : rgba_projectiles) {
+                    colors.append(f).append("\n");
+                }
+            }
+
+            // save stats
             FileWriter fw = new FileWriter(new File("save.txt"), false);
-            fw.write(player.getStats());
+            fw.write(colors.toString() + player.getStats());
             fw.close();
         } catch (IOException e) {
             e.printStackTrace();
@@ -142,9 +162,37 @@ public class Main {
                 e.printStackTrace();
             }
             String[] parsed = saved.split("\n");
-            boolean isMage = Boolean.parseBoolean(parsed[0]);
+            int startIndex = 0;
+            // load player rgb colors
+            if (parsed[startIndex].equals("null")) {
+                startIndex++;
+            } else {
+                int length = Integer.parseInt(parsed[startIndex]);
+                float[] rgb = new float[length];
+                startIndex++;
+                for (int i = 0; i < length; i++) {
+                    rgb[i] = Float.parseFloat(parsed[startIndex + i]);
+                }
+                startIndex += length;
+                rgba_player = rgb;
+            }
+            // load projectile rgb colors
+            if (parsed[startIndex].equals("null")) {
+                startIndex++;
+            } else {
+                int length = Integer.parseInt(parsed[startIndex]);
+                float[] rgb = new float[length];
+                startIndex++;
+                for (int i = 0; i < length; i++) {
+                    rgb[i] = Float.parseFloat(parsed[startIndex + i]);
+                }
+                startIndex += length;
+                rgba_projectiles = rgb;
+            }
+            boolean isMage = Boolean.parseBoolean(parsed[startIndex]);
+            startIndex++;
             ArrayList<Integer> data = new ArrayList<>();
-            for (int i = 1; i < parsed.length; i++) {
+            for (int i = startIndex; i < parsed.length; i++) {
                 data.add(Integer.parseInt(parsed[i]));
             }
 
@@ -152,8 +200,10 @@ public class Main {
             Player player;
             if (isMage) {
                 player = new Mage(null, 0, 0);
+                ((Mage) player).loadImages(rgba_player);
             } else {
                 player = new Fighter(null, 0, 0);
+                ((Fighter) player).loadImages(rgba_player);
             }
 
             // set player stats
