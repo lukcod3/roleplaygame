@@ -37,6 +37,7 @@ public class Main {
     public Player player;
 
     public enum COLORS {BLACK, RED, SAFFRON, GREEN, PINK, SKYBLUE, BLUE}
+
     public static float[] rgba_projectiles;
     public static float[] rgba_player;
 
@@ -167,8 +168,8 @@ public class Main {
             while (!data.isEmpty()) {
                 // load item stats
                 int index = data.get(0);
-                int typ = 0;
-                int itemNr = 0;
+                int typ = data.get(1);
+                int itemNr = data.get(2);
 
                 // set player inventory
                 player.inventory.equipment[index] = player.inventory.item[typ][itemNr];
