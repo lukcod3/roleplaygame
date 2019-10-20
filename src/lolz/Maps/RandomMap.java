@@ -13,9 +13,11 @@ import java.util.ArrayList;
 
 public class RandomMap extends Map {
 
-    BufferedImage[] portal;
+    Image[][] portal;
     public double portalState;
     public boolean playerPortChanneled;
+    public int[] oldPlayerCoordinates;
+
 
     public RandomMap(Player player) {
         // setup map
@@ -23,7 +25,7 @@ public class RandomMap extends Map {
 
         // generate map
         generateMap();
-        portal = new BufferedImage[8];
+        portal = new Image[3][8];
         portalState = 0;
         this.playerPortChanneled = false;
 
@@ -34,7 +36,7 @@ public class RandomMap extends Map {
         this.player.x = (this.VIRTUAL_WIDTH / 2.0) * Main.TILE_SIZE;
         this.player.y = (this.VIRTUAL_HEIGHT / 2.0) * Main.TILE_SIZE;
         this.player.directions = new boolean[4];
-
+        oldPlayerCoordinates = new int[2];
         // update expFactor before new map is created
         this.expFactor = Math.pow(1.2, this.player.level);
 
@@ -46,10 +48,15 @@ public class RandomMap extends Map {
         // load portal image
         try {
             for (int j = 0; j < 8; j++) {
-                portal[j] = ImageIO.read(new File("res/hub/Green Portal Sprite Sheet.png")).getSubimage(j * 64, 64, 64, 64);
+                portal[0][j] = ImageIO.read(new File("res/hub/Green Portal Sprite Sheet.png")).getSubimage(j * 64, 0, 64, 64).getScaledInstance(120, -1, Image.SCALE_DEFAULT);
             }
-        } catch (
-                Exception e) {
+            for (int j = 0; j < 8; j++) {
+                portal[1][j] = ImageIO.read(new File("res/hub/Green Portal Sprite Sheet.png")).getSubimage(j * 64, 64, 64, 64).getScaledInstance(120, -1, Image.SCALE_DEFAULT);
+            }
+            for (int j = 0; j < 5; j++) {
+                portal[2][j] = ImageIO.read(new File("res/hub/Green Portal Sprite Sheet.png")).getSubimage(j * 64, 64, 64, 64).getScaledInstance(120, -1, Image.SCALE_DEFAULT);
+            }
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -150,7 +157,7 @@ public class RandomMap extends Map {
                     this.projectiles.add(new Projectile(this.player.getX() + this.player.getWidth() / 10.0, this.player.getY() - this.player.getHeight() / 1.75, Projectile.TurnNumber.SOUTHEAST, Main.rgba_projectiles));
                 } else if (this.player.directions[2] && this.player.directions[1]) {
                     this.projectiles.add(new Projectile(this.player.getX() - this.player.getWidth() * 1.5, this.player.getY(), Projectile.TurnNumber.SOUTHWEST, Main.rgba_projectiles));
-                } else if (this.player.directions[0]  && this.player.directions[1]) {
+                } else if (this.player.directions[0] && this.player.directions[1]) {
                     this.projectiles.add(new Projectile(this.player.getX() - this.player.getWidth() * 1.5, this.player.getY() - this.player.getHeight(), Projectile.TurnNumber.NORTHWEST, Main.rgba_projectiles));
                 } else if (this.player.directions[0]) {
                     this.projectiles.add(new Projectile(this.player.getX() + this.player.getWidth() / 2.0, this.player.getY() - this.player.getHeight() * 1.5, Projectile.TurnNumber.NORTH, Main.rgba_projectiles));
@@ -235,8 +242,13 @@ public class RandomMap extends Map {
                 this.removeEntities[i] = 0;
                 this.removeEntityIndex -= 1;
                 this.monsterCount -= 1;
-                this.player.giveXP((int)(Math.random()*8) + 12);
-                this.player.gold += (int)(Math.random()*2 + 2);
+                if(monsterCount == 0) {
+                    this.player.backport = true;
+                    this.player.oldCoordinates[0] = (int)this.player.x;
+                    this.player.oldCoordinates[1] = (int)this.player.y;
+                }
+                this.player.giveXP((int) (Math.random() * 8) + 12);
+                this.player.gold += (int) (Math.random() * 2 + 2);
             }
         }
 
@@ -261,10 +273,11 @@ public class RandomMap extends Map {
 
     public void paint(Graphics g) {
         super.paint(g);
+
         if (this.portalState < 8) {
             this.player.allowedToMove = false;
-            g.drawImage(portal[((int) portalState)].getScaledInstance(120, -1, Image.SCALE_DEFAULT), 410, 180, null);
-        } else if(!this.playerPortChanneled){
+            g.drawImage(portal[1][((int) portalState)], 410, 180, null);
+        } else if (!this.playerPortChanneled) {
             player.allowedToMove = true;
             this.playerPortChanneled = true;
         }

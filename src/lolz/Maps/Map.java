@@ -8,7 +8,9 @@ import lolz.GUI.Tile;
 import lolz.GUI.Tile.StaticTile;
 import lolz.Main;
 
+import javax.imageio.ImageIO;
 import java.awt.*;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -29,8 +31,12 @@ public abstract class Map {
     double expFactor;
     public volatile ArrayList<Monster> followingMonsters;
     public HashMap<List<Integer>, ArrayList<List<Integer>>> pathsToPlayer;
-    public boolean debugging;
+    public boolean debugging, backport;
     public Tile[][] tiles;
+    Image[][] portal;
+    public boolean goBack;
+
+
 
     Map(int width, int height) {
         this.WIDTH = width;
@@ -54,6 +60,21 @@ public abstract class Map {
         this.followingMonsters = new ArrayList<>();
         this.pathsToPlayer = new HashMap<>();
         this.debugging = false;
+        this.portal = new Image[3][8];
+
+        try {
+            for (int j = 0; j < 8; j++) {
+                portal[0][j] = ImageIO.read(new File("res/hub/Green Portal Sprite Sheet.png")).getSubimage(j * 64, 0, 64, 64).getScaledInstance(120, -1, Image.SCALE_DEFAULT);
+            }
+            for (int j = 0; j < 8; j++) {
+                portal[1][j] = ImageIO.read(new File("res/hub/Green Portal Sprite Sheet.png")).getSubimage(j * 64, 64, 64, 64).getScaledInstance(120, -1, Image.SCALE_DEFAULT);
+            }
+            for (int j = 0; j < 5; j++) {
+                portal[2][j] = ImageIO.read(new File("res/hub/Green Portal Sprite Sheet.png")).getSubimage(j * 64, 64, 64, 64).getScaledInstance(120, -1, Image.SCALE_DEFAULT);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         // set tiles to empty by default
         this.tiles = new Tile[this.VIRTUAL_HEIGHT][this.VIRTUAL_WIDTH];
@@ -120,9 +141,9 @@ public abstract class Map {
                 }
             }
         }
-
         // translate back
         g.translate((int) (this.player.x - Main.WIDTH / 2), (int) (this.player.y - Main.HEIGHT / 2));
+
 
     }
 
@@ -439,4 +460,5 @@ public abstract class Map {
     private int randInt(int min, int max) {
         return (int) (Math.random() * (max + 1 - min) + min);
     }
+
 }

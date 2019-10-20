@@ -50,7 +50,6 @@ public class Inventory {
             item[6][i] = new Item(6, i);
         }
         this.equipment = new Item[]{item[0][0], item[1][0], item[2][0], item[3][0], item[4][0], item[5][0], item[6][0], null, null, null, null};
-
         hoverInventory = 0;
     }
 

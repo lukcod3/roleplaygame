@@ -25,7 +25,7 @@ public class Fighter extends Player {
     public void paint(Graphics g) {
         // System.out.println(map.get_tile_at((int) (this.x), (int) (this.y + this.height)).toString());
         // paint player
-
+        super.paint(g);
         // convert y from virtual to graphic
         this.y -= this.height;
 
