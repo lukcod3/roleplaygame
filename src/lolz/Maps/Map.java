@@ -27,7 +27,7 @@ public abstract class Map {
     private double monsterPercentage, ghoulPercentage, impPercentage, undeadWarriorPercentage, executionerPercentage, fireGolemPercentage;
     int[] removeEntities, removeProjectiles;
     int removeEntityIndex, removeProjectileIndex;
-    private final int minMaxHealth = 10, maxMaxHealth = 30, minDamage = 5, maxDamage = 10, minArmor = 1, maxArmor = 5, minExp = 10, maxExp = 20;
+    private final int minMaxHealth = 10, maxMaxHealth = 30, minDamage = 1, maxDamage = 5, minArmor = 5, maxArmor = 10, minExp = 10, maxExp = 20;
     double expFactor;
     public volatile ArrayList<Monster> followingMonsters;
     public HashMap<List<Integer>, ArrayList<List<Integer>>> pathsToPlayer;
