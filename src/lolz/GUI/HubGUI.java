@@ -38,11 +38,12 @@ public class HubGUI extends JPanel {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 if (!mageClicked) {
+                    main.rgba_player = null;
                     if (main.player instanceof Fighter) {
-                        ((Fighter) main.player).loadImages(null);
+                        ((Fighter) main.player).loadImages(main.rgba_player);
                         removeColorButtons();
                     } else {
-                        ((Mage) main.player).loadImages(null);
+                        ((Mage) main.player).loadImages(main.rgba_player);
                         mageClicked = true;
                     }
                 } else {
@@ -62,11 +63,12 @@ public class HubGUI extends JPanel {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 if (!mageClicked) {
+                    main.rgba_player = new float[]{0f, 0f, 0f, 1f};
                     if (main.player instanceof Fighter) {
-                        ((Fighter) main.player).loadImages(new float[]{0f, 0f, 0f, 1f});
+                        ((Fighter) main.player).loadImages(main.rgba_player);
                         removeColorButtons();
                     } else {
-                        ((Mage) main.player).loadImages(new float[]{0f, 0f, 0f, 1f});
+                        ((Mage) main.player).loadImages(main.rgba_player);
                         mageClicked = true;
                     }
                 } else {
@@ -85,11 +87,12 @@ public class HubGUI extends JPanel {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 if (!mageClicked) {
+                    main.rgba_player = new float[]{1f, 0f, 0f, 1f};
                     if (main.player instanceof Fighter) {
-                        ((Fighter) main.player).loadImages(new float[]{1f, 0f, 0f, 1f});
+                        ((Fighter) main.player).loadImages(main.rgba_player);
                         removeColorButtons();
                     } else {
-                        ((Mage) main.player).loadImages(new float[]{1f, 0f, 0f, 1f});
+                        ((Mage) main.player).loadImages(main.rgba_player);
                         mageClicked = true;
                     }
                 } else {
@@ -108,11 +111,12 @@ public class HubGUI extends JPanel {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 if (!mageClicked) {
+                    main.rgba_player = new float[]{0f, 1f, 0f, 1f};
                     if (main.player instanceof Fighter) {
-                        ((Fighter) main.player).loadImages(new float[]{0f, 1f, 0f, 1f});
+                        ((Fighter) main.player).loadImages(main.rgba_player);
                         removeColorButtons();
                     } else {
-                        ((Mage) main.player).loadImages(new float[]{0f, 1f, 0f, 1f});
+                        ((Mage) main.player).loadImages(main.rgba_player);
                         mageClicked = true;
                     }
                 } else {
@@ -131,11 +135,12 @@ public class HubGUI extends JPanel {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 if (!mageClicked) {
+                    main.rgba_player = new float[]{0f, 0f, 1f, 1f};
                     if (main.player instanceof Fighter) {
-                        ((Fighter) main.player).loadImages(new float[]{0f, 0f, 1f, 1f});
+                        ((Fighter) main.player).loadImages(main.rgba_player);
                         removeColorButtons();
                     } else {
-                        ((Mage) main.player).loadImages(new float[]{0f, 0f, 1f, 1f});
+                        ((Mage) main.player).loadImages(main.rgba_player);
                         mageClicked = true;
                     }
                 } else {
@@ -154,11 +159,12 @@ public class HubGUI extends JPanel {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 if (!mageClicked) {
+                    main.rgba_player = new float[]{1f, 1f, 0f, 1f};
                     if (main.player instanceof Fighter) {
-                        ((Fighter) main.player).loadImages(new float[]{1f, 1f, 0f, 1f});
+                        ((Fighter) main.player).loadImages(main.rgba_player);
                         removeColorButtons();
                     } else {
-                        ((Mage) main.player).loadImages(new float[]{1f, 1f, 0f, 1f});
+                        ((Mage) main.player).loadImages(main.rgba_player);
                         mageClicked = true;
                     }
                 } else {
@@ -177,11 +183,12 @@ public class HubGUI extends JPanel {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 if (!mageClicked) {
+                    main.rgba_player = new float[]{0f, 1f, 1f, 1f};
                     if (main.player instanceof Fighter) {
-                        ((Fighter) main.player).loadImages(new float[]{0f, 1f, 1f, 1f});
+                        ((Fighter) main.player).loadImages(main.rgba_player);
                         removeColorButtons();
                     } else {
-                        ((Mage) main.player).loadImages(new float[]{0f, 1f, 1f, 1f});
+                        ((Mage) main.player).loadImages(main.rgba_player);
                         mageClicked = true;
                     }
                 } else {
@@ -200,11 +207,12 @@ public class HubGUI extends JPanel {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 if (!mageClicked) {
+                    main.rgba_player = new float[]{1f, 0f, 1f, 1f};
                     if (main.player instanceof Fighter) {
-                        ((Fighter) main.player).loadImages(new float[]{1f, 0f, 1f, 1f});
+                        ((Fighter) main.player).loadImages(main.rgba_player);
                         removeColorButtons();
                     } else {
-                        ((Mage) main.player).loadImages(new float[]{1f, 0f, 1f, 1f});
+                        ((Mage) main.player).loadImages(main.rgba_player);
                         mageClicked = true;
                     }
                 } else {

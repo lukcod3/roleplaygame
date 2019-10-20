@@ -7,7 +7,6 @@ import lolz.Entity.Player;
 import lolz.GUI.GameGUI;
 import lolz.GUI.HubGUI;
 import lolz.GUI.MainMenu;
-import lolz.Maps.RandomMap;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -36,6 +35,10 @@ public class Main {
     public JPanel activePanel;
 
     public Player player;
+
+    public enum COLORS {BLACK, RED, SAFFRON, GREEN, PINK, SKYBLUE, BLUE}
+    public static float[] rgba_projectiles;
+    public static float[] rgba_player;
 
     private Main() {
 
@@ -93,8 +96,6 @@ public class Main {
             frame.repaint();
         }
     }
-
-    public static float[] rgba_projectiles;
 
     public static void saveGame(Player player) {
         try {
@@ -242,7 +243,5 @@ public class Main {
     public static void drawReflectImage(Image i, Graphics g, int x, int y) {
         g.drawImage(i, x + i.getWidth(null), y, -i.getWidth(null), i.getHeight(null), null);
     }
-
-    public enum COLORS {BLACK, RED, SAFFRON, GREEN, PINK, SKYBLUE, BLUE}
 
 }
