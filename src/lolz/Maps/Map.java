@@ -31,10 +31,9 @@ public abstract class Map {
     double expFactor;
     public volatile ArrayList<Monster> followingMonsters;
     public HashMap<List<Integer>, ArrayList<List<Integer>>> pathsToPlayer;
-    public boolean debugging, backport;
+    public boolean debugging;
     public Tile[][] tiles;
     Image[][] portal;
-    public boolean goBack;
 
 
 

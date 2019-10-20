@@ -150,22 +150,34 @@ public class RandomMap extends Map {
                     } else {
                         this.projectiles.add(new Projectile(this.player.getX() - this.player.getWidth() * 1.5, this.player.getY() - this.player.getHeight() / 2.0, Projectile.TurnNumber.WEST, Main.rgba_projectiles));
                     }
-                } else if (this.player.directions[0] && this.player.directions[3]) {
-                    this.projectiles.add(new Projectile(this.player.getX() + this.player.getWidth() / 6.0, this.player.getY() - this.player.getHeight() / 2.0, Projectile.TurnNumber.NORTHEAST, Main.rgba_projectiles));
-                } else if (this.player.directions[2] && this.player.directions[3]) {
-                    this.projectiles.add(new Projectile(this.player.getX() + this.player.getWidth() / 10.0, this.player.getY() - this.player.getHeight() / 1.75, Projectile.TurnNumber.SOUTHEAST, Main.rgba_projectiles));
-                } else if (this.player.directions[2] && this.player.directions[1]) {
-                    this.projectiles.add(new Projectile(this.player.getX() - this.player.getWidth() * 1.5, this.player.getY(), Projectile.TurnNumber.SOUTHWEST, Main.rgba_projectiles));
-                } else if (this.player.directions[0] && this.player.directions[1]) {
-                    this.projectiles.add(new Projectile(this.player.getX() - this.player.getWidth() * 1.5, this.player.getY() - this.player.getHeight(), Projectile.TurnNumber.NORTHWEST, Main.rgba_projectiles));
-                } else if (this.player.directions[0]) {
-                    this.projectiles.add(new Projectile(this.player.getX() + this.player.getWidth() / 2.0, this.player.getY() - this.player.getHeight() * 1.5, Projectile.TurnNumber.NORTH, Main.rgba_projectiles));
-                } else if (this.player.directions[1]) {
-                    this.projectiles.add(new Projectile(this.player.getX() - this.player.getWidth() * 1.5, this.player.getY() - this.player.getHeight() / 2.0, Projectile.TurnNumber.WEST, Main.rgba_projectiles));
-                } else if (this.player.directions[2]) {
-                    this.projectiles.add(new Projectile(this.player.getX() + this.player.getWidth() / 10.0, this.player.getY(), Projectile.TurnNumber.SOUTH, Main.rgba_projectiles));
-                } else if (this.player.directions[3]) {
-                    this.projectiles.add(new Projectile(this.player.getX() + this.player.getWidth() / 3.0, this.player.getY() - this.player.getHeight() / 2.0, Projectile.TurnNumber.EAST, Main.rgba_projectiles));
+                } else if (this.player.directions[0] || this.player.directions[1] || this.player.directions[2] || this.player.directions[3]) {
+                    if (this.player.directions[0] && this.player.directions[3]) {
+                        this.projectiles.add(new Projectile(this.player.getX() + this.player.getWidth() / 6.0, this.player.getY() - this.player.getHeight() / 2.0, Projectile.TurnNumber.NORTHEAST, Main.rgba_projectiles));
+                    } else if (this.player.directions[2] && this.player.directions[3]) {
+                        this.projectiles.add(new Projectile(this.player.getX() + this.player.getWidth() / 10.0, this.player.getY() - this.player.getHeight() / 1.75, Projectile.TurnNumber.SOUTHEAST, Main.rgba_projectiles));
+                    } else if (this.player.directions[2] && this.player.directions[1]) {
+                        this.projectiles.add(new Projectile(this.player.getX() - this.player.getWidth() * 1.5, this.player.getY(), Projectile.TurnNumber.SOUTHWEST, Main.rgba_projectiles));
+                    } else if (this.player.directions[0] && this.player.directions[1]) {
+                        this.projectiles.add(new Projectile(this.player.getX() - this.player.getWidth() * 1.5, this.player.getY() - this.player.getHeight(), Projectile.TurnNumber.NORTHWEST, Main.rgba_projectiles));
+                    } else if (this.player.directions[0]) {
+                        this.projectiles.add(new Projectile(this.player.getX() + this.player.getWidth() / 2.0, this.player.getY() - this.player.getHeight() * 1.5, Projectile.TurnNumber.NORTH, Main.rgba_projectiles));
+                    } else if (this.player.directions[1]) {
+                        this.projectiles.add(new Projectile(this.player.getX() - this.player.getWidth() * 1.5, this.player.getY() - this.player.getHeight() / 2.0, Projectile.TurnNumber.WEST, Main.rgba_projectiles));
+                    } else if (this.player.directions[2]) {
+                        this.projectiles.add(new Projectile(this.player.getX() + this.player.getWidth() / 10.0, this.player.getY(), Projectile.TurnNumber.SOUTH, Main.rgba_projectiles));
+                    } else if (this.player.directions[3]) {
+                        this.projectiles.add(new Projectile(this.player.getX() + this.player.getWidth() / 3.0, this.player.getY() - this.player.getHeight() / 2.0, Projectile.TurnNumber.EAST, Main.rgba_projectiles));
+                    }
+                } else{
+                    if (this.player.lastDirection == 1) {
+                        this.projectiles.add(new Projectile(this.player.getX() + this.player.getWidth() / 2.0, this.player.getY() - this.player.getHeight() * 1.5, Projectile.TurnNumber.NORTH, Main.rgba_projectiles));
+                    } else if (this.player.lastDirection == 2) {
+                        this.projectiles.add(new Projectile(this.player.getX() - this.player.getWidth() * 1.5, this.player.getY() - this.player.getHeight() / 2.0, Projectile.TurnNumber.WEST, Main.rgba_projectiles));
+                    } else if (this.player.lastDirection == 3) {
+                        this.projectiles.add(new Projectile(this.player.getX() + this.player.getWidth() / 10.0, this.player.getY(), Projectile.TurnNumber.SOUTH, Main.rgba_projectiles));
+                    } else if (this.player.lastDirection == 4) {
+                        this.projectiles.add(new Projectile(this.player.getX() + this.player.getWidth() / 3.0, this.player.getY() - this.player.getHeight() / 2.0, Projectile.TurnNumber.EAST, Main.rgba_projectiles));
+                    }
                 }
             }
 
@@ -249,14 +261,14 @@ public class RandomMap extends Map {
                 }
                 this.removeEntities[i] = 0;
                 this.removeEntityIndex -= 1;
-                if(monsterCount == 0) {
+                if (monsterCount == 0) {
                     this.player.backport = true;
                     this.player.oldCoordinates[0] = (int) this.player.x;
                     this.player.oldCoordinates[1] = (int) this.player.y;
                 }
                 this.player.giveXP((int) (Math.random() * 8) + 12);
                 this.player.gold += (int) (Math.random() * 2 + 2);
-                if(Math.random() > 0.93){
+                if (Math.random() > 0.93) {
                     int stufe;
 
                     if ((int) (1 + Math.random() * 10) * this.player.level > 60) {
@@ -268,9 +280,9 @@ public class RandomMap extends Map {
                     } else {
                         stufe = 1;
                     }
-                    for(int j = 0; j <= 3; j++){
-                        if(this.player.inventory.equipment[7+j]==null){
-                            this.player.inventory.equipment[7+j] = this.player.inventory.item[(int) (Math.random()*7)][stufe];
+                    for (int j = 0; j <= 3; j++) {
+                        if (this.player.inventory.equipment[7 + j] == null) {
+                            this.player.inventory.equipment[7 + j] = this.player.inventory.item[(int) (Math.random() * 7)][stufe];
                             break;
                         }
                     }
@@ -299,7 +311,6 @@ public class RandomMap extends Map {
 
     public void paint(Graphics g) {
         super.paint(g);
-
         if (this.portalState < 8) {
             this.player.allowedToMove = false;
             g.drawImage(portal[1][((int) portalState)], 410, 180, null);

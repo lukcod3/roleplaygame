@@ -140,6 +140,7 @@ public class GameGUI extends JPanel {
                 if ((!inEscMenu && map.player.allowedToMove) || !pressed) {
                         // change the players directions
                         map.player.directions[dir] = pressed;
+                        map.player.lastDirection = dir+1;
                 }
             }
         };

@@ -21,12 +21,14 @@ public abstract class Player extends Entity {
     public boolean goBack, backport;
     public int[] oldCoordinates;
     public boolean readyToPort;
+    public int lastDirection;
 
     public Player(Map map, int x, int y) {
         // setup player stats
         super(map, x, y, 100, 10, 30, 0.15);
         this.health = 50; // test
         this.level = 1;
+        lastDirection = 0;
 
         oldCoordinates = new int[2];
         this.width = 45;
