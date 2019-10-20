@@ -148,6 +148,7 @@ public class HubGUI extends JPanel {
                 newPlayer.inventory = map.player.inventory;
                 newPlayer.health = map.player.health;
                 map.player = newPlayer;
+                main.player = newPlayer;
                 inCharMenu = false;
                 inEscMenu = false;
                 removeCharItems();
@@ -169,6 +170,7 @@ public class HubGUI extends JPanel {
                 newPlayer.inventory = map.player.inventory;
                 newPlayer.health = map.player.health;
                 map.player = newPlayer;
+                main.player = newPlayer;
                 inCharMenu = false;
                 inEscMenu = false;
                 removeCharItems();
