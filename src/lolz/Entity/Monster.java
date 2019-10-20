@@ -46,8 +46,10 @@ public class Monster extends Entity {
         double CHANGE_DIR_POSS = 0.75;
 
         if (this.getHitting()) {
+            System.out.println(this.animation_state);
             if (this.animation_state > this.img[2].length - 1) {
                 setHitting(false);
+                this.hasDamaged = false;
             }
         }
 
