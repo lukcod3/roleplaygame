@@ -1,6 +1,7 @@
 package lolz.Maps;
 
 import lolz.Entity.*;
+import lolz.GUI.Item;
 import lolz.GUI.Tile.StaticTile;
 import lolz.GUI.Walker;
 import lolz.Main;
@@ -14,13 +15,14 @@ public class RandomMap extends Map {
 
     Image[][] portal;
     public double portalState;
-    public boolean playerPortChanneled;
+    public boolean dead, playerPortChanneled;
     public int[] oldPlayerCoordinates;
 
 
     public RandomMap(Player player) {
         // setup map
         super(20000, 15000);
+
 
         // generate map
         generateMap();
@@ -59,7 +61,12 @@ public class RandomMap extends Map {
             e.printStackTrace();
         }
     }
-
+    public boolean getDead() {
+        return dead;
+    }
+    public void setDead(boolean x){
+        dead = x;
+    }
 
     private void generateMap() {
         // set parameters
@@ -135,6 +142,22 @@ public class RandomMap extends Map {
 
         this.player.update(time);
 
+        if (this.player.getHealth() == 0){
+            setDead(true);
+        }
+
+        if (getDead() == true) {
+            player.goBack = true;
+            player.readyToPort = false;
+            player.backport = false;
+            player.inventory.equipment = new Item[11];
+            this.player.oldCoordinates[0] = (int) this.player.x;
+            this.player.oldCoordinates[1] = (int) this.player.y;
+            player.setLevel(1);
+            player.setGold(0);
+            player.setExp(0);
+
+        }
         // let the mage shoot his projectile
         if (this.player instanceof Mage) {
 
@@ -168,7 +191,7 @@ public class RandomMap extends Map {
                     } else if (this.player.directions[3]) {
                         this.projectiles.add(new Projectile(this.player.getX() + this.player.getWidth() / 3.0, this.player.getY() - this.player.getHeight() / 2.0, Projectile.TurnNumber.EAST, Main.rgba_projectiles));
                     }
-                } else{
+                } else {
                     if (this.player.lastDirection == 1) {
                         this.projectiles.add(new Projectile(this.player.getX() + this.player.getWidth() / 2.0, this.player.getY() - this.player.getHeight() * 1.5, Projectile.TurnNumber.NORTH, Main.rgba_projectiles));
                     } else if (this.player.lastDirection == 2) {
@@ -309,7 +332,7 @@ public class RandomMap extends Map {
                     if (!entity.getHitting()) {
                         entity.setHitting(true);
                     }
-                    entity.attack(player);
+                    setDead(entity.attack(player));
                 }
             }
         }
