@@ -33,7 +33,7 @@ public abstract class Map {
     public HashMap<List<Integer>, ArrayList<List<Integer>>> pathsToPlayer;
     public boolean debugging;
     public Tile[][] tiles;
-    Image[][] portal;
+    private Image[][] portal;
 
 
 

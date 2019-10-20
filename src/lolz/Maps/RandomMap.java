@@ -12,10 +12,10 @@ import java.util.ArrayList;
 
 public class RandomMap extends Map {
 
-    Image[][] portal;
-    public double portalState;
-    public boolean playerPortChanneled;
-    public int[] oldPlayerCoordinates;
+    private Image[][] portal;
+    private double portalState;
+    private boolean playerPortChanneled;
+    private int[] oldPlayerCoordinates;
 
 
     public RandomMap(Player player) {
@@ -253,9 +253,8 @@ public class RandomMap extends Map {
                     if (this.entities.get(this.removeEntities[i]) != this.player) {
                         this.entities.remove(this.removeEntities[i]);
                         this.monsterCount -= 1;
-                    } else {
-                        //System.out.println("Der Spieler soll nicht gelöscht werden!");
-                    }
+                    }  // Fehler-Ausgabe: System.out.println("Der Spieler soll nicht gelöscht werden!");
+
                 } catch (Exception ignore) {
 
                 }
