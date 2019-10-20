@@ -198,7 +198,7 @@ public abstract class Entity {
         this.damage = attackdamage;
     }
 
-    public int getArmor() {
+    private int getArmor() {
         return armor;
     }
 
@@ -218,7 +218,7 @@ public abstract class Entity {
         return (int) (this.x / Main.TILE_SIZE);
     }
 
-    public int getVirtualRightX() {
+    int getVirtualRightX() {
         return (int) ((this.x + this.width) / Main.TILE_SIZE);
     }
 

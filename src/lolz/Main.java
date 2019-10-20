@@ -32,11 +32,11 @@ public class Main {
     public static int[] mouseCoordinates = new int[2];
 
     private final JFrame frame;
-    public JPanel activePanel;
+    private JPanel activePanel;
 
     public Player player;
-    public Fighter fighter;
-    public Mage mage;
+    private Fighter fighter;
+    private Mage mage;
 
     public enum COLORS {BLACK, RED, SAFFRON, GREEN, PINK, SKYBLUE, BLUE}
 
@@ -255,7 +255,7 @@ public class Main {
         g.drawImage(i, x + i.getWidth(null), y, -i.getWidth(null), i.getHeight(null), null);
     }
 
-    public void playMusic(){
+    private void playMusic(){
         MusicPlayer mp = new MusicPlayer();
         mp.dateiAnspielen("res/audio/Dean Lewis - Stay Awake.mp3");
     }

@@ -280,7 +280,7 @@ public class GameGUI extends JPanel {
         }
     }
 
-    public void drawLevel(Graphics g){
+    private void drawLevel(Graphics g){
 
         g.drawString(""+this.map.player.level, 20, 95);
         g.setColor(new Color(0, 255, 0, 255));
@@ -291,7 +291,7 @@ public class GameGUI extends JPanel {
         g.drawRect(40, 83, 100, 5);
     }
 
-    public void drawHealth(Graphics g){
+    private void drawHealth(Graphics g){
         //fill health bar
         g.setColor(new Color(0, 125, 0, 255));
         g.fillRoundRect(25, 25, (int) (200 * ((double) this.map.player.health / (double) this.map.player.getMaxHealth())), 35, 15, 15);
