@@ -134,14 +134,6 @@ public abstract class Entity {
     }
 
     public void setHealth(int health) {
-        if (this instanceof Player) {
-            if (health >= 0 && health <= this.getMaxHealth()) {
-                this.health = health;
-            } else {
-                this.health = 0;
-            }
-        }
-        System.out.println(health);
         if (health >= 0 && health <= this.getMaxHealth()) {
             this.health = health;
         } else {
