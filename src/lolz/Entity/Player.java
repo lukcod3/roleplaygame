@@ -2,14 +2,11 @@ package lolz.Entity;
 
 
 import lolz.GUI.Inventory;
-import lolz.GUI.Item;
 import lolz.Main;
 import lolz.Maps.Map;
-import lolz.Maps.RandomMap;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
-import java.awt.image.BufferedImage;
 import java.io.File;
 
 public abstract class Player extends Entity {
@@ -29,6 +26,10 @@ public abstract class Player extends Entity {
         holdAttack = false;
         inventory = new Inventory(this);
         this.gold = 0;
+    }
+
+    public String getStats() {
+        return (this instanceof Mage) + "\n" + this.level + "\n" + this.exp + "\n" + this.gold + this.inventory.getStats();
     }
 
     // set Getters and Setters for attribute hit
