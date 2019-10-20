@@ -53,6 +53,7 @@ public class Inventory {
         hoverInventory = 0;
     }
 
+
     public String getStats() {
         StringBuilder s = new StringBuilder();
         for (int i = 0; i < this.equipment.length; i++) {
