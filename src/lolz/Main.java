@@ -43,18 +43,15 @@ public class Main {
     public static float[] rgba_projectiles;
     public static float[] rgba_player;
 
+    public MusicPlayer mp;
+    private boolean battleMusic;
+
     private Main() {
         // setup main frame
         frame = new JFrame();
 
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                playMusic();
-            }
-        }).start();
-
         // main game jpanel
+        this.battleMusic = true;
         activePanel = new MainMenu(this);
         frame.add(activePanel);
 
@@ -255,8 +252,14 @@ public class Main {
         g.drawImage(i, x + i.getWidth(null), y, -i.getWidth(null), i.getHeight(null), null);
     }
 
-    private void playMusic(){
+    public void playMusic(){
         MusicPlayer mp = new MusicPlayer();
-        mp.starteAbspielen("res/audio/Dean Lewis - Stay Awake.mp3");
+        if (activePanel instanceof GameGUI && !this.battleMusic) {
+            mp.starteAbspielen("res/audio/The Dark Amulet.mp3");
+            this.battleMusic = true;
+        } else if (!(activePanel instanceof GameGUI) && this.battleMusic) {
+            mp.starteAbspielen("res/audio/magical_theme.mp3");
+            this.battleMusic = false;
+        }
     }
 }
