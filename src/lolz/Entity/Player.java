@@ -3,15 +3,15 @@ package lolz.Entity;
 
 import lolz.GUI.Inventory;
 import lolz.Main;
+import lolz.Maps.Hub;
 import lolz.Maps.Map;
-import lolz.Maps.RandomMap;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.io.File;
 
 public abstract class Player extends Entity {
-    public boolean hasDamaged, holdAttack; // variable true if user makes character hit
+    public boolean holdAttack; // variable true if user makes character hit
     // Ingame stats
     public int level, exp, gold;
     private double baseSpeed;
@@ -53,24 +53,6 @@ public abstract class Player extends Entity {
 
     public String getStats() {
         return (this instanceof Mage) + "\n" + this.level + "\n" + this.exp + "\n" + this.gold + this.inventory.getStats();
-    }
-
-    // set Getters and Setters for attribute hit
-    public boolean getHitting() {
-        return isHitting;
-    }
-
-    public void setHitting(boolean isHitting) {
-        if (this.isHitting != isHitting) {
-            if (isHitting) {
-                // slow player down while attacking
-            } else {
-                // restore speed and attacking status
-                this.hasDamaged = false;
-            }
-            this.animation_state = 0;
-        }
-        this.isHitting = isHitting;
     }
 
     public void paint(Graphics g) {
@@ -168,7 +150,7 @@ public abstract class Player extends Entity {
         }
         this.speed = (!(this instanceof Mage)) && this.isHitting ? this.baseSpeed / 3 : this.baseSpeed;
         this.health = Math.min(this.health, this.maxHealth);
-        if (this.map instanceof RandomMap) {
+        if (this.map instanceof Hub) {
             this.health = this.maxHealth;
         }
     }

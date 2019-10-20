@@ -58,16 +58,6 @@ public class Fighter extends Player {
         this.y += this.height;
     }
 
-    public boolean attack(Entity entity) {
-        if (getHitting() && (int) animation_state % 5 == 2 && !hasDamaged) {
-            this.hasDamaged = true;
-            entity.setHealth(entity.getHealth() - this.getDamage());
-            //System.out.println("entity health: " + entity.getHealth());
-            return entity.getHealth() == 0;
-        }
-        return false;
-    }
-
     public void loadImages(float[] rgba) {
         loadImages(rgba, "res/Individual Sprites/adventurer-idle-0", "res/Individual Sprites/adventurer-run-0", "res/Individual Sprites/adventurer-attack1-0");
     }

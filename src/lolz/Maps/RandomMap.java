@@ -225,7 +225,7 @@ public class RandomMap extends Map {
             for (Entity entity : this.entities) {
                 if (entity instanceof Monster && this.player.overlap(entity)) {
                     // if the attacked monster is dead and their index in the entities ArrayList to the removeEntities array and increase the index that tells you how many monsters have to be removed (removeIndex) by one
-                    if (((Fighter) this.player).attack(entity)) {
+                    if (this.player.attack(entity)) {
                         this.removeEntities[this.removeEntityIndex] = this.entities.indexOf(entity);
                         this.removeEntityIndex += 1;
                     }
@@ -292,6 +292,12 @@ public class RandomMap extends Map {
                 } else if (this.followingMonsters.contains(entity) && (distance > 15 || distance < 1)) {
                     ((Monster) entity).isFollowing = false;
                     this.followingMonsters.remove(entity);
+                }
+                if (entity.overlap(player)) {
+                    if (!entity.getHitting()) {
+                        entity.setHitting(true);
+                    }
+                    entity.attack(player);
                 }
             }
         }

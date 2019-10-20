@@ -10,7 +10,7 @@ public abstract class Entity {
     public double x, y, speed, animation_state;
     public Image[][] img;
     public int width, height, maxHealth, health, damage, armor;
-    public boolean turnedRight, isMoving, isHitting, allowedToMove;
+    public boolean turnedRight, isMoving, isHitting, allowedToMove, hasDamaged;
     public volatile boolean[] directions; // 0 is up, 1 is left, 2 is down, 3 is right
     public Map map;
 
@@ -29,6 +29,24 @@ public abstract class Entity {
     }
 
     public abstract void paint(Graphics g);
+
+    // set Getters and Setters for attribute hit
+    public boolean getHitting() {
+        return isHitting;
+    }
+
+    public void setHitting(boolean isHitting) {
+        if (this.isHitting != isHitting) {
+            if (isHitting) {
+                // slow player down while attacking
+            } else {
+                // restore speed and attacking status
+                this.hasDamaged = false;
+            }
+            this.animation_state = 0;
+        }
+        this.isHitting = isHitting;
+    }
 
     void move(int time) {
         // count how many directions are active
@@ -116,6 +134,14 @@ public abstract class Entity {
     }
 
     public void setHealth(int health) {
+        if (this instanceof Player) {
+            if (health >= 0 && health <= this.getMaxHealth()) {
+                this.health = health;
+            } else {
+                this.health = 0;
+            }
+        }
+        System.out.println(health);
         if (health >= 0 && health <= this.getMaxHealth()) {
             this.health = health;
         } else {
@@ -154,6 +180,16 @@ public abstract class Entity {
                     return true;
                 }
             }
+        }
+        return false;
+    }
+
+    public boolean attack(Entity entity) {
+        if (getHitting() && (int) animation_state % 5 == 2 && !hasDamaged) {
+            this.hasDamaged = true;
+            entity.setHealth(entity.getHealth() - this.getDamage() * 100 / (100 + entity.getArmor()));
+            //System.out.println("entity health: " + entity.getHealth());
+            return entity.getHealth() == 0;
         }
         return false;
     }
