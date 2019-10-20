@@ -7,7 +7,6 @@ import lolz.Main;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.ArrayList;
 
@@ -191,7 +190,7 @@ public class RandomMap extends Map {
                                     entity.setHealth(entity.getHealth() - this.player.getDamage()); // player attack
                                     //System.out.println(entity.getHealth());
                                     if (entity.getHealth() == 0) { // remove dead monsters
-                                        this.removeEntities[this.removeEntityIndex] = this.entities.indexOf(entity);
+                                        this.removeEntities[this.removeEntityIndex] = removedEntityIndex;
                                         this.removeEntityIndex += 1;
                                     }
                                 }
@@ -238,14 +237,22 @@ public class RandomMap extends Map {
         if (this.removeEntityIndex != 0) {
             int index = this.removeEntityIndex - 1;
             for (int i = index; i >= 0; i--) {
-                this.entities.remove(this.removeEntities[i]);
+                try {
+                    if (this.entities.get(this.removeEntities[i]) != this.player) {
+                        this.entities.remove(this.removeEntities[i]);
+                        this.monsterCount -= 1;
+                    } else {
+                        System.out.println("Fortnite");
+                    }
+                } catch (Exception ignore) {
+
+                }
                 this.removeEntities[i] = 0;
                 this.removeEntityIndex -= 1;
-                this.monsterCount -= 1;
                 if(monsterCount == 0) {
                     this.player.backport = true;
-                    this.player.oldCoordinates[0] = (int)this.player.x;
-                    this.player.oldCoordinates[1] = (int)this.player.y;
+                    this.player.oldCoordinates[0] = (int) this.player.x;
+                    this.player.oldCoordinates[1] = (int) this.player.y;
                 }
                 this.player.giveXP((int) (Math.random() * 8) + 12);
                 this.player.gold += (int) (Math.random() * 2 + 2);

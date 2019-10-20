@@ -541,6 +541,7 @@ public class HubGUI extends JPanel {
         this.characterwahl.setVisible(false);
         if (this.inCharMenu) {
             this.removeCharItems();
+            this.removeColorButtons();
         }
         this.revalidate();
     }
