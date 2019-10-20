@@ -257,6 +257,6 @@ public class Main {
 
     public void playMusic(){
         MusicPlayer mp = new MusicPlayer();
-        mp.dateiAnspielen("res/audio/Dean Lewis - Stay Awake.mp3");
+        mp.starteAbspielen("res/audio/Dean Lewis - Stay Awake.mp3");
     }
 }

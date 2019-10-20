@@ -50,7 +50,7 @@ public class MusicPlayer
                 public void run()
                 {
                     try {
-                        player.play(5000);
+                        player.play(500000);
                     }
                     catch(JavaLayerException e) {
                         meldeProblem(dateiname);
