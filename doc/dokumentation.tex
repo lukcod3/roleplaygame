@@ -320,33 +320,41 @@ Im Anschluss wurde begonnen, ein Klassendiagramm anzufertigen um die bevorstehen
 
 \myuline{Donnerstag, 25.09.19 (Lukas, Jonas):}
 
-Lukas hat den Spieler mittels der WASD-Tasten bewegungsfähig gemacht und ihn als Bild dargestellt. \\
-Jonas hat eine Skizze für den lolz.Hub erstellt und ein Testintergrundbild eingefügt. \\
+Lukas hat das graphische Grundgerüst implementiert, den Spieler mittels der WASD-Tasten bewegungsfähig gemacht und ihn als Bild dargestellt. \\
+Jonas hat eine Skizze für den Hub erstellt und ein Testintergrundbild eingefügt. \\
 
 \myuline{Freitag, 26.09.19 (Jonas):}
 
 Jonas erstellte ein neues aktuelleres UML-Klassendiagramm.\\
 
-\myuline{Samstag, 28.09.19 (Tim, Jonas):}
+\myuline{Freitag, 27.09.19 (Lukas):}
+
+Lukas hat das Grundgerüst einer Map und eine erste Beispielsmap erstellt, dem Spieler eine Warte- und Laufanimation gegeben und mit dem Erstellen einer zufallsgenerierten Map begonnen. \\
+
+\myuline{Samstag, 28.09.19 (Tim, Jonas, Lukas):}
 
 Tim erstellte auf Lukas Grundlage der Helden-Klasse eine simple Monster-Klasse, die animiert ist, aber sonst nichts tut und noch keine Anwendung findet. \\
 Jonas implementierte eine grafische Oberfläche für das Inventar und die Attribute des Helden. \\
+Lukas vervollständigte die Zufallsgeneration einer Karte. Es muss noch an der graphisch korrekten Generation der Mauerteile gearbeitet werden. \\
 
-\myuline{Sonntag, 29.09.19 (Tim):}
+\myuline{Sonntag, 29.09.19 (Tim, Lukas):}
 
 Tim implementierte eine erste Schlaganimation des Helden. Es müssen noch \glqq{}unzulässige Eingaben\grqq{} des Benutzers abgefangen werden, da dieser zum jetzigen Zeitpunkt den Helden in der Schlaganimation festhalten kann. \\
 Tim erstellte eine Methode zum Testen, ob sich ein gegebenes Monster mit dem Helden überlappt, welche die Basis für das kommende Kampfsystem legen soll.\\
+Lukas hat weiter an der korrekten graphischen Generierung und Darstellung der Karte gearbeitet. \\
 
-\myuline{Montag, 30.09.19 (Tim, Jonas):}
+\myuline{Montag, 30.09.19 (Tim, Jonas, Lukas):}
 
 Tim setzte ein eigenes Icon für das Fenster und versuchte sich daran, den Helden die Möglichkeit zu geben, dem Monster Schaden zufügen zu können, scheiterte aber. \\
 Jonas implementierte einen neuen Helden, der nun auch nach links schauen kann und angreifen kann. \\
+Lukas hat das Rendering räumlich korrekt gestaltet. Des weiteren extenden Monster und Spieler jetzt aus Entity um die Redundanz gemeinsamer Eigenschaften zu minimieren. Außerdem kann der Spieler einen Angriff nun nicht mehr abbrechen. \\
 
-\myuline{Dienstag, 01.10.19 (Tim, Jonas):}
+\myuline{Dienstag, 01.10.19 (Tim, Jonas, Lukas):}
 
 Lukas verbesserte den Fehler in Tims \glqq{}Angriffscode\grqq{}, sodass der Held Monstern nun Schaden zufügen konnte. \\
 Tim erstellte eine Methode, die zufällig Monster auf der Karte erzeugt und die Anzahl dieser in einer Variable mitzählt. Des Weiteren lässt er die Monster verschwinden, sobald ihre Lebenspunkte 0 sind, sie also tot sind. Tim erweiterte die zufällige Monstererstellung um eine Beeinflussung durch das Spielerlevel, sodas die Monster in ihrer Stärke an die des Spielers angepasst sind. Das Erfahrungssystem ist sonst noch nicht implementiert. \\
 Jonas implementierte ein Inventarsystem. Nun können Items des Helden an und abgelegt werden. \\
+Lukas hat ein Main- und Escape-Menu hinzugefügt. \\
 
 \myuline{Mittwoch, 02.10.19 (Jonas):}
 
@@ -369,34 +377,38 @@ Tim erstellte einen \glqq{}Hub\grqq{}, von dem aus man in den Kampf mit Monstern
 Tim erweiterte die Monster um verschiedene Monsterarten, die jeweils mit einer bestimmten Prozentzahl gespawnt werden. Des Weiteren beschränkte er die Erstellung von Monstern auf alles außer 1-Tile-breite Gänge, da die Methode zur Überprüfung von Kontakt zwischen Held und Monster dort seltsamerweise nicht funktionierte. \\
 Jonas implementierte, dass nun auch ein Magier als Held gespielt werden kann, jedoch fehlt bei diesem noch die Animation des Projektils. \\
 
-\myuline{Freitag, 11.10.19 (Tim, Jonas):}
+\myuline{Freitag, 11.10.19 (Tim, Jonas, Lukas):}
 
 Tim begann mit der Implementation des Projektils und erstellte dazu eine neue Klasse \glqq{}Projectile\grqq{}. Er ermöglichte es, das ein Projektil erzeugt und dargestellt werden kann, jedoch fehlt beispielsweise noch, dass das Projektil Monstern schaden kann, dass es dorthin fliegt, wo es hinfliegen soll und dass es verschwindet, sobald es gegen eine Wand fliegt oder ein Monster getroffen hat. \\
 Jonas machte es möglich, dass der Held nachdem er alle Monster getötet hat im Hub spawnt. Außerdem implementierte er eine Animation für ein Portal, dass den Spieler vom Hub zu den Monstern transportiert. \\
+Lukas hat die Synchronität der Monsteranimationen entfernt um ihnen ein organischeres Verhalten zu geben und das graphische Rendering für alle Entities normiert um Redundanz zu verhindern.  \\
 
 \myuline{Samstag, 12.10.19 (Tim):}
 
 Tim arbeitete weiter an den Projektilen, sodass diese nun Monstern Schaden zufügen können, nicht über Wände und Monster hinausgehen und (sofern man stillsteht) dorthin fliegen, wo sie hin sollen. \\
 
-\myuline{Sonntag, 13.10.19 (Tim, Jonas):}
+\myuline{Sonntag, 13.10.19 (Tim, Jonas, Lukas):}
 
 Tim stellte die Projektile vorerst fertig, sodass diese nun in jede Richtung (jede Diagonale sowie rechts/links und oben/unten) verschossen werden können und es keine Fehler mehr gibt, wenn diese eine Wand oder ein Monster treffen. Die Methode zur Überprüfung, ob das Projektil mit einem gegebenen Monster überlappt, funktionierte noch nicht exakt wie gedacht, muss also noch überarbeitet werden. \\
 Jonas implementierte das Level-System, die zufallsbasierende Verteilung der Stats für die Items und das Updaten der Spieler Stats. \\
+Lukas began mit dem Implementieren einer "Monster verfolgen den Spieler" Funktion mittels des A*-Algorithmuses. \\
 
-\myuline{Montag, 14.10.19 (Tim):}
+\myuline{Montag, 14.10.19 (Tim, Lukas):}
 
 Die Gruppe besprach, welche Aufgaben zu erledigen sind und verteilte diese auf die Mitglieder. Lukas wird sich noch um die Verbesserung der Monster- und Spielerbewegung kümmern, Philipp M. wird sich daran machen, dass Monster dem Spieler Schaden zufügen können, Philipp N. soll sich darum kümmern, dass der Benutzer den Heldentyp auswählen kann, Jonas wird sich weiter an das Inventar und Nutzen der Items setzen und Tim wird sich um die Vervollständigung der Projektile kümmern. \\
+Lukas hat das begonne Feature weiterentwickelt. \\
 
 \myuline{Dienstag, 15.10.19 (Philipp N.):}
 
 Philipp N. beschließt, dass es dem Spiel noch an atmosphärischer Musik fehlt und kümmerte sich, nach Absprache mit Lukas, um die Organisation eines Komponisten für exklusive Musik. Diese wird, falls sie im Zeitraum fertiggestellt wird, am Ende in das Projekt eingefügt. \\
 
-\myuline{Mittwoch, 16.10.19 (Tim, Jonas):}
+\myuline{Mittwoch, 16.10.19 (Tim, Jonas, Lukas):}
 
 Tim vollendete die Projektile, sodass eine Überlappung mit einem Monster nun korrekt erkannt wird, fügte eine Lebensleiste für Monster sowie einen \glqq{}Back to Hub\grqq{} - Knopf ein, der den Spieler aus dem Kampf wieder zurück in den Hub bringt. \\
 Jonas fixte den Bug, dass die Angriffsanimation des Magiers nicht erschienen ist und löste das Problem, dass im Hub und in der eigentlichen Map unterschiedliche Spieler referenziert wurden und fügte diese zu einem zusammen. \\
+Lukas hat das begonne Feature fertiggestellt und einen Debugging-Modus hinzugefügt. \\
 
-\myuline{Donnerstag, 17.10.19 (Tim, Joas):}
+\myuline{Donnerstag, 17.10.19 (Tim, Jonas):}
 
 Tim löste das Problem nach dem Merge mit Lukas Branch, dass das Programm noch nicht an die andere X- und Y- Koordinatenspeicherung angepasst war, wie Lukas es verwendet hatte. Des Weiteren ermöglichte es, das Projektile nun auch vor Wänden entlang fliegen können. Er begann mit der Arbeit an durch den Benutzer auswählbaren Farben, in denen der Held dargestellt werden soll, sodass der Spieler seinen Charakter individualisieren kann. \\
 Jonas erstellte eine Liste in welcher er detailliert 9 aktuelle Bugs beschreibt und machte kleine Gameplay Anpassungen.\\
@@ -404,10 +416,11 @@ Jonas erstellte eine Liste in welcher er detailliert 9 aktuelle Bugs beschreibt 
 \myuline{Freitag, 18.10.19 (Tim, Jonas):}
 
 Tim löste eines der Probleme von Jonas' Liste, wegen welchem fast alle Projektile entfernt wurden, nachdem nur eines die Wand oder ein Monster getroffen hatte. Er bereitete ebenso weiter vor, dass der Benutzer den Helden sowie die Projektile in gewissen Farben auswählen kann. \\
-Jonas erstellte eine eigene Klasse für das Inventar welche nun auch im Hub funktioniert und begann mit der Implementation eines Shopkeepers im Hub. Außerdem kann das Inventar jetzt auch von Ubuntu-Usern korrekt genutzt werden.\\
+Jonas erstellte eine eigene Klasse für das Inventar welche nun auch im Hub funktioniert und begann mit der Implementation eines Shopkeepers im Hub. Außerdem kann das Inventar jetzt auch von Ubuntu-Usern korrekt genutzt werden. \\
 
-\myuline{Freitag, 18.10.19 (Tim, Jonas):}
+\myuline{Freitag, 18.10.19 (Tim, Jonas, Lukas):}
 
-Jonas erstellte eine Levelbar, eine Goldanzeige und setzte die Implementation des Shopkeepers fort. Er implementierte eine Anzeige für die Stats der Items wenn der Spieler im Inventar mit der Maus über die Items fährt.
+Jonas erstellte eine Levelbar, eine Goldanzeige und setzte die Implementation des Shopkeepers fort. Er implementierte eine Anzeige für die Stats der Items wenn der Spieler im Inventar mit der Maus über die Items fährt. \\
+Lukas hat das Speichern und Laden des aktuellen Spielstandes hinzugefügt. \\
 
 \end{document}
