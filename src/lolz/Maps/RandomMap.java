@@ -249,6 +249,25 @@ public class RandomMap extends Map {
                 }
                 this.player.giveXP((int) (Math.random() * 8) + 12);
                 this.player.gold += (int) (Math.random() * 2 + 2);
+                if(Math.random() > 0.93){
+                    int stufe;
+
+                    if ((int) (1 + Math.random() * 10) * this.player.level > 60) {
+                        stufe = 4;
+                    } else if ((int) (1 + Math.random() * 10) * this.player.level > 40) {
+                        stufe = 3;
+                    } else if ((int) (1 + Math.random() * 10) * this.player.level > 15) {
+                        stufe = 2;
+                    } else {
+                        stufe = 1;
+                    }
+                    for(int j = 0; j <= 3; j++){
+                        if(this.player.inventory.equipment[7+j]==null){
+                            this.player.inventory.equipment[7+j] = this.player.inventory.item[(int) (Math.random()*7)][stufe];
+                            break;
+                        }
+                    }
+                }
             }
         }
 
