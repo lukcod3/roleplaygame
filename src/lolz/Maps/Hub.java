@@ -74,6 +74,9 @@ public class Hub extends Map {
 
     @Override
     public void paint(Graphics g) {
+        // black background
+        g.setColor(Color.BLACK);
+        g.fillRect(0, 0, Main.CONTENT_WIDTH, Main.CONTENT_HEIGHT);
         // translate map to player coords
         g.translate((int) -(this.player.x - Main.WIDTH / 2), (int) -(this.player.y - Main.HEIGHT / 2));
 

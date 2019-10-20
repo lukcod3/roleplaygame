@@ -51,7 +51,6 @@ public class Inventory {
         }
         this.equipment = new Item[]{item[0][0], item[1][0], item[2][0], item[3][0], item[4][0], item[5][0], item[6][0], null, null, null, null};
 
-        testGeneratedRandomItemSet();
         hoverInventory = 0;
     }
 

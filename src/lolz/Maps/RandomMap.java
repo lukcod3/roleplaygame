@@ -236,7 +236,7 @@ public class RandomMap extends Map {
                 this.removeEntityIndex -= 1;
                 this.monsterCount -= 1;
                 this.player.giveXP((int)(Math.random()*8) + 12);
-                this.player.gold += (int)(Math.random()*3 + 2);
+                this.player.gold += (int)(Math.random()*2 + 2);
             }
         }
 

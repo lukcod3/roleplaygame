@@ -62,7 +62,7 @@ public class Fighter extends Player {
         if (getHitting() && (int) animation_state % 5 == 2 && !hasDamaged) {
             this.hasDamaged = true;
             entity.setHealth(entity.getHealth() - this.getDamage());
-            System.out.println("entity health: " + entity.getHealth());
+            //System.out.println("entity health: " + entity.getHealth());
             return entity.getHealth() == 0;
         }
         return false;

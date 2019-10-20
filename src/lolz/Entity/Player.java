@@ -4,6 +4,7 @@ package lolz.Entity;
 import lolz.GUI.Inventory;
 import lolz.Main;
 import lolz.Maps.Map;
+import lolz.Maps.RandomMap;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -134,6 +135,9 @@ public abstract class Player extends Entity {
         }
         this.speed = (!(this instanceof Mage))&&this.isHitting ? this.baseSpeed/3 : this.baseSpeed;
         this.health = Math.min(this.health, this.maxHealth);
+        if(this.map instanceof RandomMap){
+            this.health = this.maxHealth;
+        }
     }
 
     public void loadImages(float[] rgba, String idlePath, String runPath, String attackPath) {
