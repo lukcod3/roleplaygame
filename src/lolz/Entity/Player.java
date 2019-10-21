@@ -38,6 +38,7 @@ public abstract class Player extends Entity {
         this.gold = 0;
         portal = new Image[3][8];
         dieing = false;
+        dieingComplete = false;
 
         try {
             for (int j = 0; j < 8; j++) {

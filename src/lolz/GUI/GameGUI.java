@@ -138,7 +138,7 @@ public class GameGUI extends JPanel {
         return new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if ((!inEscMenu && map.player.allowedToMove) || !pressed) {
+                if ((!inEscMenu && map.player.allowedToMove && !map.player.dieing) || !pressed) {
                         // change the players directions
                         map.player.directions[dir] = pressed;
                         map.player.lastDirection = dir+1;
@@ -152,7 +152,7 @@ public class GameGUI extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (pressed) {
-                    if (!inEscMenu && !map.player.getHitting()) {
+                    if (!inEscMenu && !map.player.getHitting() && !map.player.dieing) {
                         map.player.setHitting(true);
                     }
                     map.player.allowedToMove = false;
