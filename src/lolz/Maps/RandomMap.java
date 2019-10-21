@@ -16,7 +16,8 @@ public class RandomMap extends Map {
     public double portalState;
     public boolean playerPortChanneled;
     public int[] oldPlayerCoordinates;
-//j
+    public boolean goThrough;
+
 
     public RandomMap(Player player) {
         // setup map
@@ -38,6 +39,7 @@ public class RandomMap extends Map {
         oldPlayerCoordinates = new int[2];
         // update expFactor before new map is created
         this.expFactor = Math.pow(1.2, this.player.level);
+        goThrough = false;
 
         //spawn random monsters
         spawnRandomMonsters(this.tiles);
@@ -208,7 +210,7 @@ public class RandomMap extends Map {
                                 }
                             }
                         }
-                    } else {
+                    } else if(!goThrough){
                         outOfBounds = true;
                     }
                     removedEntityIndexOld = removedEntityIndex;
