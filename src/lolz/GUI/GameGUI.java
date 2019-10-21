@@ -82,8 +82,8 @@ public class GameGUI extends JPanel {
         this.getActionMap().put(KeyEvent.VK_J + "Released", generateAttackKeyAction(false));
 
         // key bindings for player stats
-        this.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_I, 0, false), KeyEvent.VK_I + "Pressed");
-        this.getActionMap().put(KeyEvent.VK_I + "Pressed", generateInventoryKeyAction());
+        this.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_I, 0, true), KeyEvent.VK_I + "Released");
+        this.getActionMap().put(KeyEvent.VK_I + "Released", generateInventoryKeyAction());
 
         // key bindings for esc menu
         this.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0, false), KeyEvent.VK_ESCAPE + "Pressed");
@@ -92,6 +92,9 @@ public class GameGUI extends JPanel {
         // key bindings for debugging mode
         this.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_F5, 0, false), KeyEvent.VK_F5 + "Pressed");
         this.getActionMap().put(KeyEvent.VK_F5 + "Pressed", generateDebuggingAction());
+
+        this.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_N, 0, true), KeyEvent.VK_N + "Released");
+        this.getActionMap().put(KeyEvent.VK_N + "Released", generateMageToggleAction());
 
         this.addMouseListener(new MouseListener() {
             @Override
@@ -176,6 +179,19 @@ public class GameGUI extends JPanel {
             }
         };
     }
+
+    private Action generateMageToggleAction() {
+        return new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // change the players directions
+                if (!inEscMenu) {
+                    ((RandomMap) map).goThrough = !((RandomMap) map).goThrough;
+                }
+            }
+        };
+    }
+
 
     private Action generateEscapeAction() {
         return new AbstractAction() {
