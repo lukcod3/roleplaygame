@@ -43,7 +43,6 @@ public class Main {
     public static float[] rgba_projectiles;
     public static float[] rgba_player;
 
-    public MusicPlayer mp;
 
     private Main() {
         // setup main frame
@@ -289,8 +288,12 @@ public class Main {
     private void updateGame(int time) {
         ((GameGUI) activePanel).update(time);
         ((GameGUI) activePanel).map.player.inventory.frameLocation = frame.getLocationOnScreen();
-        if (((GameGUI) activePanel).map.player.goBack) {
-            startHub();
+        try {
+            if (((GameGUI) activePanel).map.player.goBack) {
+                startHub();
+            }
+        } catch (Exception ignore){
+
         }
 
     }
@@ -306,7 +309,6 @@ public class Main {
             public void run() {
                 MusicPlayer mp = new MusicPlayer();
                 boolean battleMusic = true;
-                System.out.println(1);
                 while (true){
                     try {
                         Thread.sleep(200);

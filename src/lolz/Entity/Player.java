@@ -22,6 +22,7 @@ public abstract class Player extends Entity {
     public int[] oldCoordinates;
     private boolean readyToPort;
     public int lastDirection;
+    public boolean dieing, dieingComplete;
 
     public Player(Map map, int x, int y) {
         // setup player stats
@@ -36,6 +37,7 @@ public abstract class Player extends Entity {
         inventory = new Inventory(this);
         this.gold = 0;
         portal = new Image[3][8];
+        dieing = false;
 
         try {
             for (int j = 0; j < 8; j++) {
@@ -53,29 +55,30 @@ public abstract class Player extends Entity {
         portalState = 0;
     }
 
-    public int getLevel(){
+    public int getLevel() {
         return level;
     }
 
-    public void setLevel(int x){
+    public void setLevel(int x) {
         level = x;
     }
 
-    public int getExp(){
+    public int getExp() {
         return exp;
     }
 
-    public void setExp(int x){
+    public void setExp(int x) {
         exp = x;
     }
 
-    public int getGold(){
+    public int getGold() {
         return gold;
     }
 
-    public void setGold(int x){
+    public void setGold(int x) {
         gold = x;
     }
+
     public String getStats() {
         return (this instanceof Mage) + "\n" + this.level + "\n" + this.exp + "\n" + this.gold + this.inventory.getStats();
     }
@@ -84,7 +87,7 @@ public abstract class Player extends Entity {
         if (backport) {
             if (readyToPort) {
                 if (portalState < 5) {
-                    g.drawImage(portal[2][(int) portalState], oldCoordinates[0] + 50, oldCoordinates[1] + 50, null);
+                    g.drawImage(portal[2][(int) portalState], oldCoordinates[0] + 50, oldCoordinates[1] - 60, null);
                 } else {
                     goBack = true;
                     readyToPort = false;
@@ -92,10 +95,10 @@ public abstract class Player extends Entity {
                 }
 
             } else if (portalState < 8) {
-                g.drawImage(portal[1][(int) portalState], oldCoordinates[0] + 50, oldCoordinates[1] + 50, null);
+                g.drawImage(portal[1][(int) portalState], oldCoordinates[0] + 50, oldCoordinates[1] - 60, null);
             } else {
-                g.drawImage(portal[0][(int) portalState % 8], oldCoordinates[0] + 50, oldCoordinates[1] + 50, null);
-                if (x < oldCoordinates[0] + 150 && x > oldCoordinates[0] + 70 && y < oldCoordinates[1] + 160 && y > oldCoordinates[1] + 60) {
+                g.drawImage(portal[0][(int) portalState % 8], oldCoordinates[0] + 50, oldCoordinates[1] - 60, null);
+                if (x < oldCoordinates[0] + 140 && x > oldCoordinates[0] + 60 && y < oldCoordinates[1] + 50 && y > oldCoordinates[1] - 50) {
                     readyToPort = true;
                     allowedToMove = false;
                     portalState = 0;
@@ -125,10 +128,10 @@ public abstract class Player extends Entity {
             }
         } else if (isMoving) {
             this.animation_state += (float) time / 100;
-            this.animation_state %= 6;
+            //this.animation_state %= 6;
         } else {
             this.animation_state += (float) time / 150;
-            this.animation_state %= 4;
+            //this.animation_state %= 4;
         }
 
         if (this.allowedToMove) {
@@ -145,6 +148,11 @@ public abstract class Player extends Entity {
                 this.map.generatePathsToPlayer();
             }
         }
+        if (health == 0) {
+            if (!dieing) animation_state = 0;
+            allowedToMove = false;
+            this.die();
+        }
 
         updatePlayerStats();
     }
@@ -153,6 +161,8 @@ public abstract class Player extends Entity {
         if (this.exp + amount >= 90 + 10 * this.level * this.level) {
             this.exp = this.exp + amount - (90 + 10 * this.level * this.level);
             this.level++;
+            updatePlayerStats();
+            this.health = maxHealth;
         } else {
             this.exp += amount;
         }
@@ -178,9 +188,10 @@ public abstract class Player extends Entity {
         if (this.map instanceof Hub) {
             this.health = this.maxHealth;
         }
+        if (health != 0) dieing = false;
     }
 
-    void loadImages(float[] rgba, String idlePath, String runPath, String attackPath) {
+    void loadImages(float[] rgba, String idlePath, String runPath, String attackPath, String diePath) {
         try {
             if (rgba == null) {
                 for (int i = 0; i < 4; i++) {
@@ -192,6 +203,11 @@ public abstract class Player extends Entity {
                 for (int i = 0; i < 5; i++) {
                     this.img[2][i] = ImageIO.read(new File(attackPath + i + ".png")).getScaledInstance(Main.ENTITY_WIDTH, -1, Image.SCALE_SMOOTH);
                 }
+                int numberDeathImages = 7;
+                if (this instanceof Mage) numberDeathImages = 10;
+                for (int i = 0; i < numberDeathImages; i++) {
+                    this.img[3][i] = ImageIO.read(new File(diePath + i + ".png")).getScaledInstance(Main.ENTITY_WIDTH, -1, Image.SCALE_SMOOTH);
+                }
             } else {
                 for (int i = 0; i < 4; i++) {
                     this.img[0][i] = tint(rgba[0], rgba[1], rgba[2], rgba[3], ImageIO.read(new File(idlePath + i + ".png"))).getScaledInstance(Main.ENTITY_WIDTH, -1, Image.SCALE_SMOOTH);
@@ -202,9 +218,23 @@ public abstract class Player extends Entity {
                 for (int i = 0; i < 5; i++) {
                     this.img[2][i] = tint(rgba[0], rgba[1], rgba[2], rgba[3], ImageIO.read(new File(attackPath + i + ".png"))).getScaledInstance(Main.ENTITY_WIDTH, -1, Image.SCALE_SMOOTH);
                 }
+                int numberDeathImages = 7;
+                if (this instanceof Mage) numberDeathImages = 10;
+                for (int i = 0; i < numberDeathImages; i++) {
+                    this.img[3][i] = tint(rgba[0], rgba[1], rgba[2], rgba[3], ImageIO.read(new File(diePath + i + ".png"))).getScaledInstance(Main.ENTITY_WIDTH, -1, Image.SCALE_SMOOTH);
+                }
             }
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+    public void die() {
+        dieing = true;
+        if (this instanceof Mage && animation_state >= 10) {
+            dieingComplete = true;
+        } else if (this instanceof Fighter && animation_state >= 7) {
+            dieingComplete = true;
         }
     }
 }

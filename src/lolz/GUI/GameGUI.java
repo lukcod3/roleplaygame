@@ -1,6 +1,7 @@
 package lolz.GUI;
 
 import lolz.Entity.Fighter;
+import lolz.Entity.Mage;
 import lolz.Entity.Player;
 import lolz.Main;
 import lolz.Maps.Map;
@@ -310,6 +311,8 @@ public class GameGUI extends JPanel {
         g.setFont(font);
         g.setColor(Color.WHITE);
         g.drawString("Monsters: " + this.map.monsterCount, Main.WIDTH - (g.getFontMetrics().stringWidth("Monsters: " + this.map.monsterCount) + 50), 50);
+
+        die(g);
     }
 
     public void update(int time) {
@@ -319,7 +322,21 @@ public class GameGUI extends JPanel {
         }
     }
 
-
-
+    public void die(Graphics g){
+        if(this.map.player.dieing){
+            Font f = g.getFont();
+            Color c = g.getColor();
+            g.getFont();
+            g.setFont(new Font("Avant Garde", Font.BOLD, 80));
+            g.setColor(Color.red);
+            g.drawString("Du bist gestorben", 150, 350);
+            g.setColor(c);
+            g.setFont(f);
+            if(this.map.player.dieingComplete){
+                main.player = this.map.player instanceof Mage ? new Mage(this.map, (int)this.map.player.x, (int)this.map.player.y): new Fighter(this.map, (int)this.map.player.x, (int)this.map.player.y);
+                main.startHub();
+            }
+        }
+    }
 
 }

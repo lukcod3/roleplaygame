@@ -603,6 +603,7 @@ public class HubGUI extends JPanel {
         main.player = newPlayer;
         removeCharItems();
         addColorButtons();
+        this.map.shopkeeper.player = newPlayer;
     }
 
 }
